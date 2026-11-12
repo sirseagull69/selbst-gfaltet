@@ -17,7 +17,7 @@ export const LERNWEGE = [
     chips: ['Einsteiger', 'Code'],
     teile: [
       { titel: 'Wie ich ohne Ausbildung programmieren gelernt hab', slug: 'programmieren-ohne-ausbildung' },
-      { titel: 'Dein erstes kleines Tool mit Claude Code', slug: 'erstes-tool' },
+      { titel: 'Dein erstes kleines Tool, ganz ohne Abo', slug: 'erstes-tool' },
       { titel: 'Was die KI nicht für dich entscheiden sollte', slug: 'was-die-ki-nicht-entscheidet' },
     ],
   },

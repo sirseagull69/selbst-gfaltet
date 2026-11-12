@@ -1,9 +1,9 @@
 ---
-titel: "Dein erstes kleines Tool mit Claude Code"
-beschreibung: "Von null bis zu einem Werkzeug, das im Browser läuft: Claude Code installieren, einen guten Auftrag schreiben, testen, verbessern, sichern und online stellen. Ohne dass du vorher programmieren kannst."
+titel: "Dein erstes kleines Tool, ganz ohne Abo"
+beschreibung: "Für ein kleines Werkzeug brauchst du weder ein Abo noch Claude Code. Der normale Claude-Chat reicht: Auftrag schreiben, ausprobieren, verbessern, als Datei mitnehmen. Und wann sich Claude Code dann doch lohnt."
 datum: 2026-11-12
 kategorie: code
-lesezeit: 8
+lesezeit: 7
 lernweg: "Claude Code ohne Informatikstudium"
 teil: 2
 ori: schreibt
@@ -19,28 +19,30 @@ import OriRand from '../../components/OriRand.astro';
 <KurzGesagt
   links="Was du brauchst"
   rechts="Was du nicht brauchst"
-  a={["Einen PC mit Internet", "Ein Claude-Abo (Pro oder höher, im kostenlosen Plan ist Claude Code nicht dabei)", "Eine Idee für ein kleines Werkzeug", "Etwa eine Stunde Zeit"]}
-  b={["Programmierkenntnisse", "Einen eigenen Server", "Node.js oder sonstige Vorkenntnisse", "Angst vor dem Terminal"]}
+  a={["Einen Browser, am PC oder am Handy", "Ein kostenloses Claude-Konto", "Eine Idee für ein kleines Werkzeug", "Etwa eine halbe Stunde Zeit"]}
+  b={["Ein Abo", "Claude Code oder sonst was zum Installieren", "Programmierkenntnisse", "Einen eigenen Server"]}
 />
 
-## Was Claude Code ist
+## Erst der Chat, dann Claude Code
 
-Claude Code ist Claude, aber nicht im Chatfenster, sondern in deinem Terminal, also dem schwarzen Fenster mit Textbefehlen. Der Unterschied: Claude Code kann direkt in deinem Ordner Dateien anlegen, ändern und Befehle ausführen. Du sagst, was du willst, und es baut.
+Viele denken, für das erste eigene Tool braucht man gleich Claude Code, ein Terminal und ein Abo. Braucht man nicht. Für ein kleines Werkzeug, das in einer einzigen Datei steckt, reicht der ganz normale Chat auf claude.ai, auch im kostenlosen Plan.
 
-Bevor es etwas Wichtiges tut, fragt es dich. Du behältst die Kontrolle.
+Du beschreibst, was du willst. Claude baut es direkt im Chat, du siehst es sofort und kannst es ausprobieren. Gefällt's dir, nimmst du es als Datei mit.
 
-Als Beispiel bauen wir einen **Pomodoro-Timer**: 25 Minuten arbeiten, 5 Minuten Pause, mit Ton am Ende. Klein, nützlich, in einer Stunde fertig. Genau so eine Seite war übrigens auch eine der Aufgaben im [Modell-Dreikampf](/blog/modell-dreikampf).
+Claude Code kommt erst später ins Spiel, wenn aus dem kleinen Tool ein richtiges Projekt wird. Dazu unten mehr.
+
+Als Beispiel bauen wir einen **Pomodoro-Timer**: 25 Minuten arbeiten, 5 Minuten Pause, mit Ton am Ende. Klein, nützlich, in einer halben Stunde fertig. Genau so eine Seite war übrigens auch eine der Aufgaben im [Modell-Dreikampf](/blog/modell-dreikampf).
 
 ## Schritt für Schritt
 
 <OriRand ori="rechnet" spruch="25 Minuten. Ich zähl runter. Du arbeitest." />
 
 <Schritte titel="Von null zum ersten Werkzeug" schritte={[
-  { titel: "Git für Windows installieren", text: "Claude Code braucht unter Windows Git. Das holst du dir von git-scm.com, einfach durchklicken. Git brauchst du später sowieso zum Sichern." },
-  { titel: "Claude Code installieren", text: "PowerShell öffnen (ohne Admin-Rechte) und diesen Befehl eintippen. Das ist der offizielle Installer, er aktualisiert sich danach selbst. Alte Anleitungen zeigen oft noch den Weg über npm, der ist veraltet. Beim ersten Start meldest du dich mit deinem Claude-Konto an.", befehl: "irm https://claude.ai/install.ps1 | iex" },
-  { titel: "Einen Ordner fürs Projekt anlegen", text: "Jedes Werkzeug bekommt einen eigenen Ordner. Dann kommt nichts durcheinander.", befehl: "mkdir pomodoro" },
-  { titel: "Reingehen und Claude Code starten", text: "Ab jetzt arbeitet Claude Code nur in diesem Ordner.", befehl: "cd pomodoro" },
-  { titel: "Starten", text: "Jetzt bist du im Gespräch mit Claude Code.", befehl: "claude" },
+  { titel: "claude.ai öffnen", text: "Im Browser oder in der App. Wenn du noch kein Konto hast, legst du eins an. Kostet nichts." },
+  { titel: "Deinen Auftrag reinschreiben", text: "Was das Tool können soll, wie es aussehen soll und dass es eine einzige HTML-Datei sein soll. Wie ein guter Auftrag aussieht, steht gleich unten." },
+  { titel: "Ausprobieren", text: "Claude baut die Seite und zeigt sie dir direkt im Chat an. Klick alles durch: Startet der Timer? Kommt der Ton?" },
+  { titel: "Wünsche nachschieben", text: "Was dir nicht gefällt, sagst du einfach. Eins nach dem anderen, nicht zehn Sachen auf einmal. Zum Beispiel: „Die Ziffern sollen noch größer sein.“" },
+  { titel: "Als Datei mitnehmen", text: "Lad die fertige Datei herunter. Doppelklick drauf, sie geht in deinem Browser auf und läuft ohne Internet und ohne Claude weiter." },
 ]} />
 
 ## Der wichtigste Teil: dein Auftrag
@@ -50,24 +52,38 @@ Als Beispiel bauen wir einen **Pomodoro-Timer**: 25 Minuten arbeiten, 5 Minuten 
 Hier entscheidet sich, ob du nach fünf Minuten was Brauchbares hast oder nach einer Stunde frustriert bist.
 
 <VorherNachher titel="Ein schlechter und ein guter Auftrag" vorherTitel="So eher nicht" nachherTitel="So klappt's">
-  <p slot="vorher">„Mach mir einen Pomodoro-Timer.“ Claude Code baut dann irgendwas. Vielleicht mit Framework, vielleicht mit fünf Dateien, vielleicht auf Englisch. Alles Annahmen.</p>
+  <p slot="vorher">„Mach mir einen Pomodoro-Timer.“ Claude baut dann irgendwas. Vielleicht auf Englisch, vielleicht mit Sachen, die du gar nicht wolltest. Alles Annahmen.</p>
   <p slot="nachher">„Bau mir einen Pomodoro-Timer als eine einzige HTML-Datei, ohne Frameworks. 25 Minuten Arbeit, 5 Minuten Pause, Start- und Reset-Knopf, kurzer Ton am Ende. Große Ziffern, deutsche Beschriftung. Ich bin Anfänger, erklär mir danach in drei Sätzen, wie der Code aufgebaut ist. Wenn was unklar ist, frag vorher.“</p>
 </VorherNachher>
 
-Der gute Auftrag sagt, **was** rauskommen soll, **wie** es aussehen soll, **was nicht** und **wer du bist**. Genau dafür gibt's auf diesem Blog den [Prompt-Baukasten](/werkzeuge#prompt): Felder ausfüllen, kopieren, bei Claude Code einfügen.
+Der gute Auftrag sagt, **was** rauskommen soll, **wie** es aussehen soll, **was nicht** und **wer du bist**. Genau dafür gibt's auf diesem Blog den [Prompt-Baukasten](/werkzeuge#prompt): Felder ausfüllen, kopieren, bei Claude einfügen.
 
 <OriSagt ori="wissen">Ein guter Auftrag ist die halbe Miete. Die andere Hälfte bin ich.</OriSagt>
 
-## Testen, verbessern, sichern
+## Verstehen, was du da gebaut hast
 
 <OriRand ori="liest" spruch="Ich hab's gebaut. Jetzt klick mal drauf." />
 
-<Schritte titel="Vom ersten Entwurf zum fertigen Werkzeug" schritte={[
-  { titel: "Datei im Browser öffnen", text: "Claude Code sagt dir, wie die Datei heißt. Doppelklick drauf, sie geht im Browser auf. Probier alles aus." },
-  { titel: "Wünsche nachschieben", text: "Was dir nicht gefällt, sagst du einfach. Eins nach dem anderen, nicht zehn Sachen auf einmal. Zum Beispiel: „Die Ziffern sollen noch größer sein.“" },
-  { titel: "Nachfragen, was der Code macht", text: "„Erklär mir die Funktion, die runterzählt.“ So verstehst du mit der Zeit, was da passiert." },
-  { titel: "Mit Git sichern", text: "Sobald was läuft: speichern. Dann kannst du jeden Umbau rückgängig machen. Sag Claude Code einfach „Leg ein Git-Repository an und speicher den Stand“." },
-  { titel: "Online stellen, wenn du magst", text: "Mit Vercel geht so eine Datei kostenlos online, mit eigener Adresse. Auch dabei hilft dir Claude Code. Dieser Blog läuft genauso." },
+Das Tool läuft. Jetzt kommt der Teil, den die meisten überspringen: nachfragen. „Erklär mir die Funktion, die runterzählt.“ Oder: „Was passiert, wenn ich auf Reset drücke?“ Dafür musst du nicht programmieren können. Du lernst es so nebenbei.
+
+Und heb dir die Dateien auf. Wenn du später was änderst, speicher die neue Version mit neuem Namen, zum Beispiel `pomodoro-2.html`. Dann hast du immer noch die alte, falls was schiefgeht.
+
+## Wann sich Claude Code lohnt
+
+<OriRand ori="vergleicht" spruch="Chat für den Zettel. Claude Code fürs Haus." />
+
+Irgendwann wird's dem Chat zu eng. Spätestens dann lohnt sich Claude Code, also Claude im Terminal, direkt in einem Ordner auf deinem PC:
+
+- **Mehr als eine Datei.** Das Tool hat eine Datenbank, mehrere Seiten oder ein paar Skripte dazu.
+- **Du baust über Wochen dran.** Claude Code arbeitet direkt in deinem Ordner, du musst nichts mehr hin und her kopieren.
+- **Du willst sichern und online stellen.** Mit Git jeden Stand speichern, mit Vercel kostenlos online stellen. Claude Code erledigt das gleich mit.
+
+Dafür brauchst du dann ein Abo (Pro oder höher), im kostenlosen Plan ist Claude Code nicht dabei. Und du installierst es einmal:
+
+<Schritte titel="Claude Code einrichten, wenn's so weit ist" schritte={[
+  { titel: "Git für Windows installieren", text: "Claude Code braucht unter Windows Git. Das holst du dir von git-scm.com, einfach durchklicken. Git brauchst du eh zum Sichern." },
+  { titel: "Claude Code installieren", text: "PowerShell öffnen (ohne Admin-Rechte) und diesen Befehl eintippen. Das ist der offizielle Installer, er aktualisiert sich danach selbst. Alte Anleitungen zeigen oft noch den Weg über npm, der ist veraltet.", befehl: "irm https://claude.ai/install.ps1 | iex" },
+  { titel: "Im Projektordner starten", text: "In den Ordner deines Tools wechseln und Claude Code starten. Beim ersten Mal meldest du dich mit deinem Claude-Konto an.", befehl: "claude" },
 ]} />
 
 Ein paar Befehle, die du in Claude Code öfter brauchst: `/clear` fängt frisch an, `/compact` fasst ein langes Gespräch zusammen, `/help` zeigt alles. Mit `Esc` unterbrichst du, wenn Claude in die falsche Richtung läuft. Mehr auf dem [Spickzettel](/spickzettel).
@@ -77,15 +93,15 @@ Ein paar Befehle, die du in Claude Code öfter brauchst: `/clear` fängt frisch 
 <OriRand ori="ratlos" spruch="Zehn Wünsche auf einmal? Ich hab den dritten schon vergessen." />
 
 - **Zu viele Wünsche auf einmal.** Lieber fünf kleine Runden als eine große. Sonst wird's unübersichtlich und du weißt nicht mehr, was was kaputt gemacht hat.
-- **Nicht gesichert.** Ein Umbau geht schief, und die alte Version ist weg. Deshalb Git, früh.
-- **Alles blind übernommen.** Wenn Claude Code fragt, ob es etwas löschen oder installieren darf: lesen, nicht einfach Ja drücken.
-- **Riesiges Projekt als erstes.** Fang klein an. Erst der Timer, dann die App.
+- **Alte Version weg.** Ein Umbau geht schief, und die Datei, die lief, ist überschrieben. Deshalb jede funktionierende Version aufheben.
+- **Zu früh zu groß.** Gleich Claude Code, Datenbank und Server, bevor das erste kleine Tool überhaupt steht. Fang im Chat an.
+- **Alles blind übernommen.** Probier selbst aus, ob's wirklich tut, was es soll. „Fertig“ heißt nicht, dass es funktioniert.
 
 <Checkliste punkte={[
-  "Claude Code ist installiert und ich bin angemeldet",
-  "Mein Projekt hat einen eigenen Ordner",
+  "Ich hab ein kostenloses Claude-Konto",
   "Mein Auftrag sagt was, wie, was nicht und wer ich bin",
-  "Die erste Version läuft im Browser",
-  "Ich hab mit Git gesichert",
-  "Ich hab mindestens einmal gefragt: Was macht diese Zeile?",
-]} geschafft="Dein erstes Tool. Ich bin fast ein bisschen stolz. Fast." />
+  "Mein Tool läuft als HTML-Datei in meinem Browser",
+  "Ich hab mindestens einmal gefragt: Was macht diese Stelle?",
+  "Funktionierende Versionen hab ich aufgehoben",
+  "Ich weiß, ab wann sich Claude Code für mich lohnt",
+]} geschafft="Dein erstes Tool. Ganz ohne Abo. Ich bin fast ein bisschen stolz. Fast." />
