@@ -23,6 +23,13 @@ Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt
 2. Entwurf immer in einem eigenen Branch `entwurf/<slug>`, nie direkt auf `main`.
 3. Nils liest, ändert den Ton und gibt frei. Erst dann nach `main`.
 
+## Domain & Mail
+- Domain selbstgfaltet.de liegt bei IONOS. DNS: A `@` → 76.76.21.21, CNAME `www` → cname.vercel-dns.com. Vercel leitet selbstgfaltet.de auf www um.
+- `fragen@selbstgfaltet.de` ist eine IONOS-Weiterleitung (kein Postfach, man kann davon nicht senden). Mail-Einträge (MX, SPF, DKIM, DMARC) bei IONOS nicht anfassen.
+- `noindex` ist raus, Google darf die Seite aufnehmen.
+
 ## Offen
-- Domain selbstgfaltet.de (IONOS) ist gekauft, `fragen@` leitet an Nils weiter. `noindex` ist raus.
+- Sitemap einbauen (`@astrojs/sitemap`).
+- Vercel Analytics einschalten.
+- Google Search Console anmelden, Sitemap dort einreichen.
 - Newsletter (z. B. Brevo) erst, wenn gewünscht.
