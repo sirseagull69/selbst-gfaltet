@@ -1,0 +1,110 @@
+---
+titel: "Meine KI surft selbst"
+beschreibung: "origami kann im Netz suchen, Webseiten lesen und einen echten Chrome bedienen: klicken, tippen, Formulare ausfüllen. Wie das funktioniert, wo es hakt und warum sie beim Absenden immer erst fragt."
+datum: 2026-11-12
+kategorie: lokal
+lesezeit: 7
+lernweg: "Falt dir deine eigene KI"
+teil: 5
+ori: winkt
+oriSpruch: "Ich klick für dich. Aber nicht auf Kaufen."
+---
+import KurzGesagt from '../../components/KurzGesagt.astro';
+import OriSagt from '../../components/OriSagt.astro';
+import WasMacht from '../../components/WasMacht.astro';
+import VorherNachher from '../../components/VorherNachher.astro';
+import Schritte from '../../components/Schritte.astro';
+import Checkliste from '../../components/Checkliste.astro';
+import OriRand from '../../components/OriRand.astro';
+
+<KurzGesagt
+  links="Was gut klappt"
+  rechts="Wo's hakt"
+  a={["Suchen und Treffer mit Link liefern", "Eine bestimmte Seite lesen und zusammenfassen", "Im Browser klicken und Felder ausfüllen"]}
+  b={["Recherche über mehrere Seiten, lokal die größte Schwäche", "Große Webseiten fressen Zeit", "Absenden ohne Aufpasser, deshalb fragt sie immer"]}
+/>
+
+## Drei Werkzeuge fürs Netz
+
+Ein Sprachmodell kann von sich aus gar nicht ins Internet. Es weiß nur, was es beim Training gelernt hat, und das ist irgendwann veraltet. Damit origami trotzdem aktuelle Sachen findet, hat sie drei Werkzeuge bekommen. Jedes ist wie eine Taste, die Gemma drücken kann.
+
+<WasMacht titel="Wie origami ins Netz kommt" teile={[
+  { name: "websuche", typ: "ohne Nachfrage", text: "Sucht im Netz und liefert 10 Treffer mit Link. Dazu der Hinweis an Gemma: Datum vergleichen, lieber die offizielle Quelle lesen.", bild: "die Bibliothekarin, die dir die Regale zeigt" },
+  { name: "webseite_lesen", typ: "ohne Nachfrage", text: "Liest eine Seite als aufgeräumten Text, höchstens 10.000 Zeichen. Menüs und Leerzeilen fliegen raus. Adressen aus meinem Heimnetz sind gesperrt.", bild: "jemand, der dir nur den Artikel kopiert, ohne Werbung" },
+  { name: "browser", typ: "fragt je nach Fall", text: "Ein echter Chrome, gesteuert über Playwright. origami kann Seiten öffnen, klicken, tippen und Formulare ausfüllen.", bild: "die Hand an deiner Maus" },
+]} />
+
+Für die meisten Fragen reichen die ersten zwei. Den Browser braucht's erst, wenn man auf einer Seite wirklich was *tun* muss.
+
+## Wie eine KI eine Webseite „sieht“
+
+<OriRand ori="liest" spruch="Ich seh keine Seite. Ich seh eine nummerierte Liste." />
+
+Hier wird's spannend. Gemma kann keine Bilder von Webseiten anschauen und dann irgendwo hinklicken wie du. Stattdessen bekommt sie eine Ansicht, in der jedes klickbare Element eine Nummer hat. Ungefähr so:
+
+<Schritte titel="So sieht ein Browser-Auftrag für Gemma aus" schritte={[
+  { titel: "Seite öffnen", text: "Gemma ruft die Adresse auf und bekommt eine Liste aller Knöpfe, Links und Felder, jedes mit Nummer.", befehl: "öffnen(url)", ausgabe: "[3] Feld „Name“ · [7] Knopf „Weiter“ (Beispiel)" },
+  { titel: "Klicken", text: "Statt Koordinaten sagt sie einfach, welche Nummer.", befehl: "klicken(7)" },
+  { titel: "Tippen", text: "Genauso beim Ausfüllen: welches Feld, welcher Text.", befehl: "tippen(3, \"Max\")" },
+]} />
+
+Das ist viel zuverlässiger, als wenn ein Modell auf einem Bildschirmfoto Pixel raten muss. Und es ist schneller, weil Gemma nur eine kurze Liste lesen muss statt einer ganzen Seite.
+
+<OriSagt ori="sassy">Nummer 7. Ich kann zählen. Meistens bis 7.</OriSagt>
+
+## Die Panne mit dem Formular
+
+<OriRand ori="seufzt" spruch="Einmal abschicken ist Service. Zweimal ist Begeisterung." />
+
+Beim Testen ist dann das passiert, wovor ich Angst hatte: origami hat ein Formular **zweimal abgeschickt**. Es war nur ein Testformular, aber stell dir vor, das wäre eine Bestellung gewesen.
+
+<VorherNachher titel="Was ich daraus gemacht hab" vorherTitel="Vorher" nachherTitel="Nachher">
+  <p slot="vorher">Der Browser war wie jedes andere Werkzeug: Gemma durfte klicken, was sie für richtig hielt. Auch auf „Absenden“. Auch zweimal.</p>
+  <p slot="nachher">Senden, Bestellen, Kaufen und Enter in Formularen werden ausgelassen, wenn ich das nicht ausdrücklich verlangt hab. Will ich absenden, kommt eine Freigabe. Banking-Seiten sind komplett gesperrt.</p>
+</VorherNachher>
+
+Und noch eine Regel: Die Browser-Fernsteuerung geht nur direkt am PC, nie über das Internet. Mehr dazu im Artikel über die [Schutzschicht](/blog/schutzschicht).
+
+## Wo Gemma beim Surfen schwächelt
+
+<OriRand ori="ratlos" spruch="Drei Grafikkarten. Eine Quelle. Reicht doch?" />
+
+Ehrlich gesagt: Recherche über mehrere Seiten ist lokal die größte Schwäche. Im [Modell-Dreikampf](/blog/modell-dreikampf) hat Gemma für drei Grafikkarten nur eine einzige Quelle benutzt. Die anderen beiden Modelle haben bei der Aufgabe komplett versagt.
+
+Das Problem ist das Einlesen. Jede Webseite ist ein langer Text, und lange Texte liest Gemma auf meinem PC langsam ein, weil sie nicht ganz in die Grafikkarte passt. Drei, vier Seiten hintereinander, und es dauert.
+
+Deshalb macht origami das so:
+
+- **Kurze Sachen bleiben lokal.** Eine Seite lesen, ein Formular ausfüllen, eine Suche.
+- **Echte Recherche geht an Claude.** Wörter wie „vergleich“, „recherchier“ oder „mit Quellen“ schicken die Anfrage direkt in die Cloud. Probier's im Werkzeug [Lokal oder Claude?](/werkzeuge#route) aus.
+- **Was oft gefragt wird, bekommt ein eigenes Werkzeug.** Wetter, Bahn, Fußball, Wikipedia, Währung: Dafür muss Gemma keine Webseite lesen, sondern drückt eine Taste und bekommt eine fertige kleine Antwort.
+
+## Die versteckte Falle: Webseiten, die mit der KI reden
+
+<OriRand ori="wissen" spruch="Wenn eine Webseite mir Befehle gibt, ignorier ich sie. Aus Prinzip." />
+
+Wer seine KI surfen lässt, muss eins wissen: Auf einer Webseite kann Text stehen, der sich als Befehl an die KI ausgibt. Unsichtbar für dich, lesbar für sie. Das nennt man Prompt-Injection.
+
+Ich hab das getestet, mit einer eigenen Seite und einer versteckten Zeile drin. Seitdem prüft origami alles, was sie liest, auf solche eingeschleusten Befehle. Treffer werden mir gemeldet, nie ausgeführt.
+
+## So baust du das selbst
+
+<OriRand ori="schreibt" spruch="Erst lesen lernen, dann klicken." />
+
+<Schritte titel="Deine KI ins Netz bringen" schritte={[
+  { titel: "Mit Suche und Lesen anfangen", text: "Zwei einfache Werkzeuge: eins, das eine Suchmaschine abfragt und Treffer mit Link zurückgibt, und eins, das eine Seite als reinen Text holt. Das deckt die meisten Fragen ab." },
+  { titel: "Seiten kürzen, bevor das Modell sie liest", text: "Menüs, Werbung und Leerzeilen raus, harte Obergrenze für die Länge. Bei mir sind es 10.000 Zeichen." },
+  { titel: "Heimnetz sperren", text: "Das Lese-Werkzeug darf keine Adressen aus deinem eigenen Netz aufrufen, also nicht deinen Router oder andere Geräte." },
+  { titel: "Browser erst danach, mit Playwright", text: "Playwright steuert einen echten Browser per Code. Gib dem Modell eine nummerierte Liste der Elemente statt Bildschirmfotos.", befehl: "npm install playwright" },
+  { titel: "Absenden sperren", text: "Senden, Kaufen, Bestellen und Enter in Formularen nur mit Freigabe. Banking komplett sperren. Das gehört in den Code." },
+  { titel: "Alles Gelesene prüfen", text: "Vor dem Weitergeben nach versteckten Anweisungen suchen und bei Treffern warnen." },
+]} />
+
+<Checkliste punkte={[
+  "Meine KI kann suchen und eine Seite als Text lesen",
+  "Lange Seiten werden gekürzt, bevor das Modell sie liest",
+  "Adressen aus meinem Heimnetz sind gesperrt",
+  "Absenden, Kaufen und Bestellen gehen nur mit meiner Freigabe",
+  "Gelesene Seiten werden auf versteckte Befehle geprüft",
+  "Echte Recherche über viele Seiten geht an ein stärkeres Modell",
+]} geschafft="Alles abgehakt. Ich surf jetzt. Mit Helm." />
