@@ -53,4 +53,5 @@ Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt
 - Die Formular-Adresse aus Brevo steht in `src/newsletter.ts`. Solange leer, ist das Feld unsichtbar und der Datenschutz-Abschnitt fehlt. Seit 12.11. eingetragen und live.
 - Verschickt wird nur bei neuen Artikeln.
 - Vorlage für die Bestätigungs-Mail: `mail/bestaetigung.html` (Platzhalter `{{ doubleoptin }}`), Bild `public/mail/ori-winkt.png`. Absender soll `fragen@selbstgfaltet.de` sein, nicht die Gmail-Adresse.
+- Willkommens-Mail nach Bestätigung (Brevo „Finale Bestätigungs-E-Mail“): `mail/willkommen.html`, mit Startpaket-Links. Die Downloads selbst bleiben frei, ohne Anmeldung.
 - Weiterleitungen aus Brevo: nach Absenden `/newsletter/fast-geschafft`, nach Bestätigung `/newsletter/dabei` (nicht in der Sitemap).
