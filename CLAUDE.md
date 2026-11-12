@@ -13,7 +13,7 @@ Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt
 ## Inhalt
 - **Ton:** Du-Form, locker, kurz, ehrlich, ein bisschen Schwäbisch. Pannen gehören dazu. Kein Marketing-Sprech, keine Emojis.
 - **Jeder Artikel** hat mindestens: `KurzGesagt`, einen visuellen Baustein (Schaubild, `WasMacht`, `Messung` oder `VorherNachher`), `Schritte` wenn man etwas nachbauen kann, eine `Checkliste` am Ende, 1–2 `OriSagt`.
-- **Ori:** Spitzname von origami (die KI heißt origami, Ori ist der Kosename). Papiervogel, sassy wie GLaDOS, trocken, nie gemein. Kommentiert am Rand (`ori`, `oriSpruch` im Frontmatter).
+- **Ori:** Spitzname von origami (die KI heißt origami, Ori ist der Kosename). origami ist eine **Sie**: sie, ihr, „die KI“, nie „er“ oder „der Assistent“. Papiervogel, sassy wie GLaDOS, trocken, nie gemein. Kommentiert am Rand (`ori`, `oriSpruch` im Frontmatter).
 - **Nur echte Zahlen** aus Nils' Messungen bzw. der origami-Doku. Nichts erfinden, nichts schätzen ohne es zu sagen.
 - **Keine Firmendaten:** Arbeitgeber, Kollegen, Dienstleister, Server, interne Vorfälle nie nennen. Keine Adressen, Zugangsdaten oder die Fernzugriffs-Adresse von origami.
 - Fachbegriffe beim ersten Auftauchen einfach erklären, neue Begriffe ins Glossar.
