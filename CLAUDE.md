@@ -4,7 +4,7 @@ Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt
 
 ## Technik
 - Astro 5, Artikel als MDX in `src/content/artikel/`, Schema in `src/content.config.ts`.
-- Werkzeuge in `src/pages/werkzeuge.astro` (Token-Uhr, Lokal oder Claude?, Passt das auf meinen PC?, Prompt-Baukasten, Fehler-Diagnose, Glossar), Spickzettel in `src/pages/spickzettel.astro`. Downloads in `src/pages/downloads.astro`, Dateien in `public/downloads/` (ki-check.ps1, modell-pruefstand.ps1, origami-bauplan.zip). Skripte als UTF-8 mit BOM und CRLF speichern (sonst kaputte Umlaute in Windows PowerShell 5.1), nur lesend, nur localhost. Alles läuft im Browser, nichts wird verschickt. Messwerte nur echte aus origami.
+- Werkzeuge in `src/pages/werkzeuge.astro` (Token-Uhr, Lokal oder Claude?, Passt das auf meinen PC?, Prompt-Baukasten, Fehler-Diagnose, Glossar), Spickzettel in `src/pages/spickzettel.astro`. Downloads in `src/pages/downloads.astro`, Dateien in `public/downloads/` (ki-check.ps1, modell-pruefstand.ps1 frei; Startpaket (Dateiname steht in `mail/willkommen.html`) mit dem origami-Bauplan nur über die Willkommens-Mail, nirgends auf der Seite verlinken). Skripte als UTF-8 mit BOM und CRLF speichern (sonst kaputte Umlaute in Windows PowerShell 5.1), nur lesend, nur localhost. Alles läuft im Browser, nichts wird verschickt. Messwerte nur echte aus origami.
 - Lernwege in `src/lernwege.ts` (Teil mit `slug` = erschienen), Glossar in `src/glossar.ts`.
 - Bausteine in `src/components/`: `KurzGesagt`, `AblaufOrigami` (Schaubild), `WasMacht`, `Schritte` (mit Terminal-Tipp-Animation), `Messung`, `VorherNachher`, `OriSagt`, `Checkliste` (Ori jubelt bei allen Haken).
 - Ori-Animationen in `public/anim/` (`-abendrot` = heller Modus, `-hell` = dunkler Modus). Quelle ist origami (`public/anim/` dort). Ori sieht überall exakt gleich aus, keine eigenen Vogel-Zeichnungen.
@@ -53,5 +53,5 @@ Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt
 - Die Formular-Adresse aus Brevo steht in `src/newsletter.ts`. Solange leer, ist das Feld unsichtbar und der Datenschutz-Abschnitt fehlt. Seit 12.11. eingetragen und live.
 - Verschickt wird nur bei neuen Artikeln.
 - Vorlage für die Bestätigungs-Mail: `mail/bestaetigung.html` (Platzhalter `{{ doubleoptin }}`), Bild `public/mail/ori-winkt.png`. Absender soll `fragen@selbstgfaltet.de` sein, nicht die Gmail-Adresse.
-- Willkommens-Mail nach Bestätigung (Brevo „Finale Bestätigungs-E-Mail“): `mail/willkommen.html`, mit Startpaket-Links. Die Downloads selbst bleiben frei, ohne Anmeldung.
+- Willkommens-Mail nach Bestätigung (Brevo „Finale Bestätigungs-E-Mail“): `mail/willkommen.html`, mit dem Link zum Startpaket (origami-Bauplan, exklusiv für Newsletter-Leser). KI-Check und Prüfstand bleiben frei.
 - Weiterleitungen aus Brevo: nach Absenden `/newsletter/fast-geschafft`, nach Bestätigung `/newsletter/dabei` (nicht in der Sitemap).
