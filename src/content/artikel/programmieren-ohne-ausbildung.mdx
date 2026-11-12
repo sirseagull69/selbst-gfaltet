@@ -1,0 +1,88 @@
+---
+titel: "Wie ich ohne Ausbildung programmieren gelernt hab"
+beschreibung: "Realschule, kein Studium, keine Ausbildung als Entwickler. Trotzdem baue ich heute eigene Apps, Spiele und eine KI, die auf meinem PC wohnt. Was geholfen hat, was nicht, und warum ich trotzdem verstehen will, was der Code macht."
+datum: 2026-11-12
+kategorie: code
+lesezeit: 6
+lernweg: "Claude Code ohne Informatikstudium"
+teil: 1
+ori: winkt
+oriSpruch: "Kein Studium. Aber eine KI, die zurückredet. Läuft."
+---
+import KurzGesagt from '../../components/KurzGesagt.astro';
+import OriSagt from '../../components/OriSagt.astro';
+import WasMacht from '../../components/WasMacht.astro';
+import Schritte from '../../components/Schritte.astro';
+import Checkliste from '../../components/Checkliste.astro';
+import OriRand from '../../components/OriRand.astro';
+
+<KurzGesagt
+  links="Was nicht geholfen hat"
+  rechts="Was geholfen hat"
+  a={["Erst monatelang Theorie pauken", "Alles perfekt planen, bevor's losgeht", "Große Frameworks, die man nicht versteht"]}
+  b={["Sofort was bauen, das ich selbst brauche", "Erst eine Version, die läuft, dann verbessern", "Einfache Dateien, die ich durchschauen kann"]}
+/>
+
+## Wo ich herkomm
+
+Realschule, dann direkt rein in die IT. Ein Informatikstudium hab ich nicht, eine Ausbildung als Entwickler auch nicht. Programmieren hab ich mir selbst beigebracht, und inzwischen baue ich die meisten meiner Sachen mit KI.
+
+Ich schreib das nicht, um anzugeben. Sondern weil ich weiß, wie es sich anfühlt, wenn alle Anleitungen so tun, als hättest du schon fünf Jahre Erfahrung. Hast du nicht. Musst du auch nicht.
+
+<OriSagt ori="sassy">Er hat mich gebaut, ohne Studium. Ich hab trotzdem keine Beschwerden. Fast keine.</OriSagt>
+
+## Was ich gebaut hab
+
+<OriRand ori="vergleicht" spruch="Eine To-do-App, ein paar Spiele und mich. Ich bin das Beste davon." />
+
+Nicht als Liste zum Angeben, sondern damit du siehst: Das waren alles Sachen, die *ich* haben wollte. Genau das hat mich drangehalten.
+
+<WasMacht titel="Meine Projekte, ganz ohne Studium" teile={[
+  { name: "origami", typ: "die KI aus diesem Blog", text: "Ein KI-Assistent, der auf meinem PC läuft, mit eigenen Werkzeugen, Schutzschichten und Zugriff vom Handy.", bild: "das große Bastelprojekt" },
+  { name: "Erledigt", typ: "eigene To-do-App", text: "Eine Windows-App für meine Aufgaben, mit Abgleich über Supabase und automatischen Updates.", bild: "der Zettel am Kühlschrank, nur besser" },
+  { name: "Pokémon-Spiele", typ: "aus Spaß", text: "Simulatoren, Roguelikes und Tycoon-Spiele rund um Pokémon-Karten. Reine Hobby-Projekte.", bild: "Spielen, aber selbst gebaut" },
+  { name: "Kickbase-Helfer", typ: "für den Fußball-Manager", text: "Ein Werkzeug mit Daten für mein Kickbase-Team. Das Verkaufen hab ich bewusst rausgelassen, das mach ich selbst.", bild: "der Co-Trainer, der nichts verkaufen darf" },
+]} />
+
+## Was wirklich geholfen hat
+
+<OriRand ori="wissen" spruch="Erst bauen, dann verstehen. Dann nochmal bauen." />
+
+**Erst mal eine Version, die läuft.** Ich plane nicht wochenlang. Ich bau eine erste, hässliche Version, schau sie mir an und verbessere dann. Ein Ding, das funktioniert, bringt mir mehr als ein perfekter Plan.
+
+**Einfach bleiben.** Meine Werkzeuge sind meistens eine einzige HTML-Datei mit normalem JavaScript, dazu Supabase als Datenbank. Kein riesiges Framework, das ich nicht durchschaue. Wenn was kaputtgeht, will ich die Stelle finden können.
+
+**Sachen bauen, die ich selbst brauche.** Bei einer Übungsaufgabe aus einem Kurs hörst du auf, wenn's schwierig wird. Bei deiner eigenen App nicht, weil du sie ja haben willst.
+
+**Neugierig bleiben, auch bei den schweren Sachen.** Ich hab mal ausprobiert, mit einem Werkzeug namens TransformerLens in ein kleines Sprachmodell (GPT-2) reinzuschauen. Verstanden hab ich längst nicht alles. Aber die Neugier ist geblieben, und bei origami hab ich später sogar ein eigenes Röntgenbild gebaut. Mehr dazu in [diesem Artikel](/blog/in-gemma-reingeschaut).
+
+## Was KI daran geändert hat
+
+<OriRand ori="seufzt" spruch="Ich schreib den Code. Er schreibt die Wünsche. Arbeitsteilung." />
+
+Heute schreibt Claude Code den Großteil meines Codes. Ohne das gäbe es origami nicht. Das ist kein Geheimnis und auch nichts, wofür man sich schämen muss.
+
+Aber ich hab gelernt: **KI ersetzt nicht, dass ich verstehe, was passiert.** Sie nimmt mir das Tippen ab, nicht das Denken. Ich muss trotzdem wissen, was ich will, ob das Ergebnis stimmt und wann die KI Unsinn baut. Dazu mehr in Teil 3: [Was die KI nicht für dich entscheiden sollte](/blog/was-die-ki-nicht-entscheidet).
+
+<OriSagt ori="seufzt">Ich hab ihm geholfen. Er nennt es „mit KI bauen“. Ich nenn's Zusammenarbeit.</OriSagt>
+
+## So fängst du an
+
+<OriRand ori="schreibt" spruch="Klein anfangen. Ich hab auch mal als Faltblatt angefangen." />
+
+<Schritte titel="Dein Start, ohne Studium" schritte={[
+  { titel: "Such dir ein echtes Problem", text: "Etwas, das dich nervt oder das du gern hättest. Eine Liste, ein Rechner, ein Spiel. Kein Übungsprojekt, sondern deins." },
+  { titel: "Fang mit einer einzigen Datei an", text: "Eine HTML-Datei, die im Browser läuft. Kein Server, keine Installation. So siehst du sofort, was passiert." },
+  { titel: "Lass die KI bauen, aber lies mit", text: "Frag bei jeder Stelle, die du nicht verstehst: „Was macht diese Zeile?“ So lernst du nebenbei mehr als in jedem Kurs." },
+  { titel: "Erst laufen lassen, dann schöner machen", text: "Die erste Version darf hässlich sein. Hauptsache, sie tut, was sie soll." },
+  { titel: "Speichern, bevor du was kaputtmachst", text: "Lern früh Git. Dann kannst du alles zurückdrehen, wenn ein Umbau schiefgeht. Passiert mir oft." },
+]} />
+
+Wie das konkret mit Claude Code geht, zeig ich dir im nächsten Teil: [Dein erstes kleines Tool](/blog/erstes-tool).
+
+<Checkliste punkte={[
+  "Ich hab ein Problem gefunden, das ich selbst lösen will",
+  "Ich weiß, dass ich dafür kein Studium brauche",
+  "Ich fange mit einer einzigen Datei an",
+  "Ich frag nach, wenn ich eine Zeile nicht versteh",
+]} geschafft="Siehst du. Kein Studium nötig. Nur Sturheit." />

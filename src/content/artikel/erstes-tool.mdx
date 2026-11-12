@@ -1,0 +1,91 @@
+---
+titel: "Dein erstes kleines Tool mit Claude Code"
+beschreibung: "Von null bis zu einem Werkzeug, das im Browser läuft: Claude Code installieren, einen guten Auftrag schreiben, testen, verbessern, sichern und online stellen. Ohne dass du vorher programmieren kannst."
+datum: 2026-11-12
+kategorie: code
+lesezeit: 8
+lernweg: "Claude Code ohne Informatikstudium"
+teil: 2
+ori: schreibt
+oriSpruch: "Du sagst, was du willst. Ich tipp. Ganz einfach."
+---
+import KurzGesagt from '../../components/KurzGesagt.astro';
+import OriSagt from '../../components/OriSagt.astro';
+import VorherNachher from '../../components/VorherNachher.astro';
+import Schritte from '../../components/Schritte.astro';
+import Checkliste from '../../components/Checkliste.astro';
+import OriRand from '../../components/OriRand.astro';
+
+<KurzGesagt
+  links="Was du brauchst"
+  rechts="Was du nicht brauchst"
+  a={["Einen PC mit Internet", "Ein Claude-Konto", "Eine Idee für ein kleines Werkzeug", "Etwa eine Stunde Zeit"]}
+  b={["Programmierkenntnisse", "Einen eigenen Server", "Teure Software", "Angst vor dem Terminal"]}
+/>
+
+## Was Claude Code ist
+
+Claude Code ist Claude, aber nicht im Chatfenster, sondern in deinem Terminal, also dem schwarzen Fenster mit Textbefehlen. Der Unterschied: Claude Code kann direkt in deinem Ordner Dateien anlegen, ändern und Befehle ausführen. Du sagst, was du willst, und es baut.
+
+Vorher fragt es dich, bevor es etwas Wichtiges tut. Du behältst die Kontrolle.
+
+Als Beispiel bauen wir einen **Pomodoro-Timer**: 25 Minuten arbeiten, 5 Minuten Pause, mit Ton am Ende. Klein, nützlich, in einer Stunde fertig. Genau so eine Seite war übrigens auch eine der Aufgaben im [Modell-Dreikampf](/blog/modell-dreikampf).
+
+## Schritt für Schritt
+
+<OriRand ori="rechnet" spruch="25 Minuten. Ich zähl runter. Du arbeitest." />
+
+<Schritte titel="Von null zum ersten Werkzeug" schritte={[
+  { titel: "Node.js installieren", text: "Claude Code braucht Node.js. Das holst du dir von nodejs.org, einfach die empfohlene Version installieren und durchklicken." },
+  { titel: "Claude Code installieren", text: "Terminal öffnen (unter Windows: PowerShell) und diesen Befehl eintippen. Beim ersten Start meldest du dich mit deinem Claude-Konto an.", befehl: "npm install -g @anthropic-ai/claude-code" },
+  { titel: "Einen Ordner fürs Projekt anlegen", text: "Jedes Werkzeug bekommt einen eigenen Ordner. Dann kommt nichts durcheinander.", befehl: "mkdir pomodoro" },
+  { titel: "Reingehen und Claude Code starten", text: "Ab jetzt arbeitet Claude Code nur in diesem Ordner.", befehl: "cd pomodoro" },
+  { titel: "Starten", text: "Jetzt bist du im Gespräch mit Claude Code.", befehl: "claude" },
+]} />
+
+## Der wichtigste Teil: dein Auftrag
+
+<OriRand ori="sassy" spruch="„Mach mal was mit Timer.“ Und dann wundern." />
+
+Hier entscheidet sich, ob du nach fünf Minuten was Brauchbares hast oder nach einer Stunde frustriert bist.
+
+<VorherNachher titel="Ein schlechter und ein guter Auftrag" vorherTitel="So eher nicht" nachherTitel="So klappt's">
+  <p slot="vorher">„Mach mir einen Pomodoro-Timer.“ Claude Code baut dann irgendwas. Vielleicht mit Framework, vielleicht mit fünf Dateien, vielleicht auf Englisch. Alles Annahmen.</p>
+  <p slot="nachher">„Bau mir einen Pomodoro-Timer als eine einzige HTML-Datei, ohne Frameworks. 25 Minuten Arbeit, 5 Minuten Pause, Start- und Reset-Knopf, kurzer Ton am Ende. Große Ziffern, deutsche Beschriftung. Ich bin Anfänger, erklär mir danach in drei Sätzen, wie der Code aufgebaut ist. Wenn was unklar ist, frag vorher.“</p>
+</VorherNachher>
+
+Der gute Auftrag sagt, **was** rauskommen soll, **wie** es aussehen soll, **was nicht** und **wer du bist**. Genau dafür gibt's auf diesem Blog den [Prompt-Baukasten](/werkzeuge#prompt): Felder ausfüllen, kopieren, bei Claude Code einfügen.
+
+<OriSagt ori="wissen">Ein guter Auftrag ist die halbe Miete. Die andere Hälfte bin ich.</OriSagt>
+
+## Testen, verbessern, sichern
+
+<OriRand ori="liest" spruch="Ich hab's gebaut. Jetzt klick mal drauf." />
+
+<Schritte titel="Vom ersten Entwurf zum fertigen Werkzeug" schritte={[
+  { titel: "Datei im Browser öffnen", text: "Claude Code sagt dir, wie die Datei heißt. Doppelklick drauf, sie geht im Browser auf. Probier alles aus." },
+  { titel: "Wünsche nachschieben", text: "Was dir nicht gefällt, sagst du einfach. Eins nach dem anderen, nicht zehn Sachen auf einmal. Zum Beispiel: „Die Ziffern sollen noch größer sein.“" },
+  { titel: "Nachfragen, was der Code macht", text: "„Erklär mir die Funktion, die runterzählt.“ So verstehst du mit der Zeit, was da passiert." },
+  { titel: "Mit Git sichern", text: "Sobald was läuft: speichern. Dann kannst du jeden Umbau rückgängig machen. Sag Claude Code einfach „Leg ein Git-Repository an und speicher den Stand“." },
+  { titel: "Online stellen, wenn du magst", text: "Mit Vercel geht so eine Datei kostenlos online, mit eigener Adresse. Auch dabei hilft dir Claude Code. Dieser Blog läuft genauso." },
+]} />
+
+Ein paar Befehle, die du in Claude Code öfter brauchst: `/clear` fängt frisch an, `/compact` fasst ein langes Gespräch zusammen, `/help` zeigt alles. Mit `Esc` unterbrichst du, wenn Claude in die falsche Richtung läuft. Mehr auf dem [Spickzettel](/spickzettel).
+
+## Was oft schiefgeht
+
+<OriRand ori="ratlos" spruch="Zehn Wünsche auf einmal? Ich hab den dritten schon vergessen." />
+
+- **Zu viele Wünsche auf einmal.** Lieber fünf kleine Runden als eine große. Sonst wird's unübersichtlich und du weißt nicht mehr, was was kaputt gemacht hat.
+- **Nicht gesichert.** Ein Umbau geht schief, und die alte Version ist weg. Deshalb Git, früh.
+- **Alles blind übernommen.** Wenn Claude Code fragt, ob es etwas löschen oder installieren darf: lesen, nicht einfach Ja drücken.
+- **Riesiges Projekt als erstes.** Fang klein an. Erst der Timer, dann die App.
+
+<Checkliste punkte={[
+  "Claude Code ist installiert und ich bin angemeldet",
+  "Mein Projekt hat einen eigenen Ordner",
+  "Mein Auftrag sagt was, wie, was nicht und wer ich bin",
+  "Die erste Version läuft im Browser",
+  "Ich hab mit Git gesichert",
+  "Ich hab mindestens einmal gefragt: Was macht diese Zeile?",
+]} geschafft="Dein erstes Tool. Ich bin fast ein bisschen stolz. Fast." />

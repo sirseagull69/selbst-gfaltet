@@ -16,9 +16,9 @@ export const LERNWEGE = [
     nr: '02', titel: 'Claude Code ohne Informatikstudium', kurz: 'Eigene Werkzeuge bauen, auch wenn du nie programmieren gelernt hast. Und wo man aufpassen muss.',
     chips: ['Einsteiger', 'Code'],
     teile: [
-      { titel: 'Wie ich ohne Ausbildung programmieren gelernt habe' },
-      { titel: 'Dein erstes kleines Tool' },
-      { titel: 'Was die KI nicht für dich entscheiden sollte' },
+      { titel: 'Wie ich ohne Ausbildung programmieren gelernt hab', slug: 'programmieren-ohne-ausbildung' },
+      { titel: 'Dein erstes kleines Tool mit Claude Code', slug: 'erstes-tool' },
+      { titel: 'Was die KI nicht für dich entscheiden sollte', slug: 'was-die-ki-nicht-entscheidet' },
     ],
   },
 ];
