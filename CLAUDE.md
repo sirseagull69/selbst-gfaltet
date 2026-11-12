@@ -48,5 +48,7 @@ Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt
 
 - Ori am Rand wandert mit: `<OriRand ori="…" spruch="…" />` unter eine Überschrift setzen, ab da wechselt Ori Animation und Spruch. Nur vorhandene Animationen aus `public/anim/` nehmen. Jeder Artikel bekommt eigene, zum Abschnitt passende Wechsel und Sprüche, kein Spruch doppelt über alle Artikel.
 
-## Offen
-- Newsletter (z. B. Brevo) erst, wenn gewünscht.
+## Newsletter
+- Brevo (Brevo GmbH, Berlin), Double-Opt-in. Anmeldefeld `src/components/Newsletter.astro` unter jedem Artikel und auf der Startseite.
+- Die Formular-Adresse aus Brevo steht in `src/newsletter.ts`. Solange leer, ist das Feld unsichtbar und der Datenschutz-Abschnitt fehlt.
+- Verschickt wird nur bei neuen Artikeln.

@@ -1,0 +1,36 @@
+---
+import Ori from './Ori.astro';
+import { NEWSLETTER_FORM } from '../newsletter';
+---
+{NEWSLETTER_FORM && (
+  <section class="newsletter">
+    <div class="nl-ori"><Ori name="winkt" alt="" /></div>
+    <div class="nl-inhalt">
+      <h2>Neuer Artikel? Kriegst du per Mail.</h2>
+      <p>Nur wenn was Neues erscheint, kein Werbekram. Abmelden geht mit einem Klick in jeder Mail.</p>
+      <form method="POST" action={NEWSLETTER_FORM}>
+        <div class="nl-zeile">
+          <label class="nl-versteckt" for="nl-mail">E-Mail-Adresse</label>
+          <input id="nl-mail" type="email" name="EMAIL" required placeholder="deine@mail.de" autocomplete="email" />
+          <button class="knopf voll" type="submit">Anmelden</button>
+        </div>
+        <label class="nl-ok"><input type="checkbox" name="OPT_IN" value="1" required /> Ich will den Newsletter von Selbst gfaltet bekommen. Ich bekomme gleich eine Mail, in der ich die Anmeldung noch bestätigen muss. Mehr in der <a href="/datenschutz#newsletter">Datenschutzerklärung</a>.</label>
+        <input type="text" name="email_address_check" value="" class="nl-versteckt" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <input type="hidden" name="locale" value="de" />
+      </form>
+    </div>
+  </section>
+)}
+<style>
+  .newsletter{display:grid; grid-template-columns:110px 1fr; gap:18px; align-items:center; margin:44px 0 8px; padding:22px; background:var(--blatt); box-shadow:var(--schatten); border-radius:3px; position:relative}
+  .newsletter::before{content:""; position:absolute; top:-11px; right:40px; width:96px; height:24px; background:var(--band); transform:rotate(3deg); border-radius:2px}
+  .nl-ori img{width:110px; height:110px}
+  .newsletter h2{font-size:1.35rem; margin:0 0 4px}
+  .newsletter p{margin:0 0 12px}
+  .nl-zeile{display:flex; gap:10px; flex-wrap:wrap}
+  .nl-zeile input{flex:1; min-width:200px; font:inherit; font-size:1rem; padding:10px 12px; border:2px solid var(--tinte); border-radius:10px; background:var(--papier); color:var(--tinte); min-height:48px}
+  .nl-ok{display:flex; gap:8px; align-items:flex-start; font-size:.85rem; margin-top:10px; color:var(--bleistift)}
+  .nl-ok input{margin-top:3px; width:18px; height:18px; flex:none}
+  .nl-versteckt{position:absolute!important; left:-9999px; width:1px; height:1px; overflow:hidden}
+  @media (max-width:560px){ .newsletter{grid-template-columns:1fr} .nl-ori{display:none} }
+</style>
