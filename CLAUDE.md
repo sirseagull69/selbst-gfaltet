@@ -42,10 +42,10 @@ Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt
 - `wie-origami-lernt`: Gedächtnis, Fixes aus Daumen runter, geplantes LoRA-Training (12.11., kein Lernweg)
 - Lernweg 01 (6 Teile) und Lernweg 02 (3 Teile) sind komplett erschienen. Lernweg 02 am 12.11. nachgeschärft (Werdegang, Installer, eigene Claude-Pannen).
 - Die ersten vier Artikel (108 Sekunden, Leerzeilen-Panne, Regeln in den Code, Eigene KI auf dem PC) wurden am 12.11. bewusst gelöscht.
+- „Wer faltet hier eigentlich?“ (Artikel über Nils) am 12.11. verworfen. Nicht wieder anlegen.
 
 ## Ideen
 - Lernweg 03 „Warum macht meine KI das?“ wurde am 12.11. rausgenommen (die Artikel dazu waren gelöscht). Kann zurückkommen, wenn es wieder Fehler-Artikel gibt.
-- Artikel nur über Nils (wie der Wechsel in die IT lief, warum eigene KI statt ChatGPT)
 
 ## Domain & Mail
 - Domain selbstgfaltet.de liegt bei IONOS. DNS: A `@` → 76.76.21.21, CNAME `www` → cname.vercel-dns.com. Vercel leitet selbstgfaltet.de auf www um.
