@@ -19,8 +19,8 @@ import OriRand from '../../components/OriRand.astro';
 <KurzGesagt
   links="Was du brauchst"
   rechts="Was du nicht brauchst"
-  a={["Einen PC mit Internet", "Ein Claude-Konto", "Eine Idee für ein kleines Werkzeug", "Etwa eine Stunde Zeit"]}
-  b={["Programmierkenntnisse", "Einen eigenen Server", "Teure Software", "Angst vor dem Terminal"]}
+  a={["Einen PC mit Internet", "Ein Claude-Abo (Pro oder höher, im kostenlosen Plan ist Claude Code nicht dabei)", "Eine Idee für ein kleines Werkzeug", "Etwa eine Stunde Zeit"]}
+  b={["Programmierkenntnisse", "Einen eigenen Server", "Node.js oder sonstige Vorkenntnisse", "Angst vor dem Terminal"]}
 />
 
 ## Was Claude Code ist
@@ -36,8 +36,8 @@ Als Beispiel bauen wir einen **Pomodoro-Timer**: 25 Minuten arbeiten, 5 Minuten 
 <OriRand ori="rechnet" spruch="25 Minuten. Ich zähl runter. Du arbeitest." />
 
 <Schritte titel="Von null zum ersten Werkzeug" schritte={[
-  { titel: "Node.js installieren", text: "Claude Code braucht Node.js. Das holst du dir von nodejs.org, einfach die empfohlene Version installieren und durchklicken." },
-  { titel: "Claude Code installieren", text: "Terminal öffnen (unter Windows: PowerShell) und diesen Befehl eintippen. Beim ersten Start meldest du dich mit deinem Claude-Konto an.", befehl: "npm install -g @anthropic-ai/claude-code" },
+  { titel: "Git für Windows installieren", text: "Claude Code braucht unter Windows Git. Das holst du dir von git-scm.com, einfach durchklicken. Git brauchst du später sowieso zum Sichern." },
+  { titel: "Claude Code installieren", text: "PowerShell öffnen (ohne Admin-Rechte) und diesen Befehl eintippen. Das ist der offizielle Installer, er aktualisiert sich danach selbst. Alte Anleitungen zeigen oft noch den Weg über npm, der ist veraltet. Beim ersten Start meldest du dich mit deinem Claude-Konto an.", befehl: "irm https://claude.ai/install.ps1 | iex" },
   { titel: "Einen Ordner fürs Projekt anlegen", text: "Jedes Werkzeug bekommt einen eigenen Ordner. Dann kommt nichts durcheinander.", befehl: "mkdir pomodoro" },
   { titel: "Reingehen und Claude Code starten", text: "Ab jetzt arbeitet Claude Code nur in diesem Ordner.", befehl: "cd pomodoro" },
   { titel: "Starten", text: "Jetzt bist du im Gespräch mit Claude Code.", befehl: "claude" },
