@@ -14,7 +14,9 @@ import Analytics from '@vercel/analytics/astro';
 
 interface Props { titel?: string; beschreibung?: string; aktiv?: string }
 const { titel, beschreibung = 'Falt dir deine eigene KI: Schritt für Schritt zum eigenen KI-Assistenten auf dem eigenen PC. Mit Bildern, Messungen und allen Pannen.', aktiv = '' } = Astro.props;
-const voll = titel ? `${titel} · Selbst gfaltet` : 'Selbst gfaltet';
+const MARKE = 'Selbst gfaltet';
+const voll = !titel ? `${MARKE} – Falt dir deine eigene KI` : (titel.length + MARKE.length + 3 <= 60 ? `${titel} – ${MARKE}` : titel);
+const start = Astro.url.pathname === '/';
 const nav = [
   ['/', 'Start', 'start'], ['/anleitungen', 'Faltanleitungen', 'lernwege'], ['/blog', 'Blog', 'blog'],
   ['/werkzeuge', 'Werkzeuge', 'werkzeuge'], ['/origami', 'origami', 'origami'], ['/ueber', 'Über mich', 'ueber'],
@@ -30,6 +32,9 @@ const nav = [
   <link rel="icon" type="image/svg+xml" href="/anim/ruhezustand-abendrot.svg" />
   <link rel="alternate" type="application/rss+xml" title="Selbst gfaltet" href="/rss.xml" />
   <meta property="og:title" content={voll} />
+  <meta property="og:site_name" content="Selbst gfaltet" />
+  <meta property="og:type" content={start ? "website" : "article"} />
+  {start && <script type="application/ld+json" set:html={JSON.stringify({"@context":"https://schema.org","@type":"WebSite","name":"Selbst gfaltet","alternateName":"selbstgfaltet.de","url":"https://www.selbstgfaltet.de/"})} />}
   <meta property="og:description" content={beschreibung} />
   <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
   <link rel="sitemap" href="/sitemap-index.xml" />
@@ -56,7 +61,7 @@ const nav = [
   <main><slot /></main>
   <footer>
     <div class="wrap">
-      <span>Selbst gfaltet · von Nils, mit zu viel Kaffee.</span>
+      <span>Selbst gfaltet · mit zu viel Kaffee gefaltet.</span>
       <span><a href="/impressum">Impressum</a> · <a href="/datenschutz">Datenschutz</a> · <a href="/rss.xml">RSS</a></span>
     </div>
   </footer>

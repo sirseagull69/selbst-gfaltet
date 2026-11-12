@@ -1,16 +1,17 @@
 ---
 import Base from '../layouts/Base.astro';
 import Ori from '../components/Ori.astro';
+import Newsletter from '../components/Newsletter.astro';
 ---
-<Base titel="origami" aktiv="origami" beschreibung="origami: eine KI, die auf deinem eigenen PC läuft. Der Bauplan hinter Ori.">
+<Base titel="origami: Die KI, die bei mir zu Hause läuft" aktiv="origami" beschreibung="origami: eine KI, die auf deinem eigenen PC läuft. Der Bauplan hinter Ori.">
 
   <div class="wrap">
     <div class="held">
       <div>
         <span class="kicker">Der Bauplan hinter Ori</span>
         <h1>origami: <span class="mark">deine KI, bei dir zu Hause.</span></h1>
-        <p class="lead">origami ist eine KI, die auf deinem eigenen PC läuft. Ein kostenloses Modell macht die Alltagsarbeit, für schwere Fragen holt sie sich Claude dazu. Du erreichst sie vom Handy und vom Laptop, und bevor sie etwas löscht oder installiert, fragt sie dich.</p>
-        <p class="lead">Bei mir läuft origami seit November 2026 jeden Tag. Jetzt mache ich daraus einen Bausatz, den du nachbauen kannst.</p>
+        <p class="lead">origami ist eine KI, die auf deinem eigenen PC läuft. Ein kostenloses Modell macht die Alltagsarbeit, für schwere Fragen holt sie sich Claude dazu. Du erreichst sie vom Handy und vom Laptop, und bevor sie etwas löscht, installiert oder absendet, fragt sie dich.</p>
+        <p class="lead">Bei mir läuft origami seit dem 9. November 2026 jeden Tag. Jetzt mache ich daraus einen Bausatz, den du nachbauen kannst.</p>
       </div>
       <div class="ori-rand">
         <Ori name="ruhezustand" alt="Ori sitzt ruhig" />
@@ -24,7 +25,7 @@ import Ori from '../components/Ori.astro';
       <div class="blockkopf"><div><h2>Für wen ist das?</h2></div></div>
       <div class="fuerwen">
         <div class="teil"><div class="wer">Neugierige</div><p>Du willst verstehen, wie so eine KI innen funktioniert, statt nur einen Chatbot zu benutzen.</p></div>
-        <div class="teil"><div class="wer">Datenschutz-Bewusste</div><p>Du willst wissen, wo deine Dateien und Fragen landen, statt es einfach zu hoffen. Was Gemma erledigt, bleibt auf deinem Rechner. Nur was du an Claude gibst, geht raus.</p></div>
+        <div class="teil"><div class="wer">Datenschutz-Bewusste</div><p>Du willst wissen, wo deine Dateien und Fragen landen, statt es einfach zu hoffen. Was origami lokal erledigt, bleibt auf deinem Rechner. Raus geht nur, was sie an Claude weitergibt oder im Netz nachschlägt.</p></div>
         <div class="teil"><div class="wer">Kleine IT-Teams</div><p>Du willst einen Helfer, der deine Abläufe kennt, ohne gleich ein teures Firmenprodukt zu kaufen.</p></div>
       </div>
     </div>
@@ -32,14 +33,14 @@ import Ori from '../components/Ori.astro';
 
   <section class="block">
     <div class="wrap">
-      <div class="blockkopf"><div><h2>Die Bausteine</h2><p>origami besteht aus Teilen, die du einzeln verstehst und einzeln baust. Jeder Baustein bekommt einen Teil in den Faltanleitungen.</p></div></div>
+      <div class="blockkopf"><div><h2>Die Bausteine</h2><p>origami besteht aus Teilen, die du einzeln verstehst und einzeln baust. Fast jeder Baustein hat schon einen eigenen Teil in den Faltanleitungen.</p></div></div>
       <div class="module">
         <div class="modul"><span class="typ">Grundlage</span><h3>Lokales Modell</h3><p>Gemma über Ollama. Kostenlos, offline, deine Daten bleiben zu Hause.</p></div>
         <div class="modul"><span class="typ">Grundlage</span><h3>Chat-Oberfläche</h3><p>Im Browser, auf PC und Handy, hell und dunkel.</p></div>
         <div class="modul"><span class="typ">Grundlage</span><h3>Werkzeuge</h3><p>Websuche, Dateien lesen, rechnen, Wetter, Erinnerungen.</p></div>
         <div class="modul"><span class="typ">Sicherheit</span><h3>Freigaben</h3><p>Löschen, Installieren, Absenden nur, wenn du es erlaubst.</p></div>
         <div class="modul"><span class="typ">Sicherheit</span><h3>Fernzugriff</h3><p>Von unterwegs erreichbar, mit Passwort und Zwei-Faktor-Code.</p></div>
-        <div class="modul"><span class="typ">Verstärkung</span><h3>Claude als Rückhalt</h3><p>Kommt das lokale Modell nicht weiter, übernimmt Claude.</p></div>
+        <div class="modul"><span class="typ">Verstärkung</span><h3>Claude als Rückhalt</h3><p>Code und Recherche gehen direkt an Claude. Und verrennt sich das lokale Modell, übernimmt Claude.</p></div>
         <div class="modul"><span class="typ">Komfort</span><h3>Gedächtnis</h3><p>Merkt sich, was du ihr sagst, und vergisst es auf Wunsch wieder.</p></div>
         <div class="modul extra"><span class="typ">Erweiterung</span><h3>Dein eigenes Ding</h3><p>Bei mir zum Beispiel feste Werkzeuge für Wetter, Bahn und Fußball. Bei dir vielleicht was ganz anderes.</p></div>
       </div>
@@ -50,7 +51,7 @@ import Ori from '../components/Ori.astro';
     <div class="wrap">
       <div class="blockkopf"><div><h2>Der Fahrplan</h2></div></div>
       <ol class="fahrplan">
-        <li><span class="wann jetzt">Jetzt</span><h3>Faltanleitungen erscheinen</h3><p>Teil für Teil, wie origami aufgebaut ist und wie du jeden Baustein selbst baust.</p></li>
+        <li><span class="wann jetzt">Schon da</span><h3>Faltanleitungen</h3><p>Teil für Teil, wie origami aufgebaut ist und wie du die Bausteine selbst baust. Jede Woche kommt ein neuer Artikel dazu.</p></li>
         <li><span class="wann bald">Als Nächstes</span><h3>Starter-Vorlage</h3><p>Ein Grundgerüst zum Herunterladen: Oberfläche, Modell, erste Werkzeuge. Du faltest weiter.</p></li>
         <li><span class="wann spaeter">Später</span><h3>origami als Bausatz</h3><p>Installieren, einrichten, loslegen. Mit den Freigaben und Bausteinen, die du brauchst.</p></li>
       </ol>
@@ -63,11 +64,13 @@ import Ori from '../components/Ori.astro';
         <Ori name="schreibt" alt="Ori schreibt" />
         <div>
           <h3>Wann kommt die Vorlage?</h3>
-          <p>Sobald die Faltanleitungen weit genug sind. Wer nichts verpassen will, abonniert den RSS-Feed. Dort taucht die Starter-Vorlage als Artikel auf.</p>
+          <p>Sobald die Faltanleitungen weit genug sind. Wer nichts verpassen will, holt sich den Newsletter oder den RSS-Feed. Dort taucht die Starter-Vorlage als Artikel auf.</p>
           <div class="knoepfe"><a class="knopf" href="/rss.xml">RSS-Feed</a><a class="knopf voll" href="/anleitungen">Zur Faltanleitung</a></div>
         </div>
       </div>
     </div>
   </section>
+
+  <div class="wrap"><Newsletter /></div>
 
 </Base>
