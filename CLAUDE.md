@@ -1,6 +1,6 @@
 # Selbst gfaltet – Regeln für Claude
 
-Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt, wie man sich einen eigenen KI-Assistenten nach dem Bauplan von **origami** baut. Live: https://selbstgfaltet.de (Vercel baut jeden Push auf `main` automatisch).
+Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt, wie man sich einen eigenen KI-Assistenten nach dem Bauplan von **origami** baut. Live: https://www.selbstgfaltet.de (Vercel baut jeden Push auf `main` automatisch).
 
 ## Technik
 - Astro 5, Artikel als MDX in `src/content/artikel/`, Schema in `src/content.config.ts`.
