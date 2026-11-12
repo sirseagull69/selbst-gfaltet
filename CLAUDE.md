@@ -29,12 +29,12 @@ Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt
 - `modell-dreikampf`: Gemma 4 26B gegen Qwen3.6 35B und Qwen3.5 9B (Test vom 9.11.)
 - `lokal-oder-claude`: Aufgabenteilung in drei Stufen, Gemma gegen Claude (Test vom 8.11.)
 - `in-gemma-reingeschaut`: 30 Schichten, 128 Experten, Röntgen, Speicher und Tempo
+- `schutzschicht`: die neun Schutzlagen, Erlaubnisliste statt Sperrliste
 - Die ersten vier Artikel (108 Sekunden, Leerzeilen-Panne, Regeln in den Code, Eigene KI auf dem PC) wurden am 12.11. bewusst gelöscht.
 
 ## Ideen
 - Meine KI surft selbst (Browser per Playwright)
 - Vom Handy aus mit dem PC zu Hause reden (Tailscale, ohne Adresse)
-- Die Schutzschicht: neun Lagen zwischen Gemma und dem PC
 - Wie origami lernt: Daumen runter, Fixes, später Training
 
 ## Domain & Mail

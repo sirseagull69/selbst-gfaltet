@@ -6,6 +6,7 @@ export const GLOSSAR = [
   ['Kontext', 'Wie viel vom Gespräch die KI gleichzeitig im Kopf behält.', 'das Kurzzeitgedächtnis'],
   ['Nachdenken (Reasoning)', 'Manche Modelle schreiben sich erst Gedanken auf, bevor sie antworten. Kostet Zeit, und manchmal bleibt es beim Denken.', 'der Schmierzettel'],
   ['Gewichte', 'Die Milliarden Zahlen, die ein Modell beim Training gelernt hat. Daraus besteht es eigentlich.', 'die Erfahrung'],
+  ['Prompt-Injection', 'Text in einer Datei oder Webseite, der sich als Befehl an die KI ausgibt, damit sie etwas tut, was du nicht willst.', 'ein gefälschter Zettel vom Chef'],
   ['Prompt', 'Das, was du der KI schreibst.', 'die Bestellung'],
   ['System-Prompt', 'Anweisungen, die die KI vor jedem Gespräch bekommt. Wirkt schwächer, als man denkt.', 'die Hausordnung'],
   ['Zwischenspeicher (Cache)', 'Was die KI schon eingelesen hat, merkt sie sich. Bleibt der Anfang gleich, spart das viel Zeit.', 'die schon geschnippelten Zwiebeln'],
