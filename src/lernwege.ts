@@ -4,7 +4,7 @@ export const LERNWEGE = [
     nr: '01', titel: 'Falt dir deine eigene KI', kurz: 'Vom „Was ist Ollama?“ bis zum eigenen Assistenten, den du vom Handy aus erreichst. Nach dem Bauplan von origami.',
     chips: ['Einsteiger', 'Windows'],
     teile: [
-      { titel: 'Ich hab mir eine KI gebaut, die auf meinem PC wohnt', slug: 'eigene-ki-auf-dem-pc' },
+      { titel: 'Ich hab mir eine KI gebaut, die auf meinem PC wohnt' },
       { titel: 'Welche Grafikkarte reicht? 8 GB gegen 24 GB' },
       { titel: 'Eine eigene Chat-Oberfläche bauen' },
       { titel: 'Werkzeuge: Die KI darf Dateien lesen, aber nicht löschen' },
@@ -27,9 +27,9 @@ export const LERNWEGE = [
     nr: '03', titel: 'Warum macht meine KI das?', kurz: 'Problemdiagnose: Sie ignoriert Regeln, ist langsam, hängt sich auf. Ursache finden, beheben.',
     chips: ['Hilfe', 'Nachschlagen'],
     teile: [
-      { titel: 'Sie ignoriert meine Regeln', slug: 'regeln-in-den-code' },
-      { titel: 'Die erste Antwort dauert ewig, danach geht\'s schnell', slug: '108-sekunden' },
-      { titel: 'Sie schreibt nur noch Leerzeilen und alles hängt', slug: 'leerzeilen-panne' },
+      { titel: 'Sie ignoriert meine Regeln' },
+      { titel: 'Die erste Antwort dauert ewig, danach geht\'s schnell' },
+      { titel: 'Sie schreibt nur noch Leerzeilen und alles hängt' },
       { titel: 'Sie wiederholt sich oder schreibt ihren Namen drunter' },
       { titel: 'Sie schreibt Werkzeug-Aufrufe als Text, statt sie auszuführen' },
       { titel: 'Sie denkt endlos nach und antwortet nie' },
