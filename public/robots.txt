@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.selbstgfaltet.de/sitemap-index.xml
