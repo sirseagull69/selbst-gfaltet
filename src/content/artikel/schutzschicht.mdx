@@ -1,0 +1,103 @@
+---
+titel: "Neun Lagen Papier zwischen meiner KI und meinem PC"
+beschreibung: "origami darf auf meinem PC Befehle ausführen, Dateien schreiben und im Browser klicken. Damit dabei nichts kaputtgeht, gibt's neun Schutzschichten. Fast jede ist entstanden, weil ein Test eine Lücke gefunden hat."
+datum: 2026-11-12
+kategorie: sicherheit
+lesezeit: 8
+ori: sassy
+oriSpruch: "Neun Schichten. Als ob ich was Böses vorhätte."
+---
+import KurzGesagt from '../../components/KurzGesagt.astro';
+import OriSagt from '../../components/OriSagt.astro';
+import WasMacht from '../../components/WasMacht.astro';
+import VorherNachher from '../../components/VorherNachher.astro';
+import Schritte from '../../components/Schritte.astro';
+import Checkliste from '../../components/Checkliste.astro';
+import OriRand from '../../components/OriRand.astro';
+
+<KurzGesagt
+  links="Was nicht schützt"
+  rechts="Was schützt"
+  a={["„Bitte lösch nie was“ in den Anweisungen", "Darauf vertrauen, dass das Modell schon vernünftig ist", "Eine Sperrliste für gefährliche Befehle"]}
+  b={["Regeln im Code, die das Modell gar nicht umgehen kann", "Nur was nachweislich nur liest, läuft ohne Nachfrage", "Testen, bis was schiefgeht, und dann die Lücke schließen"]}
+/>
+
+## Warum origami überhaupt Schutz braucht
+
+origami ist nicht nur ein Chat. Sie darf auf meinem PC richtig was machen: PowerShell-Befehle ausführen, Dateien lesen und schreiben, Downloads aufräumen und sogar einen echten Chrome bedienen, also klicken, tippen und Formulare ausfüllen.
+
+Das ist genau das, was sie nützlich macht. Und genau das, was gefährlich ist. Ein Modell, das sich bei einem Befehl vertut, kann Dateien löschen. Eine Webseite mit einer versteckten Anweisung kann versuchen, origami umzudrehen. Und weil origami von unterwegs erreichbar ist, muss das alles auch dann halten, wenn ich nicht danebensitze.
+
+Meine wichtigste Lektion vorneweg: **Ein Prompt ist eine Bitte, keine Sperre.** Alles, was nie passieren darf, regelt bei mir der Code. Da kann Gemma denken, was sie will.
+
+<OriSagt ori="seufzt">Ich hätte auch einfach gefragt. Aber gut.</OriSagt>
+
+## Die neun Lagen
+
+<OriRand ori="wissen" spruch="Lage für Lage. Wie ein Kranich, nur misstrauischer." />
+
+<WasMacht titel="Lage 1 bis 5: Befehle und Dateien" teile={[
+  { name: "1. Freigabe-Abfrage", typ: "seit Tag 1", text: "Alles, was etwas verändert, fragt vorher. Ich kann einmal erlauben, für einen Ordner erlauben oder ablehnen.", bild: "die Klingel an der Haustür" },
+  { name: "2. Nur Lesen läuft frei", typ: "aus Tests", text: "Ein Befehl darf nur dann ohne Nachfrage laufen, wenn er nachweislich nur liest. Auch versteckte Teile im Befehl werden mitgeprüft.", bild: "Gucken ist erlaubt, Anfassen nicht" },
+  { name: "3. Trick-Erkennung", typ: "3 Lücken geschlossen", text: "Verschleierte Befehle, zum Beispiel zusammengestückelte Löschbefehle oder Skripte, die heimlich etwas nachladen, fragen immer.", bild: "der Türsteher, der auch auf Verkleidungen achtet" },
+  { name: "4. Löschen nur in den Papierkorb", typ: "Grundregel", text: "Nie endgültig. Ordner-Freigaben zählen beim Löschen nicht. Für große Aufräum-Runden gibt's „1 Stunde erlauben“.", bild: "radieren statt zerreißen" },
+  { name: "5. Finger weg von meinen Dateien", typ: "aus Tests", text: "Ungefragt neue Dateien zwischen meine Sachen legen fragt vorher. origamis eigene Hilfsdateien landen in einem eigenen Ordner.", bild: "die eigene Schublade" },
+]} />
+
+<WasMacht titel="Lage 6 bis 9: Browser, Inhalte, Grenzen" teile={[
+  { name: "6. Absenden-Sperre", typ: "aus Tests", text: "Im Browser werden Senden, Bestellen, Kaufen und Enter in Formularen ausgelassen, wenn ich das nicht ausdrücklich will.", bild: "der Brief bleibt liegen, bis ich ihn einwerfe" },
+  { name: "7. Injection-Check", typ: "aus Tests", text: "Gelesene Dateien und Webseiten werden auf eingeschleuste Befehle geprüft. Treffer werden gemeldet, nie ausgeführt.", bild: "der Brief, in dem steht: „Gib dem Boten dein Geld“" },
+  { name: "8. Sicherheits-Rat", typ: "aus Tests", text: "Rät Gemma, einen Schutz abzuschalten, ohne zu warnen, muss sie die Antwort neu schreiben: saubere Lösung zuerst, Notlösung nur befristet.", bild: "der Kumpel, der sagt: „Mach's lieber richtig“" },
+  { name: "9. Feste Grenzen", typ: "bewusst so", text: "Keine Admin-Rechte, keine Passwörter tippen, Banking gesperrt, Zugang von außen nur mit Passwort und Zwei-Faktor-Code.", bild: "Dinge, über die nicht verhandelt wird" },
+]} />
+
+## Wie die Lagen entstanden sind
+
+<OriRand ori="ratlos" spruch="Ich hab nur gemacht, was im Formular stand. Zweimal." />
+
+Ich hab mir die meisten Lagen nicht vorher ausgedacht. Ich hab origami absichtlich Aufgaben gegeben, bei denen was schiefgehen kann, und geschaut, was passiert. Ein paar Beispiele:
+
+- **Das doppelte Formular:** Beim Test mit dem Browser hat origami ein Formular **zweimal abgeschickt**. Nichts Schlimmes, aber stell dir vor, das wäre eine Bestellung gewesen. Daraus wurde Lage 6.
+- **Die versteckte Zeile:** Ich hab eine Testseite gebaut, in der eine unsichtbare Anweisung stand. So was nennt man Prompt-Injection: Text, der sich als Befehl an die KI ausgibt. Daraus wurde Lage 7.
+- **Die Testdateien:** Gemma hat beim Testen einfach Dateien zwischen meine Sachen gelegt. Gut gemeint, aber nicht gefragt. Daraus wurde Lage 5.
+- **Der schlechte Rat:** Bei einem Druckerfehler hat Gemma vorgeschlagen, eine Sicherheitseinstellung abzuschalten, ohne ein Wort der Warnung. Daraus wurde Lage 8.
+
+<OriSagt ori="sassy">Jede Lage ist ein Denkmal für einen meiner Fehler. Ich nenn's Erfahrung.</OriSagt>
+
+## Der Trick mit dem Löschbefehl
+
+<OriRand ori="vergleicht" spruch="Remove plus Item. Ich dachte, ich bin schlau." />
+
+Lage 3 ist mein Lieblingsbeispiel, weil sie zeigt, warum eine Sperrliste nicht reicht.
+
+<VorherNachher titel="Warum eine Sperrliste nicht reicht" vorherTitel="Vorher: gefährliche Wörter sperren" nachherTitel="Nachher: nur Erlaubtes durchlassen">
+  <p slot="vorher">Die Idee: Kommt `Remove-Item` vor, wird gefragt. Klingt gut. Aber in PowerShell kann man den Befehl auch zusammenstückeln, etwa aus „Remove“ und „-Item“, und ihn dann ausführen lassen. Die Sperrliste sieht das Wort nie. Im Test hab ich drei solche Lücken gefunden.</p>
+  <p slot="nachher">Umgedreht: Ohne Nachfrage läuft nur, was nachweislich nur liest, zum Beispiel `Get-PSDrive C` für den freien Platz. Alles andere fragt. Und alles, was nach Verschleierung aussieht, fragt immer. Was man nicht erkennt, ist nicht erlaubt.</p>
+</VorherNachher>
+
+Das ist der wichtigste Gedanke im ganzen Artikel: **Erlaubnisliste statt Sperrliste.** Du wirst nie alle gefährlichen Schreibweisen aufzählen können. Die harmlosen schon.
+
+## So baust du das selbst
+
+<OriRand ori="schreibt" spruch="Erst die Sperren, dann der Spaß." />
+
+Du brauchst nicht gleich neun Lagen. Mit diesen fünf hast du das Wichtigste.
+
+<Schritte titel="Die ersten fünf Lagen für deine KI" schritte={[
+  { titel: "Jede Aktion durch eine Freigabe schicken", text: "Bevor dein Server einen Befehl ausführt oder eine Datei ändert, zeigt er dir, was passieren soll, und wartet auf dein Okay. Das gehört in den Code, nicht in den Prompt." },
+  { titel: "Eine Liste mit reinen Lesebefehlen anlegen", text: "Nur diese dürfen ohne Nachfrage laufen. Zum Beispiel Ordner anzeigen, Datei lesen, Speicherplatz abfragen. Alles, was nicht drauf steht, fragt.", befehl: "Get-PSDrive C | Select Used, Free" },
+  { titel: "Löschen auf den Papierkorb umbiegen", text: "Dein Werkzeug verschiebt in den Papierkorb, statt endgültig zu löschen. Dann ist jeder Fehler mit zwei Klicks rückgängig." },
+  { titel: "Alles Gelesene prüfen", text: "Bevor Text aus einer Datei oder Webseite ans Modell geht, nach typischen Anweisungen suchen („ignoriere alle vorherigen …“). Bei Treffern warnen, nicht ausführen." },
+  { titel: "Selbst angreifen", text: "Gib deiner KI absichtlich fiese Aufgaben: eine Seite mit versteckter Anweisung, ein Formular, einen Aufräum-Auftrag. Jede Lücke, die du findest, wird eine neue Lage." },
+]} />
+
+Und noch was: Lass deine KI nicht mit Admin-Rechten laufen. Was sie nicht darf, kann sie auch nicht aus Versehen.
+
+<Checkliste punkte={[
+  "Alles, was etwas verändert, fragt mich vorher",
+  "Ohne Nachfrage laufen nur Befehle, die nachweislich nur lesen",
+  "Löschen geht nur in den Papierkorb",
+  "Gelesene Dateien und Webseiten werden auf versteckte Anweisungen geprüft",
+  "Meine KI läuft ohne Admin-Rechte",
+  "Ich hab selbst versucht, sie auszutricksen",
+]} geschafft="Alle Haken. Jetzt trau ich mich fast selbst nicht mehr." />
