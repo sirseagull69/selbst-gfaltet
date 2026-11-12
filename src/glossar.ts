@@ -17,4 +17,6 @@ export const GLOSSAR = [
   ['Ollama', 'Programm, das Modelle auf deinem PC laufen lässt.', 'die Küche'],
   ['MoE (Experten-Aufbau)', 'Ein Modell aus vielen kleinen Spezialisten, von denen pro Wort nur wenige arbeiten. Groß, aber schneller als gedacht.', 'eine Großküche mit Stationen'],
   ['Open Source', 'Der Bauplan ist offen, jeder darf reinschauen und mitbauen.', 'ein Rezept zum Abschreiben'],
+  ['LoRA', 'Eine Art, ein Modell nachzutrainieren, ohne alles neu zu rechnen. Es kommt nur ein kleiner Zusatz obendrauf.', 'ein Aufsatz statt eines neuen Motors'],
+  ['Feedback-Paar', 'Eine schlechte und eine gute Antwort auf dieselbe Frage, direkt nebeneinander. Daraus lernt ein Modell beim Training am meisten.', 'vorher und nachher beim Friseur'],
 ];
