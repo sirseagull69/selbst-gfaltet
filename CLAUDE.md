@@ -27,7 +27,7 @@ Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt
 1. Material kommt aus dem Änderungsverlauf der origami-Doku (claude.ai-Projekt „Origami“, Doku „Dokumentation“). Aus diesem Projekt heraus ist die Doku nicht lesbar. Lesbar sind Nils' Artifacts, vor allem „origami von innen“ (Aufbau, Aufgabenteilung, Werkzeuge, Schutzschicht, Gedächtnis, Netz, Speicher, Pläne) und „Modell-Dreikampf origami“. Fehlt was, Nils fragen.
 2. Entwurf immer in einem eigenen Branch `entwurf/<slug>`, nie direkt auf `main`, dazu einen Pull Request anlegen.
 3. Jeden Entwurf direkt im Chat zeigen (Artikeltext plus Vorschau-Link `selbst-gfaltet-git-<branch>-lootkurs.vercel.app`), nicht nur den PR verlinken. Nils liest, ändert den Ton und gibt frei. Sagt er „passt“, merged Claude den PR selbst.
-4. Persönliches von Nils darf rein (Werdegang, Findus), aber nichts von der Arbeit. lootkurs.de kommt auf dem Blog nicht namentlich vor, höchstens als „Preisvergleichsprogramm auf Basis von …“. Pokémon-Spiele und -Projekte kommen nicht vor.
+4. Persönliches von Nils darf rein (Findus, Hobbys), aber nichts von der Arbeit und kein Werdegang im Detail (kein FSJ, keine abgebrochene Ausbildung, kein Einzelhandel), nur „Quereinsteiger, ohne Studium“. lootkurs.de kommt auf dem Blog nicht namentlich vor, höchstens als „Preisvergleichsprogramm auf Basis von …“. Pokémon-Spiele und -Projekte kommen nicht vor.
 5. Seit dem Neustart im Nov 2026: keine Fehlersuche-Artikel mehr, lieber coole Artikel und mehr über Nils selbst. Persönliches bei Bedarf bei Nils erfragen.
 6. Nach jeder Änderung den Redaktionsplan in Notion aktualisieren (Status, PR-Link).
 7. Seit 12.11.: ein neuer Artikel pro Woche, nicht mehrere auf einmal. `datum` = Tag, an dem er live geht. Der Newsletter geht mit jedem neuen Artikel raus, aber erst ab dem Artikel nächster Woche (für `wie-origami-lernt` keiner).
@@ -41,7 +41,7 @@ Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt
 - `von-unterwegs`: Tunnel, Login, nur-lokal-Bereiche, Tagesablauf, Windows-Grenzen (Ports, Auslagerungsdatei)
 - `programmieren-ohne-ausbildung`, `erstes-tool`, `was-die-ki-nicht-entscheidet`: Lernweg 02 (Claude Code ohne Informatikstudium)
 - `wie-origami-lernt`: Gedächtnis, Fixes aus Daumen runter, geplantes LoRA-Training (12.11., kein Lernweg)
-- Lernweg 01 (6 Teile) und Lernweg 02 (3 Teile) sind komplett erschienen. Lernweg 02 am 12.11. nachgeschärft (Werdegang, Installer, eigene Claude-Pannen).
+- Lernweg 01 (6 Teile) und Lernweg 02 (3 Teile) sind komplett erschienen. Lernweg 02 am 12.11. nachgeschärft (Installer, eigene Claude-Pannen), Werdegang-Details später wieder raus.
 - Die ersten vier Artikel (108 Sekunden, Leerzeilen-Panne, Regeln in den Code, Eigene KI auf dem PC) wurden am 12.11. bewusst gelöscht.
 - „Wer faltet hier eigentlich?“ (Artikel über Nils) am 12.11. verworfen. Nicht wieder anlegen.
 
