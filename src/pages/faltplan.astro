@@ -1,39 +1,62 @@
 ---
 import Base from '../layouts/Base.astro';
-import Ori from '../components/Ori.astro';
+// [Titel, Was du tust, Meine Zahl, Die Falle]
 const SCHRITTE = [
-  ['Grafikkarte prüfen', 'Wie viel VRAM hast du? Unter „Passt das auf meinen PC?“ auf selbstgfaltet.de nachschauen, welche Modelle passen.'],
-  ['Ollama installieren', 'Von ollama.com. Danach läuft es im Hintergrund.'],
-  ['Erstes Modell laden', 'ollama pull gemma4:e4b – das kleine Modell passt auf fast jede Karte.'],
-  ['Ausprobieren und messen', 'ollama run gemma4:e4b --verbose. Tokens pro Sekunde notieren.'],
-  ['Größeres Modell testen', 'Wenn genug Speicher da ist: ein größeres Modell laden und vergleichen.'],
-  ['Eigene Oberfläche', 'Kleiner Server (z. B. Node.js), der Nachrichten an Ollama weitergibt. Claude Code kann ihn für dich schreiben.'],
-  ['Erste Werkzeuge', 'Suchen, rechnen, Dateien lesen. Rechnen immer per Code, nie vom Modell.'],
-  ['Freigaben einbauen', 'Löschen, Installieren, Absenden nur nach deinem Okay. Im Code, nicht im Prompt.'],
-  ['Login absichern', 'Passwort plus Zwei-Faktor-Code, Sperre nach Fehlversuchen.'],
-  ['Von unterwegs erreichbar', 'Zum Beispiel über Tailscale, ohne den PC ins offene Internet zu stellen.'],
+  ['Grafikkarte ehrlich prüfen', 'Schau, wie viel Speicher (VRAM) deine Grafikkarte hat. Im Rechner „Passt das auf meinen PC?“ siehst du, was ungefähr passt.', 'Gemma 4 26B belegt bei mir rund 17 GB. Auf der 8-GB-Karte liegen ca. 7,6 GB, der Rest im Arbeitsspeicher.', 'Passt nicht alles auf die Karte, ist vor allem das Einlesen langer Texte zäh. Das Schreiben geht trotzdem flott.'],
+  ['Modelle mit eigenen Aufgaben testen', 'Ollama installieren, zwei, drei Modelle laden und mit zehn Aufgaben testen, die du wirklich stellen würdest. Zeit und Ergebnis aufschreiben.', 'Gemma 26B: 81 Punkte, 54 s pro Aufgabe. Das größere Qwen3.6: 76 Punkte, aber dreimal so langsam.', 'Zähl, wie oft gar keine Antwort kommt. Das kleine Qwen3.5 war schnell, hat aber 6 von 10 Mal nichts geschrieben.'],
+  ['Den Anfang des Prompts nie ändern', 'Anweisungen und Werkzeugliste bleiben bei jeder Anfrage exakt gleich. Uhrzeit, Datum und Wechselndes hängst du hinten an die Nachricht.', 'Vorher bis ca. 107 s bis zur Antwort, nachher 8 bis 12 s.', 'Schon eine Uhrzeit oben in den Anweisungen reicht, und das Modell liest jedes Mal alles neu ein.'],
+  ['Vorwärmen', 'Nach dem Start und beim Öffnen der App schickt deine Oberfläche eine leere Probe-Anfrage mit genau deinem Prompt. Dann ist der Anfang schon eingelesen, wenn du tippst.', 'Erste Frage 9 s statt 39 s.', 'Nicht während einer laufenden Antwort vorwärmen, und nicht ständig. Bei mir höchstens alle 2 Minuten.'],
+  ['Feste Werkzeuge statt Webseiten', 'Für Dinge, die oft gefragt werden (Wetter, Bahn, Rechnen), ein eigenes Werkzeug bauen, das eine fertige kleine Antwort liefert.', 'Wetterfrage: fast 4 Minuten, mit eigenem Werkzeug 14 Sekunden.', 'Lässt du das Modell ganze Webseiten lesen, verheddert es sich und braucht ewig. Und rechnen sollte nie das Modell, immer der Code.'],
+  ['Aufgaben aufteilen', 'Alltagssachen bleiben lokal, Schweres geht an ein Cloud-Modell. Entscheiden lässt du das eine einfache Wortliste, keine KI.', 'Bei mir geht alles über 700 Zeichen, Code und Recherche direkt an Claude.', 'Im Vergleich war Claude in allen 7 Aufgaben besser. Lokal lohnt sich für Alltag und private Daten, nicht für alles.'],
+  ['Notbremse einbauen', 'Dein Code zählt mit: Fehler, wiederholte Aktionen, Schritte ohne Ergebnis. Bei einer festen Grenze wird abgebrochen oder abgegeben.', 'Bei mir: 3 Fehler, 3-mal dieselbe Aktion oder 20 Schritte, dann übernimmt Claude.', 'Lokale Modelle probieren gern dasselbe immer wieder. Ohne Bremse im Code läuft das ewig.'],
+  ['Freigaben im Code, nicht im Prompt', 'Löschen, Installieren, Absenden nur nach deinem Okay. Das regelt der Code, das Modell kann es gar nicht umgehen.', 'origami hat neun Schutzschichten zwischen Gemma und dem PC. Die meisten sind entstanden, weil ein Test eine Lücke gefunden hat.', '„Bitte niemals löschen“ im Prompt ist eine Bitte, keine Sperre.'],
+  ['Gedächtnis mit Bedacht', 'Dauerhafte Fakten gezielt speichern lassen, mit Rückgängig-Knopf. Lange Chats automatisch zusammenfassen, Wichtiges wörtlich behalten.', 'Ein neuer Gedächtnis-Eintrag kostet die nächste Anfrage ca. 20 s extra. Chat-Fenster bei mir ca. 16.000 Tokens.', 'Jeder neue Eintrag ändert den Prompt, dann wird alles neu eingelesen (siehe Schritt 3). Keine Passwörter oder Gesundheitsdaten speichern.'],
+  ['Sicher von unterwegs, und stabil', 'Zugriff über einen Tunnel wie Tailscale, Login mit Passwort plus Zwei-Faktor-Code. Dazu Autostart ohne Anmeldung, Neustart nach Absturz und ein nächtliches Backup.', 'Bei mir: steht nach Absturz nach 5 s wieder auf, Backup um 3 Uhr, 14 Tage werden aufgehoben.', 'Verwaltungsseiten nur direkt am PC, nie übers Internet. Und Windows-Grenzen im Blick behalten: Ein Ausfall bei mir hing an zu wenigen freien Netzwerk-Ports und einer zu kleinen Auslagerungsdatei.'],
 ];
 ---
-<Base titel="Der Faltplan" beschreibung="In 10 Schritten zur eigenen KI. Zum Ausdrucken und Abhaken.">
+<Base titel="Der Faltplan" beschreibung="10 Schritte zur eigenen KI, jeder mit echter Messung und der Falle, in die ich getappt bin. Zum Ausdrucken.">
   <div class="wrap seite">
     <div class="nicht-drucken">
       <span class="kicker hand">Kostenlos, zum Ausdrucken</span>
       <h1>Der Faltplan</h1>
-      <p class="seite-lead">In 10 Schritten vom leeren PC zur eigenen KI, die du vom Handy aus erreichst. Ausdrucken, neben die Tastatur legen, abhaken.</p>
-      <div class="knoepfe" style="margin-bottom:32px"><a class="knopf voll" href="/faltplan.pdf">Als PDF herunterladen</a><button class="knopf" type="button" onclick="window.print()">Drucken</button></div>
+      <p class="seite-lead">10 Schritte zur eigenen KI. Wie man Ollama installiert, findest du überall. Hier steht, was sonst keiner aufschreibt: bei jedem Schritt meine echte Zahl und die Falle, in die ich getappt bin.</p>
+      <div class="knoepfe" style="margin-bottom:32px"><button class="knopf voll" type="button" onclick="window.print()">Drucken oder als PDF speichern</button><a class="knopf" href="/werkzeuge">Zu den Werkzeugen</a></div>
     </div>
-    <div class="faltplan-druck">
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:18px">
-        <div><b style="font-family:var(--display);font-size:1.6rem">Der Faltplan</b><br /><span style="color:#5d6478">In 10 Schritten zur eigenen KI · selbstgfaltet.de</span></div>
-        <img src="/anim/ruhezustand-abendrot.svg" alt="" width="80" height="80" />
+    <div class="faltplan-druck fp">
+      <div class="fp-kopf">
+        <div><b>Der Faltplan</b><br /><span>10 Schritte, 10 Fallen · gemessen mit origami · selbstgfaltet.de</span></div>
+        <img src="/anim/ruhezustand-abendrot.svg" alt="" width="72" height="72" />
       </div>
       <ol>
-        {SCHRITTE.map(([t, s]) => <li><span class="box"></span><span><b>{t}</b><small>{s}</small></span></li>)}
+        {SCHRITTE.map(([t, tun, zahl, falle]) => (
+          <li>
+            <span class="box"></span>
+            <div>
+              <b>{t}</b>
+              <p class="fp-tun">{tun}</p>
+              <p class="fp-zahl"><span>Gemessen</span>{zahl}</p>
+              <p class="fp-falle"><span>Falle</span>{falle}</p>
+            </div>
+          </li>
+        ))}
       </ol>
-      <p style="margin:20px 0 0;font-family:var(--hand);font-size:1.4rem;color:#c2410c">Alles abgehakt? Dann hast du dir deine eigene KI gefaltet. – Ori</p>
+      <p class="fp-fuss">Alles abgehakt? Dann hast du dir deine eigene KI gefaltet. – Ori</p>
+      <p class="fp-klein">Gemessen auf einer RTX 4060 (8 GB) mit 32 GB Arbeitsspeicher und gemma4:26b, November 2026. Auf anderer Hardware sind die Zahlen anders, die Fallen meistens nicht.</p>
     </div>
   </div>
 </Base>
 <style>
-  .faltplan-druck li{grid-template-columns:40px 28px 1fr}
+  .fp-kopf{display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:18px}
+  .fp-kopf b{font-family:var(--display); font-size:1.6rem}
+  .fp-kopf span{color:#5d6478; font-size:.9rem}
+  .fp li{grid-template-columns:34px 26px 1fr}
+  .fp li > div > b{font-size:1.05rem}
+  .fp p{margin:4px 0 0; font-size:.93rem; line-height:1.45}
+  .fp-tun{color:#3b4258}
+  .fp-zahl span,.fp-falle span{display:inline-block; font-family:var(--display); font-weight:700; font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; padding:1px 7px; border-radius:5px; margin-right:7px}
+  .fp-zahl span{background:#dff3e7; color:#23784a}
+  .fp-falle span{background:#fde4d6; color:#c2410c}
+  .fp-fuss{margin:20px 0 0; font-family:var(--hand); font-size:1.4rem; color:#c2410c}
+  .fp-klein{font-size:.8rem; color:#5d6478}
+  @media print{ .fp p{font-size:10px} .fp li > div > b{font-size:11.5px} .fp ol{gap:6px} .fp-kopf{margin-bottom:8px} }
 </style>
