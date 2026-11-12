@@ -1,0 +1,112 @@
+---
+titel: "Mein PC steht zu Hause, meine KI hab ich dabei"
+beschreibung: "origami läuft auf meinem PC daheim, aber ich erreiche sie vom Handy, iPad und Laptop. Wie das sicher geht, warum sie nach einem Absturz von selbst wieder aufsteht und welche Windows-Grenze mich einen Abend gekostet hat."
+datum: 2026-11-12
+kategorie: sicherheit
+lesezeit: 8
+lernweg: "Falt dir deine eigene KI"
+teil: 6
+ori: triumph
+oriSpruch: "Du gehst. Ich bleib. Und bin trotzdem da."
+---
+import KurzGesagt from '../../components/KurzGesagt.astro';
+import OriSagt from '../../components/OriSagt.astro';
+import WasMacht from '../../components/WasMacht.astro';
+import Schritte from '../../components/Schritte.astro';
+import Checkliste from '../../components/Checkliste.astro';
+import OriRand from '../../components/OriRand.astro';
+
+<KurzGesagt
+  links="Was du brauchst"
+  rechts="Was du lieber lässt"
+  a={["Einen Tunnel mit echtem HTTPS-Zertifikat", "Passwort plus Zwei-Faktor-Code", "Autostart, Neustart nach Absturz, Backup"]}
+  b={["Ports am Router aufmachen", "Verwaltungsseiten übers Internet erreichbar machen", "Hoffen, dass der PC schon läuft"]}
+/>
+
+## Die Idee
+
+Eine KI, die nur funktioniert, wenn ich vor dem PC sitze, ist nett. Richtig praktisch wird's erst, wenn ich sie überall dabei hab: im Bett auf dem iPad, unterwegs auf dem Handy, am Laptop. Und der PC zu Hause macht die Arbeit.
+
+Das klingt einfach, hat aber zwei Seiten. Erstens muss es **sicher** sein, denn origami kann auf meinem PC Befehle ausführen. Wer da reinkommt, kommt an meinen Rechner. Zweitens muss es **zuverlässig** sein. Wenn ich unterwegs bin und origami hängt, kann ich nicht mal eben den Knopf drücken.
+
+<OriSagt ori="sassy">Er hat mir einen Tunnel gebaut. Romantisch ist anders.</OriSagt>
+
+## Der Weg vom Handy zum PC
+
+<OriRand ori="vergleicht" spruch="Handy, Tunnel, Passwort, Code. Dann darfst du rein." />
+
+<WasMacht titel="Wie eine Nachricht vom Handy zu origami kommt" teile={[
+  { name: "Handy, iPad, Laptop", typ: "Browser oder App", text: "origami läuft im Browser oder als App auf dem Home-Bildschirm. Nichts muss installiert werden.", bild: "dein Hausschlüssel" },
+  { name: "Tunnel (Tailscale Funnel)", typ: "HTTPS mit echtem Zertifikat", text: "Ein Tunnel macht origami über eine verschlüsselte Adresse erreichbar, ohne dass ich am Router irgendwas aufmachen muss.", bild: "ein unterirdischer Gang statt einer offenen Haustür" },
+  { name: "Login", typ: "Passwort plus 2FA", text: "Passwort und ein Zwei-Faktor-Code aus einer App. Nach Fehlversuchen wird kurz gesperrt.", bild: "Schloss und Riegel" },
+  { name: "Der Heim-PC", typ: "macht die Arbeit", text: "Hier laufen origami und Gemma. Das Handy schickt nur Text hin und bekommt die Antwort zurück.", bild: "die Küche, das Handy ist nur der Kellner" },
+]} />
+
+Wichtig: Ein Tunnel wie dieser macht origami wirklich aus dem Internet erreichbar. Deshalb ist der Login keine Nebensache, sondern das Wichtigste an der ganzen Sache.
+
+## Was nur zu Hause geht
+
+<OriRand ori="wissen" spruch="Manche Türen gehen nur von innen auf." />
+
+Nicht alles von origami ist von außen erreichbar. Drei Sachen gehen bewusst **nur direkt am PC**:
+
+- **die Host-Seite**, also der Leitstand, auf dem ich sehe, was der Agent gerade macht
+- **die Browser-Fernsteuerung**
+- **die Schnittstelle, über die Claude an origami arbeitet**
+
+Selbst wenn jemand mein Passwort und meinen Code hätte, käme er an diese Sachen nicht ran.
+
+Und zwei Kleinigkeiten, die mir wichtig waren: Push-Nachrichten gehen nur an Geräte, die angemeldet sind. Und wenn ich mein Passwort ändere, werden alle anderen Geräte abgemeldet, auch ihre Push-Nachrichten. Geht mal ein Handy verloren, reicht ein neues Passwort.
+
+## Damit sie immer läuft
+
+<OriRand ori="ruhezustand" spruch="Ich schlaf nie. Ich ruh nur sehr konzentriert." />
+
+Sicherheit war die eine Hälfte. Die andere: origami muss laufen, auch wenn keiner zu Hause ist. So sieht ihr Tag aus:
+
+<Schritte titel="Ein Tag im Leben von origami" schritte={[
+  { titel: "PC startet", text: "Eine Windows-Aufgabe startet origami, ohne dass sich jemand anmelden muss. Niemand muss am PC sein." },
+  { titel: "Nach etwa 15 Sekunden", text: "Ollama ist bereit, Gemma wird vorgeladen. Danach bleibt sie 60 Minuten im Speicher." },
+  { titel: "Nach etwa 30 Sekunden", text: "origami läuft und wärmt sich vor: eine Probe-Anfrage mit genau meinem Prompt. Die erste echte Frage dauert dann 9 statt 39 Sekunden." },
+  { titel: "Tagsüber", text: "Anfragen, Erinnerungen, Freigaben. Erinnerungen kommen pünktlich als Push, Freigaben auch, wenn ich gerade nicht im Chat bin." },
+  { titel: "Wenn was abstürzt", text: "origami steht nach 5 Sekunden von selbst wieder auf. Ändert Claude etwas am Code, startet sie neu, sobald keine Antwort mehr läuft." },
+  { titel: "Um 3 Uhr nachts", text: "Backup von Chats, Gedächtnis, Einstellungen und Browser-Profil. 14 Tage werden aufgehoben." },
+]} />
+
+<OriSagt ori="seufzt">Um 3 Uhr Backup. Ich frag nicht, was du um die Zeit machst.</OriSagt>
+
+## Der Abend, an dem Windows Nein gesagt hat
+
+<OriRand ori="ratlos" spruch="16.384. Wer denkt sich so eine Zahl aus?" />
+
+Am 9.11. ist origami ausgefallen. Und einmal hing an dem Tag sogar das ganze Windows. Da hilft dir kein Wächter-Programm, da hilft nur der Power-Knopf. Und der ist zu Hause, nicht in meiner Hosentasche.
+
+Die Ursache waren zwei Windows-Grenzen, an die man nie denkt:
+
+- **Zu wenig Netzwerk-Ports.** Windows stellt von Haus aus 16.384 Ports für ausgehende Verbindungen bereit. Irgendwann waren keine mehr frei. Jetzt sind es 55.535.
+- **Zu kleine Auslagerungsdatei.** Das ist der Platz auf der Festplatte, auf den Windows ausweicht, wenn der Arbeitsspeicher voll ist. Die ist jetzt größer.
+
+Und weil ich so was nicht nochmal erst merken will, wenn's zu spät ist, gibt's jetzt einen **Port-Wächter**: Er zählt jede Minute die offenen Verbindungen und schickt mir ab 20.000 eine Push-Nachricht.
+
+## So machst du deine KI unterwegs erreichbar
+
+<OriRand ori="rechnet" spruch="Zwei Faktoren. Ich zähl beide." />
+
+<Schritte titel="Sicher und zuverlässig von unterwegs" schritte={[
+  { titel: "Login zuerst", text: "Bevor irgendwas von außen erreichbar ist: Passwort plus Zwei-Faktor-Code, Sperre nach Fehlversuchen. In dieser Reihenfolge, nicht andersrum." },
+  { titel: "Tunnel statt offener Ports", text: "Mit Tailscale Funnel bekommt dein PC eine HTTPS-Adresse mit echtem Zertifikat, ohne dass du am Router etwas freigibst. Der Befehl leitet einen lokalen Port nach außen weiter.", befehl: "tailscale funnel 3000" },
+  { titel: "Verwaltung nur lokal", text: "Alles, womit man deine KI steuert oder umbaut, prüft, ob die Anfrage direkt vom PC kommt. Von außen gibt's nur den Chat." },
+  { titel: "Autostart ohne Anmeldung", text: "Eine geplante Windows-Aufgabe startet deine KI beim Hochfahren, auch wenn sich niemand anmeldet. Dazu ein Wächter, der sie nach einem Absturz neu startet." },
+  { titel: "Backup jede Nacht", text: "Chats, Gedächtnis und Einstellungen sichern und ein paar Tage aufheben. Bei mir 14." },
+  { titel: "Windows-Grenzen hochsetzen", text: "Freie Ports für ausgehende Verbindungen und die Auslagerungsdatei prüfen. Den aktuellen Port-Bereich zeigt dir dieser Befehl.", befehl: "netsh int ipv4 show dynamicport tcp" },
+]} />
+
+<Checkliste punkte={[
+  "Von außen komm ich nur mit Passwort und Zwei-Faktor-Code rein",
+  "Am Router sind keine Ports offen",
+  "Verwaltung und Fernsteuerung gehen nur direkt am PC",
+  "Meine KI startet von selbst, auch ohne Anmeldung",
+  "Nach einem Absturz steht sie von selbst wieder auf",
+  "Jede Nacht gibt's ein Backup",
+  "Ich weiß, wie viele Netzwerk-Ports Windows mir lässt",
+]} geschafft="Alle Haken. Jetzt kannst du gehen. Ich pass auf." />
