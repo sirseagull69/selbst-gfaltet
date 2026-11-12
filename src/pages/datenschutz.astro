@@ -1,10 +1,11 @@
 ---
 import Base from '../layouts/Base.astro';
+import { NEWSLETTER_FORM } from '../newsletter';
 ---
 <Base titel="Datenschutz">
   <div class="wrap seite prosa">
     <h1>Datenschutzerklärung</h1>
-    <p>Kurz vorweg: Diese Seite setzt keine Cookies und lädt keine Schriften oder Skripte von fremden Servern. Ich zähle Besuche mit Vercel Web Analytics, ohne Cookies und ohne dich wiederzuerkennen (siehe Punkt 3). Es gibt kein Kontaktformular und keinen Newsletter.</p>
+    <p>Kurz vorweg: Diese Seite setzt keine Cookies und lädt keine Schriften oder Skripte von fremden Servern. Ich zähle Besuche mit Vercel Web Analytics, ohne Cookies und ohne dich wiederzuerkennen (siehe Punkt 3). Es gibt kein Kontaktformular.{NEWSLETTER_FORM ? ' Für den Newsletter gilt Punkt 5.' : ' Einen Newsletter gibt es noch nicht.'}</p>
 
     <h2>1. Verantwortlicher</h2>
     <p>Nils Pohler, Jettinger Str. 30/3, 71126 Gäufelden<br />E-Mail: fragen@selbstgfaltet.de</p>
@@ -20,13 +21,22 @@ import Base from '../layouts/Base.astro';
     <h2>4. Kontakt per E-Mail</h2>
     <p>Wenn du mir eine E-Mail schreibst, verarbeite ich deine Adresse und den Inhalt nur, um dir zu antworten (Art. 6 Abs. 1 lit. b oder f DSGVO). Die Mail wird gelöscht, wenn sie nicht mehr gebraucht wird und keine Aufbewahrungspflicht besteht.</p>
 
-    <h2>5. Schriften und Inhalte</h2>
+    {NEWSLETTER_FORM && (
+      <>
+        <h2 id="newsletter">5. Newsletter</h2>
+        <p>Wenn du dich für den Newsletter anmeldest, speichere ich deine E-Mail-Adresse, um dir Mails zu neuen Artikeln zu schicken. Die Anmeldung läuft im Double-Opt-in: Du bekommst erst eine Mail mit einem Bestätigungslink, und nur wenn du darauf klickst, wirst du eingetragen. Gespeichert werden dabei auch Zeitpunkt der Anmeldung und Bestätigung, damit ich die Einwilligung nachweisen kann.</p>
+        <p>Rechtsgrundlage ist deine Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO. Du kannst sie jederzeit widerrufen, über den Abmeldelink in jeder Mail oder per Mail an mich. Danach wird deine Adresse aus der Liste gelöscht.</p>
+        <p>Für den Versand nutze ich Brevo, einen Dienst der Brevo GmbH, Köpenicker Straße 126, 10179 Berlin. Brevo verarbeitet die Daten in meinem Auftrag auf Servern in der EU; mit Brevo besteht ein Vertrag zur Auftragsverarbeitung. Brevo kann auswerten, ob eine Mail geöffnet und ein Link angeklickt wurde. Mehr dazu: <a href="https://www.brevo.com/de/legal/privacypolicy/">brevo.com/de/legal/privacypolicy</a>.</p>
+      </>
+    )}
+
+    <h2>{NEWSLETTER_FORM ? 6 : 5}. Schriften und Inhalte</h2>
     <p>Alle Schriften, Bilder und Skripte werden von dieser Seite selbst ausgeliefert. Beim Aufruf werden keine Daten an Google Fonts oder andere Dritte übertragen. Externe Links öffnest du selbst; erst dann gelten die Datenschutzbestimmungen der jeweiligen Seite.</p>
 
-    <h2>6. Lokal im Browser gespeicherte Daten</h2>
+    <h2>{NEWSLETTER_FORM ? 7 : 6}. Lokal im Browser gespeicherte Daten</h2>
     <p>Die Werkzeuge auf dieser Seite (Token-Uhr, Lokal-oder-Claude-Test, Modell-Rechner, Prompt-Baukasten, Fehler-Diagnose, Checklisten) laufen komplett in deinem Browser. Eingaben werden nicht an mich übertragen und nicht gespeichert.</p>
 
-    <h2>7. Deine Rechte</h2>
+    <h2>{NEWSLETTER_FORM ? 8 : 7}. Deine Rechte</h2>
     <p>Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch (Art. 15 bis 21 DSGVO). Schreib mir dafür einfach eine Mail. Außerdem kannst du dich bei einer Datenschutz-Aufsichtsbehörde beschweren, zum Beispiel beim Landesbeauftragten für den Datenschutz und die Informationsfreiheit Baden-Württemberg.</p>
 
     <p class="klein">Stand: November 2026</p>
