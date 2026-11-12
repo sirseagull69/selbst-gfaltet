@@ -1,0 +1,102 @@
+---
+titel: "Merken, fixen, trainieren: Wie meine KI besser wird"
+beschreibung: "origami soll mit der Zeit besser werden. Dafür gibt's drei Wege: Sie merkt sich Sachen, jedes Daumen runter wird zu einem Fix, und irgendwann wird sie richtig nachtrainiert. Was davon schon läuft und was noch Plan ist."
+datum: 2026-11-12
+kategorie: lokal
+lesezeit: 7
+ori: liest
+oriSpruch: "Ich lerne. Freiwillig. Fast."
+---
+import KurzGesagt from '../../components/KurzGesagt.astro';
+import OriSagt from '../../components/OriSagt.astro';
+import WasMacht from '../../components/WasMacht.astro';
+import Messung from '../../components/Messung.astro';
+import VorherNachher from '../../components/VorherNachher.astro';
+import Schritte from '../../components/Schritte.astro';
+import Checkliste from '../../components/Checkliste.astro';
+import OriRand from '../../components/OriRand.astro';
+
+<KurzGesagt
+  links="Was die meisten denken"
+  rechts="Wie's wirklich ist"
+  a={["Die KI lernt bei jedem Gespräch von selbst dazu", "Training bringt ihr neues Wissen bei", "Daumen runter ist nur zum Dampf ablassen"]}
+  b={["Das Modell selbst bleibt gleich, bis man es nachtrainiert", "Training bringt Stil und Verhalten, kein neues Wissen", "Ein Daumen runter mit Grund ist das wertvollste, was du ihr geben kannst"]}
+/>
+
+## Erst mal die Enttäuschung
+
+Als ich angefangen hab, dachte ich: Je mehr ich mit origami schreib, desto schlauer wird sie. Stimmt leider nicht. Gemma, das Modell in origami, ist eine fertige Datei. Die ändert sich nicht, egal wie oft ich mit ihr red. Jedes neue Gespräch fängt sie wieder bei null an.
+
+Damit sie trotzdem besser wird, hab ich drei Wege eingebaut. Die laufen auf ganz unterschiedlichen Ebenen, und genau das hab ich am Anfang durcheinandergebracht.
+
+<WasMacht titel="Drei Wege, wie origami besser wird" teile={[
+  { name: "Merken", typ: "läuft", text: "origami legt Fakten über mich in einer Datei ab und bekommt sie in jedem Chat mit. Das Modell lernt dabei nichts, es bekommt nur einen Spickzettel.", bild: "der Zettel am Kühlschrank" },
+  { name: "Fixen", typ: "läuft", text: "Jedes Daumen runter mit Begründung schaut sich Claude an und baut daraus eine Regel oder ein Werkzeug. Geändert wird der Code drumherum, nicht Gemma.", bild: "der Handwerker, der nach jeder Reklamation nachbessert" },
+  { name: "Trainieren", typ: "geplant", text: "Ab ca. 250 Bewertungen wird Gemma selbst nachtrainiert. Erst dann ändert sich wirklich was im Modell.", bild: "die Fahrstunde" },
+]} />
+
+<OriSagt ori="seufzt">Ich vergesse nichts. Ich hab's nur nie gewusst.</OriSagt>
+
+## Weg 1: Der Spickzettel
+
+<OriRand ori="schreibt" spruch="Findus. Katze. Notiert. Schon wieder." />
+
+Sag ich origami „merk dir, dass meine Katze Findus heißt“, landet das als Eintrag in einer Datei namens `memory.json`. Die Einträge sind in Kategorien sortiert, jeder hat einen Rückgängig-Knopf, und mit „vergessen“ fliegt er wieder raus. Passwörter, Zugangsdaten und Gesundheitsdaten nimmt sie gar nicht erst an.
+
+Der Haken: Dieser Spickzettel wandert in den Prompt, also in die Anweisungen, die Gemma vor jeder Antwort liest. Ändert sich der Zettel, muss sie alles neu einlesen. Ein neuer Eintrag kostet die nächste Anfrage deshalb ca. 20 Sekunden extra. Danach ist es wieder schnell.
+
+Dann gibt's noch das Gedächtnis innerhalb eines Chats. Gemma kann nur ein begrenztes Stück Gespräch auf einmal lesen, bei origami sind das ca. 16.000 Tokens. Tokens sind Wortstücke, grob ein Dreiviertel-Wort. Wird der Chat länger, fasst origami den älteren Teil zusammen. Was ich ausdrücklich merken lassen wollte, bleibt aber Wort für Wort drin.
+
+<Messung titel="Test am 9.11.: Hält das Gedächtnis einen langen Chat aus?" spalte="Ergebnis" zeilen={[
+  { name: "Fragen im Chat", wert: "23", anteil: 100 },
+  { name: "Mal zusammengefasst", wert: "3", anteil: 13, grau: true },
+]} notiz="Am Anfang hab ich das Codewort „Schwalbe-12“ genannt. Nach 23 Fragen und drei Zusammenfassungen hat origami es noch richtig gewusst." />
+
+## Weg 2: Jedes Daumen runter wird ein Fix
+
+<OriRand ori="ratlos" spruch="Daumen runter? Ich hab mir echt Mühe gegeben." />
+
+Unter jeder Antwort gibt's Daumen hoch und Daumen runter. Ein nacktes Daumen runter hilft wenig. Ein Daumen runter mit ein paar Worten, **warum** es schlecht war, ist Gold wert.
+
+Diese Bewertungen schaut sich Claude an und überlegt: Ist das ein Einzelfall, oder fehlt origami eine Regel oder ein Werkzeug? Ein Beispiel aus dem Artikel über die [Schutzschicht](/blog/schutzschicht): Gemma hat mal geraten, eine Sicherheitseinstellung einfach abzuschalten, ohne zu warnen. Daraus wurde eine feste Regel im Code, die so eine Antwort zurückschickt und neu schreiben lässt.
+
+<VorherNachher titel="Fix oder Training?" vorherTitel="Ein Fix" nachherTitel="Ein Training">
+  <p slot="vorher">Ändert den Code um Gemma herum: eine neue Regel, ein neues Werkzeug, eine bessere Anweisung. Wirkt sofort, ist genau nachvollziehbar und lässt sich mit einem Klick zurückdrehen. Gemma selbst bleibt, wie sie ist.</p>
+  <p slot="nachher">Ändert Gemma selbst. Sie gewöhnt sich an, wie ich Antworten haben will: kürzer, direkter, im richtigen Ton. Neues Wissen bekommt sie dadurch nicht. Und es braucht viele gute Beispiele, bevor es sich lohnt.</p>
+</VorherNachher>
+
+Bis jetzt lernt origami komplett über Fixes. Ehrlich gesagt bringt das am Anfang auch am meisten, weil viele Fehler gar nicht am Modell liegen, sondern an fehlenden Regeln oder Werkzeugen.
+
+<OriSagt ori="sassy">Jeder Fix ist ein Pflaster mit meinem Namen drauf. Ich sammle die.</OriSagt>
+
+## Weg 3: Das richtige Training
+
+<OriRand ori="rechnet" spruch="250 Bewertungen. Ich zähl mit. Langsam." />
+
+Das ist noch Plan, nicht passiert. Aber der Ablauf steht schon fest. Die Bewertungen landen alle in einer Datei `feedback.jsonl`, den Stand sehe ich in den Einstellungen unter „Training“.
+
+Am wertvollsten ist dabei ein bestimmtes Paar: Daumen runter, dann „neu generieren“, dann Daumen hoch für die zweite Antwort. Damit hat man direkt nebeneinander, was schlecht war und was gut ist. Genau daraus lernt ein Modell am meisten.
+
+Trainiert wird mit LoRA. Dabei wird nicht das ganze Modell neu gerechnet, sondern nur ein kleiner Zusatz, der obendrauf kommt. Das geht schneller und braucht weniger Speicher. Trotzdem ist meine Grafikkarte zu Hause dafür zu klein, also mietet man sich für das Training eine Grafikkarte in der Cloud, nur für die paar Stunden.
+
+## So baust du das selbst
+
+<OriRand ori="vergleicht" spruch="Alte Gemma gegen neue Gemma. Möge die Bessere gewinnen. Also ich." />
+
+<Schritte titel="Von der Bewertung zur besseren KI" schritte={[
+  { titel: "Daumen hoch und runter einbauen", text: "Unter jede Antwort zwei Knöpfe. Beim Daumen runter ein kleines Feld für den Grund. Die Begründung ist wichtiger als der Daumen selbst." },
+  { titel: "Alles in eine Datei schreiben", text: "Jede Bewertung als eine Zeile: Frage, Antwort, Daumen, Grund. Das Format JSONL (eine JSON-Zeile pro Eintrag) ist dafür ideal, weil man einfach unten anhängt.", befehl: "Get-Content feedback.jsonl | Measure-Object -Line" },
+  { titel: "Paare festhalten", text: "Wenn nach einem Daumen runter neu generiert wird und die zweite Antwort Daumen hoch bekommt, beide zusammen speichern. Das sind die besten Trainingsbeispiele." },
+  { titel: "Erst fixen, dann trainieren", text: "Regelmäßig die Daumen-runter-Einträge durchgehen, am besten mit Claude. Fehlt eine Regel oder ein Werkzeug? Dann das bauen, statt aufs Training zu warten." },
+  { titel: "Vor dem Training aussieben", text: "Ein Prüfer-Modell schaut, welche Beispiele sich lohnen. Doppelte und unklare fliegen raus." },
+  { titel: "Neu gegen alt antreten lassen", text: "Die nachtrainierte Version muss im Prüflauf gegen die alte gewinnen. Nur dann wird sie genommen. Sonst bleibt alles, wie es war." },
+]} />
+
+<Checkliste punkte={[
+  "Ich weiß, dass meine KI nicht von selbst bei jedem Gespräch dazulernt",
+  "Meine KI kann sich Fakten merken und wieder vergessen",
+  "Passwörter und Gesundheitsdaten landen nicht im Gedächtnis",
+  "Unter jeder Antwort kann ich bewerten, mit Begründung",
+  "Daumen runter wird regelmäßig zu Fixes",
+  "Eine neue Version wird erst genommen, wenn sie die alte schlägt",
+]} geschafft="Alles abgehakt. Ich fühl mich beobachtet. Und ein bisschen geschmeichelt." />
