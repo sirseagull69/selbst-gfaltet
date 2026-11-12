@@ -28,7 +28,7 @@ Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt
 4. Persönliches von Nils darf rein (Werdegang, Findus), aber nichts von der Arbeit. lootkurs.de kommt auf dem Blog nicht namentlich vor, höchstens als „Preisvergleichsprogramm auf Basis von …“. Pokémon-Spiele und -Projekte kommen nicht vor.
 5. Seit dem Neustart im Nov 2026: keine Fehlersuche-Artikel mehr, lieber coole Artikel und mehr über Nils selbst. Persönliches bei Bedarf bei Nils erfragen.
 6. Nach jeder Änderung den Redaktionsplan in Notion aktualisieren (Status, PR-Link).
-7. Seit 12.11.: ein neuer Artikel pro Woche, nicht mehrere auf einmal. `datum` = Tag, an dem er live geht. Der Newsletter geht mit jedem neuen Artikel raus.
+7. Seit 12.11.: ein neuer Artikel pro Woche, nicht mehrere auf einmal. `datum` = Tag, an dem er live geht. Der Newsletter geht mit jedem neuen Artikel raus, aber erst ab dem Artikel nächster Woche (für `wie-origami-lernt` keiner).
 
 ## Erschienen
 - `modell-dreikampf`: Gemma 4 26B gegen Qwen3.6 35B und Qwen3.5 9B (Test vom 9.11.)
