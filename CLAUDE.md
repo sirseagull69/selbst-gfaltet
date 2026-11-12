@@ -1,5 +1,7 @@
 # Selbst gfaltet – Regeln für Claude
 
+> **Quelle der Wahrheit ist Notion:** Seite „Selbst gfaltet“ (https://app.notion.com/p/416a871cd769810eb3e7f4a390e6eafd) mit der Datenbank „Artikel“ (Redaktionsplan). Vor jeder Arbeit dort lesen und danach dort aktualisieren (Status, PR-Link, neue Regeln, Ideen). Bei Widerspruch gilt Notion. Diese Datei wird mitgezogen.
+
 Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt, wie man sich einen eigenen KI-Assistenten nach dem Bauplan von **origami** baut. Live: https://www.selbstgfaltet.de (Vercel baut jeden Push auf `main` automatisch).
 
 ## Technik
@@ -23,7 +25,9 @@ Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt
 1. Material kommt aus dem Änderungsverlauf der origami-Doku (claude.ai-Projekt „Origami“, Doku „Dokumentation“). Aus diesem Projekt heraus ist die Doku nicht lesbar. Lesbar sind Nils' Artifacts, vor allem „origami von innen“ (Aufbau, Aufgabenteilung, Werkzeuge, Schutzschicht, Gedächtnis, Netz, Speicher, Pläne) und „Modell-Dreikampf origami“. Fehlt was, Nils fragen.
 2. Entwurf immer in einem eigenen Branch `entwurf/<slug>`, nie direkt auf `main`, dazu einen Pull Request anlegen.
 3. Nils liest, ändert den Ton und gibt frei. Sagt er „passt“, merged Claude den PR selbst.
-4. Persönliches von Nils darf rein (Werdegang, Findus), aber nichts von der Arbeit. lootkurs.de kommt auf dem Blog nicht vor.
+4. Persönliches von Nils darf rein (Werdegang, Findus), aber nichts von der Arbeit. lootkurs.de kommt auf dem Blog nicht namentlich vor, höchstens als „Preisvergleichsprogramm auf Basis von …“. Pokémon-Spiele und -Projekte kommen nicht vor.
+5. Seit dem Neustart im Nov 2026: keine Fehlersuche-Artikel mehr, lieber coole Artikel und mehr über Nils selbst. Persönliches bei Bedarf bei Nils erfragen.
+6. Nach jeder Änderung den Redaktionsplan in Notion aktualisieren (Status, PR-Link).
 
 ## Erschienen
 - `modell-dreikampf`: Gemma 4 26B gegen Qwen3.6 35B und Qwen3.5 9B (Test vom 9.11.)
