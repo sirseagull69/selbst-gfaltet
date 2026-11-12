@@ -93,3 +93,40 @@ if (knopf) {
     document.querySelectorAll('img.ori').forEach((i) => i.offsetParent && nochmal(i));
   });
 }
+
+// Ori am Rand wandert mit: an jeder <OriRand>-Markierung wechselt sie Animation und Spruch
+const rand = document.querySelector('.randnotiz');
+const marken = [...document.querySelectorAll('.ori-wechsel')];
+if (rand && marken.length) {
+  const bilder = rand.querySelectorAll('img.ori');
+  const spruch = rand.querySelector('.hand');
+  const start = { ori: rand.dataset.ori, spruch: rand.dataset.spruch || '' };
+  let jetzt = start.ori + '|' + start.spruch;
+  function setze(z) {
+    const key = z.ori + '|' + z.spruch;
+    if (key === jetzt) return;
+    jetzt = key;
+    spruch.classList.add('weg');
+    setTimeout(() => {
+      bilder.forEach((img) => {
+        const modus = img.classList.contains('ori-dark') ? 'hell' : 'abendrot';
+        img.setAttribute('src', `/anim/${z.ori}-${modus}.svg?r=${++zaehler}`);
+      });
+      spruch.textContent = z.spruch;
+      spruch.classList.remove('weg');
+    }, ruhig ? 0 : 200);
+  }
+  let wartet = false;
+  function pruefe() {
+    wartet = false;
+    const linie = innerHeight * 0.3;
+    let aktiv = start;
+    for (const m of marken) {
+      if (m.getBoundingClientRect().top < linie) aktiv = { ori: m.dataset.ori, spruch: m.dataset.spruch || '' };
+      else break;
+    }
+    setze(aktiv);
+  }
+  addEventListener('scroll', () => { if (!wartet) { wartet = true; requestAnimationFrame(pruefe); } }, { passive: true });
+  pruefe();
+}

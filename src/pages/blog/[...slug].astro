@@ -46,9 +46,9 @@ const alle = (await getCollection('artikel')).filter((x) => x.id !== a.id).slice
         )}
       </div>
       <aside class="rand" aria-hidden="true">
-        <div class="randnotiz">
+        <div class="randnotiz" data-ori={d.ori} data-spruch={d.oriSpruch ?? ''}>
           <Ori name={d.ori} />
-          {d.oriSpruch && <span class="hand">{d.oriSpruch}</span>}
+          <span class="hand">{d.oriSpruch}</span>
         </div>
       </aside>
     </article>

@@ -13,6 +13,7 @@ import WasMacht from '../../components/WasMacht.astro';
 import Messung from '../../components/Messung.astro';
 import Schritte from '../../components/Schritte.astro';
 import Checkliste from '../../components/Checkliste.astro';
+import OriRand from '../../components/OriRand.astro';
 
 <KurzGesagt
   links="Was ich dachte"
@@ -39,6 +40,8 @@ Und wie das so ist: Alle paar Tage kommt ein neues Modell raus, und im Internet 
 
 ## Die drei Kandidaten
 
+<OriRand ori="vergleicht" spruch="Drei rein, einer raus." />
+
 <WasMacht titel="Wer angetreten ist" teile={[
   { name: "Gemma 4 26B", typ: "15 GB, der Titelverteidiger", text: "Das Modell, mit dem origami bisher läuft. Passt nicht ganz in die 8 GB der Grafikkarte, ein Teil liegt im normalen Arbeitsspeicher.", bild: "der eingespielte Stammspieler" },
   { name: "Qwen3.6 35B", typ: "23 GB, der Große", text: "Mehr Parameter, auf dem Papier schlauer. Passt bei mir aber nur mit Ach und Krach in den Speicher.", bild: "der teure Neuzugang, der nicht ins Auto passt" },
@@ -46,6 +49,8 @@ Und wie das so ist: Alle paar Tage kommt ein neues Modell raus, und im Internet 
 ]} />
 
 ## So hab ich getestet
+
+<OriRand ori="schreibt" spruch="Ich hab mitgeschrieben. Jede Sekunde." />
 
 Jedes Modell hat dieselben 10 Aufgaben bekommen, jede in einem eigenen Chat. Websuche und Werkzeuge waren an, die Übergabe an Claude war **absichtlich aus**. Normalerweise holt sich origami bei schweren Sachen Hilfe aus der Cloud, aber hier wollte ich wissen, was das lokale Modell allein draufhat.
 
@@ -64,6 +69,8 @@ Jede Aufgabe gab 0 bis 10 Punkte, also maximal 100. Die Fakten hab ich danach ge
 
 ## Das Ergebnis
 
+<OriRand ori="triumph" spruch="81. Muss ich noch was sagen?" />
+
 <Messung titel="Gemessen auf RTX 4060 (8 GB), 32 GB RAM" spalte="Punkte von 100" zeilen={[
   { name: "Gemma 4 26B", wert: "81", anteil: 81 },
   { name: "Qwen3.6 35B", wert: "76", anteil: 76, grau: true },
@@ -79,6 +86,8 @@ Jede Aufgabe gab 0 bis 10 Punkte, also maximal 100. Die Fakten hab ich danach ge
 Gemma hat gewonnen. Nicht weil es überall das Beste war, sondern weil es **nie ausgefallen ist**. Zehn Aufgaben, zehn Antworten, alle Fakten richtig.
 
 ## Der Große: schlau, aber zäh
+
+<OriRand ori="seufzt" spruch="23 GB für ein „Moin Nil“. Respekt." />
 
 Qwen3.6 hat bei ein paar Aufgaben sogar die besseren Texte geschrieben, bei der Phishing-Mail, der Windows-Checkliste und der Pomodoro-Seite. Aber 23 GB passen bei mir einfach nicht gescheit in den Speicher. Ein großer Teil läuft dann über den Prozessor, und der ist viel langsamer als die Grafikkarte.
 
@@ -96,6 +105,8 @@ Dazu kam, dass es Sätze teilweise drei Mal wiederholt hat. Und bei einer Aufgab
 
 ## Der Kleine: schnell, aber stumm
 
+<OriRand ori="ratlos" spruch="Gedacht ist noch nicht gesagt." />
+
 Qwen3.5 9B passt komplett in die Grafikkarte und war entsprechend flott. Das Problem: **6 von 10 Mal kam keine Antwort.** Das Modell hat nachgedacht, sich die Lösung zurechtgelegt und sie dann einfach nicht hingeschrieben. Die Gedanken waren da, der Text nicht.
 
 Wenn's mal geantwortet hat, war's auch nicht immer gut. Beim Wetter hat es heute statt morgen genommen. Und bei der WLAN-Frage ging's um einen Laptop, es hat aber acht Befehle auf meinem PC ausgeführt.
@@ -103,6 +114,8 @@ Wenn's mal geantwortet hat, war's auch nicht immer gut. Beim Wetter hat es heute
 Schnell bringt dir nix, wenn nix rauskommt.
 
 ## Was mich am meisten überrascht hat
+
+<OriRand ori="wissen" spruch="Werkzeug schlägt Größe. Merk dir das." />
 
 Die Wetterfrage hat früher fast **4 Minuten** gedauert. Das Modell musste dafür ganze Wetter-Webseiten lesen, und die sind riesig. Dann hab ich origami ein eigenes Wetter-Werkzeug gebaut, das direkt die Vorhersage holt. Seitdem: **14 Sekunden**, und richtig.
 
@@ -118,6 +131,8 @@ Die größte Schwäche hatten alle drei bei der Recherche über mehrere Seiten. 
 - **Die beiden Qwen-Modelle gelöscht.** Zusammen 29 GB auf der Festplatte, die ich nicht brauch.
 
 ## Teste dein Modell selbst
+
+<OriRand ori="rechnet" spruch="Na los. Ich zähl mit." />
 
 Du musst mir das nicht glauben. Das Wichtigste kannst du in zehn Minuten selbst prüfen.
 
