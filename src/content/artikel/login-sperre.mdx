@@ -1,0 +1,89 @@
+---
+titel: "Fünf Fehlversuche, dann ist Pause"
+beschreibung: "Meine KI ist von unterwegs erreichbar, also probiert früher oder später jemand Passwörter durch. Wie die Login-Sperre von origami funktioniert, warum sie jetzt mitwächst und welche Lücke mir dabei aufgefallen ist."
+datum: 2026-11-12
+kategorie: sicherheit
+lesezeit: 6
+ori: sassy
+oriSpruch: "Falsches Passwort. Schon wieder. Ich hab Zeit."
+---
+import KurzGesagt from '../../components/KurzGesagt.astro';
+import OriSagt from '../../components/OriSagt.astro';
+import VorherNachher from '../../components/VorherNachher.astro';
+import Messung from '../../components/Messung.astro';
+import Schritte from '../../components/Schritte.astro';
+import Checkliste from '../../components/Checkliste.astro';
+
+<KurzGesagt
+  links="Das Problem"
+  rechts="Die Lösung"
+  a={["Wer von außen erreichbar ist, wird irgendwann durchprobiert", "Meine alte Sperre vergaß bei jedem Neustart alles", "Die Anmeldung verriet nebenbei, ob das Passwort stimmt"]}
+  b={["Nach 5 Fehlversuchen 10 Minuten Pause, bei Wiederholung doppelt so lang", "Die Sperre steht in einer Datei und übersteht Neustarts", "Ohne Code fragt origami immer erst nach dem Code"]}
+/>
+
+## Warum überhaupt eine Sperre
+
+origami läuft bei mir daheim auf dem PC, ich will aber auch vom Handy und unterwegs drauf. Sobald etwas von außen erreichbar ist, kann theoretisch jeder die Anmeldeseite aufrufen. Und dann gibt's Leute (oder eher Programme), die einfach ein Passwort nach dem anderen ausprobieren. Das nennt man **Brute Force**: kein Trick, nur sehr viel Geduld.
+
+Bei origami muss man von außen zwei Dinge wissen: das Passwort und einen Code aus einer Authenticator-App, der sich ständig ändert. Das ist die **Zwei-Faktor-Anmeldung (2FA)**. Eine Sperre nach ein paar Fehlversuchen kam schon früh dazu, nach 5 Versuchen war 10 Minuten Ruhe. Klingt gut. Hatte aber drei Haken.
+
+<OriSagt ori="seufzt">Fünf Versuche, dann zehn Minuten Kaffeepause. Und nach einem Neustart hab ich alles vergessen. Sehr gastfreundlich.</OriSagt>
+
+## Die drei Haken und was jetzt anders ist
+
+<VorherNachher titel="Haken 1: Neustart" vorherTitel="Vorher" nachherTitel="Nachher">
+  <p slot="vorher">Die Fehlversuche standen nur im Arbeitsspeicher. Startet origami neu (und das passiert bei mir öfter, nach jeder Änderung am Server), war die Liste leer.</p>
+  <p slot="nachher">Die Sperre steht in einer kleinen Datei (`data/login-sperre.json`). origami liest sie beim Start wieder ein. Neustart heißt nicht mehr Neuanfang.</p>
+</VorherNachher>
+
+<VorherNachher titel="Haken 2: Immer gleich lang" vorherTitel="Vorher" nachherTitel="Nachher">
+  <p slot="vorher">Jede Sperre dauerte 10 Minuten. Wer geduldig ist, probiert halt alle 10 Minuten fünf neue Passwörter.</p>
+  <p slot="nachher">Jede weitere Sperre innerhalb von 24 Stunden dauert doppelt so lang wie die davor, höchstens 24 Stunden. Wer ernsthaft durchprobiert, kommt schnell kaum noch vorwärts.</p>
+</VorherNachher>
+
+<VorherNachher titel="Haken 3: Das Passwort-Orakel" vorherTitel="Vorher" nachherTitel="Nachher">
+  <p slot="vorher">Bei richtigem Passwort fragte origami nach dem Code, bei falschem kam „falsch“. Damit wusste ein Angreifer genau, wann er das Passwort erwischt hat, und musste sich nur noch um den Code kümmern.</p>
+  <p slot="nachher">Wer keinen Code mitschickt, wird immer erst nach dem Code gefragt, egal ob das Passwort stimmt. Von außen sieht ein falsches Passwort jetzt genauso aus wie ein richtiges.</p>
+</VorherNachher>
+
+Haken 3 hat mich am meisten geärgert, weil ich ihn selbst eingebaut hatte. So eine Stelle, die ungewollt verrät, ob man richtig liegt, nennt man **Orakel**.
+
+<OriSagt ori="sassy">Ich war also hilfsbereit. Zu jedem. Das hat man jetzt davon.</OriSagt>
+
+## Wie lange die Sperre wächst
+
+Nach der Regel „doppelt so lang, höchstens 24 Stunden“ sieht das so aus (gerechnet, nicht gemessen):
+
+<Messung titel="Sperrdauer je Adresse" spalte="Dauer" zeilen={[
+  { name: "1. Sperre (nach 5 Fehlversuchen)", wert: "10 Min.", anteil: 1 },
+  { name: "2. Sperre", wert: "20 Min.", anteil: 2 },
+  { name: "3. Sperre", wert: "40 Min.", anteil: 3 },
+  { name: "4. Sperre", wert: "80 Min.", anteil: 6 },
+  { name: "5. Sperre", wert: "160 Min.", anteil: 11 },
+  { name: "ab der 8. Sperre", wert: "24 Std. (Obergrenze)", anteil: 100 },
+]} notiz="Zählt nur, wenn die Sperren innerhalb von 24 Stunden aufeinander folgen." />
+
+Dazu gibt's eine **Gesamt-Bremse**: Kommen von außen 20 Fehlversuche in 15 Minuten zusammen, egal von welcher Adresse, ist die Anmeldung von außen 15 Minuten komplett zu, und ich bekomme eine Push-Nachricht aufs Handy. Das hilft, wenn jemand ständig die Adresse wechselt. Am PC selbst kann ich mich trotzdem anmelden, ich sperre mich also nicht aus.
+
+## So baust du das selbst
+
+<Schritte titel="Login-Sperre für deinen eigenen Server" schritte={[
+  { titel: "Fehlversuche je Adresse zählen", text: "Bei jedem falschen Login merkst du dir die Adresse, die Zahl der Versuche und die Uhrzeit. Ab 5 Versuchen setzt du ein Ende der Sperre." },
+  { titel: "Sperre wachsen lassen", text: "Merk dir auch, wie oft die Adresse in den letzten 24 Stunden schon gesperrt war. Dauer = 10 Minuten mal 2 hoch (Anzahl − 1), aber nie mehr als 24 Stunden." },
+  { titel: "In eine Datei schreiben", text: "Nach jeder Änderung die Liste als JSON speichern und beim Start wieder einlesen. Sonst hilft die beste Sperre nichts, sobald der Server neu startet." },
+  { titel: "Das Orakel schließen", text: "Prüf Passwort und Code zusammen. Fehlt der Code, frag immer danach, auch bei falschem Passwort. Die Antwort darf nie verraten, welcher Teil falsch war." },
+  { titel: "Gesamt-Bremse und Benachrichtigung", text: "Zähl alle Fehlversuche von außen zusammen. Bei zu vielen in kurzer Zeit: Anmeldung von außen kurz zu und eine Nachricht an dich. Den Zugang direkt am PC lässt du offen." },
+  { titel: "Testen, bevor's ernst wird", text: "Schreib ein kleines Testskript, das Fehlversuche simuliert, einen Neustart nachstellt und prüft, ob die Sperre wächst. Bei origami läuft das so:", befehl: "node tests\\login-sperre-test.js", ausgabe: "Fehler: 0" },
+]} />
+
+## Was ich daraus mitnehme
+
+Eine Sperre, die nur im Arbeitsspeicher lebt, ist eher ein Vorschlag. Und Sicherheit hört nicht beim Passwort auf: Auch die Fehlermeldungen müssen dicht sein. Das Ganze ist übrigens kein Freifahrtschein. Auf meiner Liste steht noch, die Festplatte zu verschlüsseln und zu überlegen, ob Handy und Tablet überhaupt über den öffentlichen Zugang müssen oder direkt ins private Netz können. Dazu ein andermal mehr.
+
+<Checkliste punkte={[
+  "Mein Zugang von außen braucht Passwort und Code",
+  "Nach ein paar Fehlversuchen ist Pause, und die wird bei Wiederholung länger",
+  "Die Sperre übersteht einen Neustart",
+  "Meine Anmeldung verrät nicht, ob das Passwort stimmt",
+  "Ich bekomme Bescheid, wenn jemand massenhaft durchprobiert",
+]} geschafft="Dicht. Wer jetzt noch reinwill, braucht sehr viel Geduld. Und das richtige Passwort." />

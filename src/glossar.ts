@@ -13,4 +13,7 @@ export const GLOSSAR = [
   ['Ollama', 'Programm, das Modelle auf deinem PC laufen lässt.', 'die Küche'],
   ['MoE (Experten-Aufbau)', 'Ein Modell aus vielen kleinen Spezialisten, von denen pro Wort nur wenige arbeiten. Groß, aber schneller als gedacht.', 'eine Großküche mit Stationen'],
   ['Open Source', 'Der Bauplan ist offen, jeder darf reinschauen und mitbauen.', 'ein Rezept zum Abschreiben'],
+  ['Brute Force', 'Einfach ein Passwort nach dem anderen ausprobieren, bis eins passt. Kein Trick, nur Geduld und Rechenzeit.', 'jeden Schlüssel am Bund durchprobieren'],
+  ['Zwei-Faktor-Anmeldung (2FA)', 'Zum Passwort kommt ein zweiter Beweis dazu, meist ein Code aus einer App, der sich ständig ändert.', 'Schlüssel plus Klingelcode'],
+  ['Orakel', 'Eine Stelle, die ungewollt verrät, ob man richtig liegt, zum Beispiel eine Anmeldung, die bei richtigem Passwort anders antwortet.', 'der Türsteher, der beim richtigen Namen kurz lächelt'],
 ];
