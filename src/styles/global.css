@@ -446,3 +446,5 @@ table.gemessen th{font-family:var(--display); font-size:.82rem; color:var(--blei
 .rt-wer.g{background:#dff3e7; color:#23784a}
 .rt-wer.c{background:#fde4d6; color:#c2410c}
 .rt-urteil mark{background:var(--band); padding:0 3px; border-radius:3px}
+
+.dl-hinweis{margin:18px 0 0; padding:14px 16px; border:2px dashed var(--ori); border-radius:12px; background:var(--papier)}
