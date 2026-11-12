@@ -33,6 +33,7 @@ Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt
 - Die ersten vier Artikel (108 Sekunden, Leerzeilen-Panne, Regeln in den Code, Eigene KI auf dem PC) wurden am 12.11. bewusst gelöscht.
 
 ## Ideen
+- Lernweg 03 „Warum macht meine KI das?“ wurde am 12.11. rausgenommen (die Artikel dazu waren gelöscht). Kann zurückkommen, wenn es wieder Fehler-Artikel gibt.
 - Meine KI surft selbst (Browser per Playwright)
 - Vom Handy aus mit dem PC zu Hause reden (Tailscale, ohne Adresse)
 - Wie origami lernt: Daumen runter, Fixes, später Training
