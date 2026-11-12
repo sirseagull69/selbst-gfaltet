@@ -3,19 +3,19 @@ import Base from '../layouts/Base.astro';
 import Ori from '../components/Ori.astro';
 import { LERNWEGE } from '../lernwege';
 ---
-<Base titel="Lernwege" aktiv="lernwege" beschreibung="Der Reihe nach zur eigenen KI: Lernwege mit Schaubildern, Schritten und Checklisten.">
+<Base titel="Faltanleitungen" aktiv="lernwege" beschreibung="Der Reihe nach zur eigenen KI: Faltanleitungen mit Schaubildern, Schritten und Checklisten.">
   <div class="wrap wegdetail">
     <div class="held" style="padding:0">
       <div>
         <span class="kicker">Der Reihe nach, versprochen.</span>
-        <h1>Lernwege</h1>
-        <p class="lead">Jeder Lernweg baut aufeinander auf. Jeder Teil hat dieselben Bausteine: Was du tun musst, wie's zusammenhängt, was was macht, und eine Checkliste zum Abhaken. Erschienene Teile kannst du anklicken, der Rest ist in Arbeit.</p>
+        <h1>Faltanleitungen</h1>
+        <p class="lead">Jede Faltanleitung baut aufeinander auf. Jeder Teil hat dieselben Bausteine: Was du tun musst, wie's zusammenhängt, was was macht, und eine Checkliste zum Abhaken. Erschienene Teile kannst du anklicken, der Rest ist in Arbeit.</p>
       </div>
       <div class="ori-rand"><Ori name="schreibt" alt="Ori schreibt" /><span class="hand">Ich schreib schon mit.<br />Er tippt nur langsam.</span></div>
     </div>
     {LERNWEGE.map((w) => (
       <div class="kasten" style="display:block" id={`weg-${w.nr}`}>
-        <span style="font-family:var(--mono);font-size:.8rem;color:var(--bleistift)">LERNWEG {w.nr}</span>
+        <span style="font-family:var(--mono);font-size:.8rem;color:var(--bleistift)">ANLEITUNG {w.nr}</span>
         <h2>{w.titel}</h2>
         <p style="margin:6px 0 0;color:var(--bleistift);font-size:1rem">{w.kurz}</p>
         <ol class="teile">

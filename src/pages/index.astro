@@ -24,11 +24,11 @@ const kiste = [
   <div class="wrap">
     <div class="held">
       <div>
-        <span class="kicker">Grüß Gott aus em Gäu!</span>
+        <span class="kicker">Gebaut, gemessen, aufgeschrieben</span>
         <h1>Falt dir deine eigene KI. <span class="mark">Ich zeig dir, wie's geht.</span></h1>
         <p class="lead">Eine KI, die bei dir zu Hause läuft, deine Dateien kennt und nicht jede Frage in die Cloud schickt. Ich hab mir so eine gebaut, sie heißt origami, kurz Ori. Hier zeig ich dir Schritt für Schritt, wie du dir deinen eigenen faltest. Ohne Studium, mit Bildern, und mit allen Pannen, die ich schon für dich hatte.</p>
         <div class="knoepfe">
-          <a class="knopf voll" href="/lernwege">Lernweg aussuchen</a>
+          <a class="knopf voll" href="/faltplan">Zum Faltplan</a>
           <a class="knopf" href="/origami">Was ist origami?</a>
         </div>
       </div>
@@ -38,9 +38,9 @@ const kiste = [
       </div>
     </div>
     <div class="zahlen">
-      <div><b>{LERNWEGE.length}</b><span>Lernwege</span></div>
+      <div><b>{LERNWEGE.length}</b><span>Faltanleitungen</span></div>
       <div><b>{artikel.length}</b><span>Artikel</span></div>
-      <div><b>7</b><span>Werkzeuge</span></div>
+      <div><b>6</b><span>Werkzeuge</span></div>
       <div><b>{GLOSSAR.length}</b><span>Begriffe erklärt</span></div>
     </div>
   </div>
@@ -66,8 +66,8 @@ const kiste = [
   <section class="block">
     <div class="wrap">
       <div class="blockkopf">
-        <div><h2>Lernwege</h2><p>Der Reihe nach, mit Bildern, Schritten und Checklisten. Du musst nichts vorher können.</p></div>
-        <a class="knopf" href="/lernwege">Alle Lernwege</a>
+        <div><h2>Faltanleitungen</h2><p>Der Reihe nach, mit Bildern, Schritten und Checklisten. Du musst nichts vorher können.</p></div>
+        <a class="knopf" href="/anleitungen">Alle Faltanleitungen</a>
       </div>
       <div class="lernwege">{LERNWEGE.map((w) => <LernwegKarte weg={w} />)}</div>
     </div>
@@ -133,7 +133,7 @@ const kiste = [
         <Ori name="liest" alt="Ori liest" />
         <div>
           <h3>Darf ich vorstellen: Ori</h3>
-          <p>Meine origami-KI. Papiervogel, schlagfertig, meistens im Recht. Sie läuft bei mir zu Hause auf dem PC, ist das Beispiel in allen Lernwegen und kommentiert hier am Rand, was ich so schreibe.</p>
+          <p>Meine origami-KI. Papiervogel, schlagfertig, meistens im Recht. Sie läuft bei mir zu Hause auf dem PC, ist das Beispiel in allen Faltanleitungen und kommentiert hier am Rand, was ich so schreibe.</p>
           <p class="hand">Jemand muss ja aufpassen.</p>
         </div>
       </div>

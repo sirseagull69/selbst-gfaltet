@@ -3,8 +3,8 @@ interface Props { weg: any }
 const { weg } = Astro.props;
 const da = weg.teile.filter((t: any) => t.slug).length;
 ---
-<a class="weg" href={`/lernwege#weg-${weg.nr}`}>
-  <span class="nr">LERNWEG {weg.nr} · {weg.teile.length} TEILE</span>
+<a class="weg" href={`/anleitungen#weg-${weg.nr}`}>
+  <span class="nr">ANLEITUNG {weg.nr} · {weg.teile.length} TEILE</span>
   <h3>{weg.titel}</h3>
   <p>{weg.kurz}</p>
   <div class="meta">{weg.chips.map((c: string) => <span class="chip">{c}</span>)}</div>
