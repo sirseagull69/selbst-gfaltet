@@ -1,6 +1,6 @@
 ---
 titel: "Merken, fixen, trainieren: Wie meine KI besser wird"
-beschreibung: "origami soll mit der Zeit besser werden. Dafür gibt's drei Wege: Sie merkt sich Sachen, jedes Daumen runter wird zu einem Fix, und irgendwann wird sie richtig nachtrainiert. Was davon schon läuft und was noch Plan ist."
+beschreibung: "origami soll mit der Zeit besser werden. Dafür gibt's drei Wege: Sie merkt sich Sachen, jedes Daumen-runter wird zu einem Fix, und irgendwann wird sie richtig nachtrainiert. Was davon schon läuft und was noch Plan ist."
 datum: 2026-11-12
 kategorie: lokal
 lesezeit: 7
@@ -19,8 +19,8 @@ import OriRand from '../../components/OriRand.astro';
 <KurzGesagt
   links="Was die meisten denken"
   rechts="Wie's wirklich ist"
-  a={["Die KI lernt bei jedem Gespräch von selbst dazu", "Training bringt ihr neues Wissen bei", "Daumen runter ist nur zum Dampf ablassen"]}
-  b={["Das Modell selbst bleibt gleich, bis man es nachtrainiert", "Training bringt Stil und Verhalten, kein neues Wissen", "Ein Daumen runter mit Grund ist das wertvollste, was du ihr geben kannst"]}
+  a={["Die KI lernt bei jedem Gespräch von selbst dazu", "Training bringt ihr neues Wissen bei", "Daumen-runter ist nur zum Dampfablassen"]}
+  b={["Das Modell selbst bleibt gleich, bis man es nachtrainiert", "Training bringt Stil und Verhalten, kein neues Wissen", "Ein Daumen-runter mit Grund ist das wertvollste, was du ihr geben kannst"]}
 />
 
 ## Erst mal die Enttäuschung
@@ -31,7 +31,7 @@ Damit sie trotzdem besser wird, hab ich drei Wege eingebaut. Die laufen auf ganz
 
 <WasMacht titel="Drei Wege, wie origami besser wird" teile={[
   { name: "Merken", typ: "läuft", text: "origami legt Fakten über mich in einer Datei ab und bekommt sie in jedem Chat mit. Das Modell lernt dabei nichts, es bekommt nur einen Spickzettel.", bild: "der Zettel am Kühlschrank" },
-  { name: "Fixen", typ: "läuft", text: "Jedes Daumen runter mit Begründung schaut sich Claude an und baut daraus eine Regel oder ein Werkzeug. Geändert wird der Code drumherum, nicht Gemma.", bild: "der Handwerker, der nach jeder Reklamation nachbessert" },
+  { name: "Fixen", typ: "läuft", text: "Jedes Daumen-runter mit Begründung schaut sich Claude an und baut daraus eine Regel oder ein Werkzeug. Geändert wird der Code drumherum, nicht Gemma.", bild: "der Handwerker, der nach jeder Reklamation nachbessert" },
   { name: "Trainieren", typ: "geplant", text: "Ab ca. 250 Bewertungen wird Gemma selbst nachtrainiert. Erst dann ändert sich wirklich was im Modell.", bild: "die Fahrstunde" },
 ]} />
 
@@ -52,11 +52,11 @@ Dann gibt's noch das Gedächtnis innerhalb eines Chats. Gemma kann nur ein begre
   { name: "Mal zusammengefasst", wert: "3", anteil: 13, grau: true },
 ]} notiz="Am Anfang hab ich das Codewort „Schwalbe-12“ genannt. Nach 23 Fragen und drei Zusammenfassungen hat origami es noch richtig gewusst." />
 
-## Weg 2: Jedes Daumen runter wird ein Fix
+## Weg 2: Jedes Daumen-runter wird ein Fix
 
-<OriRand ori="ratlos" spruch="Daumen runter? Ich hab mir echt Mühe gegeben." />
+<OriRand ori="ratlos" spruch="Daumen-runter? Ich hab mir echt Mühe gegeben." />
 
-Unter jeder Antwort gibt's Daumen hoch und Daumen runter. Ein nacktes Daumen runter hilft wenig. Ein Daumen runter mit ein paar Worten, **warum** es schlecht war, ist Gold wert.
+Unter jeder Antwort gibt's Daumen hoch und Daumen runter. Ein nacktes Daumen-runter hilft wenig. Ein Daumen-runter mit ein paar Worten, **warum** es schlecht war, ist Gold wert.
 
 Diese Bewertungen schaut sich Claude an und überlegt: Ist das ein Einzelfall, oder fehlt origami eine Regel oder ein Werkzeug? Ein Beispiel aus dem Artikel über die [Schutzschicht](/blog/schutzschicht): Gemma hat mal geraten, eine Sicherheitseinstellung einfach abzuschalten, ohne zu warnen. Daraus wurde eine feste Regel im Code, die so eine Antwort zurückschickt und neu schreiben lässt.
 
@@ -84,9 +84,9 @@ Trainiert wird mit LoRA. Dabei wird nicht das ganze Modell neu gerechnet, sonder
 <OriRand ori="vergleicht" spruch="Alte Gemma gegen neue Gemma. Möge die Bessere gewinnen. Also ich." />
 
 <Schritte titel="Von der Bewertung zur besseren KI" schritte={[
-  { titel: "Daumen hoch und runter einbauen", text: "Unter jede Antwort zwei Knöpfe. Beim Daumen runter ein kleines Feld für den Grund. Die Begründung ist wichtiger als der Daumen selbst." },
+  { titel: "Daumen hoch und runter einbauen", text: "Unter jede Antwort zwei Knöpfe. Beim Daumen-runter ein kleines Feld für den Grund. Die Begründung ist wichtiger als der Daumen selbst." },
   { titel: "Alles in eine Datei schreiben", text: "Jede Bewertung als eine Zeile: Frage, Antwort, Daumen, Grund. Das Format JSONL (eine JSON-Zeile pro Eintrag) ist dafür ideal, weil man einfach unten anhängt.", befehl: "Get-Content feedback.jsonl | Measure-Object -Line" },
-  { titel: "Paare festhalten", text: "Wenn nach einem Daumen runter neu generiert wird und die zweite Antwort Daumen hoch bekommt, beide zusammen speichern. Das sind die besten Trainingsbeispiele." },
+  { titel: "Paare festhalten", text: "Wenn nach einem Daumen-runter neu generiert wird und die zweite Antwort Daumen hoch bekommt, beide zusammen speichern. Das sind die besten Trainingsbeispiele." },
   { titel: "Erst fixen, dann trainieren", text: "Regelmäßig die Daumen-runter-Einträge durchgehen, am besten mit Claude. Fehlt eine Regel oder ein Werkzeug? Dann das bauen, statt aufs Training zu warten." },
   { titel: "Vor dem Training aussieben", text: "Ein Prüfer-Modell schaut, welche Beispiele sich lohnen. Doppelte und unklare fliegen raus." },
   { titel: "Neu gegen alt antreten lassen", text: "Die nachtrainierte Version muss im Prüflauf gegen die alte gewinnen. Nur dann wird sie genommen. Sonst bleibt alles, wie es war." },
@@ -97,6 +97,6 @@ Trainiert wird mit LoRA. Dabei wird nicht das ganze Modell neu gerechnet, sonder
   "Meine KI kann sich Fakten merken und wieder vergessen",
   "Passwörter und Gesundheitsdaten landen nicht im Gedächtnis",
   "Unter jeder Antwort kann ich bewerten, mit Begründung",
-  "Daumen runter wird regelmäßig zu Fixes",
+  "Jedes Daumen-runter wird regelmäßig zu einem Fix",
   "Eine neue Version wird erst genommen, wenn sie die alte schlägt",
 ]} geschafft="Alles abgehakt. Ich fühl mich beobachtet. Und ein bisschen geschmeichelt." />
