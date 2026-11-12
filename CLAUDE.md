@@ -19,9 +19,22 @@ Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt
 - Fachbegriffe beim ersten Auftauchen einfach erklären, neue Begriffe ins Glossar.
 
 ## Ablauf für neue Artikel
-1. Material kommt aus dem Änderungsverlauf der origami-Doku (claude.ai-Projekt „Origami“, Doku „Dokumentation“).
-2. Entwurf immer in einem eigenen Branch `entwurf/<slug>`, nie direkt auf `main`.
-3. Nils liest, ändert den Ton und gibt frei. Erst dann nach `main`.
+1. Material kommt aus dem Änderungsverlauf der origami-Doku (claude.ai-Projekt „Origami“, Doku „Dokumentation“). Aus diesem Projekt heraus ist die Doku nicht lesbar. Lesbar sind Nils' Artifacts, vor allem „origami von innen“ (Aufbau, Aufgabenteilung, Werkzeuge, Schutzschicht, Gedächtnis, Netz, Speicher, Pläne) und „Modell-Dreikampf origami“. Fehlt was, Nils fragen.
+2. Entwurf immer in einem eigenen Branch `entwurf/<slug>`, nie direkt auf `main`, dazu einen Pull Request anlegen.
+3. Nils liest, ändert den Ton und gibt frei. Sagt er „passt“, merged Claude den PR selbst.
+4. Persönliches von Nils darf rein (Werdegang, Findus), aber nichts von der Arbeit. lootkurs.de kommt auf dem Blog nicht vor.
+
+## Erschienen
+- `modell-dreikampf`: Gemma 4 26B gegen Qwen3.6 35B und Qwen3.5 9B (Test vom 9.11.)
+- `lokal-oder-claude`: Aufgabenteilung in drei Stufen, Gemma gegen Claude (Test vom 8.11.)
+- `in-gemma-reingeschaut`: 30 Schichten, 128 Experten, Röntgen, Speicher und Tempo
+- Die ersten vier Artikel (108 Sekunden, Leerzeilen-Panne, Regeln in den Code, Eigene KI auf dem PC) wurden am 12.11. bewusst gelöscht.
+
+## Ideen
+- Meine KI surft selbst (Browser per Playwright)
+- Vom Handy aus mit dem PC zu Hause reden (Tailscale, ohne Adresse)
+- Die Schutzschicht: neun Lagen zwischen Gemma und dem PC
+- Wie origami lernt: Daumen runter, Fixes, später Training
 
 ## Domain & Mail
 - Domain selbstgfaltet.de liegt bei IONOS. DNS: A `@` → 76.76.21.21, CNAME `www` → cname.vercel-dns.com. Vercel leitet selbstgfaltet.de auf www um.
