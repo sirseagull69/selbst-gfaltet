@@ -1,0 +1,76 @@
+---
+import Base from '../layouts/Base.astro';
+import Ori from '../components/Ori.astro';
+import Baustein from '../components/Baustein.astro';
+import { createHash } from 'node:crypto';
+import { readFileSync, statSync } from 'node:fs';
+const datei = (n: string) => {
+  const p = `public/downloads/${n}`;
+  return { pfad: `/downloads/${n}`, sha: createHash('sha256').update(readFileSync(p)).digest('hex'), kb: Math.max(1, Math.round(statSync(p).size / 1024)) };
+};
+const check = datei('ki-check.ps1'), pruef = datei('modell-pruefstand.ps1'), plan = datei('origami-bauplan.zip');
+---
+<Base titel="Downloads" aktiv="werkzeuge" beschreibung="Kostenlose Downloads für deine eigene KI: PC-Check, Modell-Prüfstand und der origami-Bauplan für Claude Code.">
+  <div class="wrap seite">
+    <div class="held" style="padding-top:0">
+      <div>
+        <span class="kicker hand">Kostenlos, ohne Anmeldung</span>
+        <h1>Die Werkzeugkiste</h1>
+        <p class="seite-lead">Drei Sachen, die ich für origami selbst gebraucht hab. Zum Runterladen und auf deinem PC benutzen. Keine Anmeldung, keine Mail-Adresse.</p>
+      </div>
+      <div class="ori-rand">
+        <Ori name="wissen" alt="Ori" />
+        <span class="hand">Alles von mir geprüft.<br />Mehr oder weniger.</span>
+      </div>
+    </div>
+
+    <Baustein titel="KI-Check: Ist mein PC bereit?" icon="gpu" id="ki-check">
+      <p style="margin-top:0">Ein PowerShell-Skript, das deinen PC durchschaut und dir sagt, worauf du achten musst, bevor du dir eine KI baust. Es prüft genau die Sachen, an denen ich hängen geblieben bin:</p>
+      <ul>
+        <li>Grafikkarte und Grafikspeicher, Arbeitsspeicher, freier Platz für Modelle</li>
+        <li>Welche Modellgrößen ungefähr passen (Schätzung) und wie viel vom geladenen Modell wirklich auf der Grafikkarte liegt</li>
+        <li>Ob Ollama läuft und welche Modelle wie viel Platz fressen</li>
+        <li>Die Windows-Grenzen, die bei mir einen Totalausfall verursacht haben: freie Netzwerk-Ports und Auslagerungsdatei</li>
+      </ul>
+      <p>Das Skript <b>liest nur</b>. Es ändert nichts und schickt nichts ins Internet. Mit <code>-Bericht</code> speichert es das Ergebnis als Textdatei auf dem Desktop.</p>
+      <div class="knoepfe"><a class="knopf voll" href={check.pfad} download>ki-check.ps1 herunterladen ({check.kb} KB)</a></div>
+      <p class="klein dl-sha">SHA-256: {check.sha}</p>
+    </Baustein>
+
+    <Baustein titel="Modell-Prüfstand: Welches Modell taugt bei mir?" icon="messung" id="pruefstand">
+      <p style="margin-top:0">Damit hab ich den <a href="/blog/modell-dreikampf">Modell-Dreikampf</a> gemacht. Das Skript schickt dieselben 10 Aufgaben an alle deine Ollama-Modelle (oder deine eigenen Aufgaben aus einer Textdatei) und misst:</p>
+      <ul>
+        <li>Zeit pro Antwort, Tempo beim Einlesen und beim Schreiben</li>
+        <li>Wie oft <b>gar keine Antwort</b> kommt, auch den fiesen Fall „nur gedacht, nichts geschrieben“</li>
+      </ul>
+      <p>Am Ende bekommst du eine Übersicht, eine Tabelle zum Öffnen in Excel und alle Antworten pro Modell zum selbst Bewerten. Es redet nur mit Ollama auf deinem PC.</p>
+      <div class="knoepfe"><a class="knopf voll" href={pruef.pfad} download>modell-pruefstand.ps1 herunterladen ({pruef.kb} KB)</a></div>
+      <p class="klein dl-sha">SHA-256: {pruef.sha}</p>
+    </Baustein>
+
+    <Baustein titel="Der origami-Bauplan für Claude Code" icon="falt" id="bauplan">
+      <p style="margin-top:0">Das Herzstück: eine fertige <code>CLAUDE.md</code> mit allen Regeln, die origami schnell und sicher machen, plus 9 Aufträge, die du nacheinander in Claude Code eingibst. Vom ersten Chat bis zur KI, die du sicher vom Handy erreichst.</p>
+      <ul>
+        <li><b>CLAUDE.md:</b> konstanter Prompt-Anfang, Vorwärmen, feste Werkzeuge, Freigaben im Code, Erlaubnisliste statt Sperrliste, Papierkorb statt Löschen, Injection-Check, Notbremse (3/3/20), Login vor Tunnel</li>
+        <li><b>SCHRITTE.md:</b> 9 Aufträge zum Kopieren, jeder mit „So prüfst du's“</li>
+      </ul>
+      <p>Du brauchst Node.js, Ollama, Claude Code und ein Claude-Konto. Wie man Claude Code installiert, steht in <a href="/blog/erstes-tool">Dein erstes kleines Tool</a>.</p>
+      <div class="knoepfe"><a class="knopf voll" href={plan.pfad} download>origami-bauplan.zip herunterladen ({plan.kb} KB)</a></div>
+      <p class="klein dl-sha">SHA-256: {plan.sha}</p>
+    </Baustein>
+
+    <Baustein titel="So startest du die Skripte" icon="schritte" id="starten">
+      <ol>
+        <li>Datei herunterladen, zum Beispiel in deinen Downloads-Ordner.</li>
+        <li>Wer mag, öffnet sie vorher mit dem Editor und liest rein. Ist ganz normaler Text, auf Deutsch kommentiert.</li>
+        <li>Rechtsklick auf die Datei, dann <b>„Mit PowerShell ausführen“</b>.</li>
+        <li>Klappt das nicht: PowerShell in dem Ordner öffnen und so starten (gilt nur für diesen einen Aufruf):</li>
+      </ol>
+      <pre>powershell -ExecutionPolicy Bypass -File .\ki-check.ps1</pre>
+      <p class="klein">Windows warnt bei Skripten aus dem Internet. Das ist richtig so. Starte nur Skripte, denen du traust, und prüf bei Bedarf die SHA-256-Prüfsumme mit <code>Get-FileHash .\ki-check.ps1</code>.</p>
+    </Baustein>
+  </div>
+</Base>
+<style>
+  .dl-sha{word-break:break-all; font-family:var(--mono); font-size:.75rem}
+</style>
