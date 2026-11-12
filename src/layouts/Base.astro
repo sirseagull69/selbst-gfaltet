@@ -10,6 +10,7 @@ import '@fontsource/caveat/latin-700.css';
 import '@fontsource/jetbrains-mono/latin-400.css';
 import '@fontsource/jetbrains-mono/latin-600.css';
 import '../styles/global.css';
+import Analytics from '@vercel/analytics/astro';
 
 interface Props { titel?: string; beschreibung?: string; aktiv?: string }
 const { titel, beschreibung = 'Falt dir deine eigene KI: Schritt für Schritt zum eigenen KI-Assistenten auf dem eigenen PC. Mit Bildern, Messungen und allen Pannen.', aktiv = '' } = Astro.props;
@@ -30,6 +31,9 @@ const nav = [
   <link rel="alternate" type="application/rss+xml" title="Selbst gfaltet" href="/rss.xml" />
   <meta property="og:title" content={voll} />
   <meta property="og:description" content={beschreibung} />
+  <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+  <link rel="sitemap" href="/sitemap-index.xml" />
+  <Analytics />
   <script is:inline>
     try { var th = localStorage.getItem('thema'); if (th === 'hell') document.documentElement.dataset.theme = 'light'; else if (th === 'dunkel') document.documentElement.dataset.theme = 'dark'; } catch (e) {}
   </script>

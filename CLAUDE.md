@@ -26,10 +26,10 @@ Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt
 ## Domain & Mail
 - Domain selbstgfaltet.de liegt bei IONOS. DNS: A `@` → 76.76.21.21, CNAME `www` → cname.vercel-dns.com. Vercel leitet selbstgfaltet.de auf www um.
 - `fragen@selbstgfaltet.de` ist eine IONOS-Weiterleitung (kein Postfach, man kann davon nicht senden). Mail-Einträge (MX, SPF, DKIM, DMARC) bei IONOS nicht anfassen.
-- `noindex` ist raus, Google darf die Seite aufnehmen.
+- `noindex` ist raus, Google darf die Seite aufnehmen. Sitemap: `/sitemap-index.xml`, steht auch in `public/robots.txt`.
+- Besucherzählung: Vercel Web Analytics (ohne Cookies), steht in der Datenschutzerklärung. Neue Dienste immer dort nachtragen.
 
 ## Offen
-- Sitemap einbauen (`@astrojs/sitemap`).
-- Vercel Analytics einschalten.
+- Vercel Analytics im Dashboard einschalten (Code ist drin, `@vercel/analytics`).
 - Google Search Console anmelden, Sitemap dort einreichen.
 - Newsletter (z. B. Brevo) erst, wenn gewünscht.
