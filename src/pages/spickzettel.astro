@@ -1,0 +1,99 @@
+---
+import Base from '../layouts/Base.astro';
+const OLLAMA = [
+  ['ollama pull gemma4:26b', 'Modell herunterladen'],
+  ['ollama run gemma4:26b', 'Modell starten und im Terminal chatten'],
+  ['ollama run gemma4:26b --verbose', 'Dasselbe, plus Tempo nach jeder Antwort'],
+  ['ollama list', 'Alle heruntergeladenen Modelle'],
+  ['ollama ps', 'Was gerade geladen ist und wie viel auf GPU und CPU liegt'],
+  ['ollama show gemma4:26b', 'Steckbrief: Größe, Kontext, Aufbau'],
+  ['ollama stop gemma4:26b', 'Modell aus dem Speicher werfen'],
+  ['ollama rm gemma4:26b', 'Modell löschen und Platz freimachen'],
+  ['/bye', 'Im Chat: beenden'],
+];
+const CC_START = [
+  ['claude', 'Claude Code im aktuellen Ordner starten'],
+  ['claude "frage"', 'Starten und direkt eine Frage stellen'],
+  ['claude -c', 'Letztes Gespräch in diesem Ordner fortsetzen'],
+  ['claude -r', 'Ein älteres Gespräch auswählen und fortsetzen'],
+  ['claude -p "frage"', 'Einmal antworten und beenden, gut für Skripte'],
+];
+const CC_DRIN = [
+  ['/init', 'Legt eine CLAUDE.md mit Infos zu deinem Projekt an'],
+  ['/clear', 'Gespräch leeren, frisch anfangen'],
+  ['/compact', 'Langes Gespräch zusammenfassen, spart Platz'],
+  ['/model', 'Modell wechseln'],
+  ['/help', 'Alle Befehle anzeigen'],
+  ['@datei', 'Eine Datei gezielt mitgeben'],
+  ['! befehl', 'Einen Terminal-Befehl direkt ausführen'],
+  ['Shift + Tab', 'Modus wechseln, z. B. erst planen, dann machen'],
+  ['Esc', 'Claude unterbrechen'],
+  ['Strg + C', 'Eingabe oder Antwort abbrechen'],
+  ['Strg + D', 'Claude Code beenden'],
+];
+const REGELN = [
+  ['Sag, was rauskommen soll', 'Nicht „mach mal was mit Excel“, sondern „eine Formel, die …“.'],
+  ['Gib Zusammenhang', 'Wofür, für wen, womit. Die KI weiß nichts, was du ihr nicht sagst.'],
+  ['Zeig ein Beispiel', 'Ein Beispiel bringt oft mehr als drei Absätze Erklärung.'],
+  ['Sag, was sie nicht soll', 'Nichts löschen, nichts erfinden, keine Fachbegriffe.'],
+  ['Lass sie nachfragen', '„Wenn was unklar ist, frag zuerst.“ Spart dir falsche Antworten.'],
+  ['Große Aufgaben aufteilen', 'Erst planen lassen, dann Schritt für Schritt bauen.'],
+  ['Regeln in den Code', 'Was nie passieren darf, regelt kein Prompt zuverlässig. Das gehört in den Code.'],
+  ['Prüf das Ergebnis', 'Zahlen, Fakten und Befehle immer gegenchecken, bevor du sie benutzt.'],
+];
+---
+<Base titel="Spickzettel" beschreibung="Ollama, Claude Code und Prompt-Regeln auf einer Seite. Zum Ausdrucken.">
+  <div class="wrap seite">
+    <div class="nicht-drucken">
+      <span class="kicker hand">Kostenlos, zum Ausdrucken</span>
+      <h1>Der Spickzettel</h1>
+      <p class="seite-lead">Die Befehle, die ich wirklich benutze, und die Regeln, mit denen KI-Antworten besser werden. Ausdrucken, neben die Tastatur legen.</p>
+      <div class="knoepfe" style="margin-bottom:32px"><button class="knopf voll" type="button" onclick="window.print()">Drucken oder als PDF speichern</button><a class="knopf" href="/werkzeuge">Zu den Werkzeugen</a></div>
+    </div>
+    <div class="spick faltplan-druck">
+      <div class="spick-kopf">
+        <div><b>Der Spickzettel</b><br /><span>Ollama · Claude Code · Prompts · selbstgfaltet.de</span></div>
+        <img src="/anim/wissen-abendrot.svg" alt="" width="64" height="64" />
+      </div>
+      <div class="spick-raster">
+        <section>
+          <h2>Ollama</h2>
+          <p class="spick-hinweis">Lässt Modelle auf deinem PC laufen. Modellname austauschen, wenn du ein anderes nimmst.</p>
+          <dl>{OLLAMA.map(([b, t]) => <><dt><code>{b}</code></dt><dd>{t}</dd></>)}</dl>
+        </section>
+        <section>
+          <h2>Claude Code: starten</h2>
+          <p class="spick-hinweis">Im Terminal, im Ordner deines Projekts.</p>
+          <dl>{CC_START.map(([b, t]) => <><dt><code>{b}</code></dt><dd>{t}</dd></>)}</dl>
+          <h2 style="margin-top:16px">Claude Code: im Gespräch</h2>
+          <dl>{CC_DRIN.map(([b, t]) => <><dt><code>{b}</code></dt><dd>{t}</dd></>)}</dl>
+        </section>
+        <section class="spick-breit">
+          <h2>Acht Regeln für bessere Prompts</h2>
+          <ol class="spick-regeln">{REGELN.map(([t, s]) => <li><b>{t}</b><span>{s}</span></li>)}</ol>
+        </section>
+      </div>
+      <p class="spick-fuss">Stand November 2026. Befehle ändern sich manchmal, im Zweifel zeigt <code>/help</code> in Claude Code und <code>ollama --help</code> den aktuellen Stand.</p>
+    </div>
+  </div>
+</Base>
+<style>
+  .spick{padding:24px}
+  .spick-kopf{display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:14px}
+  .spick-kopf b{font-family:var(--display); font-size:1.6rem}
+  .spick-kopf span{color:var(--bleistift); font-size:.9rem}
+  .spick-raster{display:grid; grid-template-columns:1fr 1fr; gap:22px}
+  .spick-breit{grid-column:1/-1}
+  .spick h2{font-size:1.15rem; margin:0 0 4px}
+  .spick-hinweis{font-size:.85rem; color:var(--bleistift); margin:0 0 8px}
+  .spick dl{display:grid; grid-template-columns:auto 1fr; gap:5px 12px; margin:0; font-size:.9rem}
+  .spick dt code{font-family:var(--mono); font-size:.82rem; background:var(--papier); border:1px solid var(--linie); border-radius:5px; padding:1px 6px; white-space:nowrap}
+  .spick dd{margin:0}
+  .spick-regeln{display:grid; grid-template-columns:1fr 1fr; gap:6px 22px; margin:0; padding-left:20px; font-size:.9rem}
+  .spick .spick-regeln li{display:list-item; grid-template-columns:none; padding:0; border:0; margin:0 0 4px}
+  .spick-regeln b{display:block; font-family:var(--display)}
+  .spick-regeln span{color:var(--bleistift)}
+  .spick-fuss{font-size:.8rem; color:var(--bleistift); margin:16px 0 0}
+  @media (max-width:760px){ .spick-raster,.spick-regeln{grid-template-columns:1fr} .spick dl{grid-template-columns:1fr} .spick dd{margin-bottom:6px} }
+  @media print{ .spick{font-size:11px; padding:0} .spick dl,.spick-regeln{font-size:10.5px} .spick-raster{gap:12px} }
+</style>
