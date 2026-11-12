@@ -1,0 +1,6 @@
+---
+import Ori from './Ori.astro';
+interface Props { ori?: string }
+const { ori = 'sassy' } = Astro.props;
+---
+<div class="inline-ori"><Ori name={ori} /><span class="hand"><slot /></span></div>

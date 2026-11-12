@@ -1,0 +1,12 @@
+---
+import Icon from './Icon.astro';
+interface Props { titel?: string; vorherTitel: string; nachherTitel: string }
+const { titel = 'Vorher, nachher', vorherTitel, nachherTitel } = Astro.props;
+---
+<div class="baustein">
+  <div class="bkopf"><Icon name="vorher" />{titel}</div>
+  <div class="kurz">
+    <div><h3>{vorherTitel}</h3><slot name="vorher" /></div>
+    <div><h3>{nachherTitel}</h3><slot name="nachher" /></div>
+  </div>
+</div>

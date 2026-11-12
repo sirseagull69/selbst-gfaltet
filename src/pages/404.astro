@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+import Ori from '../components/Ori.astro';
+---
+<Base titel="Nicht gefunden">
+  <div class="wrap seite">
+    <div class="held" style="padding-top:0">
+      <div>
+        <span class="kicker">Fehler 404</span>
+        <h1>Diese Seite hab ich wohl falsch gefaltet.</h1>
+        <p class="lead">Die Adresse gibt's nicht oder nicht mehr.</p>
+        <div class="knoepfe"><a class="knopf voll" href="/">Zur Startseite</a><a class="knopf" href="/blog">Zu den Artikeln</a></div>
+      </div>
+      <div class="ori-rand"><Ori name="ratlos" alt="Ori ist ratlos" /><span class="hand">Ich war's nicht.</span></div>
+    </div>
+  </div>
+</Base>

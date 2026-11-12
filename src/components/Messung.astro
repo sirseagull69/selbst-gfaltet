@@ -1,0 +1,19 @@
+---
+import Icon from './Icon.astro';
+interface Props { titel?: string; spalte: string; zeilen: { name: string; wert: string; anteil: number; grau?: boolean }[]; notiz?: string }
+const { titel = 'Gemessen', spalte, zeilen, notiz } = Astro.props;
+---
+<div class="baustein">
+  <div class="bkopf"><Icon name="messung" />{titel}</div>
+  <div class="bkoerper">
+    <table class="messung">
+      <thead><tr><th>Situation</th><th>{spalte}</th><th style="width:40%"><span class="sr">Balken</span></th></tr></thead>
+      <tbody>
+        {zeilen.map((z) => (
+          <tr><td>{z.name}</td><td>{z.wert}</td><td><span class="vbar"><i class={z.grau ? 'grau' : ''} style={`--w:${z.anteil}%`}></i></span></td></tr>
+        ))}
+      </tbody>
+    </table>
+    {notiz && <p class="klein" style="margin:12px 0 0">{notiz}</p>}
+  </div>
+</div>

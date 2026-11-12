@@ -1,0 +1,15 @@
+---
+import Icon from './Icon.astro';
+interface Props { titel?: string; schritte: { titel: string; text: string; befehl?: string; ausgabe?: string }[] }
+const { titel = 'Was du tun musst', schritte } = Astro.props;
+---
+<div class="baustein">
+  <div class="bkopf"><Icon name="schritte" />{titel}</div>
+  <div class="bkoerper">
+    <ol class="schritte">
+      {schritte.map((s) => (
+        <li><div><h3>{s.titel}</h3><p set:html={s.text}></p>{s.befehl && <pre class="tippen" data-ausgabe={s.ausgabe ?? ''}>{s.befehl}</pre>}</div></li>
+      ))}
+    </ol>
+  </div>
+</div>

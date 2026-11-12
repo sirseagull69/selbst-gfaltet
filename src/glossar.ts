@@ -1,0 +1,16 @@
+export const GLOSSAR = [
+  ['Modell', 'Das eigentliche KI-Gehirn. Eine große Datei, die gelernt hat, wie Sprache funktioniert.', 'der Koch'],
+  ['Token', 'Ein Wortstück. KI liest und schreibt nicht in Wörtern, sondern in Tokens, grob ¾ Wort.', 'eine Silbe'],
+  ['VRAM', 'Der Speicher der Grafikkarte. Passt das Modell hier rein, ist es schnell.', 'die Arbeitsplatte'],
+  ['Quantisierung', 'Das Modell wird verkleinert, indem Zahlen ungenauer gespeichert werden. Q4 heißt 4 Bit pro Zahl.', 'Foto als JPG statt RAW'],
+  ['Kontext', 'Wie viel vom Gespräch die KI gleichzeitig im Kopf behält.', 'das Kurzzeitgedächtnis'],
+  ['Prompt', 'Das, was du der KI schreibst.', 'die Bestellung'],
+  ['System-Prompt', 'Anweisungen, die die KI vor jedem Gespräch bekommt. Wirkt schwächer, als man denkt.', 'die Hausordnung'],
+  ['Zwischenspeicher (Cache)', 'Was die KI schon eingelesen hat, merkt sie sich. Bleibt der Anfang gleich, spart das viel Zeit.', 'die schon geschnippelten Zwiebeln'],
+  ['Werkzeug (Tool)', 'Eine Funktion, die die KI aufrufen darf, zum Beispiel suchen oder rechnen.', 'Messer und Töpfe'],
+  ['Agent', 'Eine KI, die selbst entscheidet, welche Werkzeuge sie nacheinander benutzt.', 'der Koch, der selbst einkauft'],
+  ['MCP', 'Ein Standard, über den KIs an Werkzeuge angeschlossen werden.', 'eine Steckdose'],
+  ['Ollama', 'Programm, das Modelle auf deinem PC laufen lässt.', 'die Küche'],
+  ['MoE (Experten-Aufbau)', 'Ein Modell aus vielen kleinen Spezialisten, von denen pro Wort nur wenige arbeiten. Groß, aber schneller als gedacht.', 'eine Großküche mit Stationen'],
+  ['Open Source', 'Der Bauplan ist offen, jeder darf reinschauen und mitbauen.', 'ein Rezept zum Abschreiben'],
+];

@@ -1,0 +1,148 @@
+---
+import Base from '../layouts/Base.astro';
+import Ori from '../components/Ori.astro';
+import ArtikelListe from '../components/ArtikelListe.astro';
+import LernwegKarte from '../components/LernwegKarte.astro';
+import Icon from '../components/Icon.astro';
+import { getCollection } from 'astro:content';
+import { LERNWEGE } from '../lernwege';
+import { GLOSSAR } from '../glossar';
+const artikel = (await getCollection('artikel')).sort((a, b) => +b.data.datum - +a.data.datum || a.data.titel.localeCompare(b.data.titel));
+const kiste = [
+  ['Ollama', 'Lässt die Modelle laufen. Kostenlos, einfach, macht selten Ärger.', 'täglich'],
+  ['Claude Code', 'Schreibt den Großteil meines Codes. Ohne das gäbe es origami nicht.', 'täglich'],
+  ['Tailscale', 'Verbindet Handy und Laptop sicher mit dem PC zu Hause.', 'täglich'],
+  ['Node.js', 'Darauf läuft der origami-Server. Kein Framework, bewusst schlicht.', 'täglich'],
+  ['Git', 'Damit ich alles zurückdrehen kann, wenn ich was kaputt mache. Passiert oft.', 'täglich'],
+  ['Supabase', 'Datenbank für meine kleineren Tools. Kostenlos für den Anfang.', 'oft'],
+  ['Vercel', 'Stellt Webseiten online, auch diesen Blog.', 'oft'],
+  ['Playwright', 'Steuert einen Browser für die KI, damit sie Webseiten bedienen kann.', 'manchmal'],
+];
+---
+<Base aktiv="start">
+  <div class="wrap">
+    <div class="held">
+      <div>
+        <span class="kicker">Grüß Gott aus em Gäu!</span>
+        <h1>Falt dir deine eigene KI. <span class="mark">Ich zeig dir, wie's geht.</span></h1>
+        <p class="lead">Ein KI-Assistent, der bei dir zu Hause läuft, deine Dateien kennt und nicht jede Frage in die Cloud schickt. Ich hab mir so einen gebaut, sie heißt Ori. Hier zeig ich dir Schritt für Schritt, wie du dir deinen eigenen faltest. Ohne Studium, mit Bildern, und mit allen Pannen, die ich schon für dich hatte.</p>
+        <div class="knoepfe">
+          <a class="knopf voll" href="/lernwege">Lernweg aussuchen</a>
+          <a class="knopf" href="/origami">Was ist origami?</a>
+        </div>
+      </div>
+      <div class="ori-rand">
+        <Ori name="winkt" alt="Ori, ein Papiervogel, winkt" />
+        <span class="hand">Ich bin das Original.<br />Deine wird nur ähnlich.</span>
+      </div>
+    </div>
+    <div class="zahlen">
+      <div><b>{LERNWEGE.length}</b><span>Lernwege</span></div>
+      <div><b>{artikel.length}</b><span>Artikel</span></div>
+      <div><b>3</b><span>Werkzeuge</span></div>
+      <div><b>{GLOSSAR.length}</b><span>Begriffe erklärt</span></div>
+    </div>
+  </div>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="geschenk">
+        <div class="papier" aria-hidden="true">
+          <span class="ptitel">Der Faltplan</span>
+          <span class="pzeile"></span><span class="pzeile"></span><span class="pzeile kurz"></span>
+          <span class="pcheck">☐ Ollama installiert</span><span class="pcheck">☐ Modell geladen</span><span class="pcheck">☐ Erste Frage gestellt</span>
+        </div>
+        <div>
+          <span class="kat kat-gratis">Kostenlos</span>
+          <h2>Der Faltplan: in 10 Schritten zur eigenen KI</h2>
+          <p>Eine Seite zum Ausdrucken. Alle Schritte vom leeren PC bis zum Assistenten, den du vom Handy aus erreichst, mit Kästchen zum Abhaken.</p>
+          <div class="knoepfe"><a class="knopf voll" href="/faltplan">Faltplan ansehen</a><a class="knopf" href="/faltplan.pdf">Als PDF</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="blockkopf">
+        <div><h2>Lernwege</h2><p>Der Reihe nach, mit Bildern, Schritten und Checklisten. Du musst nichts vorher können.</p></div>
+        <a class="knopf" href="/lernwege">Alle Lernwege</a>
+      </div>
+      <div class="lernwege">{LERNWEGE.map((w) => <LernwegKarte weg={w} />)}</div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="blockkopf">
+        <div><h2>Neu aus der Werkstatt</h2><p>Die neuesten Artikel. Filter nach dem, was dich interessiert.</p></div>
+        <a class="knopf" href="/blog">Alle Artikel</a>
+      </div>
+      <ArtikelListe artikel={artikel} max={6} />
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="blockkopf">
+        <div><h2>Kostenlose Werkzeuge</h2><p>Kleine Helfer zum Ausprobieren, direkt im Browser.</p></div>
+        <a class="knopf" href="/werkzeuge">Alle Werkzeuge</a>
+      </div>
+      <div class="wzgitter">
+        <a class="wz" href="/werkzeuge#gpu"><span class="kat kat-live">Live</span><Icon name="gpu" /><h3>GPU-Rechner</h3><p>Welche Modelle laufen auf deiner Grafikkarte?</p></a>
+        <a class="wz" href="/werkzeuge#diagnose"><span class="kat kat-live">Live</span><Icon name="diagnose" /><h3>Fehler-Diagnose</h3><p>Ein paar Fragen klicken, Ursache finden.</p></a>
+        <a class="wz" href="/werkzeuge#glossar"><span class="kat kat-live">Live</span><Icon name="buch" /><h3>Fachchinesisch auf Deutsch</h3><p>{GLOSSAR.length} Begriffe, jeder mit Alltagsvergleich.</p></a>
+        <a class="wz" href="/faltplan"><span class="kat kat-gratis">Kostenlos</span><Icon name="falt" /><h3>Der Faltplan</h3><p>In 10 Schritten zur eigenen KI, zum Ausdrucken.</p></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap zwei">
+      <div class="kasten kasten-col">
+        <div class="kkopf"><Ori name="vergleicht" alt="Ori vergleicht" /><div><span class="kat kat-messung">Messung</span><h3>Modellvergleich auf meiner Hardware</h3><p>Dieselben Aufgaben, bewertet von 0 bis 100. RTX 4060 mit 8 GB.</p></div></div>
+        <div class="vergleich">
+          <div class="vz"><span>Gemma 4 26B</span><span class="vbar"><i style="--w:81%"></i></span><b>81</b></div>
+          <div class="vz"><span>Qwen3.6 35B</span><span class="vbar"><i class="grau" style="--w:76%"></i></span><b>76</b></div>
+        </div>
+        <p class="hand" style="margin:10px 0 0">Ich bin Gemma. Nur falls das jemand fragt.</p>
+      </div>
+      <div class="kasten kasten-col">
+        <div class="kkopf"><Ori name="sassy" alt="Ori schaut skeptisch" /><div><span class="kat kat-lokal">Lokal gegen Cloud</span><h3>Gemma gegen Claude</h3><p>70 Testaufgaben aus meinem Alltag, Punkte von 70.</p></div></div>
+        <div class="vergleich">
+          <div class="vz"><span>Claude Opus</span><span class="vbar"><i style="--w:98.6%"></i></span><b>69</b></div>
+          <div class="vz"><span>Gemma 4 26B</span><span class="vbar"><i class="grau" style="--w:78.6%"></i></span><b>55</b></div>
+        </div>
+        <p class="hand" style="margin:10px 0 0">Dafür zählt bei mir keiner mit, wie oft du fragst.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="blockkopf"><div><h2>Meine Werkzeugkiste</h2><p>Was ich wirklich benutze. Ehrlich bewertet, keine Werbelinks.</p></div></div>
+      <div class="kiste">{kiste.map(([n, t, h]) => <div class="kwz"><div class="wer">{n}<span class={`nutz nutz-${h}`}>{h}</span></div><p>{t}</p></div>)}</div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap zwei">
+      <div class="kasten">
+        <Ori name="liest" alt="Ori liest" />
+        <div>
+          <h3>Darf ich vorstellen: Ori</h3>
+          <p>Meine origami-KI. Papiervogel, schlagfertig, meistens im Recht. Sie läuft bei mir zu Hause auf dem PC, ist das Beispiel in allen Lernwegen und kommentiert hier am Rand, was ich so schreibe.</p>
+          <p class="hand">Jemand muss ja aufpassen.</p>
+        </div>
+      </div>
+      <div class="kasten">
+        <Ori name="schreibt" alt="Ori schreibt" />
+        <div>
+          <h3>Neue Artikel mitbekommen</h3>
+          <p>Einen Newsletter gibt's noch nicht. Bis dahin: Den RSS-Feed kannst du in jedem Feed-Reader abonnieren, dann siehst du jeden neuen Artikel.</p>
+          <div class="knoepfe"><a class="knopf" href="/rss.xml">RSS-Feed</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

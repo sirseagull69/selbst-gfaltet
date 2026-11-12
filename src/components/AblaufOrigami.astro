@@ -1,0 +1,65 @@
+---
+import Icon from "./Icon.astro";
+---
+<div class="baustein">
+  <div class="bkopf"><Icon name="ablauf" />Wie's zusammenhängt</div>
+  <div class="bkoerper ablauf">
+<svg viewBox="0 0 640 330" role="img" aria-label="Ablauf: Browser schickt Nachricht an den Server, der Server gibt sie an das lokale Modell Gemma, das Werkzeuge benutzt; bei schweren Fragen hilft Claude.">
+              <defs>
+                <marker id="spitze" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--tinte)"/></marker>
+                <marker id="spitze2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--ori)"/></marker>
+              </defs>
+              <rect class="k" x="10" y="40" width="130" height="70" rx="12"/>
+              <text x="75" y="70" text-anchor="middle">Du</text>
+              <text class="klein" x="75" y="90" text-anchor="middle">Handy, Laptop, PC</text>
+
+              <rect class="k" x="190" y="40" width="130" height="70" rx="12"/>
+              <text x="255" y="70" text-anchor="middle">Server</text>
+              <text class="klein" x="255" y="90" text-anchor="middle">server.js</text>
+
+              <rect class="k2" x="370" y="40" width="130" height="70" rx="12"/>
+              <text x="435" y="70" text-anchor="middle">Gemma</text>
+              <text class="klein" x="435" y="90" text-anchor="middle" style="fill:#1d2742">lokales Modell</text>
+
+              <rect class="k3" x="370" y="210" width="130" height="70" rx="12"/>
+              <text x="435" y="240" text-anchor="middle">Claude</text>
+              <text class="klein" x="435" y="260" text-anchor="middle">nur bei Bedarf</text>
+
+              <rect class="k" x="545" y="20" width="85" height="34" rx="8"/><text class="klein" x="587" y="42" text-anchor="middle">Websuche</text>
+              <rect class="k" x="545" y="62" width="85" height="34" rx="8"/><text class="klein" x="587" y="84" text-anchor="middle">Dateien</text>
+              <rect class="k" x="545" y="104" width="85" height="34" rx="8"/><text class="klein" x="587" y="126" text-anchor="middle">Wetter …</text>
+
+              <path class="pf" d="M140 66 H186"/>
+              <path class="pf" d="M320 66 H366"/>
+              <path class="pf" d="M500 60 L541 40"/>
+              <path class="pf" d="M500 75 H541"/>
+              <path class="pf" d="M500 90 L541 118"/>
+              <path class="pf2" d="M420 110 V206"/>
+              <path class="pf2" d="M450 206 V114"/>
+              <path class="pf" d="M366 96 C330 150 200 150 75 114" />
+
+              <circle class="dot" cx="163" cy="66" r="13"/><text x="163" y="71" text-anchor="middle" style="fill:#fff;font-size:13px">1</text>
+              <circle class="dot" cx="343" cy="66" r="13"/><text x="343" y="71" text-anchor="middle" style="fill:#fff;font-size:13px">2</text>
+              <circle class="dot" cx="520" cy="20" r="13"/><text x="520" y="25" text-anchor="middle" style="fill:#fff;font-size:13px">3</text>
+              <circle class="dot" cx="400" cy="158" r="13"/><text x="400" y="163" text-anchor="middle" style="fill:#fff;font-size:13px">4</text>
+              <circle class="dot" cx="210" cy="140" r="13"/><text x="210" y="145" text-anchor="middle" style="fill:#fff;font-size:13px">5</text>
+
+              <g class="fluss">
+                <circle r="5" class="dot"><animateMotion dur="3.2s" repeatCount="indefinite" path="M140 66 H186"/></circle>
+                <circle r="5" class="dot"><animateMotion dur="3.2s" begin="0.8s" repeatCount="indefinite" path="M320 66 H366"/></circle>
+                <circle r="4" class="dot"><animateMotion dur="3.2s" begin="1.6s" repeatCount="indefinite" path="M500 75 H541"/></circle>
+                <circle r="4" class="dot"><animateMotion dur="3.2s" begin="1.9s" repeatCount="indefinite" path="M500 60 L541 40"/></circle>
+                <circle r="5" class="dot"><animateMotion dur="4s" begin="1s" repeatCount="indefinite" path="M420 110 V206"/></circle>
+                <circle r="5" class="dot"><animateMotion dur="4s" begin="3s" repeatCount="indefinite" path="M450 206 V114"/></circle>
+                <circle r="5" class="dot"><animateMotion dur="3.2s" begin="2.4s" repeatCount="indefinite" path="M366 96 C330 150 200 150 75 114"/></circle>
+              </g>
+              <text class="hand2" x="470" y="168">kommt nicht weiter?</text>
+              <text class="hand2" x="470" y="190">Claude fragen</text>
+              <text class="klein" x="40" y="215">1  Du schreibst eine Nachricht</text>
+              <text class="klein" x="40" y="237">2  Der Server reicht sie ans Modell weiter</text>
+              <text class="klein" x="40" y="259">3  Gemma benutzt Werkzeuge</text>
+              <text class="klein" x="40" y="281">4  Bei schweren Fragen hilft Claude</text>
+              <text class="klein" x="40" y="303">5  Die Antwort kommt zu dir zurück</text>
+            </svg>
+  </div>
+</div>

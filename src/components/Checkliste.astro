@@ -1,0 +1,16 @@
+---
+import Icon from './Icon.astro';
+import Ori from './Ori.astro';
+interface Props { punkte: string[]; geschafft?: string }
+const { punkte, geschafft = 'Gschafft! Ich bin fast stolz.' } = Astro.props;
+const id = 'cl' + Math.random().toString(36).slice(2, 7);
+---
+<div class="baustein checkliste">
+  <div class="bkopf"><Icon name="check" />Checkliste zum Abhaken</div>
+  <div class="bkoerper">
+    <ul class="check">
+      {punkte.map((p, i) => <li><input type="checkbox" id={`${id}-${i}`} /><label for={`${id}-${i}`} set:html={p}></label></li>)}
+    </ul>
+    <div class="geschafft" aria-live="polite"><Ori name="triumph" alt="Ori jubelt" /><span class="hand">{geschafft}</span></div>
+  </div>
+</div>

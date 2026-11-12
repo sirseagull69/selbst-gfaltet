@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import Ori from '../components/Ori.astro';
+---
+<Base titel="Über mich" aktiv="ueber" beschreibung="Wer hinter Selbst gfaltet steckt.">
+  <div class="wrap seite">
+    <div class="held" style="padding-top:0">
+      <div>
+        <span class="kicker">Servus, ich bin's.</span>
+        <h1>Nils, 24, IT aus em Gäu</h1>
+        <p class="lead">Realschule, dann direkt rein in die IT. Programmieren habe ich mir selbst beigebracht, die meisten meiner Tools baue ich inzwischen mit KI. Nebenbei betreibe ich lootkurs.de, einen Preisvergleich für Pokémon-Karten, und spiele zu viel Kickbase.</p>
+        <p class="lead">Hier schreibe ich so, wie ich's mir selbst erklärt hätte: mit Bildern, der Reihe nach, ohne Fachchinesisch. Wenn ich ein Wort benutze, erkläre ich es. Und wenn was schiefgeht, steht das auch hier.</p>
+        <div class="knoepfe"><a class="knopf voll" href="/blog">Zu den Artikeln</a><a class="knopf" href="/origami">Was ist origami?</a></div>
+      </div>
+      <div class="ori-rand">
+        <Ori name="sassy" alt="Ori" />
+        <span class="hand">Und ich bin die,<br />die alles besser weiß.</span>
+      </div>
+    </div>
+  </div>
+</Base>

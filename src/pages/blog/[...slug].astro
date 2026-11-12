@@ -1,0 +1,56 @@
+---
+import Base from '../../layouts/Base.astro';
+import Ori from '../../components/Ori.astro';
+import { getCollection, render } from 'astro:content';
+import { KATEGORIEN, datumDE } from '../../lib';
+import { LERNWEGE } from '../../lernwege';
+export async function getStaticPaths() {
+  const artikel = await getCollection('artikel');
+  return artikel.map((a) => ({ params: { slug: a.id }, props: { a } }));
+}
+const { a } = Astro.props;
+const { Content } = await render(a);
+const d = a.data;
+const weg = LERNWEGE.find((w) => w.teile.some((t: any) => t.slug === a.id));
+const idx = weg ? weg.teile.findIndex((t: any) => t.slug === a.id) : -1;
+const naechster = weg ? weg.teile.slice(idx + 1).find((t: any) => t.slug) : null;
+const alle = (await getCollection('artikel')).filter((x) => x.id !== a.id).slice(0, 3);
+---
+<Base titel={d.titel} beschreibung={d.beschreibung} aktiv="blog">
+  <div class="wrap">
+    <article class="artikel">
+      <header class="akopf">
+        <span class="hand">{weg ? `${weg.titel} · Teil ${idx + 1} von ${weg.teile.length}` : KATEGORIEN[d.kategorie]}</span>
+        <h1>{d.titel}</h1>
+        <p class="lead">{d.beschreibung}</p>
+        <div class="meta"><span class={`kat kat-${d.kategorie}`} style="margin:0">{KATEGORIEN[d.kategorie]}</span><span class="chip">{datumDE(d.datum)}</span><span class="chip">{d.lesezeit} Min. Lesezeit</span></div>
+      </header>
+      <div class="inhalt">
+        <Content />
+        <div class="knoepfe" style="margin-top:32px">
+          {naechster ? <a class="knopf voll" href={`/blog/${naechster.slug}`}>Weiter im Lernweg</a> : weg ? <a class="knopf voll" href={`/lernwege#weg-${weg.nr}`}>Zum Lernweg</a> : null}
+          <a class="knopf" href="/blog">Alle Artikel</a>
+        </div>
+        {alle.length > 0 && (
+          <section style="margin-top:48px">
+            <h2 style="font-size:1.4rem;margin-bottom:12px">Auch aus der Werkstatt</h2>
+            <div class="liste">
+              {alle.map((x) => (
+                <a class="eintrag" href={`/blog/${x.id}`} style="grid-template-columns:1fr auto">
+                  <div><span class={`kat kat-${x.data.kategorie}`}>{KATEGORIEN[x.data.kategorie]}</span><h3>{x.data.titel}</h3></div>
+                  <span class="lese">{x.data.lesezeit} Min.</span>
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
+      </div>
+      <aside class="rand" aria-hidden="true">
+        <div class="randnotiz">
+          <Ori name={d.ori} />
+          {d.oriSpruch && <span class="hand">{d.oriSpruch}</span>}
+        </div>
+      </aside>
+    </article>
+  </div>
+</Base>

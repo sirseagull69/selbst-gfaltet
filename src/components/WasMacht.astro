@@ -1,0 +1,13 @@
+---
+import Icon from './Icon.astro';
+interface Props { teile: { name: string; typ: string; text: string; bild: string }[]; titel?: string }
+const { teile, titel = 'Was macht was' } = Astro.props;
+---
+<div class="baustein">
+  <div class="bkopf"><Icon name="teile" />{titel}</div>
+  <div class="bkoerper wasmacht">
+    {teile.map((t) => (
+      <div class="teil"><div class="wer">{t.name} <span>{t.typ}</span></div><p>{t.text}</p><div class="bild">= {t.bild}</div></div>
+    ))}
+  </div>
+</div>

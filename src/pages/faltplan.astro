@@ -1,0 +1,39 @@
+---
+import Base from '../layouts/Base.astro';
+import Ori from '../components/Ori.astro';
+const SCHRITTE = [
+  ['Grafikkarte prüfen', 'Wie viel VRAM hast du? Im GPU-Rechner auf selbst-gfaltet nachschauen, welche Modelle passen.'],
+  ['Ollama installieren', 'Von ollama.com. Danach läuft es im Hintergrund.'],
+  ['Erstes Modell laden', 'ollama pull gemma4:e4b – das kleine Modell passt auf fast jede Karte.'],
+  ['Ausprobieren und messen', 'ollama run gemma4:e4b --verbose. Tokens pro Sekunde notieren.'],
+  ['Größeres Modell testen', 'Wenn genug Speicher da ist: ein größeres Modell laden und vergleichen.'],
+  ['Eigene Oberfläche', 'Kleiner Server (z. B. Node.js), der Nachrichten an Ollama weitergibt. Claude Code kann ihn für dich schreiben.'],
+  ['Erste Werkzeuge', 'Suchen, rechnen, Dateien lesen. Rechnen immer per Code, nie vom Modell.'],
+  ['Freigaben einbauen', 'Löschen, Installieren, Absenden nur nach deinem Okay. Im Code, nicht im Prompt.'],
+  ['Login absichern', 'Passwort plus Zwei-Faktor-Code, Sperre nach Fehlversuchen.'],
+  ['Von unterwegs erreichbar', 'Zum Beispiel über Tailscale, ohne den PC ins offene Internet zu stellen.'],
+];
+---
+<Base titel="Der Faltplan" beschreibung="In 10 Schritten zur eigenen KI. Zum Ausdrucken und Abhaken.">
+  <div class="wrap seite">
+    <div class="nicht-drucken">
+      <span class="kicker hand">Kostenlos, zum Ausdrucken</span>
+      <h1>Der Faltplan</h1>
+      <p class="seite-lead">In 10 Schritten vom leeren PC zur eigenen KI, die du vom Handy aus erreichst. Ausdrucken, neben die Tastatur legen, abhaken.</p>
+      <div class="knoepfe" style="margin-bottom:32px"><a class="knopf voll" href="/faltplan.pdf">Als PDF herunterladen</a><button class="knopf" type="button" onclick="window.print()">Drucken</button></div>
+    </div>
+    <div class="faltplan-druck">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:18px">
+        <div><b style="font-family:var(--display);font-size:1.6rem">Der Faltplan</b><br /><span style="color:#5d6478">In 10 Schritten zur eigenen KI · selbst-gfaltet</span></div>
+        <img src="/anim/ruhezustand-abendrot.svg" alt="" width="80" height="80" />
+      </div>
+      <ol>
+        {SCHRITTE.map(([t, s]) => <li><span class="box"></span><span><b>{t}</b><small>{s}</small></span></li>)}
+      </ol>
+      <p style="margin:20px 0 0;font-family:var(--hand);font-size:1.4rem;color:#c2410c">Alles abgehakt? Dann hast du dir deine eigene KI gefaltet. – Ori</p>
+    </div>
+  </div>
+</Base>
+<style>
+  .faltplan-druck li{grid-template-columns:40px 28px 1fr}
+</style>

@@ -1,0 +1,12 @@
+---
+import Icon from './Icon.astro';
+interface Props { links: string; rechts: string; a: string[]; b: string[] }
+const { links, rechts, a, b } = Astro.props;
+---
+<div class="baustein">
+  <div class="bkopf"><Icon name="kurz" />Kurz gesagt</div>
+  <div class="kurz">
+    <div><h3>{links}</h3><ul>{a.map((x) => <li>{x}</li>)}</ul></div>
+    <div><h3>{rechts}</h3><ul>{b.map((x) => <li>{x}</li>)}</ul></div>
+  </div>
+</div>

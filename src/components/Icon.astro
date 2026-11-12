@@ -1,0 +1,18 @@
+---
+interface Props { name: string }
+const P: Record<string,string> = {
+  kurz:'<path d="M4 6h16M4 12h10M4 18h7"/>',
+  ablauf:'<rect x="3" y="4" width="6" height="6" rx="1"/><rect x="15" y="14" width="6" height="6" rx="1"/><path d="M9 7h4a2 2 0 0 1 2 2v5"/>',
+  teile:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
+  schritte:'<path d="M5 12l4 4L19 6"/>',
+  messung:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+  check:'<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 12l3 3 5-6"/>',
+  vorher:'<path d="M12 3v18M4 8l-2 4 2 4M20 8l2 4-2 4"/>',
+  gpu:'<rect x="2" y="7" width="20" height="10" rx="2"/><path d="M6 11h2M10 11h2M6 17v2M18 17v2"/>',
+  buch:'<path d="M4 4h12l4 4v12H4z"/><path d="M8 10h8M8 14h8M8 18h5"/>',
+  diagnose:'<circle cx="11" cy="11" r="7"/><path d="M21 21l-5-5M11 8v3l2 2"/>',
+  falt:'<path d="M3 20L12 4l9 16z"/><path d="M12 4v16M7.5 12h9"/>',
+};
+const { name } = Astro.props;
+---
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={P[name] ?? P.kurz}></svg>

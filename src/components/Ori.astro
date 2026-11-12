@@ -1,0 +1,6 @@
+---
+interface Props { name: string; alt?: string; class?: string }
+const { name, alt = '', class: cls = '' } = Astro.props;
+---
+<img class={`ori ori-light ${cls}`} src={`/anim/${name}-abendrot.svg`} alt={alt} width="100" height="100" loading="lazy" />
+<img class={`ori ori-dark ${cls}`} src={`/anim/${name}-hell.svg`} alt={alt} width="100" height="100" loading="lazy" />

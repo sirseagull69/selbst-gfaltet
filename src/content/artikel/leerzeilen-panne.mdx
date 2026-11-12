@@ -1,0 +1,59 @@
+---
+titel: "Die Nacht, in der meine KI nur noch Leerzeilen schrieb"
+beschreibung: "Am 11.11. hing origami plötzlich komplett. Schuld war eine Antwort aus nichts als Leerraum und eine Textprüfung, die daran erstickt ist. Was passiert ist und was ich daraus gebaut habe."
+datum: 2026-11-12
+kategorie: panne
+lesezeit: 5
+ori: ratlos
+oriSpruch: "Ich wollte nur Abstand halten."
+---
+import KurzGesagt from '../../components/KurzGesagt.astro';
+import OriSagt from '../../components/OriSagt.astro';
+import WasMacht from '../../components/WasMacht.astro';
+import Schritte from '../../components/Schritte.astro';
+import Checkliste from '../../components/Checkliste.astro';
+
+<KurzGesagt
+  links="Was passiert ist"
+  rechts="Was ich gelernt habe"
+  a={["Das Modell schrieb plötzlich nur noch Leerzeilen", "Meine Aufräum-Prüfung danach blieb daran hängen", "Der ganze Server reagierte nicht mehr"]}
+  b={["Jede Prüfung braucht ein Zeitlimit", "Nach 400 Zeichen nur Leerraum wird abgebrochen", "Ein Wächter startet neu, wenn nichts mehr geht"]}
+/>
+
+## Was passiert ist
+
+Lokale Modelle haben manchmal Aussetzer. Statt einer Antwort kam bei mir eine Flut aus Leerzeilen. Das allein wäre nicht schlimm gewesen. Aber origami räumt jede Antwort hinterher auf: doppelte Sätze raus, Unterschriften wie „Antwort von Gemma“ raus, kaputte Formatierung raus. Diese Aufräum-Regeln arbeiten mit Suchmustern, und eines davon ist an der Leerzeilen-Flut regelrecht erstickt.
+
+Das Ergebnis: Der Server hat nur noch gerechnet und auf nichts mehr reagiert. Von unterwegs kam ich nicht mehr drauf.
+
+<OriSagt ori="seufzt">Ich war nicht kaputt. Ich hab nur sehr gründlich über Leerzeichen nachgedacht.</OriSagt>
+
+## Warum ein Suchmuster einen Server lahmlegen kann
+
+Manche Suchmuster probieren bei bestimmten Texten unglaublich viele Möglichkeiten durch, bevor sie aufgeben. Bei normalem Text merkt man das nicht. Bei tausenden Leerzeilen am Stück dauert das gefühlt ewig. Und weil Node.js alles in einem Strang abarbeitet, wartet währenddessen alles andere mit.
+
+<WasMacht titel="Die drei Sicherungen" teile={[
+  { name: "Leerraum-Bremse", typ: "beim Schreiben", text: "Kommen 400 Zeichen hintereinander nur Leerzeichen und Zeilenumbrüche, bricht origami die Antwort ab.", bild: "der Rauchmelder" },
+  { name: "Zeitlimit", typ: "beim Aufräumen", text: "Jede Aufräum-Regel läuft in einer abgeschotteten Umgebung mit 2 Sekunden Zeit. Dauert's länger, bleibt die Antwort einfach unverändert.", bild: "die Eieruhr" },
+  { name: "Wächter", typ: "von außen", text: "Ein Startskript schaut, ob origami noch lebt. Kommt 4 Minuten lang kein Lebenszeichen, wird neu gestartet.", bild: "der Nachbar mit Ersatzschlüssel" },
+]} />
+
+## So baust du das Zeitlimit selbst
+
+<Schritte titel="Zeitlimit für Textprüfungen in Node.js" schritte={[
+  { titel: "Das vm-Modul nehmen", text: "Node.js bringt mit <code>vm</code> eine abgeschottete Umgebung mit, die ein Zeitlimit kennt." },
+  { titel: "Prüfung darin ausführen", text: "Die Aufräum-Regel läuft dort mit <code>timeout: 2000</code>. Hängt sie, wirft Node einen Fehler, statt ewig zu warten.", befehl: "vm.runInNewContext(code, { text }, { timeout: 2000 })" },
+  { titel: "Fehler abfangen", text: "Bei einem Abbruch gibst du einfach den ursprünglichen Text zurück und schreibst einen Eintrag ins Protokoll." },
+  { titel: "Testfall schreiben", text: "Für jede neue Aufräum-Regel ein Test, auch einer mit 10.000 Leerzeilen. So merkst du's, bevor der Server hängt." },
+]} />
+
+## Was ich daraus mitnehme
+
+Die Panne kam nicht vom Modell, sondern von meinem eigenen Sicherheitsnetz. Seitdem gilt bei origami: Alles, was Text vom Modell verarbeitet, bekommt ein Zeitlimit. Und jede neue Aufräum-Regel bekommt einen Testfall.
+
+<Checkliste punkte={[
+  "Meine Textprüfungen haben ein Zeitlimit",
+  "Eine Antwort aus nur Leerraum wird abgebrochen",
+  "Irgendwas startet meinen Server neu, wenn er hängt",
+  "Ich habe einen Test mit absurd langem Leerraum",
+]} geschafft="Abgesichert. Ich darf jetzt wieder Leerzeilen schreiben. Aber nur ein paar." />

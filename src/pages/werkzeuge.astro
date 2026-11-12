@@ -1,0 +1,130 @@
+---
+import Base from '../layouts/Base.astro';
+import Ori from '../components/Ori.astro';
+import Baustein from '../components/Baustein.astro';
+import { GLOSSAR } from '../glossar';
+---
+<Base titel="Werkzeuge" aktiv="werkzeuge" beschreibung="GPU-Rechner, Fehler-Diagnose und Glossar für deine eigene KI.">
+  <div class="wrap seite">
+    <span class="kicker hand">Zum Ausprobieren</span>
+    <h1>Werkzeuge</h1>
+    <p class="seite-lead">Kleine Helfer, die dir Fragen beantworten, bevor du Geld ausgibst oder Stunden verlierst.</p>
+
+    <Baustein titel="GPU-Rechner: Was läuft auf meiner Grafikkarte?" icon="gpu" id="gpu" class="rechner">
+      <div class="rein2">
+        <fieldset class="chips" id="vramwahl"><legend>Speicher der Grafikkarte (VRAM)</legend>
+          {[6, 8, 10, 12, 16, 24, 32].map((g) => <label class="chip-wahl"><input type="radio" name="vram" value={g} checked={g === 8} /><span>{g} GB</span></label>)}
+        </fieldset>
+        <fieldset class="chips" id="ramwahl"><legend>Arbeitsspeicher (RAM)</legend>
+          {[16, 32, 64].map((g) => <label class="chip-wahl"><input type="radio" name="ram" value={g} checked={g === 32} /><span>{g} GB</span></label>)}
+        </fieldset>
+      </div>
+      <div class="gpu-ori"><Ori name="rechnet" alt="Ori rechnet" /><span class="hand" id="orisagt">Mit 8 GB kommst du weit. Nur nicht ganz bis oben.</span></div>
+      <div class="gpu-tafel">
+        <div class="gpu-linie" id="gpulinie"><span id="gpulinietext">deine 8 GB</span></div>
+        <div id="gpuraus" aria-live="polite"></div>
+      </div>
+      <p class="klein">Grobe Faustregel für Modelle in 4-Bit-Größe (Q4), wie Ollama sie standardmäßig lädt: etwa 0,6 GB pro Milliarde Parameter plus 1,5 GB für das Gespräch. Modelle mit Experten-Aufbau (MoE) laufen oft schneller, als die Größe vermuten lässt. Bei mir läuft gemma4:26b auf 8 GB mit nur 19 % auf der CPU.</p>
+    </Baustein>
+
+    <Baustein titel="Fehler-Diagnose: Warum macht meine KI das?" icon="diagnose" id="diagnose">
+      <div class="diag" id="diag">
+        <div class="ori-mini"><Ori name="ratlos" alt="Ori ist ratlos" /><span class="hand">Erzähl. Ich hör zu. Meistens.</span></div>
+        <div class="pfad" id="diagpfad"></div>
+        <div class="frage" id="diagfrage"></div>
+        <div class="antworten" id="diagantw"></div>
+        <div id="diagerg"></div>
+      </div>
+      <noscript><p>Die Diagnose braucht JavaScript.</p></noscript>
+    </Baustein>
+
+    <Baustein titel="Fachchinesisch auf Deutsch" icon="buch" id="glossar">
+      <div class="glkopf">
+        <div class="feld" style="flex:1"><label for="glsuche">Begriff suchen</label><input id="glsuche" type="search" placeholder="z. B. Token" /></div>
+        <div class="ori-mini"><Ori name="wissen" alt="Ori weiß was" /></div>
+      </div>
+      <div class="wasmacht" id="glliste">
+        {GLOSSAR.map(([w, t, b]) => <div class="teil gl"><div class="wer">{w}</div><p>{t}</p><div class="bild">= {b}</div></div>)}
+      </div>
+    </Baustein>
+  </div>
+</Base>
+
+<script>
+  const oriNochmal = (img: HTMLImageElement) => (window as any).oriNochmal?.(img);
+  // GPU-Rechner
+  const modelle: [string, number][] = [['4B', 4], ['8B', 8], ['14B', 14], ['27B', 27], ['32B', 32], ['70B', 70]];
+  const wert = (n: string) => +(document.querySelector<HTMLInputElement>(`input[name=${n}]:checked`)!.value);
+  const raus = document.getElementById('gpuraus')!;
+  const sagt = document.getElementById('orisagt')!;
+  const SKALA = 46;
+  function rechne() {
+    const v = wert('vram'), r = wert('ram');
+    const linie = document.getElementById('gpulinie')!;
+    linie.style.left = `calc(var(--namebreite) + 12px + (100% - var(--namebreite) - var(--etikett) - 24px) * ${v / SKALA})`;
+    document.getElementById('gpulinietext')!.textContent = `deine ${v} GB`;
+    raus.innerHTML = modelle.map(([n, p]) => {
+      const gb = Math.round((p * 0.6 + 1.5) * 10) / 10;
+      const gpu = Math.min(gb, v), cpu = Math.max(0, gb - v);
+      let etikett: string, kl: string;
+      if (gb <= v) { etikett = '✓ passt'; kl = 'ok'; }
+      else if (cpu <= r * 0.6) { etikett = `${Math.round((cpu / gb) * 100)} % CPU`; kl = 'halb'; }
+      else { etikett = '✕ zu groß'; kl = 'nein'; }
+      const gbTxt = String(gb).replace('.', ',');
+      return `<div class="gzeile ${kl}"><div class="gname"><b>${n}</b><small>${gbTxt}&nbsp;GB</small></div><div class="gspur"><i class="gteil gpu" style="width:${(gpu / SKALA) * 100}%"></i><i class="gteil cpu" style="left:${(gpu / SKALA) * 100}%;width:${(cpu / SKALA) * 100}%"></i></div><span class="getikett">${etikett}</span></div>`;
+    }).join('');
+    sagt.textContent = v >= 24 ? 'Jetzt wird\'s ernst. Ich bin neidisch.' : v >= 16 ? 'Solide. Die mittleren Modelle fliegen.' : v >= 8 ? `Mit ${v} GB kommst du weit. Nur nicht ganz bis oben.` : 'Klein, aber ehrlich. Fang mit 4B an.';
+    document.querySelectorAll<HTMLImageElement>('#gpu img.ori').forEach(oriNochmal);
+  }
+  document.querySelectorAll('input[name=vram], input[name=ram]').forEach((i) => i.addEventListener('change', rechne));
+  rechne();
+
+  // Glossar-Suche
+  const gs = document.getElementById('glsuche') as HTMLInputElement;
+  gs.addEventListener('input', () => {
+    const q = gs.value.trim().toLowerCase();
+    document.querySelectorAll<HTMLElement>('#glliste .gl').forEach((g) => { g.hidden = !!q && !g.textContent!.toLowerCase().includes(q); });
+  });
+
+  // Fehler-Diagnose (Entscheidungsbaum)
+  type Knoten = { f: string; a: [string, string][] } | { e: string; t: string; l?: string; link?: string };
+  const B: Record<string, Knoten> = {
+    start: { f: 'Was nervt dich gerade am meisten?', a: [['Sie ist langsam', 'lang'], ['Sie macht nicht, was ich sage', 'regel'], ['Sie hängt oder antwortet nie', 'haengt'], ['Die Antworten sehen komisch aus', 'komisch']] },
+    lang: { f: 'Ist nur die erste Antwort langsam, und danach geht\'s schneller?', a: [['Ja, genau', 'cache'], ['Nein, alles ist langsam', 'vram']] },
+    cache: { e: 'Der Zwischenspeicher greift nicht', t: 'Das Modell liest den Anfang jedes Mal neu ein. Meist steht vorne im Prompt etwas, das sich ändert, zum Beispiel die Uhrzeit oder eine wechselnde Werkzeugliste.', l: 'Anfang des Prompts konstant halten, Wechselndes an die Nachricht hängen, vorwärmen.', link: '/blog/108-sekunden' },
+    vram: { e: 'Das Modell passt nicht in die Grafikkarte', t: 'Liegt ein Teil des Modells im normalen Arbeitsspeicher, rechnet die CPU mit, und das ist viel langsamer.', l: 'Kleineres Modell nehmen oder im GPU-Rechner prüfen, was passt.', link: '#gpu' },
+    regel: { f: 'Steht die Regel nur in den Anweisungen (System-Prompt)?', a: [['Ja', 'prompt'], ['Nein, sie ist auch im Code', 'werkzeug']] },
+    prompt: { e: 'Regeln im System-Prompt wirken schwach', t: 'Lange Anweisungen ganz oben verlieren an Gewicht, bis das Modell bei deiner Frage ankommt.', l: 'Harte Regeln in den Code, Hinweise direkt ins Werkzeug-Ergebnis.', link: '/blog/regeln-in-den-code' },
+    werkzeug: { e: 'Das Werkzeug-Ergebnis sagt nicht deutlich genug, was zu tun ist', t: 'Das Modell entscheidet nach dem, was es zuletzt gelesen hat. Ist das Ergebnis eines Werkzeugs vage, rät es.', l: 'Klare Hinweise ins Ergebnis schreiben, zum Beispiel „Frag den Nutzer, bevor du weitermachst“.', link: '/blog/regeln-in-den-code' },
+    haengt: { f: 'Kommt vorher eine Flut aus Leerzeilen oder endloses „Nachdenken“?', a: [['Leerzeilen', 'leer'], ['Endloses Nachdenken', 'denken'], ['Weiß ich nicht', 'waechter']] },
+    leer: { e: 'Leerzeilen-Flut legt die Textprüfung lahm', t: 'Suchmuster in deiner Nachbearbeitung können an sehr langem Leerraum hängen bleiben und den ganzen Server blockieren.', l: 'Nach 400 Zeichen Leerraum abbrechen, Textprüfungen mit Zeitlimit laufen lassen.', link: '/blog/leerzeilen-panne' },
+    denken: { e: 'Denk-Schleife', t: 'Manche Modelle denken im Kreis und kommen nie zur Antwort.', l: 'Nach einer festen Länge abbrechen und einmal ohne Nachdenken neu fragen. Klappt das nicht, an ein stärkeres Modell übergeben.' },
+    waechter: { e: 'Erst mal absichern', t: 'Ohne Protokoll weißt du nicht, was passiert ist.', l: 'Jede Anfrage protokollieren und einen Wächter einbauen, der neu startet, wenn minutenlang nichts kommt.', link: '/blog/leerzeilen-panne' },
+    komisch: { f: 'Was genau ist komisch?', a: [['Sie wiederholt sich oder unterschreibt', 'wdh'], ['Werkzeug-Aufrufe stehen als Text da', 'tooltext']] },
+    wdh: { e: 'Typische Modell-Macken', t: 'Lokale Modelle hängen gern ihren Namen an oder schreiben denselben Absatz zweimal.', l: 'Eine Nachbearbeitung, die doppelte Absätze und Unterschriften entfernt. Jede Regel mit Testfall.' },
+    tooltext: { e: 'Das Modell schreibt den Werkzeug-Aufruf, statt ihn auszuführen', t: 'Kleinere Modelle formatieren den Aufruf manchmal als normalen Text.', l: 'Solche Texte erkennen und den Aufruf trotzdem ausführen. Schon erledigte Aufrufe überspringen.' },
+  };
+  const pfad: string[] = [];
+  const elF = document.getElementById('diagfrage')!, elA = document.getElementById('diagantw')!, elE = document.getElementById('diagerg')!, elP = document.getElementById('diagpfad')!;
+  function zeige(id: string) {
+    const k = B[id];
+    elA.innerHTML = ''; elE.innerHTML = '';
+    elP.textContent = pfad.length ? 'Deine Antworten: ' + pfad.join(' → ') : '';
+    if ('f' in k) {
+      elF.textContent = k.f;
+      k.a.forEach(([txt, ziel]) => {
+        const b = document.createElement('button'); b.className = 'knopf'; b.type = 'button'; b.textContent = txt;
+        b.onclick = () => { pfad.push(txt); zeige(ziel); };
+        elA.appendChild(b);
+      });
+    } else {
+      elF.textContent = 'Das ist es vermutlich:';
+      elE.innerHTML = `<div class="ergebnis"><h3>${k.e}</h3><p>${k.t}</p>${k.l ? `<p><b>Lösung:</b> ${k.l}</p>` : ''}${k.link ? `<p><a href="${k.link}">Mehr dazu →</a></p>` : ''}</div>`;
+      const b = document.createElement('button'); b.className = 'knopf'; b.type = 'button'; b.textContent = 'Nochmal von vorn';
+      b.onclick = () => { pfad.length = 0; zeige('start'); };
+      elA.appendChild(b);
+      document.querySelectorAll<HTMLImageElement>('#diagnose img.ori').forEach(oriNochmal);
+    }
+  }
+  zeige('start');
+</script>

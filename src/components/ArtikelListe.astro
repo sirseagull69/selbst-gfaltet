@@ -1,0 +1,21 @@
+---
+import { KATEGORIEN, datumDE } from '../lib';
+interface Props { artikel: any[]; max?: number }
+const { artikel, max } = Astro.props;
+const zaehl: Record<string, number> = {};
+artikel.forEach((a) => (zaehl[a.data.kategorie] = (zaehl[a.data.kategorie] ?? 0) + 1));
+const kats = Object.keys(KATEGORIEN).filter((k) => zaehl[k]);
+---
+<div class="tabs" aria-label="Nach Kategorie filtern">
+  <button class="tab aktiv" data-f="alle" aria-pressed="true">Alle <span>{artikel.length}</span></button>
+  {kats.map((k) => <button class="tab" data-f={k} aria-pressed="false">{KATEGORIEN[k]} <span>{zaehl[k]}</span></button>)}
+</div>
+<div class="liste" data-max={max}>
+  {artikel.map((a) => (
+    <a class="eintrag" href={`/blog/${a.id}`} data-kat={a.data.kategorie}>
+      <time datetime={a.data.datum.toISOString().slice(0, 10)}>{datumDE(a.data.datum)}</time>
+      <div><span class={`kat kat-${a.data.kategorie}`}>{KATEGORIEN[a.data.kategorie]}</span><h3>{a.data.titel}</h3><p>{a.data.beschreibung}</p></div>
+      <span class="lese">{a.data.lesezeit} Min.</span>
+    </a>
+  ))}
+</div>

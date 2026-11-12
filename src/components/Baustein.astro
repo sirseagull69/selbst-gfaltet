@@ -1,0 +1,9 @@
+---
+import Icon from './Icon.astro';
+interface Props { titel: string; icon?: string; class?: string; id?: string }
+const { titel, icon = 'kurz', class: cls = '', id } = Astro.props;
+---
+<div class="baustein" id={id}>
+  <div class="bkopf"><Icon name={icon} />{titel}</div>
+  <div class={`bkoerper ${cls}`}><slot /></div>
+</div>
