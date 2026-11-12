@@ -13,6 +13,7 @@ Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt
 - Ori-Animationen in `public/anim/` (`-abendrot` = heller Modus, `-hell` = dunkler Modus). Quelle ist origami (`public/anim/` dort). Ori sieht überall exakt gleich aus, keine eigenen Vogel-Zeichnungen. Alle Animationen laufen in Schleife (`repeatCount="indefinite"`, nie `fill="freeze"`).
 - Schriften selbst gehostet über `@fontsource` (keine Google-Fonts-Links, Datenschutz).
 - Prüfen: `npm run build` muss ohne Fehler durchlaufen.
+- Raster im CSS immer mit `minmax(0,1fr)` statt `1fr`, sonst scrollt die Seite auf dem Handy seitlich.
 
 ## Inhalt
 - **Ton:** Du-Form, locker, kurz, ehrlich, ein bisschen Schwäbisch. Pannen gehören dazu. Kein Marketing-Sprech, keine Emojis.
