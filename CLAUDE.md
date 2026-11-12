@@ -24,7 +24,7 @@ Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt
 ## Ablauf für neue Artikel
 1. Material kommt aus dem Änderungsverlauf der origami-Doku (claude.ai-Projekt „Origami“, Doku „Dokumentation“). Aus diesem Projekt heraus ist die Doku nicht lesbar. Lesbar sind Nils' Artifacts, vor allem „origami von innen“ (Aufbau, Aufgabenteilung, Werkzeuge, Schutzschicht, Gedächtnis, Netz, Speicher, Pläne) und „Modell-Dreikampf origami“. Fehlt was, Nils fragen.
 2. Entwurf immer in einem eigenen Branch `entwurf/<slug>`, nie direkt auf `main`, dazu einen Pull Request anlegen.
-3. Nils liest, ändert den Ton und gibt frei. Sagt er „passt“, merged Claude den PR selbst.
+3. Jeden Entwurf direkt im Chat zeigen (Artikeltext plus Vorschau-Link `selbst-gfaltet-git-<branch>-lootkurs.vercel.app`), nicht nur den PR verlinken. Nils liest, ändert den Ton und gibt frei. Sagt er „passt“, merged Claude den PR selbst.
 4. Persönliches von Nils darf rein (Werdegang, Findus), aber nichts von der Arbeit. lootkurs.de kommt auf dem Blog nicht namentlich vor, höchstens als „Preisvergleichsprogramm auf Basis von …“. Pokémon-Spiele und -Projekte kommen nicht vor.
 5. Seit dem Neustart im Nov 2026: keine Fehlersuche-Artikel mehr, lieber coole Artikel und mehr über Nils selbst. Persönliches bei Bedarf bei Nils erfragen.
 6. Nach jeder Änderung den Redaktionsplan in Notion aktualisieren (Status, PR-Link).
