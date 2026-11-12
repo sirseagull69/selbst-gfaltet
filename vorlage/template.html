@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Selbst gfaltet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Caveat:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* Layout-Idee: Werkstatt-Notizbuch. Kariertes Papier, Tinte, Textmarker; Ori kommentiert handschriftlich am Rand. */
+:root{
+  --papier:#f5f4ee;
+  --karo:rgba(40,60,110,.07);
+  --tinte:#1d2742;
+  --bleistift:#5d6478;
+  --marker:#ffe36e;
+  --blatt:#ffffff;
+  --linie:#d9d8cf;
+  --ori:#c2410c;
+  --ok:#2f7d4f;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --text:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --hand:"Caveat", "Comic Sans MS", cursive;
+  --mono:"JetBrains Mono", Consolas, monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --papier:#131a2b; --karo:rgba(180,200,255,.05); --tinte:#e9ecf5; --bleistift:#a3abc2;
+    --marker:#8a7420; --blatt:#1b2338; --linie:#2e3852; --ori:#ff8a4c; --ok:#7fd6a0; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --papier:#131a2b; --karo:rgba(180,200,255,.05); --tinte:#e9ecf5; --bleistift:#a3abc2;
+  --marker:#8a7420; --blatt:#1b2338; --linie:#2e3852; --ori:#ff8a4c; --ok:#7fd6a0; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background-color:var(--papier); color:var(--tinte);
+  background-image:linear-gradient(var(--karo) 1px,transparent 1px),linear-gradient(90deg,var(--karo) 1px,transparent 1px);
+  background-size:24px 24px;
+  font-family:var(--text); font-size:18px; line-height:1.65;
+}
+img{max-width:100%}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--ori); outline-offset:3px; border-radius:4px}
+.wrap{max-width:1120px; margin:0 auto; padding:0 24px}
+h1,h2,h3{font-family:var(--display); line-height:1.12; text-wrap:balance; margin:0}
+h1{font-size:clamp(2.2rem,5vw,3.6rem); font-weight:800; letter-spacing:-.02em}
+h2{font-size:clamp(1.6rem,3vw,2.2rem); font-weight:700; letter-spacing:-.01em}
+h3{font-size:1.2rem; font-weight:700}
+.mark{background:linear-gradient(transparent 55%,var(--marker) 55%,var(--marker) 90%,transparent 90%); padding:0 .1em}
+.hand{font-family:var(--hand); font-size:1.5rem; line-height:1.15; color:var(--ori)}
+.ori-dark{display:none}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .ori-light{display:none} :root:not([data-theme="light"]) .ori-dark{display:inline}}
+:root[data-theme="dark"] .ori-light{display:none} :root[data-theme="dark"] .ori-dark{display:inline}
+
+/* Kopf */
+header{border-bottom:2px solid var(--tinte); background:var(--papier)}
+.kopf{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:14px 24px; max-width:1120px; margin:0 auto; flex-wrap:wrap}
+.logo{display:flex; align-items:center; gap:10px; text-decoration:none; font-family:var(--display); font-weight:800; font-size:1.45rem}
+.logo img{width:44px; height:44px}
+nav{display:flex; gap:6px; flex-wrap:wrap}
+nav a{font-family:var(--display); font-weight:500; font-size:.98rem; text-decoration:none; padding:8px 12px; border-radius:8px; min-height:44px; display:inline-flex; align-items:center}
+nav a:hover,nav a[aria-current="page"]{background:var(--marker); color:var(--tinte)}
+
+/* Ansichten */
+.ansicht{display:none}
+.ansicht.aktiv{display:block}
+
+/* Start */
+.held{display:grid; grid-template-columns:1.4fr .8fr; gap:40px; align-items:center; padding:56px 0 40px}
+.held p.lead{font-size:1.2rem; max-width:34em; color:var(--bleistift); margin:18px 0 0}
+.held .kicker{font-family:var(--hand); font-size:1.6rem; color:var(--ori); display:block; margin-bottom:6px}
+.ori-rand{position:relative; text-align:center}
+.ori-rand img{width:220px; height:220px}
+.ori-rand .hand{display:block; transform:rotate(-3deg); margin-top:-6px}
+.knoepfe{display:flex; gap:12px; flex-wrap:wrap; margin-top:26px}
+.knopf{font-family:var(--display); font-weight:700; text-decoration:none; padding:12px 18px; border:2px solid var(--tinte); border-radius:10px; min-height:48px; display:inline-flex; align-items:center; gap:8px; background:var(--blatt); cursor:pointer; font-size:1rem; color:var(--tinte)}
+.knopf.voll{background:var(--tinte); color:var(--papier)}
+.knopf:hover{transform:translate(-2px,-2px); box-shadow:4px 4px 0 var(--tinte)}
+section.block{padding:40px 0}
+.blockkopf{display:flex; align-items:end; justify-content:space-between; gap:16px; margin-bottom:22px; flex-wrap:wrap}
+.blockkopf p{margin:6px 0 0; color:var(--bleistift)}
+.lernwege{display:grid; grid-template-columns:repeat(3,1fr); gap:20px}
+.weg{background:var(--blatt); border:2px solid var(--tinte); border-radius:14px; padding:22px; display:flex; flex-direction:column; gap:10px; text-decoration:none; position:relative}
+.weg:hover{box-shadow:6px 6px 0 var(--tinte); transform:translate(-3px,-3px)}
+.weg .nr{font-family:var(--mono); font-size:.8rem; color:var(--bleistift)}
+.weg p{margin:0; font-size:1rem; color:var(--bleistift)}
+.fortschritt{display:flex; gap:4px; margin-top:auto; padding-top:8px}
+.fortschritt span{flex:1; height:8px; border-radius:4px; background:var(--linie)}
+.fortschritt span.da{background:var(--ori)}
+.meta{display:flex; gap:10px; flex-wrap:wrap; font-family:var(--display); font-size:.85rem}
+.chip{border:1.5px solid var(--linie); border-radius:999px; padding:2px 10px; background:var(--papier)}
+.liste{display:grid; gap:0; border-top:2px solid var(--tinte)}
+.eintrag{display:grid; grid-template-columns:110px 1fr auto; gap:20px; padding:18px 4px; border-bottom:1px solid var(--linie); text-decoration:none; align-items:baseline}
+.eintrag:hover h3{text-decoration:underline; text-decoration-color:var(--ori); text-decoration-thickness:3px}
+.eintrag time{font-family:var(--mono); font-size:.85rem; color:var(--bleistift)}
+.eintrag p{margin:4px 0 0; font-size:1rem; color:var(--bleistift)}
+.eintrag .lese{font-family:var(--display); font-size:.85rem; color:var(--bleistift); white-space:nowrap}
+.zwei{display:grid; grid-template-columns:1fr 1fr; gap:24px}
+.kasten{background:var(--blatt); border:2px solid var(--tinte); border-radius:14px; padding:26px; display:flex; gap:20px; align-items:flex-start}
+.kasten img{width:110px; height:110px; flex:none}
+.kasten p{margin:8px 0 0; font-size:1rem}
+form.brief{display:flex; gap:10px; margin-top:14px; flex-wrap:wrap}
+form.brief input{flex:1; min-width:180px; font:inherit; font-size:1rem; padding:10px 12px; border:2px solid var(--tinte); border-radius:10px; background:var(--papier); color:var(--tinte); min-height:48px}
+.hinweis{font-family:var(--hand); font-size:1.3rem; color:var(--ori); margin:8px 0 0; min-height:1.3em}
+footer{border-top:2px solid var(--tinte); margin-top:40px; padding:28px 0 40px; font-family:var(--display); font-size:.95rem; color:var(--bleistift)}
+footer .wrap{display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap}
+
+/* Lernwege-Ansicht */
+.wegdetail{display:grid; gap:24px; padding-top:40px; padding-bottom:40px}
+.teile{list-style:none; margin:14px 0 0; padding:0; display:grid; gap:8px}
+.teile li{display:grid; grid-template-columns:36px 1fr auto; gap:12px; align-items:center; background:var(--papier); border:1.5px solid var(--linie); border-radius:10px; padding:10px 14px; font-size:1rem}
+.teile li b{font-family:var(--mono); color:var(--ori)}
+.teile li .status{font-family:var(--display); font-size:.8rem; color:var(--bleistift)}
+.teile li.fertig .status{color:var(--ok)}
+
+/* Artikel */
+.artikel{display:grid; grid-template-columns:minmax(0,680px) 240px; gap:48px; padding:48px 0; justify-content:center}
+.artikel header.akopf{border:0; background:none; grid-column:1/-1; max-width:860px}
+.akopf .meta{margin-top:16px}
+.akopf p.lead{font-size:1.22rem; color:var(--bleistift); margin:16px 0 0; max-width:36em}
+.inhalt h2{margin:44px 0 12px; font-size:1.7rem}
+.inhalt p{margin:0 0 16px}
+.rand{position:relative}
+.randnotiz{position:sticky; top:24px; display:flex; flex-direction:column; align-items:center; gap:4px; text-align:center}
+.randnotiz img{width:140px; height:140px}
+.randnotiz .hand{transform:rotate(2deg)}
+.inline-ori{display:flex; gap:14px; align-items:center; margin:22px 0; padding:12px 16px; border-left:4px solid var(--ori); background:var(--blatt); border-radius:0 12px 12px 0}
+.inline-ori img{width:72px; height:72px; flex:none}
+.inline-ori .hand{font-size:1.45rem}
+
+/* Bausteine */
+.baustein{margin:28px 0; background:var(--blatt); border:2px solid var(--tinte); border-radius:14px; overflow:hidden}
+.baustein .bkopf{display:flex; align-items:center; gap:10px; padding:10px 18px; border-bottom:2px solid var(--tinte); background:var(--marker); color:#1d2742; font-family:var(--display); font-weight:700; font-size:.95rem; letter-spacing:.02em}
+.baustein .bkopf svg{width:20px; height:20px; flex:none}
+.bkoerper{padding:20px}
+
+.schritte{list-style:none; margin:0; padding:0; display:grid; gap:14px; counter-reset:s}
+.schritte li{display:grid; grid-template-columns:44px 1fr; gap:14px; counter-increment:s}
+.schritte li::before{content:counter(s); width:44px; height:44px; border-radius:50%; border:2px solid var(--tinte); display:grid; place-items:center; font-family:var(--display); font-weight:800; font-size:1.1rem; background:var(--papier)}
+.schritte h3{font-size:1.05rem; margin-top:8px}
+.schritte p{margin:4px 0 0; font-size:.98rem; color:var(--bleistift)}
+.schritte code,.inhalt code{font-family:var(--mono); font-size:.85em; background:var(--papier); border:1px solid var(--linie); border-radius:5px; padding:1px 6px}
+pre{font-family:var(--mono); font-size:.85rem; background:#1d2742; color:#e9ecf5; border-radius:10px; padding:14px 16px; overflow-x:auto; margin:10px 0 0; line-height:1.5}
+
+.ablauf{overflow-x:auto}
+.ablauf svg{display:block; min-width:600px; width:100%; height:auto}
+.ablauf .k{fill:var(--papier); stroke:var(--tinte); stroke-width:2}
+.ablauf .k2{fill:var(--marker); stroke:var(--tinte); stroke-width:2}
+.ablauf .k3{fill:var(--blatt); stroke:var(--ori); stroke-width:2.5; stroke-dasharray:6 4}
+.ablauf text{fill:var(--tinte); font-family:var(--display); font-size:15px; font-weight:700}
+.ablauf text.klein{font-family:var(--text); font-weight:400; font-size:13px; fill:var(--bleistift)}
+.ablauf text.hand2{font-family:var(--hand); font-size:19px; font-weight:700; fill:var(--ori)}
+.ablauf .pf{stroke:var(--tinte); stroke-width:2; fill:none; marker-end:url(#spitze)}
+.ablauf .pf2{stroke:var(--ori); stroke-width:2; fill:none; stroke-dasharray:5 4; marker-end:url(#spitze2)}
+.ablauf .dot{fill:var(--ori)}
+
+.wasmacht{display:grid; grid-template-columns:repeat(2,1fr); gap:12px}
+.teil{border:1.5px solid var(--linie); border-radius:12px; padding:14px 16px; background:var(--papier)}
+.teil .wer{font-family:var(--display); font-weight:700; display:flex; justify-content:space-between; gap:8px; align-items:baseline}
+.teil .wer span{font-family:var(--mono); font-weight:400; font-size:.75rem; color:var(--bleistift)}
+.teil p{margin:6px 0 0; font-size:.95rem; color:var(--bleistift)}
+.teil .bild{font-family:var(--hand); font-size:1.2rem; color:var(--ori); margin-top:6px}
+
+.messung{width:100%; border-collapse:collapse; font-size:.95rem; font-variant-numeric:tabular-nums}
+.messung th,.messung td{text-align:left; padding:8px 6px; border-bottom:1px solid var(--linie)}
+.messung th{font-family:var(--display); font-size:.85rem; color:var(--bleistift); font-weight:500}
+.balken{height:12px; border-radius:6px; background:var(--ori); display:block}
+.balken.grau{background:var(--bleistift)}
+
+.check{list-style:none; margin:0; padding:0; display:grid; gap:8px}
+.check li{display:flex; gap:12px; align-items:flex-start}
+.check input{width:22px; height:22px; margin-top:4px; accent-color:var(--ok); flex:none}
+.check label{font-size:1rem; cursor:pointer}
+.check input:checked + label{text-decoration:line-through; color:var(--bleistift)}
+
+.kurz{display:grid; grid-template-columns:1fr 1fr; gap:0}
+.kurz > div{padding:16px 20px}
+.kurz > div + div{border-left:2px solid var(--tinte)}
+.kurz h3{font-size:1rem; margin-bottom:8px}
+.kurz ul{margin:0; padding-left:20px; font-size:.97rem}
+
+
+/* origami-Seite */
+.module{display:grid; grid-template-columns:repeat(4,1fr); gap:14px}
+.modul{background:var(--blatt); border:2px solid var(--tinte); border-radius:12px; padding:16px; display:flex; flex-direction:column; gap:6px}
+.modul .typ{font-family:var(--mono); font-size:.72rem; color:var(--bleistift); text-transform:uppercase}
+.modul p{margin:0; font-size:.95rem; color:var(--bleistift)}
+.modul.extra{border-style:dashed}
+.fahrplan{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(3,1fr); gap:0; border:2px solid var(--tinte); border-radius:14px; overflow:hidden; background:var(--blatt)}
+.fahrplan li{padding:20px; display:flex; flex-direction:column; gap:6px}
+.fahrplan li + li{border-left:2px solid var(--tinte)}
+.fahrplan .wann{font-family:var(--display); font-weight:700; font-size:.85rem}
+.fahrplan .wann.jetzt{color:var(--ok)}
+.fahrplan .wann.bald{color:var(--ori)}
+.fahrplan .wann.spaeter{color:var(--bleistift)}
+.fahrplan p{margin:0; font-size:.97rem; color:var(--bleistift)}
+.fuerwen{display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
+.fuerwen .teil{background:var(--blatt)}
+@media (max-width:860px){ .module{grid-template-columns:1fr 1fr} .fahrplan,.fuerwen{grid-template-columns:1fr} .fahrplan li + li{border-left:0; border-top:2px solid var(--tinte)} }
+@media (max-width:420px){ .module{grid-template-columns:1fr} }
+@media (max-width:860px){
+  .held{grid-template-columns:1fr; padding-top:36px}
+  .ori-rand img{width:160px; height:160px}
+  .lernwege,.zwei,.wasmacht,.kurz{grid-template-columns:1fr}
+  .kurz > div + div{border-left:0; border-top:2px solid var(--tinte)}
+  .artikel{grid-template-columns:1fr; gap:0}
+  .rand{display:none}
+  .eintrag{grid-template-columns:1fr; gap:4px}
+}
+@media (max-width:420px){ .wrap{padding:0 16px} .kopf{padding:12px 16px} body{font-size:17px} }
+@media (prefers-reduced-motion: reduce){ *{transition:none!important; scroll-behavior:auto!important} .knopf:hover,.weg:hover{transform:none} }
+
+/* ---- Inhalt wie ein Magazin ---- */
+.zahlen{display:grid; grid-template-columns:repeat(4,1fr); border:2px solid var(--tinte); border-radius:14px; background:var(--blatt); margin-bottom:8px}
+.zahlen div{padding:16px 20px; display:flex; flex-direction:column}
+.zahlen div + div{border-left:2px solid var(--tinte)}
+.zahlen b{font-family:var(--display); font-size:2rem; font-weight:800; line-height:1; font-variant-numeric:tabular-nums}
+.zahlen span{font-family:var(--display); font-size:.9rem; color:var(--bleistift); margin-top:4px}
+.kat{display:inline-block; font-family:var(--display); font-weight:700; font-size:.72rem; letter-spacing:.04em; text-transform:uppercase; padding:3px 9px; border-radius:6px; margin-bottom:6px; background:var(--papier); border:1.5px solid var(--linie)}
+.kat-lokal{background:#e6efff; border-color:#b9cdf5; color:#1d3d8a}
+.kat-sicherheit{background:#e5f5ea; border-color:#b3dcc1; color:#1f5f38}
+.kat-messung{background:#fff3c4; border-color:#ecd77b; color:#6b5300}
+.kat-code{background:#f0e8ff; border-color:#cfbdf2; color:#4a2a8a}
+.kat-panne{background:#ffe7da; border-color:#f5c2a6; color:#8a3108}
+.kat-live{background:#e5f5ea; border-color:#b3dcc1; color:#1f5f38}
+.kat-bald{background:var(--papier); color:var(--bleistift)}
+.kat-gratis{background:var(--marker); border-color:var(--tinte); color:#1d2742}
+.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px}
+.tab{font-family:var(--display); font-weight:500; font-size:.95rem; padding:8px 14px; min-height:44px; border:2px solid var(--tinte); border-radius:999px; background:var(--blatt); color:var(--tinte); cursor:pointer; transition:background .2s, transform .2s}
+.tab span{font-family:var(--mono); font-size:.75rem; color:var(--bleistift); margin-left:4px}
+.tab.aktiv{background:var(--tinte); color:var(--papier)}
+.tab.aktiv span{color:var(--papier); opacity:.7}
+.tab:hover{transform:translateY(-2px)}
+.eintrag[hidden]{display:none}
+.eintrag{transition:background .2s}
+.eintrag:hover{background:var(--blatt)}
+.eintrag.neu{animation:rein .35s ease-out both}
+@keyframes rein{from{transform:translateY(8px)} to{transform:none}}
+.geschenk{display:grid; grid-template-columns:200px 1fr; gap:32px; align-items:center; background:var(--blatt); border:2px solid var(--tinte); border-radius:16px; padding:28px; box-shadow:8px 8px 0 var(--marker)}
+.geschenk p{margin:8px 0 0; color:var(--bleistift)}
+.geschenk .klein{font-family:var(--display); font-size:.85rem; color:var(--bleistift); align-self:center}
+.papier{background:#fff; color:#1d2742; border:1.5px solid #d9d8cf; border-radius:6px; padding:16px; transform:rotate(-4deg); box-shadow:0 10px 24px rgba(0,0,0,.12); display:flex; flex-direction:column; gap:7px; transition:transform .4s}
+.geschenk:hover .papier{transform:rotate(2deg) translateY(-6px)}
+.ptitel{font-family:var(--display); font-weight:800; font-size:1.1rem}
+.pzeile{height:6px; border-radius:3px; background:#e4e3dc}
+.pzeile.kurz{width:60%}
+.pcheck{font-family:var(--hand); font-size:1.1rem; color:#c2410c}
+.wzgitter{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px}
+.wz{background:var(--blatt); border:2px solid var(--tinte); border-radius:14px; padding:18px; text-decoration:none; display:flex; flex-direction:column; gap:6px; align-items:flex-start; transition:transform .2s, box-shadow .2s}
+a.wz:hover{transform:translate(-3px,-3px); box-shadow:6px 6px 0 var(--tinte)}
+.wz svg{width:34px; height:34px; color:var(--ori)}
+.wz p{margin:0; font-size:.95rem; color:var(--bleistift)}
+.kasten-col{flex-direction:column; align-items:stretch}
+.kkopf{display:flex; gap:16px; align-items:center}
+.kkopf img{width:96px; height:96px; flex:none}
+.vergleich{display:grid; gap:12px; margin-top:6px}
+.vz{display:grid; grid-template-columns:120px 1fr 40px; gap:12px; align-items:center; font-family:var(--display); font-size:.95rem}
+.vz b{font-variant-numeric:tabular-nums; text-align:right; font-size:1.1rem}
+.vbar{height:14px; background:var(--papier); border:1.5px solid var(--linie); border-radius:7px; overflow:hidden}
+.vbar i{display:block; height:100%; width:var(--w); background:var(--ori); border-radius:6px}
+.vbar i.grau{background:var(--bleistift)}
+.zeigen .vbar i{animation:wachs 1.1s cubic-bezier(.2,.8,.2,1) both}
+@keyframes wachs{from{width:0}}
+.weiter{font-family:var(--display); font-weight:700; text-decoration:none; color:var(--ori); margin-top:4px}
+.kiste{display:grid; grid-template-columns:repeat(4,1fr); gap:12px}
+.kwz{background:var(--blatt); border:1.5px solid var(--linie); border-radius:12px; padding:14px 16px}
+.kwz .wer{font-family:var(--display); font-weight:700; display:flex; justify-content:space-between; gap:8px; align-items:center}
+.kwz p{margin:6px 0 0; font-size:.93rem; color:var(--bleistift)}
+.nutz{font-family:var(--mono); font-weight:400; font-size:.7rem; padding:2px 7px; border-radius:999px; border:1px solid var(--linie)}
+.nutz-täglich{background:#e5f5ea; color:#1f5f38; border-color:#b3dcc1}
+.nutz-oft{background:#e6efff; color:#1d3d8a; border-color:#b9cdf5}
+.nutz-manchmal{background:var(--papier); color:var(--bleistift)}
+.rechner .rein{display:grid; grid-template-columns:1fr 1fr 1.2fr; gap:16px; align-items:end}
+.feld{display:flex; flex-direction:column; gap:6px}
+.feld label{font-family:var(--display); font-weight:700; font-size:.9rem}
+.feld select,.feld input{font:inherit; font-size:1rem; padding:10px 12px; border:2px solid var(--tinte); border-radius:10px; background:var(--papier); color:var(--tinte); min-height:48px}
+.ori-mini{display:flex; gap:10px; align-items:center}
+.ori-mini img{width:84px; height:84px; flex:none}
+.ori-mini .hand{font-size:1.3rem}
+.raus{display:grid; gap:10px; margin:22px 0 10px}
+.gz{display:grid; grid-template-columns:90px 1fr 190px; gap:14px; align-items:center; font-family:var(--display); font-size:.95rem}
+.gz .gb{height:22px; background:var(--papier); border:1.5px solid var(--linie); border-radius:6px; position:relative; overflow:hidden}
+.gz .gb i{position:absolute; left:0; top:0; bottom:0; border-radius:5px; transition:width .7s cubic-bezier(.2,.8,.2,1)}
+.gz .gb i.gpu{background:var(--ok)}
+.gz .gb i.cpu{background:var(--ori)}
+.gz .gb i.aus{background:var(--linie)}
+.gz .gs{font-size:.85rem}
+.gz .gs.ok{color:var(--ok)} .gz .gs.halb{color:var(--ori)} .gz .gs.nein{color:var(--bleistift)}
+.klein{font-size:.88rem; color:var(--bleistift)}
+.glkopf{display:flex; gap:16px; align-items:end; margin-bottom:16px}
+.gl[hidden]{display:none}
+.geschafft{display:none; align-items:center; gap:14px; margin-top:16px; padding:12px 16px; border:2px dashed var(--ok); border-radius:12px}
+.geschafft.da{display:flex; animation:rein .4s ease-out both}
+.geschafft img{width:96px; height:96px; flex:none}
+pre.tippen::after{content:"▋"; color:var(--marker); margin-left:2px; animation:blink 1s steps(1) infinite}
+pre.tippen.fertig::after{content:""}
+@keyframes blink{50%{opacity:0}}
+pre .aus{color:#9fb0d8; display:block}
+.mark{background-size:100% 100%; background-repeat:no-repeat}
+.aktiv .mark{animation:marker .9s .2s cubic-bezier(.3,.8,.3,1) both}
+@keyframes marker{from{background-size:0% 100%}}
+.weg,.kasten,.wz,.baustein{transition:transform .25s, box-shadow .25s}
+img.ori{cursor:pointer}
+@media (max-width:860px){
+  .zahlen{grid-template-columns:1fr 1fr} .zahlen div:nth-child(3){border-left:0} .zahlen div:nth-child(n+3){border-top:2px solid var(--tinte)}
+  .geschenk{grid-template-columns:1fr} .papier{max-width:220px}
+  .wzgitter,.kiste{grid-template-columns:1fr 1fr}
+  .rechner .rein{grid-template-columns:1fr}
+  .gz{grid-template-columns:70px 1fr; } .gz .gs{grid-column:1/-1}
+}
+@media (max-width:420px){ .wzgitter,.kiste{grid-template-columns:1fr} .vz{grid-template-columns:96px 1fr 32px} }
+@media (prefers-reduced-motion: reduce){ .fluss{display:none} .aktiv .mark,.zeigen .vbar i,.eintrag.neu,.geschafft.da{animation:none} pre.tippen::after{animation:none} }
+</style>
+</head>
+<body>
+<header>
+  <div class="kopf">
+    <a class="logo" href="#start"><img class="ori ori-light" src="{{ruhezustand-abendrot}}" alt=""><img class="ori ori-dark" src="{{ruhezustand-hell}}" alt="">Selbst gfaltet</a>
+    <nav aria-label="Hauptmenü">
+      <a href="#start" data-nav="start">Start</a>
+      <a href="#lernwege" data-nav="lernwege">Lernwege</a>
+      <a href="#blog" data-nav="blog">Blog</a>
+      <a href="#werkzeuge" data-nav="werkzeuge">Werkzeuge</a>
+      <a href="#origami" data-nav="origami">origami</a>
+      <a href="#ueber" data-nav="ueber">Über mich</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- ============ START ============ -->
+<div class="ansicht" id="v-start">
+  <div class="wrap">
+    <div class="held">
+      <div>
+        <span class="kicker">Grüß Gott aus em Gäu!</span>
+        <h1>Falt dir deine eigene KI. <span class="mark">Ich zeig dir, wie's geht.</span></h1>
+        <p class="lead">Ein KI-Assistent, der bei dir zu Hause läuft, deine Dateien kennt und nicht jede Frage in die Cloud schickt. Ich hab mir so einen gebaut, sie heißt Ori. Hier zeig ich dir Schritt für Schritt, wie du dir deinen eigenen faltest. Ohne Studium, mit Bildern, und mit allen Pannen, die ich schon für dich hatte.</p>
+        <div class="knoepfe">
+          <a class="knopf voll" href="#lernwege">Lernweg aussuchen</a>
+          <a class="knopf" href="#origami">Was ist origami?</a>
+        </div>
+      </div>
+      <div class="ori-rand">
+        <img class="ori ori-light" src="{{winkt-abendrot}}" alt="Ori, ein Papiervogel, winkt"><img class="ori ori-dark" src="{{winkt-hell}}" alt="Ori, ein Papiervogel, winkt">
+        <span class="hand">Ich bin das Original.<br>Deine wird nur ähnlich.</span>
+      </div>
+    </div>
+    <div class="zahlen">
+      <div><b>3</b><span>Lernwege</span></div>
+      <div><b>12</b><span>Artikel</span></div>
+      <div><b>4</b><span>Werkzeuge</span></div>
+      <div><b>12</b><span>Begriffe erklärt</span></div>
+    </div>
+  </div>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="geschenk">
+        <div class="papier" aria-hidden="true">
+          <span class="ptitel">Der Faltplan</span>
+          <span class="pzeile"></span><span class="pzeile"></span><span class="pzeile kurz"></span>
+          <span class="pcheck">☐ Ollama installiert</span><span class="pcheck">☐ Modell geladen</span><span class="pcheck">☐ Erste Frage gestellt</span>
+        </div>
+        <div>
+          <span class="kat kat-gratis">Kostenlos</span>
+          <h2>Der Faltplan: in 10 Schritten zur eigenen KI</h2>
+          <p>Eine Seite zum Ausdrucken. Alle Schritte vom leeren PC bis zum Assistenten, den du vom Handy aus erreichst, mit Häkchen zum Abhaken.</p>
+          <div class="knoepfe"><a class="knopf voll" href="#werkzeuge">Faltplan holen</a><span class="klein">PDF · Druckversion · Markdown</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="blockkopf">
+        <div><h2>Lernwege</h2><p>Der Reihe nach, mit Bildern, Schritten und Checklisten. Du musst nichts vorher können.</p></div>
+        <a class="knopf" href="#lernwege">Alle Lernwege</a>
+      </div>
+      <div class="lernwege">
+        <a class="weg" href="#lernwege">
+          <span class="nr">LERNWEG 01 · 6 TEILE</span>
+          <h3>Falt dir deine eigene KI</h3>
+          <p>Vom „Was ist Ollama?“ bis zum eigenen Assistenten, den du vom Handy aus erreichst. Nach dem Bauplan von origami.</p>
+          <div class="meta"><span class="chip">Einsteiger</span><span class="chip">Windows</span></div>
+          <div class="fortschritt" aria-label="2 von 6 Teilen erschienen"><span class="da"></span><span class="da"></span><span></span><span></span><span></span><span></span></div>
+        </a>
+        <a class="weg" href="#lernwege">
+          <span class="nr">LERNWEG 02 · 5 TEILE</span>
+          <h3>Claude Code ohne Informatikstudium</h3>
+          <p>Eigene Werkzeuge bauen, auch wenn du nie programmieren gelernt hast. Und wo man aufpassen muss.</p>
+          <div class="meta"><span class="chip">Einsteiger</span><span class="chip">Code</span></div>
+          <div class="fortschritt" aria-label="1 von 5 Teilen erschienen"><span class="da"></span><span></span><span></span><span></span><span></span></div>
+        </a>
+        <a class="weg" href="#lernwege">
+          <span class="nr">LERNWEG 03 · NACHSCHLAGEN</span>
+          <h3>Warum macht meine KI das?</h3>
+          <p>Problemdiagnose: Sie wiederholt sich, erfindet Sachen, ist langsam. Ursache finden, beheben.</p>
+          <div class="meta"><span class="chip">Hilfe</span><span class="chip">12 Probleme</span></div>
+          <div class="fortschritt" aria-label="4 von 12 Problemen beschrieben"><span class="da"></span><span class="da"></span><span class="da"></span><span class="da"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="blockkopf">
+        <div><h2>Neu aus der Werkstatt</h2><p>Die neuesten Artikel. Filter nach dem, was dich interessiert.</p></div>
+        <a class="knopf" href="#blog">Alle 12 Artikel</a>
+      </div>
+      <div class="tabs" role="tablist" aria-label="Kategorie">
+        <button class="tab aktiv" data-f="alle">Alle <span>12</span></button>
+        <button class="tab" data-f="lokal">Lokale KI <span>3</span></button>
+        <button class="tab" data-f="sicherheit">Sicherheit <span>3</span></button>
+        <button class="tab" data-f="messung">Messungen <span>2</span></button>
+        <button class="tab" data-f="code">Claude Code <span>2</span></button>
+        <button class="tab" data-f="panne">Werkstatt-Pannen <span>2</span></button>
+      </div>
+      <div class="liste filterbar" data-max="6">
+        <a class="eintrag" href="#artikel-erste-ki" data-kat="lokal">
+          <time datetime="2026-11-12">12.11.2026</time>
+          <div><span class="kat kat-lokal">Lokale KI</span><h3>Ich hab mir eine KI gebaut, die auf meinem PC wohnt</h3><p>Was origami kann, was es kostet und wie die Teile zusammenspielen. Mit Schaubild.</p></div>
+          <span class="lese">9 Min.</span>
+        </a><a class="eintrag" href="#artikel-erste-ki" data-kat="messung">
+          <time datetime="2026-11-08">08.11.2026</time>
+          <div><span class="kat kat-messung">Messungen</span><h3>Warum die erste Antwort 108 Sekunden dauert</h3><p>Zwischenspeicher, Vorwärmen und warum das Einlesen langsam ist, nicht das Schreiben.</p></div>
+          <span class="lese">7 Min.</span>
+        </a><a class="eintrag" href="#artikel-erste-ki" data-kat="lokal">
+          <time datetime="2026-11-05">05.11.2026</time>
+          <div><span class="kat kat-lokal">Lokale KI</span><h3>Regeln im System-Prompt? Ignoriert sie halt.</h3><p>Warum ich Regeln nicht mehr reinschreibe, sondern in den Code baue. Vorher-nachher.</p></div>
+          <span class="lese">6 Min.</span>
+        </a><a class="eintrag" href="#artikel-erste-ki" data-kat="sicherheit">
+          <time datetime="2026-11-01">01.11.2026</time>
+          <div><span class="kat kat-sicherheit">Sicherheit</span><h3>Meine KI darf nichts löschen, ohne zu fragen</h3><p>Freigaben selbst gebaut: welche Befehle durchgehen und welche immer nachfragen.</p></div>
+          <span class="lese">8 Min.</span>
+        </a><a class="eintrag" href="#artikel-erste-ki" data-kat="messung">
+          <time datetime="2026-10-29">29.10.2026</time>
+          <div><span class="kat kat-messung">Messungen</span><h3>Gemma gegen Qwen auf einer RTX 4060</h3><p>Zwei lokale Modelle, dieselben Aufgaben, 81 zu 76 Punkten. So habe ich getestet.</p></div>
+          <span class="lese">11 Min.</span>
+        </a><a class="eintrag" href="#artikel-erste-ki" data-kat="code">
+          <time datetime="2026-10-25">25.10.2026</time>
+          <div><span class="kat kat-code">Claude Code</span><h3>Claude Code ohne Programmierkenntnisse: mein erstes Tool</h3><p>Von der Idee zur fertigen Lizenz-Übersicht, ohne eine Zeile selbst zu tippen.</p></div>
+          <span class="lese">10 Min.</span>
+        </a><a class="eintrag" href="#artikel-erste-ki" data-kat="panne">
+          <time datetime="2026-10-22">22.10.2026</time>
+          <div><span class="kat kat-panne">Werkstatt-Panne</span><h3>Die Nacht, in der meine KI nur noch Leerzeilen schrieb</h3><p>Eine Panne, ein eingefrorener Server und was ich daraus gebaut habe.</p></div>
+          <span class="lese">5 Min.</span>
+        </a><a class="eintrag" href="#artikel-erste-ki" data-kat="sicherheit">
+          <time datetime="2026-10-18">18.10.2026</time>
+          <div><span class="kat kat-sicherheit">Sicherheit</span><h3>Von unterwegs auf die KI zu Hause: Tailscale erklärt</h3><p>Wie du deinen PC vom Handy erreichst, ohne ihn ins offene Internet zu stellen.</p></div>
+          <span class="lese">9 Min.</span>
+        </a><a class="eintrag" href="#artikel-erste-ki" data-kat="lokal">
+          <time datetime="2026-10-14">14.10.2026</time>
+          <div><span class="kat kat-lokal">Lokale KI</span><h3>Gemma oder Claude? Wann ich welches Modell nehme</h3><p>Kostenlos und lokal gegen stark und in der Cloud. Meine Aufteilung nach Aufgaben.</p></div>
+          <span class="lese">6 Min.</span>
+        </a><a class="eintrag" href="#artikel-erste-ki" data-kat="panne">
+          <time datetime="2026-10-10">10.10.2026</time>
+          <div><span class="kat kat-panne">Werkstatt-Panne</span><h3>Als meine KI ihr Gedächtnis gelöscht hat</h3><p>Ohne Rückfrage, einfach weg. Warum Vergessen jetzt einen Papierkorb hat.</p></div>
+          <span class="lese">4 Min.</span>
+        </a><a class="eintrag" href="#artikel-erste-ki" data-kat="sicherheit">
+          <time datetime="2026-10-06">06.10.2026</time>
+          <div><span class="kat kat-sicherheit">Sicherheit</span><h3>Zwei-Faktor-Login selbst gebaut</h3><p>Passwort plus Code vom Handy, Sperre nach Fehlversuchen. Einfacher als gedacht.</p></div>
+          <span class="lese">8 Min.</span>
+        </a><a class="eintrag" href="#artikel-erste-ki" data-kat="code">
+          <time datetime="2026-10-02">02.10.2026</time>
+          <div><span class="kat kat-code">Claude Code</span><h3>Git für Leute, die Angst vorm Terminal haben</h3><p>Speichern, zurückspringen, nichts kaputt machen. Mit Bildern statt Fachchinesisch.</p></div>
+          <span class="lese">7 Min.</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="blockkopf">
+        <div><h2>Kostenlose Werkzeuge</h2><p>Kleine Helfer zum Ausprobieren, direkt im Browser.</p></div>
+        <a class="knopf" href="#werkzeuge">Alle Werkzeuge</a>
+      </div>
+      <div class="wzgitter">
+        <a class="wz" href="#werkzeuge"><span class="kat kat-live">Live</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="10" rx="2"/><path d="M6 11h2M10 11h2M6 17v2M18 17v2"/></svg><h3>GPU-Rechner</h3><p>Welche Modelle laufen auf deiner Grafikkarte?</p></a>
+        <a class="wz" href="#werkzeuge"><span class="kat kat-live">Live</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h12l4 4v12H4z"/><path d="M8 10h8M8 14h8M8 18h5"/></svg><h3>Fachchinesisch auf Deutsch</h3><p>12 Begriffe, jeder mit Alltagsvergleich.</p></a>
+        <a class="wz" href="#werkzeuge"><span class="kat kat-bald">Bald</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><h3>Tempo-Schätzer</h3><p>Wie lange wartest du auf eine Antwort?</p></a>
+        <a class="wz" href="#werkzeuge"><span class="kat kat-bald">Bald</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v6M12 15v6M5 9h14l-3 6H8z"/></svg><h3>Fehler-Diagnose</h3><p>Ja/Nein klicken, Ursache finden.</p></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap zwei">
+      <div class="kasten kasten-col">
+        <div class="kkopf"><img class="ori ori-light" src="{{vergleicht-abendrot}}" alt="Ori vergleicht"><img class="ori ori-dark" src="{{vergleicht-hell}}" alt="Ori vergleicht"><div><span class="kat kat-messung">Messung</span><h3>Modellvergleich auf meiner Hardware</h3><p>Dieselben Aufgaben, bewertet von 0 bis 100. RTX 4060, 8 GB.</p></div></div>
+        <div class="vergleich">
+          <div class="vz"><span>Gemma 4 26B</span><span class="vbar"><i style="--w:81%"></i></span><b>81</b></div>
+          <div class="vz"><span>Qwen3.6 35B</span><span class="vbar"><i class="grau" style="--w:76%"></i></span><b>76</b></div>
+        </div>
+        <a class="weiter" href="#artikel-erste-ki">Zum Messprotokoll →</a>
+      </div>
+      <div class="kasten kasten-col">
+        <div class="kkopf"><img class="ori ori-light" src="{{sassy-abendrot}}" alt="Ori schaut skeptisch"><img class="ori ori-dark" src="{{sassy-hell}}" alt="Ori schaut skeptisch"><div><span class="kat kat-lokal">Lokal gegen Cloud</span><h3>Gemma gegen Claude</h3><p>70 Testaufgaben aus meinem Alltag, Punkte von 70.</p></div></div>
+        <div class="vergleich">
+          <div class="vz"><span>Claude Opus</span><span class="vbar"><i style="--w:98.6%"></i></span><b>69</b></div>
+          <div class="vz"><span>Gemma 4 26B</span><span class="vbar"><i class="grau" style="--w:78.6%"></i></span><b>55</b></div>
+        </div>
+        <p class="hand" style="margin:10px 0 0">Ich bin trotzdem lieber lokal. Mich zählt keiner.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="blockkopf"><div><h2>Meine Werkzeugkiste</h2><p>Was ich wirklich benutze. Ehrlich bewertet, keine Werbelinks.</p></div></div>
+      <div class="kiste"><div class="kwz"><div class="wer">Ollama<span class="nutz nutz-täglich">täglich</span></div><p>Lässt die Modelle laufen. Kostenlos, einfach, macht selten Ärger.</p></div><div class="kwz"><div class="wer">Claude Code<span class="nutz nutz-täglich">täglich</span></div><p>Schreibt den Großteil meines Codes. Ohne das gäbe es origami nicht.</p></div><div class="kwz"><div class="wer">Tailscale<span class="nutz nutz-täglich">täglich</span></div><p>Verbindet Handy und Laptop sicher mit dem PC zu Hause.</p></div><div class="kwz"><div class="wer">Node.js<span class="nutz nutz-täglich">täglich</span></div><p>Darauf läuft der origami-Server. Kein Framework, bewusst schlicht.</p></div><div class="kwz"><div class="wer">Git<span class="nutz nutz-täglich">täglich</span></div><p>Damit ich alles zurückdrehen kann, wenn ich was kaputt mache. Passiert oft.</p></div><div class="kwz"><div class="wer">Supabase<span class="nutz nutz-oft">oft</span></div><p>Datenbank für meine kleineren Tools. Kostenlos für den Anfang.</p></div><div class="kwz"><div class="wer">Vercel<span class="nutz nutz-oft">oft</span></div><p>Stellt Webseiten online, auch diesen Blog.</p></div><div class="kwz"><div class="wer">Playwright<span class="nutz nutz-manchmal">manchmal</span></div><p>Steuert einen Browser für die KI, damit sie Webseiten bedienen kann.</p></div></div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap zwei">
+      <div class="kasten">
+        <img class="ori ori-light" src="{{liest-abendrot}}" alt="Ori liest"><img class="ori ori-dark" src="{{liest-hell}}" alt="Ori liest">
+        <div>
+          <h3>Darf ich vorstellen: Ori</h3>
+          <p>Meine origami-KI. Papiervogel, schlagfertig, meistens im Recht. Sie läuft bei mir zu Hause auf dem PC, ist das Beispiel in allen Lernwegen und kommentiert hier am Rand, was ich so schreibe.</p>
+          <p class="hand">Jemand muss ja aufpassen.</p>
+        </div>
+      </div>
+      <div class="kasten">
+        <img class="ori ori-light" src="{{schreibt-abendrot}}" alt="Ori schreibt"><img class="ori ori-dark" src="{{schreibt-hell}}" alt="Ori schreibt">
+        <div>
+          <h3>Feierabend-Commit</h3>
+          <p>Alle zwei Wochen eine Mail: der neue Artikel, eine Panne der Woche und ein Werkzeug, das ich gerade benutze. Kein Verkauf.</p>
+          <form class="brief" id="brief">
+            <label for="mail" style="position:absolute;left:-9999px">E-Mail-Adresse</label>
+            <input id="mail" type="email" placeholder="deine@mail.de" required>
+            <button class="knopf voll" type="submit">Eintragen</button>
+          </form>
+          <p class="hinweis" id="briefhinweis" aria-live="polite"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ BLOG ============ -->
+<div class="ansicht" id="v-blog">
+  <div class="wrap" style="padding-top:48px;padding-bottom:24px">
+    <div class="held" style="padding:0 0 24px">
+      <div>
+        <span class="kicker">Alles aus der Werkstatt</span>
+        <h1>Blog</h1>
+        <p class="lead">Anleitungen, Messungen und Pannen rund um eigene KI. Jeder Artikel mit Schaubild, Schritten und Checkliste.</p>
+      </div>
+      <div class="ori-rand"><img class="ori ori-light" src="{{liest-abendrot}}" alt="Ori liest"><img class="ori ori-dark" src="{{liest-hell}}" alt="Ori liest"><span class="hand">Ich hab alle gelesen.<br>Zweimal.</span></div>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Kategorie">
+        <button class="tab aktiv" data-f="alle">Alle <span>12</span></button>
+        <button class="tab" data-f="lokal">Lokale KI <span>3</span></button>
+        <button class="tab" data-f="sicherheit">Sicherheit <span>3</span></button>
+        <button class="tab" data-f="messung">Messungen <span>2</span></button>
+        <button class="tab" data-f="code">Claude Code <span>2</span></button>
+        <button class="tab" data-f="panne">Werkstatt-Pannen <span>2</span></button>
+      </div>
+    <div class="liste filterbar">
+      <a class="eintrag" href="#artikel-erste-ki" data-kat="lokal">
+          <time datetime="2026-11-12">12.11.2026</time>
+          <div><span class="kat kat-lokal">Lokale KI</span><h3>Ich hab mir eine KI gebaut, die auf meinem PC wohnt</h3><p>Was origami kann, was es kostet und wie die Teile zusammenspielen. Mit Schaubild.</p></div>
+          <span class="lese">9 Min.</span>
+        </a><a class="eintrag" href="#artikel-erste-ki" data-kat="messung">
+          <time datetime="2026-11-08">08.11.2026</time>
+          <div><span class="kat kat-messung">Messungen</span><h3>Warum die erste Antwort 108 Sekunden dauert</h3><p>Zwischenspeicher, Vorwärmen und warum das Einlesen langsam ist, nicht das Schreiben.</p></div>
+          <span class="lese">7 Min.</span>
+        </a><a class="eintrag" href="#artikel-erste-ki" data-kat="lokal">
+          <time datetime="2026-11-05">05.11.2026</time>
+          <div><span class="kat kat-lokal">Lokale KI</span><h3>Regeln im System-Prompt? Ignoriert sie halt.</h3><p>Warum ich Regeln nicht mehr reinschreibe, sondern in den Code baue. Vorher-nachher.</p></div>
+          <span class="lese">6 Min.</span>
+        </a><a class="eintrag" href="#artikel-erste-ki" data-kat="sicherheit">
+          <time datetime="2026-11-01">01.11.2026</time>
+          <div><span class="kat kat-sicherheit">Sicherheit</span><h3>Meine KI darf nichts löschen, ohne zu fragen</h3><p>Freigaben selbst gebaut: welche Befehle durchgehen und welche immer nachfragen.</p></div>
+          <span class="lese">8 Min.</span>
+        </a><a class="eintrag" href="#artikel-erste-ki" data-kat="messung">
+          <time datetime="2026-10-29">29.10.2026</time>
+          <div><span class="kat kat-messung">Messungen</span><h3>Gemma gegen Qwen auf einer RTX 4060</h3><p>Zwei lokale Modelle, dieselben Aufgaben, 81 zu 76 Punkten. So habe ich getestet.</p></div>
+          <span class="lese">11 Min.</span>
+        </a><a class="eintrag" href="#artikel-erste-ki" data-kat="code">
+          <time datetime="2026-10-25">25.10.2026</time>
+          <div><span class="kat kat-code">Claude Code</span><h3>Claude Code ohne Programmierkenntnisse: mein erstes Tool</h3><p>Von der Idee zur fertigen Lizenz-Übersicht, ohne eine Zeile selbst zu tippen.</p></div>
+          <span class="lese">10 Min.</span>
+        </a><a class="eintrag" href="#artikel-erste-ki" data-kat="panne">
+          <time datetime="2026-10-22">22.10.2026</time>
+          <div><span class="kat kat-panne">Werkstatt-Panne</span><h3>Die Nacht, in der meine KI nur noch Leerzeilen schrieb</h3><p>Eine Panne, ein eingefrorener Server und was ich daraus gebaut habe.</p></div>
+          <span class="lese">5 Min.</span>
+        </a><a class="eintrag" href="#artikel-erste-ki" data-kat="sicherheit">
+          <time datetime="2026-10-18">18.10.2026</time>
+          <div><span class="kat kat-sicherheit">Sicherheit</span><h3>Von unterwegs auf die KI zu Hause: Tailscale erklärt</h3><p>Wie du deinen PC vom Handy erreichst, ohne ihn ins offene Internet zu stellen.</p></div>
+          <span class="lese">9 Min.</span>
+        </a><a class="eintrag" href="#artikel-erste-ki" data-kat="lokal">
+          <time datetime="2026-10-14">14.10.2026</time>
+          <div><span class="kat kat-lokal">Lokale KI</span><h3>Gemma oder Claude? Wann ich welches Modell nehme</h3><p>Kostenlos und lokal gegen stark und in der Cloud. Meine Aufteilung nach Aufgaben.</p></div>
+          <span class="lese">6 Min.</span>
+        </a><a class="eintrag" href="#artikel-erste-ki" data-kat="panne">
+          <time datetime="2026-10-10">10.10.2026</time>
+          <div><span class="kat kat-panne">Werkstatt-Panne</span><h3>Als meine KI ihr Gedächtnis gelöscht hat</h3><p>Ohne Rückfrage, einfach weg. Warum Vergessen jetzt einen Papierkorb hat.</p></div>
+          <span class="lese">4 Min.</span>
+        </a><a class="eintrag" href="#artikel-erste-ki" data-kat="sicherheit">
+          <time datetime="2026-10-06">06.10.2026</time>
+          <div><span class="kat kat-sicherheit">Sicherheit</span><h3>Zwei-Faktor-Login selbst gebaut</h3><p>Passwort plus Code vom Handy, Sperre nach Fehlversuchen. Einfacher als gedacht.</p></div>
+          <span class="lese">8 Min.</span>
+        </a><a class="eintrag" href="#artikel-erste-ki" data-kat="code">
+          <time datetime="2026-10-02">02.10.2026</time>
+          <div><span class="kat kat-code">Claude Code</span><h3>Git für Leute, die Angst vorm Terminal haben</h3><p>Speichern, zurückspringen, nichts kaputt machen. Mit Bildern statt Fachchinesisch.</p></div>
+          <span class="lese">7 Min.</span>
+        </a>
+    </div>
+  </div>
+</div>
+
+<!-- ============ WERKZEUGE ============ -->
+<div class="ansicht" id="v-werkzeuge">
+  <div class="wrap" style="padding-top:48px">
+    <span class="kicker hand">Zum Ausprobieren</span>
+    <h1>Werkzeuge</h1>
+    <p class="lead" style="color:var(--bleistift);max-width:36em">Kleine Helfer, die dir Fragen beantworten, bevor du Geld ausgibst oder Stunden verlierst.</p>
+
+    <div class="baustein" id="gpu">
+      <div class="bkopf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="10" rx="2"/><path d="M6 11h2M10 11h2"/></svg>GPU-Rechner: Was läuft auf meiner Grafikkarte?</div>
+      <div class="bkoerper rechner">
+        <div class="rein">
+          <div class="feld"><label for="vram">Speicher der Grafikkarte (VRAM)</label>
+            <select id="vram"><option value="6">6 GB</option><option value="8" selected>8 GB, z. B. RTX 4060</option><option value="10">10 GB</option><option value="12">12 GB, z. B. RTX 3060</option><option value="16">16 GB</option><option value="24">24 GB, z. B. RTX 3090</option><option value="32">32 GB</option></select></div>
+          <div class="feld"><label for="ram">Arbeitsspeicher (RAM)</label>
+            <select id="ram"><option value="16">16 GB</option><option value="32" selected>32 GB</option><option value="64">64 GB</option></select></div>
+          <div class="ori-mini"><img class="ori ori-light" src="{{rechnet-abendrot}}" alt="Ori rechnet"><img class="ori ori-dark" src="{{rechnet-hell}}" alt="Ori rechnet"><span class="hand" id="orisagt">Mit 8 GB kommst du weit. Nur nicht ganz bis oben.</span></div>
+        </div>
+        <div class="raus" id="gpuraus" aria-live="polite"></div>
+        <p class="klein">Grobe Schätzung für Modelle in 4-Bit-Größe (Q4), wie Ollama sie standardmäßig lädt, plus etwas Platz für das Gespräch. Modelle mit Experten-Aufbau (MoE) laufen oft schneller, als die Größe vermuten lässt.</p>
+      </div>
+    </div>
+
+    <div class="baustein" id="glossar">
+      <div class="bkopf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h12l4 4v12H4z"/></svg>Fachchinesisch auf Deutsch</div>
+      <div class="bkoerper">
+        <div class="glkopf">
+          <div class="feld" style="flex:1"><label for="glsuche">Begriff suchen</label><input id="glsuche" type="search" placeholder="z. B. Token"></div>
+          <div class="ori-mini"><img class="ori ori-light" src="{{wissen-abendrot}}" alt="Ori weiß was"><img class="ori ori-dark" src="{{wissen-hell}}" alt="Ori weiß was"></div>
+        </div>
+        <div class="wasmacht" id="glliste"><div class="teil gl" data-wort="modell"><div class="wer">Modell</div><p>Das eigentliche KI-Gehirn. Eine große Datei, die gelernt hat, wie Sprache funktioniert.</p><div class="bild">= der Koch</div></div><div class="teil gl" data-wort="token"><div class="wer">Token</div><p>Ein Wortstück. KI liest und schreibt nicht in Wörtern, sondern in Tokens, grob ¾ Wort.</p><div class="bild">= eine Silbe</div></div><div class="teil gl" data-wort="vram"><div class="wer">VRAM</div><p>Der Speicher der Grafikkarte. Passt das Modell hier rein, ist es schnell.</p><div class="bild">= die Arbeitsplatte</div></div><div class="teil gl" data-wort="quantisierung"><div class="wer">Quantisierung</div><p>Das Modell wird verkleinert, indem Zahlen ungenauer gespeichert werden. Q4 = 4 Bit.</p><div class="bild">= Foto als JPG statt RAW</div></div><div class="teil gl" data-wort="kontext"><div class="wer">Kontext</div><p>Wie viel vom Gespräch die KI gleichzeitig im Kopf behält.</p><div class="bild">= das Kurzzeitgedächtnis</div></div><div class="teil gl" data-wort="prompt"><div class="wer">Prompt</div><p>Das, was du der KI schreibst.</p><div class="bild">= die Bestellung</div></div><div class="teil gl" data-wort="system-prompt"><div class="wer">System-Prompt</div><p>Anweisungen, die die KI vor jedem Gespräch bekommt. Wirkt schwächer, als man denkt.</p><div class="bild">= die Hausordnung</div></div><div class="teil gl" data-wort="werkzeug"><div class="wer">Werkzeug</div><p>Eine Funktion, die die KI aufrufen darf, zum Beispiel suchen oder rechnen.</p><div class="bild">= Messer und Töpfe</div></div><div class="teil gl" data-wort="agent"><div class="wer">Agent</div><p>Eine KI, die selbst entscheidet, welche Werkzeuge sie nacheinander benutzt.</p><div class="bild">= der Koch, der selbst einkauft</div></div><div class="teil gl" data-wort="mcp"><div class="wer">MCP</div><p>Ein Standard, über den KIs an Werkzeuge angeschlossen werden.</p><div class="bild">= eine Steckdose</div></div><div class="teil gl" data-wort="ollama"><div class="wer">Ollama</div><p>Programm, das Modelle auf deinem PC laufen lässt.</p><div class="bild">= die Küche</div></div><div class="teil gl" data-wort="open source"><div class="wer">Open Source</div><p>Der Bauplan ist offen, jeder darf reinschauen und mitbauen.</p><div class="bild">= ein Rezept zum Abschreiben</div></div></div>
+      </div>
+    </div>
+
+    <div class="wzgitter" style="margin:28px 0 40px">
+      <div class="wz"><span class="kat kat-bald">Bald</span><h3>Tempo-Schätzer</h3><p>Wie lange wartest du auf eine Antwort, kalt und warm?</p></div>
+      <div class="wz"><span class="kat kat-bald">Bald</span><h3>Fehler-Diagnose</h3><p>Ja/Nein klicken, Ursache finden, Lösung lesen.</p></div>
+      <div class="wz"><span class="kat kat-gratis">Kostenlos</span><h3>Der Faltplan</h3><p>In 10 Schritten zur eigenen KI. Kommt mit der echten Seite als PDF.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ LERNWEGE ============ -->
+<div class="ansicht" id="v-lernwege">
+  <div class="wrap wegdetail">
+    <div>
+      <span class="hand">Der Reihe nach, versprochen.</span>
+      <h1>Lernwege</h1>
+      <p style="color:var(--bleistift);max-width:36em">Jeder Lernweg baut aufeinander auf. Jeder Teil hat dieselben Bausteine: Was du tun musst, wie's zusammenhängt, was was macht, und eine Checkliste zum Abhaken.</p>
+    </div>
+    <div class="kasten" style="display:block">
+      <span class="weg nr" style="border:0;padding:0;font-family:var(--mono);font-size:.8rem;color:var(--bleistift)">LERNWEG 01</span>
+      <h2>Falt dir deine eigene KI</h2>
+      <ol class="teile">
+        <li class="fertig"><b>01</b><a href="#artikel-erste-ki">Ich hab mir eine KI gebaut, die auf meinem PC wohnt</a><span class="status">erschienen</span></li>
+        <li class="fertig"><b>02</b><span>Welche Grafikkarte reicht? 8 GB gegen 24 GB</span><span class="status">erschienen</span></li>
+        <li><b>03</b><span>Ollama installieren und das erste Modell laden</span><span class="status">in Arbeit</span></li>
+        <li><b>04</b><span>Eine eigene Chat-Oberfläche bauen</span><span class="status">geplant</span></li>
+        <li><b>05</b><span>Werkzeuge: Die KI darf Dateien lesen, aber nicht löschen</span><span class="status">geplant</span></li>
+        <li><b>06</b><span>Sicher von unterwegs erreichbar machen</span><span class="status">geplant</span></li>
+      </ol>
+    </div>
+    <div class="kasten" style="display:block">
+      <span style="font-family:var(--mono);font-size:.8rem;color:var(--bleistift)">LERNWEG 02</span>
+      <h2>Claude Code ohne Informatikstudium</h2>
+      <ol class="teile">
+        <li class="fertig"><b>01</b><span>Wie ich ohne Ausbildung programmieren gelernt habe</span><span class="status">erschienen</span></li>
+        <li><b>02</b><span>Dein erstes kleines Tool: eine Lizenz-Übersicht</span><span class="status">in Arbeit</span></li>
+        <li><b>03</b><span>Git verstehen, ohne Angst vor dem Terminal</span><span class="status">geplant</span></li>
+        <li><b>04</b><span>Online stellen: Vercel und Supabase in einfach</span><span class="status">geplant</span></li>
+        <li><b>05</b><span>Was die KI nicht für dich entscheiden sollte</span><span class="status">geplant</span></li>
+      </ol>
+    </div>
+    <div class="kasten" style="display:block">
+      <span style="font-family:var(--mono);font-size:.8rem;color:var(--bleistift)">LERNWEG 03 · NACHSCHLAGEN</span>
+      <h2>Warum macht meine KI das?</h2>
+      <ol class="teile">
+        <li class="fertig"><b>A</b><span>Sie ignoriert meine Regeln</span><span class="status">beschrieben</span></li>
+        <li class="fertig"><b>B</b><span>Die erste Antwort dauert ewig, danach geht's schnell</span><span class="status">beschrieben</span></li>
+        <li class="fertig"><b>C</b><span>Sie wiederholt sich oder schreibt ihren Namen drunter</span><span class="status">beschrieben</span></li>
+        <li class="fertig"><b>D</b><span>Sie schreibt Werkzeug-Aufrufe als Text, statt sie auszuführen</span><span class="status">beschrieben</span></li>
+        <li><b>E</b><span>Sie denkt endlos nach und antwortet nie</span><span class="status">geplant</span></li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ORIGAMI ============ -->
+<div class="ansicht" id="v-origami">
+  <div class="wrap">
+    <div class="held">
+      <div>
+        <span class="kicker">Der Bauplan hinter Ori</span>
+        <h1>origami: <span class="mark">deine KI, bei dir zu Hause.</span></h1>
+        <p class="lead">origami ist ein KI-Assistent, der auf deinem eigenen PC läuft. Ein kostenloses Modell macht die Alltagsarbeit, für schwere Fragen holt er sich Claude dazu. Du erreichst ihn vom Handy und vom Laptop, und bevor er etwas löscht oder installiert, fragt er dich.</p>
+        <p class="lead">Bei mir läuft origami seit November 2026 jeden Tag. Jetzt mache ich daraus einen Bausatz, den du nachbauen kannst.</p>
+      </div>
+      <div class="ori-rand">
+        <img class="ori ori-light" src="{{ruhezustand-abendrot}}" alt="Ori sitzt ruhig"><img class="ori ori-dark" src="{{ruhezustand-hell}}" alt="Ori sitzt ruhig">
+        <span class="hand">Ein Bausatz für mich?<br>Ich fühl mich geehrt.</span>
+      </div>
+    </div>
+  </div>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="blockkopf"><div><h2>Für wen ist das?</h2></div></div>
+      <div class="fuerwen">
+        <div class="teil"><div class="wer">Neugierige</div><p>Du willst verstehen, wie so eine KI innen funktioniert, statt nur einen Chatbot zu benutzen.</p></div>
+        <div class="teil"><div class="wer">Datenschutz-Bewusste</div><p>Deine Dateien und Fragen sollen auf deinem Rechner bleiben, nicht bei irgendeinem Anbieter.</p></div>
+        <div class="teil"><div class="wer">Kleine IT-Teams</div><p>Du willst einen Helfer, der deine Abläufe kennt, ohne gleich ein teures Firmenprodukt zu kaufen.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="blockkopf"><div><h2>Die Bausteine</h2><p>origami besteht aus Teilen, die du einzeln verstehst und einzeln baust. Jeder Baustein bekommt einen Teil im Lernweg.</p></div></div>
+      <div class="module">
+        <div class="modul"><span class="typ">Grundlage</span><h3>Lokales Modell</h3><p>Gemma über Ollama. Kostenlos, offline, deine Daten bleiben zu Hause.</p></div>
+        <div class="modul"><span class="typ">Grundlage</span><h3>Chat-Oberfläche</h3><p>Im Browser, auf PC und Handy, hell und dunkel.</p></div>
+        <div class="modul"><span class="typ">Grundlage</span><h3>Werkzeuge</h3><p>Websuche, Dateien lesen, rechnen, Wetter, Erinnerungen.</p></div>
+        <div class="modul"><span class="typ">Sicherheit</span><h3>Freigaben</h3><p>Löschen, Installieren, Absenden nur, wenn du es erlaubst.</p></div>
+        <div class="modul"><span class="typ">Sicherheit</span><h3>Fernzugriff</h3><p>Von unterwegs erreichbar, mit Passwort und Zwei-Faktor-Code.</p></div>
+        <div class="modul"><span class="typ">Verstärkung</span><h3>Claude als Rückhalt</h3><p>Kommt das lokale Modell nicht weiter, übernimmt Claude.</p></div>
+        <div class="modul"><span class="typ">Komfort</span><h3>Gedächtnis</h3><p>Merkt sich, was du ihr sagst, und vergisst es auf Wunsch wieder.</p></div>
+        <div class="modul extra"><span class="typ">Erweiterung</span><h3>Dein eigenes Ding</h3><p>Bei mir ein Kickbase-Berater. Bei dir vielleicht was ganz anderes.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="blockkopf"><div><h2>Der Fahrplan</h2></div></div>
+      <ol class="fahrplan">
+        <li><span class="wann jetzt">Jetzt</span><h3>Lernweg erscheint</h3><p>Teil für Teil, wie origami aufgebaut ist und wie du jeden Baustein selbst baust.</p></li>
+        <li><span class="wann bald">Als Nächstes</span><h3>Starter-Vorlage</h3><p>Ein Grundgerüst zum Herunterladen: Oberfläche, Modell, erste Werkzeuge. Du faltest weiter.</p></li>
+        <li><span class="wann spaeter">Später</span><h3>origami als Bausatz</h3><p>Installieren, einrichten, loslegen. Mit den Freigaben und Bausteinen, die du brauchst.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="kasten">
+        <img class="ori ori-light" src="{{schreibt-abendrot}}" alt="Ori schreibt"><img class="ori ori-dark" src="{{schreibt-hell}}" alt="Ori schreibt">
+        <div style="flex:1">
+          <h3>Sag mir Bescheid, wenn die Vorlage fertig ist</h3>
+          <p>Eine Mail, wenn die Starter-Vorlage online ist. Sonst nichts.</p>
+          <form class="brief" id="warte">
+            <label for="wartemail" style="position:absolute;left:-9999px">E-Mail-Adresse</label>
+            <input id="wartemail" type="email" placeholder="deine@mail.de" required>
+            <button class="knopf voll" type="submit">Auf die Liste</button>
+          </form>
+          <p class="hinweis" id="wartehinweis" aria-live="polite"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ ARTIKEL ============ -->
+<div class="ansicht" id="v-artikel-erste-ki">
+  <div class="wrap">
+    <article class="artikel">
+      <header class="akopf">
+        <span class="hand">Falt dir deine eigene KI · Teil 1 von 6</span>
+        <h1>Ich hab mir eine KI gebaut, die auf meinem PC wohnt</h1>
+        <p class="lead">Kein Abo-Chatbot, sondern ein eigener Assistent auf meinem Rechner zu Hause. Hier siehst du, aus welchen Teilen er besteht, was jedes Teil macht, und was du selbst tun musst, um so etwas aufzubauen.</p>
+        <div class="meta"><span class="chip">12.11.2026</span><span class="chip">9 Min. Lesezeit</span><span class="chip">Einsteiger</span></div>
+      </header>
+
+      <div class="inhalt">
+        <div class="baustein">
+          <div class="bkopf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h10M4 18h7"/></svg>Kurz gesagt</div>
+          <div class="kurz">
+            <div><h3>Das kann sie</h3><ul><li>Chatten, auch vom Handy aus</li><li>Dateien lesen und Word-Dateien bauen</li><li>Im Netz suchen, Wetter, Erinnerungen</li><li>Bei schweren Fragen Claude zu Hilfe holen</li></ul></div>
+            <div><h3>Das brauchst du</h3><ul><li>Einen PC mit Grafikkarte, 8 GB reichen für den Anfang</li><li>Ollama (kostenlos)</li><li>Etwas Node.js, oder Claude Code, das es für dich schreibt</li><li>Ein paar Abende Geduld</li></ul></div>
+          </div>
+        </div>
+
+        <h2>Warum überhaupt selbst bauen?</h2>
+        <p>Ich wollte einen Assistenten, der meine Dateien sieht, meine Abläufe kennt und nicht bei jeder Frage meine Daten in die Cloud schickt. Fertige Lösungen konnten entweder zu wenig oder wollten zu viel Zugriff. Also habe ich angefangen, mir selbst einen zu bauen. Heute heißt er origami, und den Vogel siehst du hier am Rand.</p>
+
+        <div class="inline-ori">
+          <img class="ori ori-light" src="{{seufzt-abendrot}}" alt=""><img class="ori ori-dark" src="{{seufzt-hell}}" alt="">
+          <span class="hand">„Ein paar Abende.“ Es waren Wochen. Ich war dabei.</span>
+        </div>
+
+        <h2>Wie's zusammenhängt</h2>
+        <p>Das wirkt kompliziert, ist aber nur eine Kette. Du tippst, der Server reicht weiter, ein Modell denkt nach und benutzt Werkzeuge, die Antwort kommt zurück.</p>
+
+        <div class="baustein">
+          <div class="bkopf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="6" height="6" rx="1"/><rect x="15" y="14" width="6" height="6" rx="1"/><path d="M9 7h4a2 2 0 0 1 2 2v5"/></svg>Wie's zusammenhängt</div>
+          <div class="bkoerper ablauf">
+            <svg viewBox="0 0 640 330" role="img" aria-label="Ablauf: Browser schickt Nachricht an den Server, der Server gibt sie an das lokale Modell Gemma, das Werkzeuge benutzt; bei schweren Fragen hilft Claude.">
+              <defs>
+                <marker id="spitze" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--tinte)"/></marker>
+                <marker id="spitze2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--ori)"/></marker>
+              </defs>
+              <rect class="k" x="10" y="40" width="130" height="70" rx="12"/>
+              <text x="75" y="70" text-anchor="middle">Du</text>
+              <text class="klein" x="75" y="90" text-anchor="middle">Handy, Laptop, PC</text>
+
+              <rect class="k" x="190" y="40" width="130" height="70" rx="12"/>
+              <text x="255" y="70" text-anchor="middle">Server</text>
+              <text class="klein" x="255" y="90" text-anchor="middle">server.js</text>
+
+              <rect class="k2" x="370" y="40" width="130" height="70" rx="12"/>
+              <text x="435" y="70" text-anchor="middle">Gemma</text>
+              <text class="klein" x="435" y="90" text-anchor="middle" style="fill:#1d2742">lokales Modell</text>
+
+              <rect class="k3" x="370" y="210" width="130" height="70" rx="12"/>
+              <text x="435" y="240" text-anchor="middle">Claude</text>
+              <text class="klein" x="435" y="260" text-anchor="middle">nur bei Bedarf</text>
+
+              <rect class="k" x="545" y="20" width="85" height="34" rx="8"/><text class="klein" x="587" y="42" text-anchor="middle">Websuche</text>
+              <rect class="k" x="545" y="62" width="85" height="34" rx="8"/><text class="klein" x="587" y="84" text-anchor="middle">Dateien</text>
+              <rect class="k" x="545" y="104" width="85" height="34" rx="8"/><text class="klein" x="587" y="126" text-anchor="middle">Wetter …</text>
+
+              <path class="pf" d="M140 66 H186"/>
+              <path class="pf" d="M320 66 H366"/>
+              <path class="pf" d="M500 60 L541 40"/>
+              <path class="pf" d="M500 75 H541"/>
+              <path class="pf" d="M500 90 L541 118"/>
+              <path class="pf2" d="M420 110 V206"/>
+              <path class="pf2" d="M450 206 V114"/>
+              <path class="pf" d="M366 96 C330 150 200 150 75 114" />
+
+              <circle class="dot" cx="163" cy="66" r="13"/><text x="163" y="71" text-anchor="middle" style="fill:#fff;font-size:13px">1</text>
+              <circle class="dot" cx="343" cy="66" r="13"/><text x="343" y="71" text-anchor="middle" style="fill:#fff;font-size:13px">2</text>
+              <circle class="dot" cx="520" cy="20" r="13"/><text x="520" y="25" text-anchor="middle" style="fill:#fff;font-size:13px">3</text>
+              <circle class="dot" cx="400" cy="158" r="13"/><text x="400" y="163" text-anchor="middle" style="fill:#fff;font-size:13px">4</text>
+              <circle class="dot" cx="210" cy="140" r="13"/><text x="210" y="145" text-anchor="middle" style="fill:#fff;font-size:13px">5</text>
+
+              <g class="fluss">
+                <circle r="5" class="dot"><animateMotion dur="3.2s" repeatCount="indefinite" path="M140 66 H186"/></circle>
+                <circle r="5" class="dot"><animateMotion dur="3.2s" begin="0.8s" repeatCount="indefinite" path="M320 66 H366"/></circle>
+                <circle r="4" class="dot"><animateMotion dur="3.2s" begin="1.6s" repeatCount="indefinite" path="M500 75 H541"/></circle>
+                <circle r="4" class="dot"><animateMotion dur="3.2s" begin="1.9s" repeatCount="indefinite" path="M500 60 L541 40"/></circle>
+                <circle r="5" class="dot"><animateMotion dur="4s" begin="1s" repeatCount="indefinite" path="M420 110 V206"/></circle>
+                <circle r="5" class="dot"><animateMotion dur="4s" begin="3s" repeatCount="indefinite" path="M450 206 V114"/></circle>
+                <circle r="5" class="dot"><animateMotion dur="3.2s" begin="2.4s" repeatCount="indefinite" path="M366 96 C330 150 200 150 75 114"/></circle>
+              </g>
+              <text class="hand2" x="470" y="168">kommt nicht weiter?</text>
+              <text class="hand2" x="470" y="190">Claude fragen</text>
+              <text class="klein" x="40" y="215">1  Du schreibst eine Nachricht</text>
+              <text class="klein" x="40" y="237">2  Der Server reicht sie ans Modell weiter</text>
+              <text class="klein" x="40" y="259">3  Gemma benutzt Werkzeuge</text>
+              <text class="klein" x="40" y="281">4  Bei schweren Fragen hilft Claude</text>
+              <text class="klein" x="40" y="303">5  Die Antwort kommt zu dir zurück</text>
+            </svg>
+          </div>
+        </div>
+
+        <h2>Was macht was?</h2>
+        <p>Jedes Teil hat genau eine Aufgabe. Wenn etwas kaputt ist, weißt du so sofort, wo du suchen musst.</p>
+
+        <div class="baustein">
+          <div class="bkopf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Was macht was</div>
+          <div class="bkoerper wasmacht">
+            <div class="teil"><div class="wer">Ollama <span>Programm</span></div><p>Lässt KI-Modelle auf deinem PC laufen. Ohne Ollama kein lokales Modell.</p><div class="bild">= die Küche</div></div>
+            <div class="teil"><div class="wer">Gemma <span>Modell</span></div><p>Das Gehirn. Ein kostenloses Modell von Google, das komplett bei dir läuft.</p><div class="bild">= der Koch</div></div>
+            <div class="teil"><div class="wer">Server <span>server.js</span></div><p>Nimmt deine Nachricht an, prüft Passwort und gibt sie weiter. Läuft im Hintergrund.</p><div class="bild">= die Bedienung</div></div>
+            <div class="teil"><div class="wer">Werkzeuge <span>tools.js</span></div><p>Kleine Funktionen, die das Modell aufrufen darf: suchen, rechnen, Dateien lesen.</p><div class="bild">= Messer und Töpfe</div></div>
+            <div class="teil"><div class="wer">Freigaben <span>Sicherheit</span></div><p>Bevor etwas gelöscht oder installiert wird, fragt die KI dich. Immer.</p><div class="bild">= der Chef, der draufschaut</div></div>
+            <div class="teil"><div class="wer">Claude <span>Cloud-Modell</span></div><p>Springt ein, wenn Gemma nicht weiterkommt. Kostet Kontingent, ist aber deutlich stärker.</p><div class="bild">= der Sternekoch am Telefon</div></div>
+          </div>
+        </div>
+
+        <h2>Was du tun musst</h2>
+        <p>Für den Anfang brauchst du noch keinen eigenen Server. Diese vier Schritte reichen, damit du heute Abend mit einer KI auf deinem eigenen PC chattest.</p>
+
+        <div class="baustein">
+          <div class="bkopf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l4 4L19 6"/></svg>Was du tun musst</div>
+          <div class="bkoerper">
+            <ol class="schritte">
+              <li><div><h3>Ollama herunterladen und installieren</h3><p>Von ollama.com, normale Windows-Installation. Danach läuft es unten rechts in der Taskleiste.</p></div></li>
+              <li><div><h3>Ein Modell laden</h3><p>Eingabeaufforderung öffnen und eintippen. Das kleine Modell passt auf fast jede Grafikkarte.</p><pre class="tippen" data-ausgabe="pulling manifest… success">ollama pull gemma4:e4b</pre></div></li>
+              <li><div><h3>Ausprobieren</h3><p>Direkt im Terminal chatten. Beenden mit <code>/bye</code>.</p><pre class="tippen" data-ausgabe="&gt;&gt;&gt; Send a message (/? for help)">ollama run gemma4:e4b</pre></div></li>
+              <li><div><h3>Messen, wie schnell es ist</h3><p>Mit <code>--verbose</code> siehst du, wie viele Wörter pro Sekunde kommen. Merk dir die Zahl für Teil 2.</p></div></li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="inline-ori">
+          <img class="ori ori-light" src="{{ratlos-abendrot}}" alt=""><img class="ori ori-dark" src="{{ratlos-hell}}" alt="">
+          <span class="hand">Die erste Antwort dauert ewig? Normal. Das Modell muss erst in die Grafikkarte. Lernweg 03, Problem B.</span>
+        </div>
+
+        <h2>Was es bei mir bringt</h2>
+        <p>Meine Messwerte auf einer RTX 4060 mit 8 GB. Langsam ist nicht das Schreiben, sondern das erste Einlesen.</p>
+
+        <div class="baustein">
+          <div class="bkopf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Gemessen</div>
+          <div class="bkoerper">
+            <table class="messung">
+              <thead><tr><th>Situation</th><th>Zeit bis zur Antwort</th><th style="width:40%"></th></tr></thead>
+              <tbody>
+                <tr><td>Neuer Chat, Modell schon warm</td><td>8–12 s</td><td><span class="balken" style="width:10%"></span></td></tr>
+                <tr><td>Neuer Chat, Modell kalt</td><td>ca. 108 s</td><td><span class="balken grau" style="width:100%"></span></td></tr>
+              </tbody>
+            </table>
+            <p style="margin:12px 0 0;font-size:.95rem;color:var(--bleistift)">Deshalb wärmt origami das Modell vor: nach dem Start, beim Öffnen der App und nach dem Aufwachen aus dem Standby.</p>
+          </div>
+        </div>
+
+        <h2>Checkliste zum Abhaken</h2>
+        <div class="baustein">
+          <div class="bkopf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 12l3 3 5-6"/></svg>Checkliste</div>
+          <div class="bkoerper">
+            <ul class="check">
+              <li><input type="checkbox" id="c1"><label for="c1">Ollama ist installiert und läuft</label></li>
+              <li><input type="checkbox" id="c2"><label for="c2">Ein Modell ist geladen (<code>ollama list</code> zeigt es)</label></li>
+              <li><input type="checkbox" id="c3"><label for="c3">Ich habe eine erste Frage gestellt und eine Antwort bekommen</label></li>
+              <li><input type="checkbox" id="c4"><label for="c4">Ich kenne meine Wörter pro Sekunde</label></li>
+            </ul>
+            <div class="geschafft" id="geschafft" aria-live="polite"><img class="ori ori-light" src="{{triumph-abendrot}}" alt="Ori jubelt"><img class="ori ori-dark" src="{{triumph-hell}}" alt="Ori jubelt"><span class="hand">Gschafft! Teil 1 erledigt. Ich bin fast stolz.</span></div>
+          </div>
+        </div>
+
+        <p>Genau diesen Aufbau baust du in diesem Lernweg Teil für Teil nach. Im nächsten Teil schauen wir, welche Grafikkarte wirklich reicht und warum 24 GB Speicher bei mir der größte Hebel wären.</p>
+        <div class="knoepfe"><a class="knopf voll" href="#lernwege">Weiter zu Teil 2</a><a class="knopf" href="#start">Zur Startseite</a></div>
+      </div>
+
+      <aside class="rand" aria-hidden="true">
+        <div class="randnotiz">
+          <img class="ori ori-light" src="{{liest-abendrot}}" alt=""><img class="ori ori-dark" src="{{liest-hell}}" alt="">
+          <span class="hand">Ich lese mit.<br>Nur damit du's weißt.</span>
+        </div>
+      </aside>
+    </article>
+  </div>
+</div>
+
+<!-- ============ ÜBER ============ -->
+<div class="ansicht" id="v-ueber">
+  <div class="wrap" style="padding:48px 24px">
+    <div class="held" style="padding-top:0">
+      <div>
+        <span class="kicker">Servus, ich bin's.</span>
+        <h1>Nils, 24, IT aus em Gäu</h1>
+        <p class="lead">Realschule, dann direkt rein in die IT. Programmieren habe ich mir selbst beigebracht, die meisten Tools in der Firma baue ich inzwischen mit KI. Nebenbei betreibe ich lootkurs.de, einen Preisvergleich für Pokémon-Karten, und spiele zu viel Kickbase.</p>
+        <p class="lead">Hier schreibe ich so, wie ich's mir selbst erklärt hätte: mit Bildern, der Reihe nach, ohne Fachchinesisch. Wenn ich ein Wort benutze, erkläre ich es.</p>
+      </div>
+      <div class="ori-rand">
+        <img class="ori ori-light" src="{{sassy-abendrot}}" alt="Ori"><img class="ori ori-dark" src="{{sassy-hell}}" alt="Ori">
+        <span class="hand">Und ich bin die,<br>die alles besser weiß.</span>
+      </div>
+    </div>
+  </div>
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Selbst gfaltet · von Nils, im Gäu, mit zu viel Kaffee.</span>
+    <span>Impressum · Datenschutz · RSS</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var ansichten=["start","blog","werkzeuge","lernwege","origami","artikel-erste-ki","ueber"];
+  function zeige(){
+    var h=(location.hash||"#start").slice(1);
+    if(ansichten.indexOf(h)<0) h="start";
+    ansichten.forEach(function(a){
+      document.getElementById("v-"+a).classList.toggle("aktiv",a===h);
+    });
+    document.querySelectorAll("nav a").forEach(function(a){
+      if(a.dataset.nav===h) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current");
+    });
+    window.scrollTo(0,0);
+  }
+  window.addEventListener("hashchange",zeige);
+  zeige();
+  [["brief","briefhinweis"],["warte","wartehinweis"]].forEach(function(p){
+    document.getElementById(p[0]).addEventListener("submit",function(e){
+      e.preventDefault();
+      document.getElementById(p[1]).textContent="Vorschau: Die Anmeldung kommt mit der echten Seite.";
+    });
+  });
+})();
+
+(function(){
+  var ruhig=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function nochmal(img){ var s=img.getAttribute("src"); img.setAttribute("src",""); img.setAttribute("src",s); }
+  var gesehen=new WeakSet();
+  var io=("IntersectionObserver" in window)?new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting){
+        if(e.target.tagName==="IMG"){ nochmal(e.target); }
+        else { e.target.classList.add("zeigen"); if(e.target.matches("pre.tippen")) tippe(e.target); }
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:.35}):null;
+  function beobachte(root){
+    if(!io) return;
+    root.querySelectorAll("img.ori, .vergleich, pre.tippen").forEach(function(el){ io.unobserve(el); el.classList.remove("zeigen"); io.observe(el); });
+  }
+  document.querySelectorAll("img.ori").forEach(function(img){ img.addEventListener("mouseenter",function(){ nochmal(img); }); img.addEventListener("click",function(){ nochmal(img); }); });
+  window.addEventListener("hashchange",function(){ setTimeout(function(){ var v=document.querySelector(".ansicht.aktiv"); if(v) beobachte(v); },30); });
+  setTimeout(function(){ var v=document.querySelector(".ansicht.aktiv"); if(v) beobachte(v); },30);
+
+  // Terminal tippt sich selbst
+  function tippe(pre){
+    if(ruhig||pre.dataset.lief) return; pre.dataset.lief="1";
+    var text=pre.textContent, aus=pre.dataset.ausgabe||"", i=0;
+    pre.textContent="";
+    (function schritt(){
+      pre.textContent=text.slice(0,++i);
+      if(i<text.length) setTimeout(schritt,45+Math.random()*50);
+      else setTimeout(function(){ var s=document.createElement("span"); s.className="aus"; s.textContent=aus; pre.appendChild(s); pre.classList.add("fertig"); },350);
+    })();
+  }
+
+  // Filter
+  document.querySelectorAll(".tabs").forEach(function(tabs){
+    var liste=tabs.nextElementSibling, max=+liste.dataset.max||999;
+    function filtern(f){
+      var n=0;
+      liste.querySelectorAll(".eintrag").forEach(function(e){
+        var passt=(f==="alle"||e.dataset.kat===f)&&n<max;
+        if(passt){ n++; e.hidden=false; e.classList.remove("neu"); void e.offsetWidth; if(!ruhig) e.classList.add("neu"); } else e.hidden=true;
+      });
+    }
+    tabs.querySelectorAll(".tab").forEach(function(b){
+      b.addEventListener("click",function(){
+        tabs.querySelectorAll(".tab").forEach(function(x){ x.classList.toggle("aktiv",x===b); x.setAttribute("aria-selected",x===b); });
+        filtern(b.dataset.f);
+      });
+    });
+    filtern("alle");
+  });
+
+  // GPU-Rechner
+  var modelle=[["4B",4],["8B",8],["14B",14],["27B",27],["32B",32],["70B",70]];
+  var vram=document.getElementById("vram"), ram=document.getElementById("ram"), raus=document.getElementById("gpuraus"), sagt=document.getElementById("orisagt");
+  function rechne(){
+    var v=+vram.value, r=+ram.value, html="", passt=0;
+    modelle.forEach(function(m){
+      var gb=Math.round((m[1]*0.6+1.5)*10)/10;
+      var gpu=Math.min(gb,v), cpu=Math.max(0,gb-v), skala=46;
+      var status, kl;
+      if(gb<=v){ status="passt komplett, schnell"; kl="ok"; passt++; }
+      else if(cpu<=r*0.6){ status="läuft, "+Math.round(cpu/gb*100)+" % auf der CPU, langsamer"; kl="halb"; }
+      else { status="zu groß"; kl="nein"; }
+      html+='<div class="gz"><span><b>'+m[0]+'</b> · '+String(gb).replace(".",",")+' GB</span><span class="gb"><i class="gpu" style="width:'+(gpu/skala*100)+'%"></i><i class="cpu" style="left:'+(gpu/skala*100)+'%;width:'+(kl==="nein"?0:cpu/skala*100)+'%"></i></span><span class="gs '+kl+'">'+status+'</span></div>';
+    });
+    raus.innerHTML=html;
+    sagt.textContent = v>=24 ? "24 GB. Jetzt wird's ernst. Ich bin neidisch." : v>=16 ? "Solide. Die mittleren Modelle fliegen." : v>=8 ? "Mit "+v+" GB kommst du weit. Nur nicht ganz bis oben." : "Klein, aber ehrlich. Fang mit 4B an.";
+    document.querySelectorAll("#gpu img.ori").forEach(nochmal);
+  }
+  if(vram){ vram.addEventListener("change",rechne); ram.addEventListener("change",rechne); rechne(); }
+
+  // Glossar-Suche
+  var gs=document.getElementById("glsuche");
+  if(gs) gs.addEventListener("input",function(){
+    var q=gs.value.trim().toLowerCase();
+    document.querySelectorAll("#glliste .gl").forEach(function(g){ g.hidden = q && g.textContent.toLowerCase().indexOf(q)<0; });
+  });
+
+  // Checkliste: Ori jubelt
+  var cbs=document.querySelectorAll(".check input"), gesch=document.getElementById("geschafft");
+  cbs.forEach(function(c){ c.addEventListener("change",function(){
+    var alle=[].every.call(cbs,function(x){return x.checked;});
+    if(alle&&!gesch.classList.contains("da")){ gesch.classList.add("da"); gesch.querySelectorAll("img.ori").forEach(nochmal); }
+    if(!alle) gesch.classList.remove("da");
+  }); });
+})();
+</script>
+</body>
+</html>
