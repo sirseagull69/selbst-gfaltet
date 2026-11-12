@@ -32,7 +32,8 @@ Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt
 - `schutzschicht`: die neun Schutzlagen, Erlaubnisliste statt Sperrliste
 - `ki-surft-selbst`: Suche, Seiten lesen, Browser per Playwright, Absenden-Sperre
 - `von-unterwegs`: Tunnel, Login, nur-lokal-Bereiche, Tagesablauf, Windows-Grenzen (Ports, Auslagerungsdatei)
-- Lernweg 01 hat jetzt alle 6 Teile erschienen.
+- `programmieren-ohne-ausbildung`, `erstes-tool`, `was-die-ki-nicht-entscheidet`: Lernweg 02 (Claude Code ohne Informatikstudium)
+- Lernweg 01 (6 Teile) und Lernweg 02 (3 Teile) sind komplett erschienen.
 - Die ersten vier Artikel (108 Sekunden, Leerzeilen-Panne, Regeln in den Code, Eigene KI auf dem PC) wurden am 12.11. bewusst gelöscht.
 
 ## Ideen
