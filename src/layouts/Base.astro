@@ -16,7 +16,7 @@ interface Props { titel?: string; beschreibung?: string; aktiv?: string }
 const { titel, beschreibung = 'Falt dir deine eigene KI: Schritt für Schritt zum eigenen KI-Assistenten auf dem eigenen PC. Mit Bildern, Messungen und allen Pannen.', aktiv = '' } = Astro.props;
 const voll = titel ? `${titel} · Selbst gfaltet` : 'Selbst gfaltet';
 const nav = [
-  ['/', 'Start', 'start'], ['/lernwege', 'Lernwege', 'lernwege'], ['/blog', 'Blog', 'blog'],
+  ['/', 'Start', 'start'], ['/anleitungen', 'Faltanleitungen', 'lernwege'], ['/blog', 'Blog', 'blog'],
   ['/werkzeuge', 'Werkzeuge', 'werkzeuge'], ['/origami', 'origami', 'origami'], ['/ueber', 'Über mich', 'ueber'],
 ];
 ---
@@ -56,7 +56,7 @@ const nav = [
   <main><slot /></main>
   <footer>
     <div class="wrap">
-      <span>Selbst gfaltet · von Nils, im Gäu, mit zu viel Kaffee.</span>
+      <span>Selbst gfaltet · von Nils, mit zu viel Kaffee.</span>
       <span><a href="/impressum">Impressum</a> · <a href="/datenschutz">Datenschutz</a> · <a href="/rss.xml">RSS</a></span>
     </div>
   </footer>

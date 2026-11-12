@@ -29,7 +29,7 @@ const alle = (await getCollection('artikel')).filter((x) => x.id !== a.id).slice
       <div class="inhalt">
         <Content />
         <div class="knoepfe" style="margin-top:32px">
-          {naechster ? <a class="knopf voll" href={`/blog/${naechster.slug}`}>Weiter im Lernweg</a> : weg ? <a class="knopf voll" href={`/lernwege#weg-${weg.nr}`}>Zum Lernweg</a> : null}
+          {naechster ? <a class="knopf voll" href={`/blog/${naechster.slug}`}>Weiter in der Faltanleitung</a> : weg ? <a class="knopf voll" href={`/anleitungen#weg-${weg.nr}`}>Zur Faltanleitung</a> : null}
           <a class="knopf" href="/blog">Alle Artikel</a>
         </div>
         <Newsletter />
