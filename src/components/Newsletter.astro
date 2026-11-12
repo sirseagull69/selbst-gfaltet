@@ -6,15 +6,16 @@ import { NEWSLETTER_FORM } from '../newsletter';
   <section class="newsletter">
     <div class="nl-ori"><Ori name="winkt" alt="" /></div>
     <div class="nl-inhalt">
+      <span class="nl-band">Gratis dazu: das Startpaket</span>
       <h2>Neuer Artikel? Kriegst du per Mail.</h2>
-      <p>Nur wenn was Neues erscheint, kein Werbekram. Abmelden geht mit einem Klick in jeder Mail.</p>
+      <p>Nur wenn was Neues erscheint, kein Werbekram. Als Dankeschön gibt's den <b>origami-Bauplan für Claude Code</b>, den es nur im Newsletter gibt. Abmelden geht mit einem Klick in jeder Mail.</p>
       <form method="POST" action={NEWSLETTER_FORM}>
         <div class="nl-zeile">
           <label class="nl-versteckt" for="nl-mail">E-Mail-Adresse</label>
           <input id="nl-mail" type="email" name="EMAIL" required placeholder="deine@mail.de" autocomplete="email" />
           <button class="knopf voll" type="submit">Anmelden</button>
         </div>
-        <label class="nl-ok"><input type="checkbox" name="OPT_IN" value="1" required /> Ich will den Newsletter von Selbst gfaltet bekommen. Ich bekomme gleich eine Mail, in der ich die Anmeldung noch bestätigen muss. Mehr in der <a href="/datenschutz#newsletter">Datenschutzerklärung</a>.</label>
+        <label class="nl-ok"><input type="checkbox" name="OPT_IN" value="1" required /><span>Ich will den Newsletter von Selbst gfaltet bekommen. Ich bekomme gleich eine Mail, in der ich die Anmeldung noch bestätigen muss. Mehr in der <a href="/datenschutz#newsletter">Datenschutzerklärung</a>.</span></label>
         <input type="text" name="email_address_check" value="" class="nl-versteckt" tabindex="-1" autocomplete="off" aria-hidden="true" />
         <input type="hidden" name="locale" value="de" />
       </form>
@@ -25,6 +26,7 @@ import { NEWSLETTER_FORM } from '../newsletter';
   .newsletter{display:grid; grid-template-columns:110px 1fr; gap:18px; align-items:center; margin:44px 0 8px; padding:22px; background:var(--blatt); box-shadow:var(--schatten); border-radius:3px; position:relative}
   .newsletter::before{content:""; position:absolute; top:-11px; right:40px; width:96px; height:24px; background:var(--band); transform:rotate(3deg); border-radius:2px}
   .nl-ori img{width:110px; height:110px}
+  .nl-band{display:inline-block; background:var(--ori); color:#fff; font-family:var(--display); font-weight:800; font-size:.75rem; letter-spacing:.04em; text-transform:uppercase; padding:3px 10px; border-radius:6px; margin-bottom:6px}
   .newsletter h2{font-size:1.35rem; margin:0 0 4px}
   .newsletter p{margin:0 0 12px}
   .nl-zeile{display:flex; gap:10px; flex-wrap:wrap}

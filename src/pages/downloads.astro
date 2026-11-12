@@ -2,21 +2,22 @@
 import Base from '../layouts/Base.astro';
 import Ori from '../components/Ori.astro';
 import Baustein from '../components/Baustein.astro';
+import Newsletter from '../components/Newsletter.astro';
 import { createHash } from 'node:crypto';
 import { readFileSync, statSync } from 'node:fs';
 const datei = (n: string) => {
   const p = `public/downloads/${n}`;
   return { pfad: `/downloads/${n}`, sha: createHash('sha256').update(readFileSync(p)).digest('hex'), kb: Math.max(1, Math.round(statSync(p).size / 1024)) };
 };
-const check = datei('ki-check.ps1'), pruef = datei('modell-pruefstand.ps1'), plan = datei('origami-bauplan.zip');
+const check = datei('ki-check.ps1'), pruef = datei('modell-pruefstand.ps1');
 ---
-<Base titel="Downloads" aktiv="werkzeuge" beschreibung="Kostenlose Downloads für deine eigene KI: PC-Check, Modell-Prüfstand und der origami-Bauplan für Claude Code.">
+<Base titel="Downloads" aktiv="werkzeuge" beschreibung="Kostenlose Downloads für deine eigene KI: PC-Check und Modell-Prüfstand. Dazu der origami-Bauplan für Claude Code im Newsletter-Startpaket.">
   <div class="wrap seite">
     <div class="held" style="padding-top:0">
       <div>
-        <span class="kicker hand">Kostenlos, ohne Anmeldung</span>
+        <span class="kicker hand">Kostenlos</span>
         <h1>Die Werkzeugkiste</h1>
-        <p class="seite-lead">Drei Sachen, die ich für origami selbst gebraucht hab. Zum Runterladen und auf deinem PC benutzen. Keine Anmeldung, keine Mail-Adresse.</p>
+        <p class="seite-lead">Zwei Skripte, die ich für origami selbst gebraucht hab, frei zum Runterladen, ohne Anmeldung. Und das Startpaket mit dem origami-Bauplan, exklusiv für Newsletter-Leser.</p>
       </div>
       <div class="ori-rand">
         <Ori name="wissen" alt="Ori" />
@@ -48,16 +49,17 @@ const check = datei('ki-check.ps1'), pruef = datei('modell-pruefstand.ps1'), pla
       <p class="klein dl-sha">SHA-256: {pruef.sha}</p>
     </Baustein>
 
-    <Baustein titel="Der origami-Bauplan für Claude Code" icon="falt" id="bauplan">
-      <p style="margin-top:0">Das Herzstück: eine fertige <code>CLAUDE.md</code> mit allen Regeln, die origami schnell und sicher machen, plus 9 Aufträge, die du nacheinander in Claude Code eingibst. Vom ersten Chat bis zur KI, die du sicher vom Handy erreichst.</p>
+    <div class="exklusiv">
+      <span class="exklusiv-band">Nur für Newsletter-Leser</span>
+      <h2>Das Startpaket: der origami-Bauplan für Claude Code</h2>
+      <p>Das Herzstück gibt's nicht zum freien Download, sondern als Dankeschön für alle, die den Newsletter lesen:</p>
       <ul>
-        <li><b>CLAUDE.md:</b> konstanter Prompt-Anfang, Vorwärmen, feste Werkzeuge, Freigaben im Code, Erlaubnisliste statt Sperrliste, Papierkorb statt Löschen, Injection-Check, Notbremse (3/3/20), Login vor Tunnel</li>
-        <li><b>SCHRITTE.md:</b> 9 Aufträge zum Kopieren, jeder mit „So prüfst du's“</li>
+        <li><b>CLAUDE.md</b> mit allen Regeln, die origami schnell und sicher machen: konstanter Prompt-Anfang, Vorwärmen, feste Werkzeuge, Freigaben im Code, Erlaubnisliste statt Sperrliste, Papierkorb statt Löschen, Injection-Check, Notbremse, Login vor Tunnel</li>
+        <li><b>9 Aufträge</b> zum Kopieren in Claude Code, vom ersten Chat bis zur KI, die du sicher vom Handy erreichst. Jeder mit „So prüfst du's“.</li>
       </ul>
-      <p>Du brauchst Node.js, Ollama, Claude Code und ein Claude-Konto. Wie man Claude Code installiert, steht in <a href="/blog/erstes-tool">Dein erstes kleines Tool</a>.</p>
-      <div class="knoepfe"><a class="knopf voll" href={plan.pfad} download>origami-bauplan.zip herunterladen ({plan.kb} KB)</a></div>
-      <p class="klein dl-sha">SHA-256: {plan.sha}</p>
-    </Baustein>
+      <p>Anmelden, Mail bestätigen, und der Link kommt direkt in deinem Postfach an.</p>
+    </div>
+    <Newsletter />
 
     <Baustein titel="So startest du die Skripte" icon="schritte" id="starten">
       <ol>
@@ -72,5 +74,8 @@ const check = datei('ki-check.ps1'), pruef = datei('modell-pruefstand.ps1'), pla
   </div>
 </Base>
 <style>
+  .exklusiv{position:relative; margin:40px 0 0; padding:26px 24px 20px; border:3px solid var(--ori); border-radius:14px; background:var(--blatt)}
+  .exklusiv-band{position:absolute; top:-15px; left:22px; background:var(--ori); color:#fff; font-family:var(--display); font-weight:800; font-size:.85rem; letter-spacing:.04em; text-transform:uppercase; padding:4px 12px; border-radius:6px; transform:rotate(-2deg)}
+  .exklusiv h2{margin:6px 0 8px}
   .dl-sha{word-break:break-all; font-family:var(--mono); font-size:.75rem}
 </style>
