@@ -1,0 +1,140 @@
+---
+titel: "Drei KI-Modelle, eine Grafikkarte: Wer taugt was?"
+beschreibung: "Ich hab drei Modelle auf meinem PC gegeneinander antreten lassen. Gleiche 10 Aufgaben, keine Hilfe aus der Cloud. Das größte Modell hat nicht gewonnen, das kleinste hat 6 von 10 Mal einfach nichts gesagt."
+datum: 2026-11-12
+kategorie: messung
+lesezeit: 9
+ori: vergleicht
+oriSpruch: "Ich hab gewonnen. War mir vorher klar."
+---
+import KurzGesagt from '../../components/KurzGesagt.astro';
+import OriSagt from '../../components/OriSagt.astro';
+import WasMacht from '../../components/WasMacht.astro';
+import Messung from '../../components/Messung.astro';
+import Schritte from '../../components/Schritte.astro';
+import Checkliste from '../../components/Checkliste.astro';
+
+<KurzGesagt
+  links="Was ich dachte"
+  rechts="Was rauskam"
+  a={["Größeres Modell = bessere Antworten", "Kleines Modell = schnell und gut genug", "Ein besseres Modell löst meine Probleme"]}
+  b={["Das große war 5 Punkte schlechter und dreimal so langsam", "Das kleine hat 6 von 10 Mal gar nicht geantwortet", "Ein passendes Werkzeug hat mehr gebracht als jedes andere Modell"]}
+/>
+
+## Erst mal: Warum hab ich überhaupt eine eigene KI?
+
+Die Idee kam mir eher nebenbei, als es mal wieder darum ging, wo eigentlich die Daten landen, die man in KI-Dienste kippt. Der eigentliche Grund war aber ein anderer: Ich wollte eine Oberfläche, die zu mir passt, mit genau den Werkzeugen, die ich brauch. Und dass sie bei mir zu Hause läuft, ist ein schöner Bonus.
+
+Daraus ist origami geworden, und die KI darin heißt Ori. Online ging das Ganze am 9. November 2026. Ehrlich gesagt nutze ich Ori im Moment fast nur zum Testen, und ab und zu für ein, zwei Kleinigkeiten. Aber genau beim Testen lernt man am meisten.
+
+Leicht war's nicht. Die Werkzeuge haben rumgezickt, und am Anfang hat Ori ewig zum Warmlaufen gebraucht, bevor überhaupt die erste Antwort kam. Hingeschmissen hätte ich deswegen nicht, aber es gab Abende, da war's mehr Durchbeißen als Basteln.
+
+## Warum ich die Modelle gegeneinander antreten lasse
+
+Ori läuft bei mir zu Hause auf einem ganz normalen Gaming-PC: RTX 4060 mit 8 GB, 32 GB Arbeitsspeicher. Kein Rechenzentrum, keine Profi-Grafikkarte. Das Modell dahinter ist Gemma 4 mit 26 Milliarden Parametern.
+
+Und wie das so ist: Alle paar Tage kommt ein neues Modell raus, und im Internet heißt es, das sei jetzt *das* Ding. Bevor ich mich an Gemma gewöhne, wollte ich wissen, ob ich aufs richtige Pferd setze. Also hab ich nicht weiter gelesen, sondern getestet, noch am selben Tag.
+
+<OriSagt ori="sassy">Er wollte mich ersetzen. Am ersten Tag. Ich hab's nicht vergessen.</OriSagt>
+
+## Die drei Kandidaten
+
+<WasMacht titel="Wer angetreten ist" teile={[
+  { name: "Gemma 4 26B", typ: "15 GB, der Titelverteidiger", text: "Das Modell, mit dem origami bisher läuft. Passt nicht ganz in die 8 GB der Grafikkarte, ein Teil liegt im normalen Arbeitsspeicher.", bild: "der eingespielte Stammspieler" },
+  { name: "Qwen3.6 35B", typ: "23 GB, der Große", text: "Mehr Parameter, auf dem Papier schlauer. Passt bei mir aber nur mit Ach und Krach in den Speicher.", bild: "der teure Neuzugang, der nicht ins Auto passt" },
+  { name: "Qwen3.5 9B", typ: "6 GB, der Kleine", text: "Passt komplett in die Grafikkarte. Sollte also richtig schnell sein.", bild: "der flinke Jugendspieler" },
+]} />
+
+## So hab ich getestet
+
+Jedes Modell hat dieselben 10 Aufgaben bekommen, jede in einem eigenen Chat. Websuche und Werkzeuge waren an, die Übergabe an Claude war **absichtlich aus**. Normalerweise holt sich origami bei schweren Sachen Hilfe aus der Cloud, aber hier wollte ich wissen, was das lokale Modell allein draufhat.
+
+Die Aufgaben waren ein Mix aus dem, was ich wirklich mit Ori mache:
+
+- eine verdächtige Mail prüfen, ob sie Phishing ist
+- eine Checkliste für Windows-11-Einstellungen schreiben
+- ein PowerShell-Skript schreiben und testen
+- WLAN-Probleme Schritt für Schritt eingrenzen
+- einen Fehler auf einem Bildschirmfoto erkennen
+- drei Grafikkarten recherchieren, mit Preisen und Quellen
+- eine kleine Pomodoro-Timer-Webseite bauen
+- und drei Alltagsfragen: Wetter morgen, ein aktueller Preis, wer gerade Bundestrainer ist
+
+Jede Aufgabe gab 0 bis 10 Punkte, also maximal 100. Die Fakten hab ich danach gegen aktuelle Quellen geprüft.
+
+## Das Ergebnis
+
+<Messung titel="Gemessen auf RTX 4060 (8 GB), 32 GB RAM" spalte="Punkte von 100" zeilen={[
+  { name: "Gemma 4 26B", wert: "81", anteil: 81 },
+  { name: "Qwen3.6 35B", wert: "76", anteil: 76, grau: true },
+  { name: "Qwen3.5 9B", wert: "30", anteil: 30, grau: true },
+]} />
+
+<Messung spalte="Zeit pro Aufgabe (Durchschnitt)" zeilen={[
+  { name: "Gemma 4 26B", wert: "54 s", anteil: 32 },
+  { name: "Qwen3.6 35B", wert: "2:51 Min.", anteil: 100, grau: true },
+  { name: "Qwen3.5 9B", wert: "56 s", anteil: 33, grau: true },
+]} notiz="Für alle 10 Aufgaben zusammen brauchte Gemma 9 Minuten, Qwen3.6 28,5 Minuten und Qwen3.5 gut 9 Minuten. Gemessen ist die Gesamtzeit pro Antwort, inklusive aller Werkzeuge." />
+
+Gemma hat gewonnen. Nicht weil es überall das Beste war, sondern weil es **nie ausgefallen ist**. Zehn Aufgaben, zehn Antworten, alle Fakten richtig.
+
+## Der Große: schlau, aber zäh
+
+Qwen3.6 hat bei ein paar Aufgaben sogar die besseren Texte geschrieben, bei der Phishing-Mail, der Windows-Checkliste und der Pomodoro-Seite. Aber 23 GB passen bei mir einfach nicht gescheit in den Speicher. Ein großer Teil läuft dann über den Prozessor, und der ist viel langsamer als die Grafikkarte.
+
+Die langsamste Antwort hat **7 Minuten 41 Sekunden** gedauert. Für eine Preisfrage. In der Zeit hätt ich's dreimal selbst gegoogelt.
+
+Und dann der Moment, wo ich echt lachen musste: Bei der Grafikkarten-Recherche hat es sechs Minuten gerechnet und dann geantwortet:
+
+> „Moin Nil! Was kann ich für dich tun?“
+
+Sechs Minuten. Für eine Begrüßung. Mit falschem Namen.
+
+<OriSagt ori="seufzt">Das wäre mir nie passiert. Ich sag nicht mal Moin.</OriSagt>
+
+Dazu kam, dass es Sätze teilweise drei Mal wiederholt hat. Und bei einer Aufgabe hat es `Remove-Item` vorgeschlagen, also den PowerShell-Befehl zum Löschen. Danach gefragt hatte keiner.
+
+## Der Kleine: schnell, aber stumm
+
+Qwen3.5 9B passt komplett in die Grafikkarte und war entsprechend flott. Das Problem: **6 von 10 Mal kam keine Antwort.** Das Modell hat nachgedacht, sich die Lösung zurechtgelegt und sie dann einfach nicht hingeschrieben. Die Gedanken waren da, der Text nicht.
+
+Wenn's mal geantwortet hat, war's auch nicht immer gut. Beim Wetter hat es heute statt morgen genommen. Und bei der WLAN-Frage ging's um einen Laptop, es hat aber acht Befehle auf meinem PC ausgeführt.
+
+Schnell bringt dir nix, wenn nix rauskommt.
+
+## Was mich am meisten überrascht hat
+
+Die Wetterfrage hat früher fast **4 Minuten** gedauert. Das Modell musste dafür ganze Wetter-Webseiten lesen, und die sind riesig. Dann hab ich origami ein eigenes Wetter-Werkzeug gebaut, das direkt die Vorhersage holt. Seitdem: **14 Sekunden**, und richtig.
+
+Das war für mich die eigentliche Erkenntnis aus dem ganzen Test: Ein passendes Werkzeug hat mehr gebracht als jedes andere Modell. Statt das Modell zu wechseln, lohnt es sich oft mehr, ihm die Arbeit leichter zu machen.
+
+Die größte Schwäche hatten alle drei bei der Recherche über mehrere Seiten. Gemma hat für drei Grafikkarten nur eine einzige Quelle benutzt. Im echten Alltag ist das bei mir aber kein Problem, weil origami solche Aufgaben an Claude weitergibt. Dafür ist die Cloud da.
+
+## Was ich danach geändert hab
+
+- **Gemma bleibt.** Nichts umgestellt.
+- **Doppelte Sätze abgestellt.** Die kamen bei allen drei Modellen vor. Lag an origami, nicht am Modell.
+- **Leere Antworten abgefangen.** Liefert das Modell nur Gedanken und keinen Text, fragt origami jetzt einmal automatisch nach.
+- **Die beiden Qwen-Modelle gelöscht.** Zusammen 29 GB auf der Festplatte, die ich nicht brauch.
+
+## Teste dein Modell selbst
+
+Du musst mir das nicht glauben. Das Wichtigste kannst du in zehn Minuten selbst prüfen.
+
+<Schritte titel="So findest du raus, ob dein Modell zu deinem PC passt" schritte={[
+  { titel: "Modell laden", text: "Mit Ollama lädst du ein Modell mit einem Befehl herunter.", befehl: "ollama pull gemma4:26b" },
+  { titel: "Mit Messung starten", text: "Mit --verbose zeigt Ollama nach jeder Antwort an, wie viele Tokens pro Sekunde es geschafft hat. Stell drei, vier Fragen, die du wirklich stellen würdest.", befehl: "ollama run gemma4:26b --verbose" },
+  { titel: "Prüfen, wo es läuft", text: "In einem zweiten Fenster siehst du, wie viel vom Modell auf der Grafikkarte liegt und wie viel auf dem Prozessor. Je mehr GPU, desto schneller.", befehl: "ollama ps" },
+  { titel: "Eigene Aufgaben nehmen", text: "Nimm nicht irgendwelche Rätsel aus dem Internet, sondern zehn Sachen, die du wirklich machen willst. Schreib dir Zeit und Ergebnis auf. Erst dann vergleichen." },
+  { titel: "Verlierer löschen", text: "Modelle sind groß. Was du nicht nimmst, fliegt wieder runter.", befehl: "ollama rm qwen3.6:35b" },
+]} />
+
+Mein Tipp: Achte nicht nur auf die Punkte, sondern darauf, wie oft ein Modell **gar nicht** liefert. Ein Modell, das immer eine ordentliche Antwort gibt, ist im Alltag mehr wert als eins, das manchmal glänzt und manchmal schweigt.
+
+<Checkliste punkte={[
+  "Ich weiß, wie viel Speicher meine Grafikkarte hat",
+  "Ich hab mit ollama ps geprüft, ob mein Modell auf der GPU läuft",
+  "Ich hab mein Modell mit eigenen Aufgaben getestet, nicht mit fremden Ranglisten",
+  "Ich hab gezählt, wie oft gar keine Antwort kam",
+  "Modelle, die ich nicht brauche, sind wieder gelöscht",
+]} geschafft="Gut gemacht. Und jetzt hör auf, mich ersetzen zu wollen." />
