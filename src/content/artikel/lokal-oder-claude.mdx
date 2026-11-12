@@ -1,0 +1,90 @@
+---
+titel: "Lokal oder Claude? Wie meine KI entscheidet, wer antwortet"
+beschreibung: "origami hat zwei Gehirne: Gemma auf meinem PC und Claude in der Cloud. Wer welche Frage bekommt, entscheidet keine KI, sondern eine schlichte Wortliste. Und eine Notbremse, wenn Gemma sich verrennt."
+datum: 2026-11-12
+kategorie: lokal
+lesezeit: 7
+ori: wissen
+oriSpruch: "Ich mach die Arbeit. Claude kriegt die Lorbeeren."
+---
+import KurzGesagt from '../../components/KurzGesagt.astro';
+import OriSagt from '../../components/OriSagt.astro';
+import WasMacht from '../../components/WasMacht.astro';
+import Schritte from '../../components/Schritte.astro';
+import Checkliste from '../../components/Checkliste.astro';
+import OriRand from '../../components/OriRand.astro';
+
+<KurzGesagt
+  links="Lokal (Gemma)"
+  rechts="Cloud (Claude)"
+  a={["Kostet nix und läuft ohne Internet", "Daten bleiben zu Hause", "Gut bei Alltag, Dateien, Merken, Erinnern", "Langsamer, weil sie nicht ganz in die Grafikkarte passt"]}
+  b={["War im Test in allen 7 Aufgaben besser", "Meist sogar schneller, weil's in der Cloud läuft", "Stark bei Code, Recherche, IT-Fachfragen", "Kostet Kontingent und braucht Internet"]}
+/>
+
+## Zwei Gehirne in einer KI
+
+origami läuft bei mir zu Hause. Die meiste Arbeit macht Gemma, ein Modell, das direkt auf meinem PC rechnet. Aber Gemma ist nicht für alles gut. Für schwere Sachen holt sich origami Claude dazu, das läuft in der Cloud.
+
+Ich hab am 8.11. einen kleinen Vergleich gemacht: dieselbe Aufgabe einmal an Gemma, einmal an Claude, sieben Aufgaben lang. Das Ergebnis war eindeutig. **Claude war in allen sieben besser**, und meistens sogar schneller.
+
+Warum dann überhaupt Gemma? Weil Claude jedes Mal mein Kontingent frisst und Internet braucht. Und weil ich für „Erinner mich morgen an den Müll“ nicht extra in die Cloud muss. Die Frage ist also nicht *wer ist besser*, sondern *wer ist gut genug für genau diese Frage*.
+
+<OriSagt ori="seufzt">Sieben zu null. Ich red nicht drüber.</OriSagt>
+
+## Wie origami entscheidet
+
+<OriRand ori="vergleicht" spruch="Drei Stufen. Wie beim Falten." />
+
+Ich hätte eine KI entscheiden lassen können, welche KI antwortet. Hab ich aber nicht. Das wäre langsam, teuer und unberechenbar. Stattdessen sind es drei ganz einfache Stufen.
+
+<WasMacht titel="Die drei Stufen" teile={[
+  { name: "Stufe 1: Modus", typ: "deine Wahl", text: "Im Chat stell ich ein: Auto lässt origami entscheiden, Schnell nimmt immer Gemma, Gründlich immer direkt Claude.", bild: "der Schalter am Herd" },
+  { name: "Stufe 2: Aufgabenteilung", typ: "vor der Antwort", text: "Eine feste Wortliste, keine KI. Kurze Alltagssachen wie Erinnern, Merken, Wetter oder Uhrzeit bleiben immer bei Gemma. Code, Recherche, IT-Fachfragen und alles über 700 Zeichen geht direkt zu Claude.", bild: "der Türsteher mit Gästeliste" },
+  { name: "Stufe 3: Hilfe holen", typ: "während Gemma arbeitet", text: "Gemma kann Claude um Rat fragen oder ganz abgeben. Und origami greift selbst ein: nach 3 Fehlern, nach 3-mal derselben Aktion oder nach 20 Schritten ohne Ergebnis.", bild: "die Notbremse im Zug" },
+]} />
+
+## Warum eine Wortliste und keine KI?
+
+<OriRand ori="sassy" spruch="Eine Liste. Ernsthaft. Und sie funktioniert." />
+
+Klingt erst mal primitiv. Ist es auch. Aber genau das ist der Punkt:
+
+- **Sie ist sofort fertig.** Keine Sekunde Nachdenken, bevor überhaupt jemand antwortet.
+- **Sie macht immer dasselbe.** Gleiche Frage, gleiche Entscheidung. Bei einer KI weißt du das nie so genau.
+- **Ich versteh sie.** Wenn was falsch landet, schau ich in die Liste und weiß warum. Das ist eine Datei, `lib/route.js`, kein Hexenwerk.
+
+Die 700-Zeichen-Grenze hat einen ganz praktischen Grund: Lange Texte muss Gemma erst mal einlesen, und das dauert bei mir am längsten, weil sie nicht komplett in die Grafikkarte passt. Claude liest so was nebenbei.
+
+## Die Notbremse
+
+<OriRand ori="ratlos" spruch="Ich hab's dreimal probiert. Dreimal falsch. Okay, okay." />
+
+Stufe 3 ist mir am wichtigsten. Lokale Modelle haben eine Macke: Wenn sie sich verrennen, versuchen sie dasselbe immer wieder. Ein Werkzeug schlägt fehl, Gemma probiert's nochmal, gleiche Eingabe, gleicher Fehler. Ohne Bremse läuft das ewig.
+
+Deshalb zählt origami mit. Drei Fehler, drei Mal dieselbe Aktion oder 20 Schritte ohne Ergebnis, und dann ist Schluss. Dann übernimmt Claude. Das entscheidet nicht Gemma, das entscheidet der Code. Gemma kann sich noch so sicher sein, dass der vierte Versuch klappt.
+
+<OriSagt ori="sassy">Der vierte Versuch hätte geklappt. Wahrscheinlich.</OriSagt>
+
+## So baust du das selbst
+
+<OriRand ori="schreibt" spruch="Schreib mit. Ich prüf's danach." />
+
+Du brauchst dafür kein großes Framework. Ein paar Zeilen in deinem eigenen Server reichen.
+
+<Schritte titel="Eine einfache Aufgabenteilung" schritte={[
+  { titel: "Modus-Schalter einbauen", text: "Drei Möglichkeiten im Chat: Auto, nur lokal, nur Cloud. So kannst du jederzeit selbst entscheiden und den Rest der Logik umgehen." },
+  { titel: "Zwei Wortlisten anlegen", text: "Eine für „bleibt immer lokal“ (erinner, merk, wetter, uhrzeit …) und eine für „geht in die Cloud“ (skript, code, recherchier …). Prüf die Nachricht einfach auf diese Wörter." },
+  { titel: "Längengrenze setzen", text: "Über einer bestimmten Länge direkt an die Cloud. Bei mir sind's 700 Zeichen. Probier aus, ab wann dein PC beim Einlesen zäh wird." },
+  { titel: "Notbremse zählen lassen", text: "Fehler, wiederholte Aktionen und Schritte mitzählen. Bei einer festen Grenze abbrechen und abgeben. Das gehört in den Code, nicht in die Anweisungen ans Modell." },
+  { titel: "Unter jede Antwort schreiben, wer's war", text: "origami zeigt unter jeder Antwort Modell, Dauer und Schritte an. So siehst du sofort, ob die Aufteilung passt." },
+]} />
+
+Fang mit kurzen Listen an. Jedes Mal, wenn eine Frage beim falschen Modell landet, kommt ein Wort dazu. So wird die Liste mit der Zeit immer besser.
+
+<Checkliste punkte={[
+  "Ich kann im Chat selbst wählen: lokal, Cloud oder automatisch",
+  "Alltagssachen bleiben lokal, ohne dass eine KI das entscheidet",
+  "Lange Texte und Code gehen direkt an das stärkere Modell",
+  "Mein lokales Modell hat eine Notbremse im Code",
+  "Unter jeder Antwort steht, welches Modell geantwortet hat",
+]} geschafft="Zwei Gehirne, eine Liste. Und ich bleib die Chefin." />

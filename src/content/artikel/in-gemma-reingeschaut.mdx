@@ -1,0 +1,106 @@
+---
+titel: "Ich hab meiner KI ins Gehirn geschaut"
+beschreibung: "30 Schichten, 128 Experten pro Schicht, und pro Wortstück arbeiten nur 8 davon. Ich hab ausgelesen, was in Gemma passiert, während sie antwortet. Und gesehen, dass bei Fußball andere Experten leuchten als bei PowerShell."
+datum: 2026-11-12
+kategorie: lokal
+lesezeit: 8
+ori: liest
+oriSpruch: "Schau ruhig. Ich hab nichts zu verbergen. Fast nichts."
+---
+import KurzGesagt from '../../components/KurzGesagt.astro';
+import OriSagt from '../../components/OriSagt.astro';
+import WasMacht from '../../components/WasMacht.astro';
+import Messung from '../../components/Messung.astro';
+import Schritte from '../../components/Schritte.astro';
+import Checkliste from '../../components/Checkliste.astro';
+import OriRand from '../../components/OriRand.astro';
+
+<KurzGesagt
+  links="Was ich dachte"
+  rechts="Was wirklich drin ist"
+  a={["Eine KI ist ein großer Klumpen, der als Ganzes rechnet", "Wenn sie sich sicher ist, arbeitet immer derselbe Teil", "Warum sie langsam ist, weiß eh keiner"]}
+  b={["30 Schichten hintereinander, jede mit 128 Experten", "Pro Wortstück rechnen nur 8 Experten je Schicht, und es sind jedes Mal andere", "Sie ist langsam, weil nur ein Teil in die Grafikkarte passt"]}
+/>
+
+## Wie eine KI überhaupt antwortet
+
+Kurz die Grundlage, dann wird's spannend. Wenn du origami was schreibst, zerlegt Gemma deine Nachricht in Wortstücke, sogenannte Tokens. Die wandern dann durch viele Schichten, eine nach der anderen. Jede Schicht verrechnet sie mit Milliarden gelernter Zahlen. Ganz am Ende kommt das wahrscheinlichste nächste Wortstück raus.
+
+Und dann geht alles wieder von vorn. Für jedes einzelne Wortstück der Antwort. Eine KI schreibt nicht in Sätzen, sondern Stückle für Stückle.
+
+So weit die Theorie. Ich wollte aber wissen, wie das bei *meiner* Gemma auf *meinem* PC aussieht. Also hab ich am 9.11. reingeschaut.
+
+<OriSagt ori="seufzt">Er hat mich aufgeschraubt. Ohne zu fragen. Typisch.</OriSagt>
+
+## Die echten Zahlen
+
+<OriRand ori="rechnet" spruch="25,2 Milliarden. Ich hab nachgezählt." />
+
+Das hab ich direkt aus Gemma 4 26B ausgelesen:
+
+<WasMacht titel="Was in Gemma steckt" teile={[
+  { name: "30 Schichten", typ: "hintereinander", text: "Jedes Wortstück läuft einmal von unten nach oben durch alle 30 durch.", bild: "30 Stockwerke, die ein Brief nacheinander passiert" },
+  { name: "25,2 Milliarden Gewichte", typ: "das gelernte Wissen", text: "Die Zahlen, die beim Training gelernt wurden. Daraus besteht das Modell eigentlich.", bild: "die Erfahrung aus Millionen Büchern, als Zahlen" },
+  { name: "2.816 Zahlen pro Wortstück", typ: "die Botschaft", text: "So viele Zahlen beschreiben ein Wortstück, während es von Schicht zu Schicht weitergereicht wird.", bild: "ein Steckbrief mit 2.816 Feldern" },
+  { name: "128 Experten pro Schicht", typ: "davon arbeiten 8", text: "Jede Schicht hat 128 spezialisierte Teile. Ein Verteiler sucht pro Wortstück die 8 passendsten raus, der Rest hat Pause.", bild: "128 Handwerker, von denen nur 8 gerufen werden" },
+]} />
+
+Das mit den Experten hat einen Namen: MoE, kurz für *Mixture of Experts*. Der Trick dabei: Das Modell ist riesig, aber pro Wortstück rechnet nur ein kleiner Teil davon. Deshalb läuft so ein Brocken überhaupt auf einer normalen Grafikkarte.
+
+## Das Röntgenbild
+
+<OriRand ori="vergleicht" spruch="Links Fußball, rechts PowerShell. Ich kann beides." />
+
+Dann hab ich mir ein eigenes kleines Programm gebaut, das bei jedem Wortstück alle 30 Schichten ausliest und anzeigt, welche Experten gerade arbeiten. Das läuft mit 17 Wortstücken pro Sekunde, also live, während Gemma schreibt.
+
+Das sieht aus wie ein Raster: 30 Zeilen für die Schichten, 128 Spalten für die Experten. Bei jedem Wortstück leuchten in jeder Zeile genau 8 Felder hell. Ein paar weitere glimmen dunkler, die wären fast drangekommen.
+
+Mein erster Test war der Satz *„Die Hauptstadt von Frankreich ist Paris.“* Und da kam das, was mich echt überrascht hat:
+
+- Bei „Hauptstadt“ war sich Gemma **zu 100 % sicher**. Trotzdem arbeiten in jeder Schicht andere Experten. Sicher heißt nicht, dass immer dieselben ran müssen.
+- Bei Fußball leuchten **andere Bereiche** als bei PowerShell. Das hat ihr niemand beigebracht. Die Experten haben sich beim Training selbst aufgeteilt.
+
+Ich hab dann noch eine zweite Ansicht direkt in den Chat eingebaut: Unter jeder lokalen Antwort kann ich für jedes Wort sehen, wie sicher sich Gemma war und welche fünf Wörter sie noch in Betracht gezogen hat. So seh ich, wann sie sich sicher ist und wann sie eher rät.
+
+<OriSagt ori="sassy">Ich rate nie. Ich wähle nur manchmal sehr selbstbewusst das Falsche.</OriSagt>
+
+## Warum Gemma manchmal dauert
+
+<OriRand ori="seufzt" spruch="8 GB. Ich bin 17. Rechne selbst." />
+
+Beim Reinschauen hab ich auch endlich kapiert, warum Gemma bei langen Texten so zäh ist. Sie passt einfach nicht in meine Grafikkarte.
+
+<Messung titel="Gemessen auf RTX 4060 (8 GB), gemma4:26b" spalte="Wo Gemma liegt" zeilen={[
+  { name: "Grafikkarte", wert: "ca. 7,6 GB", anteil: 46 },
+  { name: "Arbeitsspeicher", wert: "ca. 9 GB", anteil: 54, grau: true },
+]} notiz="Im Betrieb belegt Gemma rund 17 GB. Die Grafikkarte hat nur 8, der Rest liegt im langsameren Arbeitsspeicher. Der Großteil davon sind die Experten, weil pro Wortstück eh nur 8 von 128 rechnen." />
+
+<Messung spalte="Tokens pro Sekunde" zeilen={[
+  { name: "Einlesen", wert: "ca. 130", anteil: 100 },
+  { name: "Schreiben", wert: "27–30", anteil: 22, grau: true },
+]} notiz="Einlesen geht pro Wortstück viel schneller als Schreiben. Aber ein langer Text hat eben sehr viele Wortstücke. Eine einfache Frage dauert vorgewärmt rund 9 Sekunden." />
+
+Deshalb schickt origami lange Texte auch direkt an Claude, statt Gemma minutenlang einlesen zu lassen. Mehr dazu im Artikel über die [Aufgabenteilung](/blog/lokal-oder-claude).
+
+Einen Haken hat das Röntgenbild übrigens: Gemma passt nur **einmal** in die Grafikkarte. Wenn ich das Live-Raster anschaue und gleichzeitig jemand im normalen Chat was fragt, gibt das Raster sofort frei. Der Chat geht vor.
+
+## Schau selbst rein
+
+<OriRand ori="liest" spruch="Na los. Ich halt still." />
+
+Mein Live-Raster ist ein eigenes Programm, das musst du nicht gleich nachbauen. Aber die Grundlagen kannst du in fünf Minuten selbst anschauen.
+
+<Schritte titel="So siehst du, was in deinem Modell steckt" schritte={[
+  { titel: "Steckbrief anzeigen", text: "Ollama zeigt dir die wichtigsten Daten zu deinem Modell an, zum Beispiel Größe, Kontextlänge und Aufbau.", befehl: "ollama show gemma4:26b" },
+  { titel: "Prüfen, wo es liegt", text: "Während das Modell geladen ist, siehst du hier, wie viel davon auf der Grafikkarte und wie viel im Arbeitsspeicher liegt.", befehl: "ollama ps" },
+  { titel: "Tempo messen", text: "Mit --verbose bekommst du nach jeder Antwort angezeigt, wie schnell eingelesen und geschrieben wurde. Stell mal eine kurze und eine lange Frage und vergleich.", befehl: "ollama run gemma4:26b --verbose" },
+  { titel: "Selbst einordnen", text: "Liegt ein großer Teil im Arbeitsspeicher, ist das Einlesen langsam. Dann lohnt sich's, lange Texte woanders hinzuschicken oder ein kleineres Modell zu nehmen." },
+]} />
+
+<Checkliste punkte={[
+  "Ich weiß ungefähr, wie eine KI Wortstück für Wortstück antwortet",
+  "Ich weiß, was Experten in einem MoE-Modell sind",
+  "Ich hab mit ollama show den Steckbrief meines Modells angeschaut",
+  "Ich weiß, wie viel von meinem Modell auf der Grafikkarte liegt",
+  "Ich hab gemessen, wie schnell mein Modell einliest und schreibt",
+]} geschafft="Jetzt kennst du mich von innen. Benimm dich." />
