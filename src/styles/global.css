@@ -419,3 +419,21 @@ main > section.block:first-child{padding-top:0}
 .thema svg{width:18px; height:18px; display:none}
 .thema[data-modus="auto"] .t-auto,.thema[data-modus="hell"] .t-hell,.thema[data-modus="dunkel"] .t-dunkel{display:block}
 .thema:not([data-modus]) .t-auto{display:block}
+
+/* Werkzeuge: Token-Uhr, Prompt-Baukasten, Messtabelle */
+.feld textarea{font:inherit; font-size:1rem; padding:10px 12px; border:2px solid var(--tinte); border-radius:10px; background:var(--papier); color:var(--tinte); resize:vertical}
+.feld textarea[readonly]{font-family:var(--mono); font-size:.88rem; background:var(--blatt)}
+.feld label small{font-weight:500; color:var(--bleistift)}
+.tk-werte{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:14px}
+.tk-werte div{border:2px solid var(--tinte); border-radius:12px; padding:10px 12px; background:var(--papier)}
+.tk-werte b{display:block; font-family:var(--display); font-size:1.6rem; font-variant-numeric:tabular-nums}
+.tk-werte span{font-size:.85rem; color:var(--bleistift)}
+.pb-felder{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+.pb-felder .feld:nth-child(2),.pb-felder .feld:nth-child(3),.pb-felder .feld:nth-child(6){grid-column:1/-1}
+.pb-haken{grid-column:1/-1; display:flex; gap:8px; align-items:center; font-family:var(--display); font-weight:700; font-size:.95rem}
+.pb-haken input{width:20px; height:20px}
+.tabwrap{overflow-x:auto}
+table.gemessen{border-collapse:collapse; width:100%; min-width:480px; font-size:.95rem}
+table.gemessen th,table.gemessen td{text-align:left; padding:8px 10px; border-bottom:1.5px solid var(--linie)}
+table.gemessen th{font-family:var(--display); font-size:.82rem; color:var(--bleistift)}
+@media (max-width:640px){ .tk-werte{grid-template-columns:1fr 1fr} .pb-felder{grid-template-columns:1fr} }

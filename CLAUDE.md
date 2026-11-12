@@ -4,6 +4,7 @@ Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt
 
 ## Technik
 - Astro 5, Artikel als MDX in `src/content/artikel/`, Schema in `src/content.config.ts`.
+- Werkzeuge in `src/pages/werkzeuge.astro` (Token-Uhr, Passt das auf meinen PC?, Prompt-Baukasten, Fehler-Diagnose, Glossar), Spickzettel in `src/pages/spickzettel.astro`. Alles läuft im Browser, nichts wird verschickt. Messwerte nur echte aus origami.
 - Lernwege in `src/lernwege.ts` (Teil mit `slug` = erschienen), Glossar in `src/glossar.ts`.
 - Bausteine in `src/components/`: `KurzGesagt`, `AblaufOrigami` (Schaubild), `WasMacht`, `Schritte` (mit Terminal-Tipp-Animation), `Messung`, `VorherNachher`, `OriSagt`, `Checkliste` (Ori jubelt bei allen Haken).
 - Ori-Animationen in `public/anim/` (`-abendrot` = heller Modus, `-hell` = dunkler Modus). Quelle ist origami (`public/anim/` dort). Ori sieht überall exakt gleich aus, keine eigenen Vogel-Zeichnungen.
