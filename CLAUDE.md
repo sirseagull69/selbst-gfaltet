@@ -1,6 +1,6 @@
 # Selbst gfaltet – Regeln für Claude
 
-Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt, wie man sich einen eigenen KI-Assistenten nach dem Bauplan von **origami** baut. Live: https://selbst-gfaltet.vercel.app (Vercel baut jeden Push auf `main` automatisch).
+Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt, wie man sich einen eigenen KI-Assistenten nach dem Bauplan von **origami** baut. Live: https://www.selbstgfaltet.de (Vercel baut jeden Push auf `main` automatisch).
 
 ## Technik
 - Astro 5, Artikel als MDX in `src/content/artikel/`, Schema in `src/content.config.ts`.
@@ -24,6 +24,5 @@ Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt
 3. Nils liest, ändert den Ton und gibt frei. Erst dann nach `main`.
 
 ## Offen
-- Domain selbstgfaltet.de kaufen und verbinden, Postfach fragen@selbstgfaltet.de anlegen.
-- Danach `noindex` in `src/layouts/Base.astro` entfernen und `site` in `astro.config.mjs` anpassen.
+- Domain selbstgfaltet.de (IONOS) ist gekauft, `fragen@` leitet an Nils weiter. `noindex` ist raus.
 - Newsletter (z. B. Brevo) erst, wenn gewünscht.
