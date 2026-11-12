@@ -5,6 +5,7 @@ export const GLOSSAR = [
   ['Quantisierung', 'Das Modell wird verkleinert, indem Zahlen ungenauer gespeichert werden. Q4 heißt 4 Bit pro Zahl.', 'Foto als JPG statt RAW'],
   ['Kontext', 'Wie viel vom Gespräch die KI gleichzeitig im Kopf behält.', 'das Kurzzeitgedächtnis'],
   ['Nachdenken (Reasoning)', 'Manche Modelle schreiben sich erst Gedanken auf, bevor sie antworten. Kostet Zeit, und manchmal bleibt es beim Denken.', 'der Schmierzettel'],
+  ['Gewichte', 'Die Milliarden Zahlen, die ein Modell beim Training gelernt hat. Daraus besteht es eigentlich.', 'die Erfahrung'],
   ['Prompt', 'Das, was du der KI schreibst.', 'die Bestellung'],
   ['System-Prompt', 'Anweisungen, die die KI vor jedem Gespräch bekommt. Wirkt schwächer, als man denkt.', 'die Hausordnung'],
   ['Zwischenspeicher (Cache)', 'Was die KI schon eingelesen hat, merkt sie sich. Bleibt der Anfang gleich, spart das viel Zeit.', 'die schon geschnippelten Zwiebeln'],
