@@ -52,3 +52,4 @@ Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt
 - Brevo (Brevo GmbH, Berlin), Double-Opt-in. Anmeldefeld `src/components/Newsletter.astro` unter jedem Artikel und auf der Startseite.
 - Die Formular-Adresse aus Brevo steht in `src/newsletter.ts`. Solange leer, ist das Feld unsichtbar und der Datenschutz-Abschnitt fehlt.
 - Verschickt wird nur bei neuen Artikeln.
+- Weiterleitungen aus Brevo: nach Absenden `/newsletter/fast-geschafft`, nach Bestätigung `/newsletter/dabei` (nicht in der Sitemap).
