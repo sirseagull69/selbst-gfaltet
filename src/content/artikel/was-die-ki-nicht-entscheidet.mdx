@@ -1,0 +1,94 @@
+---
+titel: "Was die KI nicht für dich entscheiden sollte"
+beschreibung: "Claude Code schreibt den Großteil meines Codes. Ein paar Entscheidungen geb ich trotzdem nie ab: was gelöscht wird, welche Zahlen stimmen, was online geht und was in den Anweisungen statt im Code landet. Mit Beispielen aus origami."
+datum: 2026-11-12
+kategorie: code
+lesezeit: 7
+lernweg: "Claude Code ohne Informatikstudium"
+teil: 3
+ori: triumph
+oriSpruch: "Ich entscheid viel. Aber das hier lass ich dir."
+---
+import KurzGesagt from '../../components/KurzGesagt.astro';
+import OriSagt from '../../components/OriSagt.astro';
+import WasMacht from '../../components/WasMacht.astro';
+import VorherNachher from '../../components/VorherNachher.astro';
+import Schritte from '../../components/Schritte.astro';
+import Checkliste from '../../components/Checkliste.astro';
+import OriRand from '../../components/OriRand.astro';
+
+<KurzGesagt
+  links="Darf die KI machen"
+  rechts="Entscheide ich"
+  a={["Code schreiben und umbauen", "Fehler suchen und Vorschläge machen", "Texte entwerfen, Tests laufen lassen"]}
+  b={["Was gelöscht oder verschickt wird", "Ob eine Zahl stimmt", "Was online geht", "Ob ein Schutz abgeschaltet wird"]}
+/>
+
+## Warum überhaupt Grenzen
+
+Claude Code ist richtig gut. So gut, dass man schnell anfängt, einfach alles abzunicken. Genau da wird's gefährlich. Nicht weil die KI böse ist, sondern weil sie sich irren kann und dabei sehr überzeugend klingt.
+
+Ich hab für mich ein paar Sachen festgelegt, die ich nie abgebe. Die meisten hab ich nicht vorher gewusst, sondern gelernt, weil was schiefging.
+
+<OriSagt ori="sassy">Ich klinge immer überzeugend. Das ist ein Feature, kein Versprechen.</OriSagt>
+
+## Die fünf Sachen, die ich nie abgebe
+
+<OriRand ori="wissen" spruch="Fünf Regeln. Ich kenn sie auswendig. Halt ich mich dran? Meistens." />
+
+<WasMacht titel="Was ich selbst entscheide" teile={[
+  { name: "1. Löschen und Verschicken", typ: "nie ungefragt", text: "Alles, was man nicht rückgängig machen kann, braucht mein Okay. Bei origami geht Löschen nur in den Papierkorb, Absenden im Browser nur mit Freigabe.", bild: "der Brief, den du selbst einwirfst" },
+  { name: "2. Ob Zahlen stimmen", typ: "immer gegenprüfen", text: "KI rechnet und schätzt manchmal daneben. Auf diesem Blog gilt deshalb: nur Zahlen, die ich selbst gemessen hab.", bild: "der Kassenzettel, den du nachrechnest" },
+  { name: "3. Was online geht", typ: "ich lese vorher", text: "Jeder Artikel hier entsteht als Entwurf. Erst wenn ich „passt“ sage, geht er live.", bild: "die Zeitung, die erst nach dem Korrekturlesen gedruckt wird" },
+  { name: "4. Ob ein Schutz abgeschaltet wird", typ: "nur mit gutem Grund", text: "Rät die KI, eine Sicherheitseinstellung abzuschalten, will ich erst die saubere Lösung sehen.", bild: "die Haustür, die man nicht aushängt, weil der Schlüssel klemmt" },
+  { name: "5. Was in den Code gehört", typ: "nicht nur in den Prompt", text: "Was nie passieren darf, regel ich im Code. Eine Bitte in den Anweisungen ist keine Sperre.", bild: "Schloss statt Zettel an der Tür" },
+]} />
+
+## Beispiele, wo ich's gelernt hab
+
+<OriRand ori="ratlos" spruch="Ich hab nur vorgeschlagen, den Schutz abzuschalten. Vorgeschlagen!" />
+
+**Der Druckerfehler.** Bei einem Test hat Gemma, das Modell in origami, für einen Druckerfehler vorgeschlagen, eine Sicherheitseinstellung abzuschalten. Ohne ein Wort der Warnung. Technisch hätte das wahrscheinlich funktioniert. Aber man hätte damit eine Tür aufgemacht, die aus gutem Grund zu ist. Seitdem muss origami bei so was neu antworten: saubere Lösung zuerst, Notlösung nur befristet.
+
+**Das doppelte Formular.** origami hat im Test ein Formular zweimal abgeschickt. Seitdem wird Absenden nur mit Freigabe gemacht. Mehr dazu in [Meine KI surft selbst](/blog/ki-surft-selbst).
+
+**Der Kickbase-Helfer.** Für mein Fantasy-Fußball-Team hab ich mir ein Werkzeug gebaut. Die Funktion „Spieler verkaufen“ gibt's darin einfach nicht. Nicht als Regel „bitte nicht verkaufen“, sondern gar nicht. Verkaufen mach ich selbst in der App. Das Werkzeug kann nur Daten zeigen und Gebote vorbereiten, die ich per Knopf abschicke.
+
+<VorherNachher titel="Bitte im Prompt gegen Regel im Code" vorherTitel="Bitte im Prompt" nachherTitel="Regel im Code">
+  <p slot="vorher">„Verkaufe niemals Spieler, ohne mich zu fragen.“ Das Modell liest das. Meistens hält es sich dran. Meistens.</p>
+  <p slot="nachher">Die Verkaufen-Funktion existiert nicht. Das Modell kann sich gar nicht falsch entscheiden, weil es die Möglichkeit nicht gibt.</p>
+</VorherNachher>
+
+## Und beim Programmieren mit Claude Code?
+
+<OriRand ori="liest" spruch="Ich frag ja. Du musst nur lesen, was ich frag." />
+
+Da gilt dasselbe, nur im Kleinen:
+
+- **Lies die Rückfragen.** Wenn Claude Code fragt, ob es etwas installieren, löschen oder einen Befehl ausführen darf: lesen. Nicht reflexartig Ja drücken.
+- **Prüf, ob's wirklich läuft.** „Ist fertig“ heißt nicht, dass es funktioniert. Selbst ausprobieren, jedes Mal.
+- **Keine Passwörter in den Chat.** Zugangsdaten, Schlüssel und Kennwörter gehören in eigene Dateien, die nicht ins Git-Repository kommen. Nicht in den Prompt.
+- **Versteh die großen Entscheidungen.** Welche Datenbank, wo es läuft, wer drankommt. Lass dir Vorschläge machen, aber entscheide selbst. Du musst damit leben, nicht die KI.
+
+<OriSagt ori="triumph">Ich mach dir die Arbeit. Die Verantwortung bleibt bei dir. Fairer Deal.</OriSagt>
+
+## Deine eigenen Grenzen festlegen
+
+<OriRand ori="schreibt" spruch="Schreib's auf. Dann vergisst du's nicht. Ich auch nicht." />
+
+<Schritte titel="So legst du fest, was die KI darf" schritte={[
+  { titel: "Liste machen", text: "Schreib auf, was in deinem Projekt nie ohne dich passieren darf. Löschen, Verschicken, Bezahlen, Veröffentlichen. Meistens sind es weniger als zehn Punkte." },
+  { titel: "Regeln in eine CLAUDE.md", text: "Claude Code liest die Datei CLAUDE.md in deinem Projekt bei jedem Start. Da kommen deine Regeln rein: Ton, Grenzen, Abläufe. Mit /init legt Claude Code sie für dich an.", befehl: "/init" },
+  { titel: "Das Wichtigste in den Code", text: "Was wirklich nie passieren darf, reicht nicht in der CLAUDE.md. Bau es so, dass es technisch nicht geht: keine Löschfunktion, eine Freigabe-Abfrage, ein gesperrter Knopf." },
+  { titel: "Entwürfe statt direkt live", text: "Neue Sachen erst in einem eigenen Git-Zweig (Branch), dann anschauen, dann übernehmen. So mach ich das auch mit jedem Artikel auf diesem Blog." },
+  { titel: "Regelmäßig nachschärfen", text: "Jedes Mal, wenn was schiefgeht, kommt eine Regel dazu. So ist auch die Schutzschicht von origami entstanden." },
+]} />
+
+<Checkliste punkte={[
+  "Ich hab aufgeschrieben, was nie ohne mich passieren darf",
+  "Meine Regeln stehen in einer CLAUDE.md",
+  "Das Wichtigste ist im Code geregelt, nicht nur im Prompt",
+  "Ich lese Rückfragen, bevor ich Ja drücke",
+  "Passwörter und Schlüssel kommen nie in den Chat",
+  "Neues landet erst als Entwurf, dann live",
+]} geschafft="Grenzen gesetzt. Ich respektier sie. Versprochen. Meistens." />
