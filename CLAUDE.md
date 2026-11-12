@@ -30,12 +30,14 @@ Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt
 - `lokal-oder-claude`: Aufgabenteilung in drei Stufen, Gemma gegen Claude (Test vom 8.11.)
 - `in-gemma-reingeschaut`: 30 Schichten, 128 Experten, Röntgen, Speicher und Tempo
 - `schutzschicht`: die neun Schutzlagen, Erlaubnisliste statt Sperrliste
+- `ki-surft-selbst`: Suche, Seiten lesen, Browser per Playwright, Absenden-Sperre
+- `von-unterwegs`: Tunnel, Login, nur-lokal-Bereiche, Tagesablauf, Windows-Grenzen (Ports, Auslagerungsdatei)
+- `programmieren-ohne-ausbildung`, `erstes-tool`, `was-die-ki-nicht-entscheidet`: Lernweg 02 (Claude Code ohne Informatikstudium)
+- Lernweg 01 (6 Teile) und Lernweg 02 (3 Teile) sind komplett erschienen.
 - Die ersten vier Artikel (108 Sekunden, Leerzeilen-Panne, Regeln in den Code, Eigene KI auf dem PC) wurden am 12.11. bewusst gelöscht.
 
 ## Ideen
 - Lernweg 03 „Warum macht meine KI das?“ wurde am 12.11. rausgenommen (die Artikel dazu waren gelöscht). Kann zurückkommen, wenn es wieder Fehler-Artikel gibt.
-- Meine KI surft selbst (Browser per Playwright)
-- Vom Handy aus mit dem PC zu Hause reden (Tailscale, ohne Adresse)
 - Wie origami lernt: Daumen runter, Fixes, später Training
 
 ## Domain & Mail

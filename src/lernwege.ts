@@ -8,8 +8,8 @@ export const LERNWEGE = [
       { titel: 'Ich hab meiner KI ins Gehirn geschaut', slug: 'in-gemma-reingeschaut' },
       { titel: 'Lokal oder Claude? Wie meine KI entscheidet, wer antwortet', slug: 'lokal-oder-claude' },
       { titel: 'Neun Lagen Papier zwischen meiner KI und meinem PC', slug: 'schutzschicht' },
-      { titel: 'Meine KI surft selbst' },
-      { titel: 'Sicher von unterwegs erreichbar machen' },
+      { titel: 'Meine KI surft selbst', slug: 'ki-surft-selbst' },
+      { titel: 'Mein PC steht zu Hause, meine KI hab ich dabei', slug: 'von-unterwegs' },
     ],
   },
   {
