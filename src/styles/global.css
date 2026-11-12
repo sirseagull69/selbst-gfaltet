@@ -437,3 +437,12 @@ table.gemessen{border-collapse:collapse; width:100%; min-width:480px; font-size:
 table.gemessen th,table.gemessen td{text-align:left; padding:8px 10px; border-bottom:1.5px solid var(--linie)}
 table.gemessen th{font-family:var(--display); font-size:.82rem; color:var(--bleistift)}
 @media (max-width:640px){ .tk-werte{grid-template-columns:1fr 1fr} .pb-felder{grid-template-columns:1fr} }
+
+.rt-beispiele{display:flex; flex-wrap:wrap; gap:8px; margin:12px 0}
+.chip-knopf{font:inherit; font-size:.88rem; padding:6px 12px; border:1.5px solid var(--tinte); border-radius:999px; background:var(--papier); color:var(--tinte); cursor:pointer}
+.chip-knopf:hover{background:var(--blatt)}
+.rt-urteil{display:flex; gap:12px; align-items:center; min-height:56px; padding:12px 14px; border:2px dashed var(--ori); border-radius:12px; background:var(--papier)}
+.rt-wer{font-family:var(--display); font-weight:800; font-size:1.1rem; padding:4px 12px; border-radius:8px; flex:none}
+.rt-wer.g{background:#dff3e7; color:#23784a}
+.rt-wer.c{background:#fde4d6; color:#c2410c}
+.rt-urteil mark{background:var(--band); padding:0 3px; border-radius:3px}

@@ -4,7 +4,7 @@ import Ori from '../components/Ori.astro';
 import Baustein from '../components/Baustein.astro';
 import { GLOSSAR } from '../glossar';
 ---
-<Base titel="Werkzeuge" aktiv="werkzeuge" beschreibung="Token-Uhr, Modell-Rechner mit echten Messwerten, Prompt-Baukasten, Spickzettel, Fehler-Diagnose und Glossar für deine eigene KI.">
+<Base titel="Werkzeuge" aktiv="werkzeuge" beschreibung="Token-Uhr, Lokal-oder-Claude-Test, Modell-Rechner mit echten Messwerten, Prompt-Baukasten, Spickzettel, Fehler-Diagnose und Glossar für deine eigene KI.">
   <div class="wrap seite">
     <span class="kicker hand">Zum Ausprobieren</span>
     <h1>Werkzeuge</h1>
@@ -20,6 +20,16 @@ import { GLOSSAR } from '../glossar';
       </div>
       <div class="gpu-ori"><Ori name="liest" alt="Ori liest" /><span class="hand" id="tkori">Gib mir was zu lesen.</span></div>
       <p class="klein">Tokens grob geschätzt mit etwa 4 Zeichen pro Token, die echte Zahl hängt vom Modell ab. Zeiten gemessen mit gemma4:26b auf einer RTX 4060 (8 GB): ca. 130 Tokens pro Sekunde beim Einlesen, 27–30 beim Schreiben. Bei origami geht alles über 700 Zeichen direkt an Claude.</p>
+    </Baustein>
+
+    <Baustein titel="Lokal oder Claude? Wer würde antworten" icon="diagnose" id="route">
+      <p style="margin-top:0">Tipp eine Nachricht wie im Chat. Du siehst, ob origami sie selbst mit Gemma beantwortet oder direkt an Claude gibt. Das sind die echten Wortlisten aus origami, Stand 9.11.2026.</p>
+      <div class="feld"><label for="rtext">Deine Nachricht</label><textarea id="rtext" rows="3" placeholder="z. B. erinner mich morgen an den Müll, oder: schreib mir ein PowerShell-Skript"></textarea></div>
+      <div class="rt-beispiele">
+        {['wie wird das wetter morgen', 'merk dir, meine Katze heißt Findus', 'schreib mir ein skript, das alle pcs anpingt', 'vergleich mir drei grafikkarten mit preisen', 'warum ist mein wlan so langsam', 'fass diese seite zusammen'].map((b) => <button type="button" class="chip-knopf" data-beispiel={b}>{b}</button>)}
+      </div>
+      <div class="rt-urteil" id="rurteil" aria-live="polite"></div>
+      <p class="klein">Die Entscheidung trifft keine KI, sondern eine feste Wortliste. Kurze Alltagssachen bleiben bei Gemma, Code, Recherche, IT-Fachfragen und alles über 700 Zeichen gehen direkt an Claude. Bleibt etwas bei Gemma und sie kommt nicht weiter, holt sie sich Claude trotzdem dazu. Mehr im Artikel <a href="/blog/lokal-oder-claude">Lokal oder Claude?</a></p>
     </Baustein>
 
     <Baustein titel="Passt das auf meinen PC?" icon="gpu" id="gpu" class="rechner">
@@ -131,6 +141,30 @@ import { GLOSSAR } from '../glossar';
     setTimeout(() => (k.textContent = 'Kopieren'), 2000);
   });
   pbBau();
+
+  // Lokal oder Claude (echte Wortlisten aus origami lib/route.js, Stand 9.11.2026)
+  const LOKAL = /\b(erinner\w*|reminder|merk(e)?\s+dir|vergiss|vergessen|wie\s+spät|uhrzeit|welcher\s+tag|platz\s+(auf|hab)|speicherplatz|zeig\s+mir|öffne|mach\s+auf|liste?\s+(meine|den|die)|wie\s+heißt|danke|hallo|hi|moin|servus|guten\s+(morgen|abend|tag)|wetter)\b/i;
+  const WEGE: [string, RegExp][] = [
+    ['Recherche', /\b(recherchier\w*|vergleich\w*|preisvergleich|kaufberatung|marktübersicht|was\s+(ist|wäre)\s+besser|lohnt\s+sich|beste[nrs]?\s+\w+\s+(unter|bis|für)|(such|find)\w*\s+(mir\s+)?(mal\s+)?\d+|mit\s+(quelle|quellen|link|links)|aktuelle[nrs]?\s+(preise?|angebote|modelle))\b/i],
+    ['Code', /\b(skript\w*|script\w*|programmier\w*|code|coden|powershell|python|javascript|typescript|node\.?js|(?<!\.)html|(?<!\.)css|sql|regex|(?<!\.)json|api|bug|debug\w*|fehler\s+im\s+code|funktion\s+(schreib|bau)\w*|bau\s+mir|baue?\s+(mir\s+)?(ein|eine|einen)|programm|tool|app|spiel\s+(bau|programmier|erstell|entwickel)\w*|seite\s+(bau|erstell|mach)\w*|tetris|website|webseite\s+(bau|erstell))\b/i],
+    ['IT-Fachfrage', /\b(gpo|gruppenrichtlinie\w*|active\s+directory|härtung|hardening|firewall|vlan|dhcp|dns|intune|exchange|m365|microsoft\s+365|entra|azure|phishing|sicherheitslücke|cve|ransomware|backup-?konzept|raid|bitlocker|laps|domäne|domain|netzwerk\w*|wlan|router|switch|vpn|fehlersuche|troubleshoot\w*|checkliste|konzept|richtlinie)\b/i],
+  ];
+  const rText = document.getElementById('rtext') as HTMLTextAreaElement;
+  const rUrteil = document.getElementById('rurteil')!;
+  const hx = (t: string) => t.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]!));
+  function urteil() {
+    const t = rText.value.trim();
+    const zeig = (wer: string, warum: string) => { rUrteil.innerHTML = `<span class="rt-wer ${wer === 'Gemma' ? 'g' : 'c'}">${wer}</span><span>${warum}</span>`; };
+    if (!t) { rUrteil.innerHTML = '<span class="klein">Schreib oben was rein oder tipp ein Beispiel an.</span>'; return; }
+    const l = t.match(LOKAL);
+    if (l && t.length < 160) return zeig('Gemma', `Alltags-Stichwort <mark>${hx(l[0])}</mark> und kurz. Bleibt auf dem PC.`);
+    for (const [name, re] of WEGE) { const m = t.match(re); if (m) return zeig('Claude', `${name} erkannt an <mark>${hx(m[0])}</mark>. Geht direkt in die Cloud.`); }
+    if (t.length > 700) return zeig('Claude', 'Über 700 Zeichen. Lange Texte liest Claude schneller ein.');
+    zeig('Gemma', 'Kein Stichwort gefunden, bleibt auf dem PC. Kommt Gemma nicht weiter, holt sie sich Claude dazu.');
+  }
+  rText.addEventListener('input', urteil);
+  document.querySelectorAll<HTMLButtonElement>('[data-beispiel]').forEach((b) => b.addEventListener('click', () => { rText.value = b.dataset.beispiel!; urteil(); }));
+  urteil();
 
   // GPU-Rechner
   const modelle: [string, number][] = [['4B', 4], ['8B', 8], ['14B', 14], ['27B', 27], ['32B', 32], ['70B', 70]];
