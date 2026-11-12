@@ -46,6 +46,10 @@ const SCHRITTE = [
   </div>
 </Base>
 <style>
+  /* Faltplan ist ein Blatt Papier: immer hell, auch im dunklen Modus */
+  .fp{background:#fffdf8 !important; color:#1d2742 !important; border-color:#1d2742}
+  .fp li > div > b,.fp-kopf b{color:#1d2742}
+  .fp .box{border-color:#1d2742; background:#fff}
   .fp-kopf{display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:18px}
   .fp-kopf b{font-family:var(--display); font-size:1.6rem}
   .fp-kopf span{color:#5d6478; font-size:.9rem}
