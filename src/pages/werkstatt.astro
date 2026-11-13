@@ -55,6 +55,8 @@ const WUENSCHE = [
   { id: 'claude', titel: 'Hilfe bei schweren Fragen', satz: 'Alltägliches bleibt bei dir zu Hause, Schwieriges geht an Claude. Große Aufgaben machen beide im Team.', ids: ['claude', 'team'], anim: 'uebergabe-claude', ori: 'Für die schweren Sachen hol ich mir Verstärkung. Kein Drama.' },
   { id: 'lernen', titel: 'Aus Fehlern lernen', satz: 'Daumen hoch oder runter, aus jedem Daumen runter wird eine Verbesserung. Und sie führt ihr eigenes Handbuch.', ids: ['feedback', 'handbuch'], anim: 'daumen-runter', ori: 'Daumen runter tut weh. Aber ich werd besser davon.' },
 ];
+// Die sechs häufigsten Wünsche stehen immer da, der Rest klappt auf.
+const KERN = ['schnell', 'alltag', 'internet', 'merken', 'handy', 'claude'];
 ---
 <Base titel="Die Werkstatt: Stell dir deine eigene KI zusammen" aktiv="werkzeuge" beschreibung="Sag in Alltagssprache, was deine KI können soll. Die Werkstatt macht daraus deinen Faltplan in der richtigen Reihenfolge, zum Abhaken und Ausdrucken.">
   <div class="wrap seite">
@@ -89,14 +91,15 @@ const WUENSCHE = [
           <button type="button" class="chip-knopf" data-vorlage="leer">Von vorn</button>
         </span>
       </p>
-      <div class="ws-wuensche">
-        {WUENSCHE.map((w) => (
-          <button type="button" class="ws-wunsch" data-wunsch={w.id} aria-pressed="false">
+      <div class="ws-wuensche" id="ws-wuensche-liste">
+        {[...WUENSCHE.filter((w) => KERN.includes(w.id)), ...WUENSCHE.filter((w) => !KERN.includes(w.id))].map((w) => (
+          <button type="button" class={`ws-wunsch${KERN.includes(w.id) ? '' : ' ws-extra'}`} data-wunsch={w.id} aria-pressed="false">
             <span class="ws-w-haken" aria-hidden="true"></span>
-            <span class="ws-w-text"><b>{w.titel}</b><span>{w.satz}</span><small>Dafür baust du: {w.ids.map((i) => TEILE.find((t) => t.id === i)!.titel).join(', ')}</small></span>
+            <span class="ws-w-text"><b>{w.titel}</b><span>{w.satz}</span></span>
           </button>
         ))}
       </div>
+      <button type="button" class="ws-mehr" id="ws-mehr" aria-expanded="false">Noch {WUENSCHE.length - KERN.length} Wünsche zeigen</button>
       <div class="ws-info" id="ws-info" aria-live="polite">
         <img class="ori-light ws-info-ori" id="ws-info-ori-l" src="/anim/sassy-abendrot.svg" alt="" width="56" height="56" />
         <img class="ori-dark ws-info-ori" id="ws-info-ori-d" src="/anim/sassy-hell.svg" alt="" width="56" height="56" />
@@ -148,13 +151,18 @@ const WUENSCHE = [
   .ws-nr{flex:none; display:grid; place-items:center; width:38px; height:38px; border-radius:50%; background:var(--ori); color:#fff; font-family:var(--display); font-weight:800; font-size:1.1rem}
   .ws-hilfe{color:var(--bleistift); font-size:.95rem; margin:0 0 14px; max-width:62em}
   .ws-vorlagen{display:inline-flex; flex-wrap:wrap; gap:6px; margin-left:6px; vertical-align:middle}
-  .ws-wuensche{display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr)); gap:12px; margin-bottom:26px}
-  .ws-wunsch{display:flex; gap:12px; align-items:flex-start; text-align:left; background:var(--blatt); color:var(--tinte); border:2px solid var(--tinte); border-radius:14px; padding:14px; cursor:pointer; font:inherit; transition:transform .15s, box-shadow .15s, background .2s}
+  .ws-wuensche{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin-bottom:12px}
+  @media (max-width:820px){ .ws-wuensche{grid-template-columns:repeat(2,minmax(0,1fr))} }
+  @media (max-width:500px){ .ws-wuensche{grid-template-columns:minmax(0,1fr)} }
+  .ws-wuensche:not(.offen) .ws-extra:not([aria-pressed="true"]){display:none}
+  .ws-mehr{display:block; margin:0 0 22px; background:none; border:0; padding:4px 0; font:inherit; font-family:var(--display); font-weight:700; color:var(--ori); cursor:pointer; text-decoration:underline; text-underline-offset:3px}
+  .ws-mehr:focus-visible{outline:3px solid var(--ori); outline-offset:3px}
+  .ws-wunsch{display:flex; gap:12px; align-items:flex-start; text-align:left; background:var(--blatt); color:var(--tinte); border:2px solid var(--tinte); border-radius:14px; padding:12px 14px; cursor:pointer; font:inherit; transition:transform .15s, box-shadow .15s, background .2s}
   .ws-wunsch:hover{transform:translate(-2px,-2px); box-shadow:4px 4px 0 var(--tinte)}
   .ws-wunsch:focus-visible{outline:3px solid var(--ori); outline-offset:3px}
   .ws-w-haken{flex:none; width:26px; height:26px; border:2px solid var(--tinte); border-radius:7px; background:var(--papier); display:grid; place-items:center; margin-top:1px}
   .ws-w-text b{display:block; font-family:var(--display); font-size:1.05rem}
-  .ws-w-text span{display:block; font-size:.92rem; color:var(--bleistift); line-height:1.4; margin-top:2px}
+  .ws-w-text span{display:block; font-size:.88rem; color:var(--bleistift); line-height:1.4; margin-top:2px}
   .ws-w-text small{display:block; font-size:.78rem; color:var(--bleistift); margin-top:8px; opacity:.85}
   .ws-wunsch[aria-pressed="true"]{background:color-mix(in srgb,var(--marker) 45%,var(--blatt))}
   .ws-wunsch[aria-pressed="true"] .ws-w-haken{background:var(--ok); border-color:var(--ok)}
@@ -291,8 +299,16 @@ const WUENSCHE = [
     zeichnen(); speichern();
   }
 
+  function mehrAuf(auf: boolean) {
+    const l = document.getElementById('ws-wuensche-liste')!, b = document.getElementById('ws-mehr')!;
+    l.classList.toggle('offen', auf); b.setAttribute('aria-expanded', String(auf));
+    const n = l.querySelectorAll('.ws-extra').length;
+    b.textContent = auf ? 'Weniger zeigen' : `Noch ${n} Wünsche zeigen`;
+  }
+
   document.addEventListener('click', (e) => {
     const z = e.target as HTMLElement;
+    if (z.closest('#ws-mehr')) { mehrAuf(!document.getElementById('ws-wuensche-liste')!.classList.contains('offen')); return; }
     const wu = z.closest<HTMLElement>('[data-wunsch]'); if (wu) { wunsch(wu.dataset.wunsch!); return; }
     const hk = z.closest<HTMLElement>('[data-haken]'); if (hk) { haken(hk.dataset.haken!); return; }
     const vl = z.closest<HTMLElement>('[data-vorlage]');
