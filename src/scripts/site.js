@@ -94,6 +94,14 @@ if (knopf) {
   });
 }
 
+// Höhe der mitlaufenden Kopfzeile messen (bricht das Menü um, wird sie höher), damit Ori am Rand nie darunter rutscht
+const kopf = document.querySelector('body > header');
+if (kopf) {
+  const miss = () => document.documentElement.style.setProperty('--kopf-h', kopf.offsetHeight + 'px');
+  miss();
+  if ('ResizeObserver' in window) new ResizeObserver(miss).observe(kopf); else addEventListener('resize', miss);
+}
+
 // Ori am Rand wandert mit: an jeder <OriRand>-Markierung wechselt sie Animation und Spruch
 const rand = document.querySelector('.randnotiz');
 const marken = [...document.querySelectorAll('.ori-wechsel')];
