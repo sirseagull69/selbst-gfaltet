@@ -3,7 +3,7 @@
 // der Knopf öffnet nur das Mailprogramm mit fertigem Betreff an fragen@selbstgfaltet.de.
 import Ori from './Ori.astro';
 interface Props { thema?: string; ori?: string }
-const { thema = '', ori = 'denkt-nach-3' } = Astro.props;
+const { thema = '', ori = 'ratlos' } = Astro.props;
 const betreff = thema ? `Frage zu: ${thema}` : 'Frage an Selbst gfaltet';
 const link = `mailto:fragen@selbstgfaltet.de?subject=${encodeURIComponent(betreff)}`;
 ---
