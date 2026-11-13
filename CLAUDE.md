@@ -60,7 +60,7 @@ Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt
 Das ist das origami-Hausdesign für alles, was wir rausgeben: gedruckt, als PDF oder als Datei (Faltplan, Spickzettel, Startpaket, alles Künftige). Nie „nackig“ wie ein Formular. Bausteine: `src/components/papier/` (PapierDeko, PapierLogo, PapierFuss) + `src/styles/papier.css`, Seiten in `.pp-blatt`.
 - **Kopf auf jeder Seite:** Logo (Ori `ruhezustand` + „Selbst gfaltet“). Seite 1 zusätzlich Titel mit gelbem Klebestreifen (`#ffe36e`), Folgeseiten kleiner Kopf mit Logo + Untertitel.
 - **Fußzeile auf jeder Seite:** Linie, links Mini-Ori + „selbstgfaltet.de“, rechts in Handschrift „Falte X von Y“ (nie „Seite“).
-- **Große orange Ecke oben rechts:** volles Dreieck bis an den Papierrand (36 mm, `#ff8a4c` mit dunkler Facette `#c2410c`), dazu feine gestrichelte Faltlinien (`#ece5d6`). Druck ohne Seitenrand (`@page margin:0`), Abstand innen über `.pp-blatt`.
+- **Große orange Ecke oben rechts:** volles Dreieck bis an den Papierrand (24 mm, `#ff8a4c` mit dunkler Facette `#c2410c`), dazu feine gestrichelte Faltlinien (`#ece5d6`). Druck ohne Seitenrand (`@page margin:0`), Abstand innen über `.pp-blatt`.
 - **Ori am Rand:** 1–2 Kommentare pro Seite in Handschrift (`#c2410c`) mit vorhandener Animation. Jeder Spruch passt genau zum Schritt daneben, sassy und trocken, nie gemein, kein Spruch doppelt (auch nicht mit den Artikeln).
 - Das Design gilt auch für die Vorschau auf der Seite (Bildschirm = Blatt). Auf dem Handy kleinere Ecke, Ori-Sprüche aus.
 - Schrift lesbar halten (Fließtext ca. 13,5 px). Faltplan = ein Blatt beidseitig, Schritte 1–5 vorne, 6–10 hinten. Vor dem Freigeben PDF erzeugen und anschauen (genau 2 Seiten, nichts abgeschnitten).
