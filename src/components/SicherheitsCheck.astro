@@ -1,0 +1,67 @@
+---
+// Echter Sicherheits-Check für Download-Skripte: Wird beim Bauen der Seite
+// automatisch ausgeführt. Besteht ein Skript eine Prüfung nicht, bricht der
+// Build ab, die Seite geht dann gar nicht erst online. Kein grüner Haken ohne Prüfung.
+import { createHash } from 'node:crypto';
+import { readFileSync } from 'node:fs';
+interface Props { datei: string; schreibt: string }
+const { datei, schreibt } = Astro.props;
+const roh = readFileSync(`public/downloads/${datei}`);
+const sha = createHash('sha256').update(roh).digest('hex');
+const text = roh.toString('utf8').replace(/^﻿/, '');
+// Kommentare raus, damit nur echter Code geprüft wird
+const code = text.replace(/<#[\s\S]*?#>/g, '').split(/\r?\n/).filter((z) => !z.trim().startsWith('#')).join('\n');
+// Für Befehls-Prüfungen Texte in Anführungszeichen ausblenden (z. B. angezeigte Tipps wie "ollama rm <name>")
+const ohneTexte = code.split('\n').map((z) => z.replace(/'[^']*'|"[^"]*"/g, "''"));
+const treffer = (re: RegExp) => ohneTexte.filter((z) => re.test(z));
+const urlVar = /(?:\[string\])?\$(\w+)\s*=\s*'http:\/\/(localhost|127\.0\.0\.1)[:\/]/i.exec(code)?.[1];
+const netz = code.split('\n').filter((z) => /Invoke-RestMethod|Invoke-WebRequest|Net\.WebClient|HttpClient|Start-BitsTransfer|curl\b|wget\b/i.test(z));
+const PRUEFUNGEN = [
+  { t: 'Löscht nichts', ok: treffer(/Remove-Item|Clear-Content|Clear-RecycleBin|Format-Volume|\brm\s|\bdel\s|\brmdir\b/i).length === 0 },
+  { t: 'Installiert und startet keine Programme', ok: treffer(/Install-|Start-Process|msiexec|winget|choco\s|Invoke-Expression|\biex\b|Add-Type\s+-Path/i).length === 0 },
+  { t: 'Ändert keine Einstellungen am System', ok: treffer(/Set-ItemProperty|New-ItemProperty|Set-Service|Stop-Process|Restart-Computer|Stop-Computer|reg\s+add|Set-ExecutionPolicy|Set-MpPreference|netsh\b.*\b(set|add|delete|reset)\b/i).length === 0 },
+  { t: 'Redet nur mit deinem eigenen PC (localhost)', ok: !!urlVar && netz.every((z) => new RegExp(`-Uri\\s+"\\$${urlVar}`).test(z)) },
+  { t: 'Braucht keine Admin-Rechte', ok: !/RunAsAdministrator/i.test(text) },
+];
+const fehler = PRUEFUNGEN.filter((p) => !p.ok);
+if (fehler.length) throw new Error(`Sicherheits-Check für ${datei} nicht bestanden: ${fehler.map((f) => f.t).join(', ')}`);
+const zeilen = text.split(/\r?\n/).length;
+---
+<div class="sc">
+  <div class="sc-kopf">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"></path><path d="M8.5 12l2.5 2.5 4.5-5"></path></svg>
+    <div><b>Sicherheits-Check bestanden</b><small>Automatisch beim Bauen dieser Seite geprüft. Fällt eine Prüfung durch, geht die Seite gar nicht erst online.</small></div>
+  </div>
+  <ul class="sc-liste">
+    {PRUEFUNGEN.map((p) => <li><span class="sc-ok" aria-hidden="true">✓</span>{p.t}</li>)}
+    <li><span class="sc-info" aria-hidden="true">i</span>Schreibt Dateien: {schreibt}</li>
+  </ul>
+  <details class="sc-code">
+    <summary>Den kompletten Code ansehen ({zeilen} Zeilen), bevor du runterlädst</summary>
+    <pre><code>{text}</code></pre>
+  </details>
+  <div class="sc-selbst">
+    <b>Selbst nachprüfen:</b> Nach dem Runterladen in PowerShell <code>Get-FileHash .\{datei}</code> eingeben. Die Zahl muss genau so aussehen:
+    <code class="sc-sha">{sha}</code>
+    Starte Skripte aus dem Netz nie als Administrator, auch dieses nicht.
+  </div>
+</div>
+
+<style>
+  .sc{margin:16px 0 0; border:2px solid var(--ok); border-radius:12px; padding:14px 16px; background:color-mix(in srgb,var(--ok) 7%,var(--blatt))}
+  .sc-kopf{display:flex; gap:12px; align-items:flex-start}
+  .sc-kopf svg{width:30px; height:30px; flex:none; fill:none; stroke:var(--ok); stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
+  .sc-kopf b{font-family:var(--display); display:block; color:var(--ok)}
+  .sc-kopf small{display:block; font-size:.85rem; color:var(--bleistift); line-height:1.4}
+  .sc-liste{list-style:none; margin:12px 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr)); gap:6px 18px; font-size:.95rem}
+  .sc-liste li{display:flex; gap:8px; align-items:baseline}
+  .sc-ok,.sc-info{flex:none; display:inline-grid; place-items:center; width:20px; height:20px; border-radius:50%; font-family:var(--display); font-weight:800; font-size:.75rem}
+  .sc-ok{background:var(--ok); color:#fff}
+  .sc-info{border:1.5px solid var(--bleistift); color:var(--bleistift)}
+  .sc-code{margin-top:12px}
+  .sc-code summary{cursor:pointer; font-family:var(--display); font-weight:700; font-size:.92rem}
+  .sc-code pre{max-height:420px; overflow:auto; font-size:.8rem; line-height:1.5; margin:10px 0 0}
+  .sc-selbst{margin-top:12px; font-size:.88rem; color:var(--bleistift); line-height:1.5}
+  .sc-selbst b{color:var(--tinte)}
+  .sc-sha{display:block; word-break:break-all; margin:4px 0; font-size:.78rem}
+</style>

@@ -39,7 +39,7 @@ a{color:inherit}
 :focus-visible{outline:3px solid var(--ori); outline-offset:3px; border-radius:4px}
 .wrap{max-width:1120px; margin:0 auto; padding:0 24px}
 h1,h2,h3{font-family:var(--display); line-height:1.12; text-wrap:balance; margin:0}
-h1{font-size:clamp(2.2rem,5vw,3.6rem); font-weight:800; letter-spacing:-.02em}
+h1{font-size:clamp(2.2rem,5vw,3.6rem); font-weight:800; letter-spacing:-.02em; overflow-wrap:break-word; hyphens:auto}
 h2{font-size:clamp(1.6rem,3vw,2.2rem); font-weight:700; letter-spacing:-.01em}
 h3{font-size:1.2rem; font-weight:700}
 .mark{background:linear-gradient(transparent 55%,var(--marker) 55%,var(--marker) 90%,transparent 90%); padding:0 .1em}
@@ -421,7 +421,7 @@ main > section.block:first-child{padding-top:0}
 .thema[data-modus="auto"] .t-auto,.thema[data-modus="hell"] .t-hell,.thema[data-modus="dunkel"] .t-dunkel{display:block}
 .thema:not([data-modus]) .t-auto{display:block}
 
-/* Werkzeuge: Token-Uhr, Prompt-Baukasten, Messtabelle */
+/* Werkzeuge: Prompt-Baukasten, Messtabelle */
 .feld textarea{font:inherit; font-size:1rem; padding:10px 12px; border:2px solid var(--tinte); border-radius:10px; background:var(--papier); color:var(--tinte); resize:vertical}
 .feld textarea[readonly]{font-family:var(--mono); font-size:.88rem; background:var(--blatt)}
 .feld label small{font-weight:500; color:var(--bleistift)}

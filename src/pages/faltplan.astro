@@ -1,5 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
+import PapierDeko from '../components/papier/PapierDeko.astro';
+import PapierLogo from '../components/papier/PapierLogo.astro';
+import PapierFuss from '../components/papier/PapierFuss.astro';
+import '../styles/papier.css';
 // [Titel, Was du tust, Meine Zahl, Die Falle]
 const SCHRITTE = [
   ['Grafikkarte ehrlich prüfen', 'Schau, wie viel Speicher (VRAM) deine Grafikkarte hat. Im Rechner „Passt das auf meinen PC?“ siehst du, was ungefähr passt.', 'Gemma 4 26B belegt bei mir rund 17 GB. Auf der 8-GB-Karte liegen ca. 7,6 GB, der Rest im Arbeitsspeicher.', 'Passt nicht alles auf die Karte, ist vor allem das Einlesen langer Texte zäh. Das Schreiben geht trotzdem flott.'],
@@ -13,6 +17,14 @@ const SCHRITTE = [
   ['Gedächtnis mit Bedacht', 'Dauerhafte Fakten gezielt speichern lassen, mit Rückgängig-Knopf. Lange Chats automatisch zusammenfassen, Wichtiges wörtlich behalten.', 'Ein neuer Gedächtnis-Eintrag kostet die nächste Anfrage ca. 20 s extra. Chat-Fenster bei mir ca. 16.000 Tokens.', 'Jeder neue Eintrag ändert den Prompt, dann wird alles neu eingelesen (siehe Schritt 3). Keine Passwörter oder Gesundheitsdaten speichern.'],
   ['Sicher von unterwegs, und stabil', 'Zugriff über einen Tunnel wie Tailscale, Login mit Passwort plus Zwei-Faktor-Code. Dazu Autostart ohne Anmeldung, Neustart nach Absturz und ein nächtliches Backup.', 'Bei mir: steht nach Absturz nach 5 s wieder auf, Backup um 3 Uhr, 14 Tage werden aufgehoben.', 'Verwaltungsseiten nur direkt am PC, nie übers Internet. Und Windows-Grenzen im Blick behalten: Ein Ausfall bei mir hing an zu wenigen freien Netzwerk-Ports und einer zu kleinen Auslagerungsdatei.'],
 ];
+// Ori kommentiert am Rand (nur im Druck), zwei pro Seite
+const ORI: Record<number, [string, string]> = {
+  2: ['sassy', 'Eine Uhrzeit. Eine einzige. Und ich fang von vorn an.'],
+  4: ['rechnet', 'Rechnen? Ich? Dafür gibt’s Code.'],
+  7: ['seufzt', 'Bitten überhör ich. Sperren nicht.'],
+  8: ['wissen', 'Ich merk mir alles. Fast alles.'],
+};
+const SEITEN = [SCHRITTE.slice(0, 5), SCHRITTE.slice(5)];
 ---
 <Base titel="Der Faltplan: 10 Schritte zur eigenen KI" beschreibung="10 Schritte zur eigenen KI, jeder mit echter Messung und der Falle, in die ich getappt bin. Zum Ausdrucken.">
   <div class="wrap seite">
@@ -22,26 +34,55 @@ const SCHRITTE = [
       <p class="seite-lead">10 Schritte zur eigenen KI. Wie man Ollama installiert, findest du überall. Hier steht, was sonst keiner aufschreibt: bei jedem Schritt meine echte Zahl und die Falle, in die ich getappt bin.</p>
       <div class="knoepfe" style="margin-bottom:32px"><button class="knopf voll" type="button" onclick="window.print()">Drucken oder als PDF speichern</button><a class="knopf" href="/werkzeuge">Zu den Werkzeugen</a></div>
     </div>
-    <div class="faltplan-druck fp">
-      <div class="fp-kopf">
-        <div><b>Der Faltplan</b><br /><span>10 Schritte, 10 Fallen · gemessen mit origami · selbstgfaltet.de</span></div>
-        <img src="/anim/ruhezustand-abendrot.svg" alt="" width="72" height="72" />
-      </div>
-      <ol>
-        {SCHRITTE.map(([t, tun, zahl, falle]) => (
-          <li>
-            <span class="box"></span>
-            <div>
-              <b>{t}</b>
-              <p class="fp-tun">{tun}</p>
-              <p class="fp-zahl"><span>Gemessen</span>{zahl}</p>
-              <p class="fp-falle"><span>Falle</span>{falle}</p>
+    <div class="faltplan-druck fp pp-karte">
+      {SEITEN.map((seite, si) => (
+        <section class="fp-blatt pp-blatt">
+          <PapierDeko />
+          {si === 0 && (
+            <>
+            <div class="fp-kopf">
+              <div>
+                <PapierLogo />
+                <b class="pp-titel"><span class="pp-tape" aria-hidden="true"></span>Der Faltplan</b><br /><span>10 Schritte, 10 Fallen · gemessen mit origami · selbstgfaltet.de</span>
+              </div>
+              <img class="fp-kopf-ori" src="/anim/ruhezustand-abendrot.svg" alt="" width="72" height="72" />
             </div>
-          </li>
-        ))}
-      </ol>
-      <p class="fp-fuss">Alles abgehakt? Dann hast du dir deine eigene KI gefaltet. – Ori</p>
-      <p class="fp-klein">Gemessen auf einer RTX 4060 (8 GB) mit 32 GB Arbeitsspeicher und gemma4:26b, November 2026. Auf anderer Hardware sind die Zahlen anders, die Fallen meistens nicht.</p>
+            </>
+          )}
+          {si > 0 && (
+            <div class="pp-kopf2">
+              <PapierLogo />
+              <span>Der Faltplan, Schritte 6 bis 10</span>
+            </div>
+          )}
+          <ol style={`counter-reset:f ${si * 5}`}>
+            {seite.map(([t, tun, zahl, falle], i) => {
+              const ori = ORI[si * 5 + i];
+              return (
+                <li class={ori ? 'hat-ori' : undefined}>
+                  <span class="box"></span>
+                  <div>
+                    <b>{t}</b>
+                    <p class="fp-tun">{tun}</p>
+                    <p class="fp-zahl"><span>Gemessen</span>{zahl}</p>
+                    <p class="fp-falle"><span>Falle</span>{falle}</p>
+                  </div>
+                  {ori && (
+                    <span class="pp-ori fp-ori"><img src={`/anim/${ori[0]}-abendrot.svg`} alt="" width="46" height="46" /><em>{ori[1]}</em></span>
+                  )}
+                </li>
+              );
+            })}
+          </ol>
+          {si === SEITEN.length - 1 && (
+            <>
+              <p class="fp-fuss">Alles abgehakt? Dann hast du dir deine eigene KI gefaltet. – Ori</p>
+              <p class="fp-klein">Gemessen auf einer RTX 4060 (8 GB) mit 32 GB Arbeitsspeicher und gemma4:26b, November 2026. Auf anderer Hardware sind die Zahlen anders, die Fallen meistens nicht.</p>
+            </>
+          )}
+          <PapierFuss seite={si + 1} von={SEITEN.length} />
+        </section>
+      ))}
     </div>
   </div>
 </Base>
@@ -60,7 +101,39 @@ const SCHRITTE = [
   .fp-zahl span,.fp-falle span{display:inline-block; font-family:var(--display); font-weight:700; font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; padding:1px 7px; border-radius:5px; margin-right:7px}
   .fp-zahl span{background:#dff3e7; color:#23784a}
   .fp-falle span{background:#fde4d6; color:#c2410c}
-  .fp-fuss{margin:20px 0 0; font-family:var(--hand); font-size:1.4rem; color:#c2410c}
-  .fp-klein{font-size:.8rem; color:#5d6478}
-  @media print{ .fp p{font-size:10px} .fp li > div > b{font-size:11.5px} .fp ol{gap:6px} .fp-kopf{margin-bottom:8px} }
+  .fp .fp-fuss{margin:20px 0 0; font-family:var(--hand); font-size:1.4rem; color:#c2410c}
+  .fp .fp-klein{font-size:.8rem; color:#5d6478}
+  .fp ol{list-style:none}
+  .fp-kopf-ori{display:none}
+  .fp-kopf :global(.pp-logo){margin-bottom:10px}
+  .fp li{position:relative}
+  .fp li.hat-ori > div{padding-right:150px}
+  .fp-ori{position:absolute !important; right:0; top:2px; width:140px}
+  @media screen and (max-width:700px){ .fp li.hat-ori > div{padding-right:0} }
+  @media print{
+    /* ein Blatt beidseitig: Schritte 1-5 vorne, 6-10 hinten, gut lesbare Schrift */
+    .fp{max-width:none !important; width:100%; margin:0; padding:0 !important; box-shadow:none !important; border:0 !important; border-radius:0; background:#fff !important;
+      -webkit-print-color-adjust:exact; print-color-adjust:exact}
+    .fp-kopf{margin-bottom:8px}
+    .fp-kopf b{font-size:1.6rem}
+    .fp-kopf span{font-size:12px}
+    .fp-kopf img{width:56px; height:56px}
+    .fp ol{gap:13px}
+    .fp li{grid-template-columns:30px 22px 1fr; gap:10px; break-inside:avoid; page-break-inside:avoid}
+    .fp-kopf{position:relative; z-index:1}
+    .fp li::before{font-size:1.4rem}
+    .fp .box{width:18px; height:18px; margin-top:2px}
+    .fp li > div > b{font-size:17px}
+    .fp p{font-size:13.5px; line-height:1.4; margin-top:3px}
+    .fp-zahl span,.fp-falle span{font-size:10px; padding:1px 5px; margin-right:6px}
+    .fp .fp-fuss{font-size:1.5rem; margin-top:12px; break-inside:avoid}
+    .fp .fp-klein{font-size:12px; margin-top:4px}
+  }
+</style>
+<style is:global>
+  /* Druck: A4 hochkant, zwei Seiten (beidseitig = ein Blatt) */
+  @media print{
+    html,body{background:#fff !important}
+    .wrap.seite{max-width:none; padding:0; margin:0}
+  }
 </style>

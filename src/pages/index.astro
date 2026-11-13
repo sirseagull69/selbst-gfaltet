@@ -40,7 +40,7 @@ const kiste = [
     <div class="zahlen">
       <div><b>{LERNWEGE.length}</b><span>Faltanleitungen</span></div>
       <div><b>{artikel.length}</b><span>Artikel</span></div>
-      <div><b>6</b><span>Werkzeuge</span></div>
+      <div><b>10</b><span>Werkzeuge</span></div>
       <div><b>{GLOSSAR.length}</b><span>Begriffe erklärt</span></div>
     </div>
   </div>
@@ -56,7 +56,7 @@ const kiste = [
         <div>
           <span class="kat kat-gratis">Kostenlos</span>
           <h2>Der Faltplan: 10 Schritte, 10 Fallen</h2>
-          <p>Eine Seite zum Ausdrucken. Bei jedem Schritt meine echte Messung und die Falle, in die ich getappt bin. Zum Beispiel: Wie eine Antwort von 107 auf 8 Sekunden schrumpft.</p>
+          <p>Ein Blatt zum Ausdrucken, vorne und hinten. Bei jedem Schritt meine echte Messung und die Falle, in die ich getappt bin. Zum Beispiel: Wie eine Antwort von 107 auf 8 Sekunden schrumpft.</p>
           <div class="knoepfe"><a class="knopf voll" href="/faltplan">Faltplan ansehen</a></div>
         </div>
       </div>
@@ -90,10 +90,10 @@ const kiste = [
         <a class="knopf" href="/werkzeuge">Alle Werkzeuge</a>
       </div>
       <div class="wzgitter">
-        <a class="wz" href="/werkzeuge#token"><span class="kat kat-live">Live</span><Icon name="messung" /><h3>Token-Uhr</h3><p>Wie lange liest deine KI diesen Text ein? Mit echten Messwerten.</p></a>
+        <a class="wz" href="/werkstatt"><span class="kat kat-live">Neu</span><Icon name="teile" /><h3>Die Werkstatt</h3><p>Bauteile zusammenziehen, eigenen Faltplan kriegen und beim Bauen abhaken.</p></a>
         <a class="wz" href="/werkzeuge#gpu"><span class="kat kat-live">Live</span><Icon name="gpu" /><h3>Passt das auf meinen PC?</h3><p>Welche Modelle laufen auf deiner Grafikkarte, plus echte Testergebnisse.</p></a>
         <a class="wz" href="/werkzeuge#prompt"><span class="kat kat-live">Live</span><Icon name="falt" /><h3>Prompt-Baukasten</h3><p>Felder ausfüllen, fertigen Prompt kopieren. Für Claude und lokale Modelle.</p></a>
-        <a class="wz" href="/downloads"><span class="kat kat-gratis">Download</span><Icon name="falt" /><h3>Die Werkzeugkiste</h3><p>PC-Check und Modell-Prüfstand zum Download. Plus der origami-Bauplan, exklusiv im Newsletter.</p></a>
+        <a class="wz" href="/downloads"><span class="kat kat-gratis">Download</span><Icon name="falt" /><h3>Die Werkzeugkiste</h3><p>PC-Check, Modell-Prüfstand und Falt-TÜV zum Download, jeweils mit Sicherheits-Check. Plus der origami-Bauplan im Newsletter.</p></a>
         <a class="wz" href="/spickzettel"><span class="kat kat-gratis">Kostenlos</span><Icon name="buch" /><h3>Spickzettel</h3><p>Ollama, Claude Code und Prompt-Regeln auf einer Seite zum Ausdrucken.</p></a>
       </div>
     </div>
@@ -147,5 +147,5 @@ const kiste = [
       </div>
     </div>
   </section>
-  <div class="wrap"><Newsletter /></div>
+  <div class="wrap" id="newsletter"><Newsletter /></div>
 </Base>

@@ -1,0 +1,8 @@
+---
+interface Props { seite: number; von: number }
+const { seite, von } = Astro.props;
+---
+<div class="pp-fuss">
+  <span class="pp-logo"><img src="/anim/ruhezustand-abendrot.svg" alt="" width="20" height="20" />selbstgfaltet.de</span>
+  <span class="pp-seite">Falte {seite} von {von}</span>
+</div>

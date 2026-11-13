@@ -2,27 +2,40 @@
 import Base from '../layouts/Base.astro';
 import Ori from '../components/Ori.astro';
 import Baustein from '../components/Baustein.astro';
+import Icon from '../components/Icon.astro';
 import { GLOSSAR } from '../glossar';
 ---
-<Base titel="Werkzeuge für deine eigene KI" aktiv="werkzeuge" beschreibung="Token-Uhr, Lokal-oder-Claude-Test, Modell-Rechner mit echten Messwerten, Prompt-Baukasten, Spickzettel und Glossar für deine eigene KI.">
+<Base titel="Werkzeuge für deine eigene KI" aktiv="werkzeuge" beschreibung="Werkstatt, Lokal-oder-Claude-Test, Modell-Rechner mit echten Messwerten, Prompt-Baukasten, Spickzettel und Glossar für deine eigene KI.">
   <div class="wrap seite">
-    <span class="kicker hand">Zum Ausprobieren</span>
+    <span class="kicker hand">Planen, ausprobieren, mitnehmen</span>
     <h1>Werkzeuge</h1>
-    <p class="seite-lead">Kleine Helfer, die dir Fragen beantworten, bevor du Geld ausgibst oder Stunden verlierst. Alles läuft in deinem Browser, nichts wird verschickt.</p>
+    <p class="seite-lead">Alles, was dir beim Falten hilft, an einem Ort: erst planen, dann ausprobieren, dann mitnehmen. Was hier auf der Seite läuft, läuft in deinem Browser, nichts wird verschickt.</p>
 
-    <div class="dl-hinweis"><b>Neu: Die Werkzeugkiste zum Download.</b> PC-Check und Modell-Prüfstand, dazu der origami-Bauplan exklusiv im Newsletter. <a href="/downloads">Zu den Downloads</a></div>
-
-    <Baustein titel="Token-Uhr: Wie lange liest meine KI das?" icon="messung" id="token">
-      <div class="feld"><label for="tktext">Text oder Prompt reinkopieren</label><textarea id="tktext" rows="6" placeholder="Zum Beispiel deine Anweisungen an die KI, eine Mail oder ein Stück Code"></textarea></div>
-      <div class="tk-werte" aria-live="polite">
-        <div><b id="tkzeichen">0</b><span>Zeichen</span></div>
-        <div><b id="tktoken">0</b><span>Tokens (geschätzt)</span></div>
-        <div><b id="tklesen">0 s</b><span>Einlesen bei mir</span></div>
-        <div><b id="tkschreiben">0 s</b><span>gleich lange Antwort schreiben</span></div>
+    <nav class="wz-hub" aria-label="Alle Werkzeuge">
+      <div class="wz-gruppe">
+        <h2><span class="hand">1</span> Planen</h2>
+        <div class="wzgitter">
+          <a class="wz" href="/werkstatt"><span class="kat kat-live">Neu</span><Icon name="teile" /><h3>Die Werkstatt</h3><p>Zieh zusammen, was deine KI können soll. Du kriegst deinen Faltplan mit Schaubild zum Abhaken.</p></a>
+          <a class="wz" href="#gpu"><span class="kat kat-live">Hier auf der Seite</span><Icon name="gpu" /><h3>Passt das auf meinen PC?</h3><p>Welche Modellgröße auf deine Grafikkarte passt.</p></a>
+        </div>
       </div>
-      <div class="gpu-ori"><Ori name="liest" alt="Ori liest" /><span class="hand" id="tkori">Gib mir was zu lesen.</span></div>
-      <p class="klein">Tokens grob geschätzt mit etwa 4 Zeichen pro Token, die echte Zahl hängt vom Modell ab. Zeiten gemessen mit gemma4:26b auf einer RTX 4060 (8 GB): ca. 130 Tokens pro Sekunde beim Einlesen, 27–30 beim Schreiben. Bei origami geht alles über 700 Zeichen direkt an Claude.</p>
-    </Baustein>
+      <div class="wz-gruppe">
+        <h2><span class="hand">2</span> Ausprobieren</h2>
+        <div class="wzgitter">
+          <a class="wz" href="#route"><span class="kat kat-live">Hier auf der Seite</span><Icon name="diagnose" /><h3>Lokal oder Claude?</h3><p>Wer bei origami antworten würde, mit den echten Wortlisten.</p></a>
+          <a class="wz" href="#prompt"><span class="kat kat-live">Hier auf der Seite</span><Icon name="falt" /><h3>Prompt-Baukasten</h3><p>Felder ausfüllen, fertigen Prompt kopieren.</p></a>
+          <a class="wz" href="#glossar"><span class="kat kat-live">Hier auf der Seite</span><Icon name="kurz" /><h3>Fachchinesisch</h3><p>Die Begriffe vom Blog, einfach erklärt.</p></a>
+        </div>
+      </div>
+      <div class="wz-gruppe">
+        <h2><span class="hand">3</span> Mitnehmen</h2>
+        <div class="wzgitter">
+          <a class="wz" href="/downloads"><span class="kat kat-gratis">Download</span><Icon name="schritte" /><h3>Die Werkzeugkiste</h3><p>KI-Check, Modell-Prüfstand und der Falt-TÜV. Jedes Skript mit echtem Sicherheits-Check.</p></a>
+          <a class="wz" href="/faltplan"><span class="kat kat-gratis">Ausdrucken</span><Icon name="check" /><h3>Der Faltplan</h3><p>10 Schritte, 10 Fallen. Ein Blatt, vorne und hinten.</p></a>
+          <a class="wz" href="/spickzettel"><span class="kat kat-gratis">Ausdrucken</span><Icon name="buch" /><h3>Der Spickzettel</h3><p>Ollama, Claude Code und Prompt-Regeln auf einer Seite.</p></a>
+        </div>
+      </div>
+    </nav>
 
     <Baustein titel="Lokal oder Claude? Wer würde antworten" icon="diagnose" id="route">
       <p style="margin-top:0">Tipp eine Nachricht wie im Chat. Du siehst, ob origami sie selbst mit Gemma beantwortet oder direkt an Claude gibt. Das sind die echten Wortlisten aus origami, Stand 9.11.2026.</p>
@@ -76,11 +89,6 @@ import { GLOSSAR } from '../glossar';
       <div class="knoepfe" style="margin-top:10px"><button class="knopf voll" id="pbkopie" type="button">Kopieren</button><span class="hand" id="pbori" style="align-self:center"></span></div>
     </Baustein>
 
-    <Baustein titel="Spickzettel zum Ausdrucken" icon="buch" id="spick">
-      <p style="margin-top:0">Die wichtigsten Befehle für Ollama und Claude Code und die Regeln für gute Prompts. Eine Seite, passt neben die Tastatur.</p>
-      <div class="knoepfe"><a class="knopf voll" href="/spickzettel">Spickzettel öffnen</a></div>
-    </Baustein>
-
     <Baustein titel="Fachchinesisch auf Deutsch" icon="buch" id="glossar">
       <div class="glkopf">
         <div class="feld" style="flex:1"><label for="glsuche">Begriff suchen</label><input id="glsuche" type="search" placeholder="z. B. Token" /></div>
@@ -93,27 +101,15 @@ import { GLOSSAR } from '../glossar';
   </div>
 </Base>
 
+<style>
+  .wz-hub{display:grid; gap:26px; margin:26px 0 40px}
+  .wz-gruppe h2{font-size:1.25rem; margin:0 0 12px; display:flex; align-items:baseline; gap:10px}
+  .wz-gruppe h2 .hand{font-size:1.8rem; color:var(--ori)}
+  .wz-hub .wz h3{font-size:1.05rem; margin:0}
+  .wz-hub .wz p{margin:0; font-size:.92rem; color:var(--bleistift)}
+</style>
 <script>
   const oriNochmal = (img: HTMLImageElement) => (window as any).oriNochmal?.(img);
-  // Token-Uhr
-  const tk = document.getElementById('tktext') as HTMLTextAreaElement;
-  const zeit = (s: number) => {
-    if (s < 10) return `${(Math.round(s * 10) / 10).toLocaleString('de-DE')} s`;
-    const r = Math.round(s);
-    return r < 60 ? `${r} s` : `${Math.floor(r / 60)}:${String(r % 60).padStart(2, '0')} Min.`;
-  };
-  const spanne = (a: string, b: string) => a === b ? a : (a.endsWith(' s') && b.endsWith(' s') ? `${a.slice(0, -2)}–${b}` : `${a}–${b}`);
-  function tkRechne() {
-    const z = tk.value.length, t = Math.ceil(z / 4);
-    document.getElementById('tkzeichen')!.textContent = z.toLocaleString('de-DE');
-    document.getElementById('tktoken')!.textContent = t.toLocaleString('de-DE');
-    document.getElementById('tklesen')!.textContent = zeit(t / 130);
-    document.getElementById('tkschreiben')!.textContent = t ? spanne(zeit(t / 30), zeit(t / 27)) : '0 s';
-    const o = document.getElementById('tkori')!;
-    o.textContent = !z ? 'Gib mir was zu lesen.' : z > 700 ? 'Über 700 Zeichen. Bei origami ginge das direkt an Claude.' : t / 130 < 2 ? 'Zack, gelesen.' : 'Moment. Ich les noch.';
-  }
-  tk.addEventListener('input', tkRechne);
-
   // Prompt-Baukasten
   const pb = (id: string) => (document.getElementById(id) as HTMLInputElement | HTMLTextAreaElement).value.trim();
   const pbRaus = document.getElementById('pbraus') as HTMLTextAreaElement;

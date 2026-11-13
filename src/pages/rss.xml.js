@@ -8,5 +8,6 @@ export async function GET(context) {
     site: context.site,
     items: artikel.map((a) => ({ title: a.data.titel, pubDate: a.data.datum, description: a.data.beschreibung, link: `/blog/${a.id}/` })),
     customData: '<language>de-de</language>',
+    stylesheet: '/rss.xsl',
   });
 }

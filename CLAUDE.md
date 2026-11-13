@@ -6,11 +6,11 @@ Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt
 
 ## Technik
 - Astro 5, Artikel als MDX in `src/content/artikel/`, Schema in `src/content.config.ts`.
-- Werkzeuge in `src/pages/werkzeuge.astro` (Token-Uhr, Lokal oder Claude?, Passt das auf meinen PC?, Prompt-Baukasten, Glossar; Fehler-Diagnose am 12.11. entfernt), Spickzettel in `src/pages/spickzettel.astro`. Downloads in `src/pages/downloads.astro`, Dateien in `public/downloads/` (ki-check.ps1, modell-pruefstand.ps1 frei; Startpaket (Dateiname steht in `mail/willkommen.html`) mit dem origami-Bauplan nur über die Willkommens-Mail, nirgends auf der Seite verlinken). Skripte als UTF-8 mit BOM und CRLF speichern (sonst kaputte Umlaute in Windows PowerShell 5.1), nur lesend, nur localhost. Alles läuft im Browser, nichts wird verschickt. Messwerte nur echte aus origami.
+- Werkzeuge in `src/pages/werkzeuge.astro` (oben Übersicht in drei Gruppen Planen / Ausprobieren / Mitnehmen, jedes Werkzeug genau einmal verlinkt; darunter Token-Uhr, Lokal oder Claude?, Passt das auf meinen PC?, Prompt-Baukasten, Glossar; Fehler-Diagnose am 12.11. entfernt), Spickzettel in `src/pages/spickzettel.astro`. Werkstatt (Drag-and-drop-Baukasten mit Schaubild „Deine KI“ nach Nils' Canvas-Entwurf, Abhaken, Plan im Browser gespeichert) in `src/pages/werkstatt.astro` + `src/components/werkstatt/DeineKI.astro`; die fertige CLAUDE.md bleibt exklusiv im Startpaket. Downloads in `src/pages/downloads.astro`, Dateien in `public/downloads/` (ki-check.ps1, modell-pruefstand.ps1, falt-tuev.ps1 frei, jedes mit `SicherheitsCheck`-Kasten: prüft beim Build automatisch auf Löschen, Installieren, Systemänderungen, Netz außer localhost, Admin-Rechte; fällt eine Prüfung durch, bricht der Build ab. Neue Skripte bekommen immer diesen Kasten; Startpaket (Dateiname steht in `mail/willkommen.html`) mit dem origami-Bauplan nur über die Willkommens-Mail, nirgends auf der Seite verlinken). Skripte als UTF-8 mit BOM und CRLF speichern (sonst kaputte Umlaute in Windows PowerShell 5.1), nur lesend, nur localhost. Alles läuft im Browser, nichts wird verschickt. Messwerte nur echte aus origami.
 - Lernwege heißen auf der Seite „Faltanleitungen“ (Seite `/anleitungen`, `/lernwege` leitet um). Daten in `src/lernwege.ts` (Teil mit `slug` = erschienen), Glossar in `src/glossar.ts`.
 - Eigenes Profil: nicht zu nah an anderen Blogs bauen. Eigene Begriffe aus der Origami-Welt (Faltplan, Faltanleitung, Werkstatt), Startseite führt zum Faltplan, keine Ortsangabe (Gäu) auf der Seite außer im Impressum.
 - Bausteine in `src/components/`: `KurzGesagt`, `AblaufOrigami` (Schaubild), `WasMacht`, `Schritte` (mit Terminal-Tipp-Animation), `Messung`, `VorherNachher`, `OriSagt`, `Checkliste` (Ori jubelt bei allen Haken).
-- Ori-Animationen in `public/anim/` (`-abendrot` = heller Modus, `-hell` = dunkler Modus). Quelle ist origami (`public/anim/` dort). Ori sieht überall exakt gleich aus, keine eigenen Vogel-Zeichnungen. Alle Animationen laufen in Schleife (`repeatCount="indefinite"`, nie `fill="freeze"`).
+- Ori-Animationen in `public/anim/` (`-abendrot` = heller Modus, `-hell` = dunkler Modus). Quelle ist origami (`public/anim/` dort) bzw. der Canvas „origami Animationen v2“ (alle 84 Animationen, Seite „Alle Animationen“). Ori sieht überall exakt gleich aus, keine eigenen Vogel-Zeichnungen. Alle Animationen laufen in Schleife (`repeatCount="indefinite"`, nie `fill="freeze"`).
 - Schriften selbst gehostet über `@fontsource` (keine Google-Fonts-Links, Datenschutz).
 - Prüfen: `npm run build` muss ohne Fehler durchlaufen.
 - Raster im CSS immer mit `minmax(0,1fr)` statt `1fr`, sonst scrollt die Seite auf dem Handy seitlich.
@@ -56,6 +56,15 @@ Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt
 - Besucherzählung: Vercel Web Analytics (ohne Cookies), steht in der Datenschutzerklärung. Neue Dienste immer dort nachtragen.
 
 - Ori am Rand wandert mit: `<OriRand ori="…" spruch="…" />` unter eine Überschrift setzen, ab da wechselt Ori Animation und Spruch. Nur vorhandene Animationen aus `public/anim/` nehmen. Jeder Artikel bekommt eigene, zum Abschnitt passende Wechsel und Sprüche, kein Spruch doppelt über alle Artikel.
+
+## Druck-Dokumente: Papier-Design (seit 13.11.)
+Das ist das origami-Hausdesign für alles, was wir rausgeben: gedruckt, als PDF oder als Datei (Faltplan, Spickzettel, Startpaket, alles Künftige). Nie „nackig“ wie ein Formular. Bausteine: `src/components/papier/` (PapierDeko, PapierLogo, PapierFuss) + `src/styles/papier.css`, Seiten in `.pp-blatt`.
+- **Kopf auf jeder Seite:** Logo (Ori `ruhezustand` + „Selbst gfaltet“). Seite 1 zusätzlich Titel mit gelbem Klebestreifen (`#ffe36e`), Folgeseiten kleiner Kopf mit Logo + Untertitel.
+- **Fußzeile auf jeder Seite:** Linie, links Mini-Ori + „selbstgfaltet.de“, rechts in Handschrift „Falte X von Y“ (nie „Seite“).
+- **Große orange Ecke oben rechts:** volles Dreieck (22 mm, im Druck 5 mm vom Rand, weil Drucker nicht randlos drucken; auf dem Bildschirm bündig; `#ff8a4c` mit dunkler Facette `#c2410c`), dazu feine gestrichelte Faltlinien (`#ece5d6`). Druck ohne Seitenrand (`@page margin:0`), Abstand innen über `.pp-blatt`.
+- **Ori am Rand:** 1–2 Kommentare pro Seite in Handschrift (`#c2410c`) mit vorhandener Animation. Jeder Spruch passt genau zum Schritt daneben, sassy und trocken, nie gemein, kein Spruch doppelt (auch nicht mit den Artikeln).
+- Das Design gilt auch für die Vorschau auf der Seite (Bildschirm = Blatt). Auf dem Handy kleinere Ecke, Ori-Sprüche aus.
+- Schrift lesbar halten (Fließtext ca. 13,5 px). Faltplan = ein Blatt beidseitig, Schritte 1–5 vorne, 6–10 hinten. Vor dem Freigeben PDF erzeugen und anschauen (genau 2 Seiten, nichts abgeschnitten).
 
 ## Newsletter
 - Brevo (Brevo GmbH, Berlin), Double-Opt-in. Anmeldefeld `src/components/Newsletter.astro` unter jedem Artikel und auf der Startseite.
