@@ -1,26 +1,47 @@
-/* origami-Papier-Design für alles, was gedruckt oder als PDF rausgeht.
-   Regeln: CLAUDE.md, Abschnitt „Druck-Dokumente“. Nur im Druck sichtbar. */
-.nur-druck{display:none}
+/* origami-Hausdesign für alles, was wir rausgeben (Druck, PDF, Vorschau auf der Seite).
+   Regeln: CLAUDE.md, Abschnitt „Druck-Dokumente“. Bausteine: src/components/papier/. */
+.pp-blatt{position:relative}
+.pp-blatt > *{position:relative; z-index:1}
+.pp-blatt > .pp-falten{position:absolute; inset:0; width:100%; height:100%; z-index:0; pointer-events:none}
+.pp-falten line{stroke:#ece5d6; stroke-width:.5; stroke-dasharray:3 2.4; vector-effect:non-scaling-stroke}
+.pp-blatt > .pp-kante{position:absolute; top:0; right:0; z-index:3; display:block}
+.pp-logo{display:inline-flex; align-items:center; gap:6px; font-family:var(--display); font-weight:800; font-size:13px; color:#1d2742}
+div > .pp-logo:first-child{display:flex; margin-bottom:10px}
+.pp-titel{position:relative; display:inline-block; z-index:0}
+.pp-tape{position:absolute; left:-6px; right:-10px; top:22%; height:62%; background:#ffe36e; opacity:.85; transform:rotate(-2deg); z-index:-1}
+.pp-kopf2{display:flex; justify-content:space-between; align-items:center; gap:12px; font-size:11px; color:#5d6478; border-bottom:1px solid #e8e2d4; padding-bottom:8px}
+.pp-fuss{display:flex; justify-content:space-between; align-items:center; border-top:1px solid #e8e2d4; padding-top:8px}
+.pp-fuss .pp-logo{font-size:11px; font-weight:600; color:#5d6478}
+.pp-seite{font-family:var(--hand); font-size:17px; color:#c2410c}
+.pp-ori{display:flex; flex-direction:column; align-items:center; text-align:center; transform:rotate(-2deg)}
+.pp-ori em{font-family:var(--hand); font-style:normal; font-size:17px; line-height:1.1; color:#c2410c}
+
+/* Bildschirm: die Vorschau sieht aus wie das Blatt */
+@media screen{
+  .pp-karte{padding:0 !important; overflow:hidden}
+  .pp-blatt{padding:32px 32px 22px}
+  .pp-blatt > .pp-kante{width:92px; height:92px}
+  .pp-blatt + .pp-blatt{border-top:2px dashed #ece5d6}
+  .pp-kopf2{margin-bottom:22px; padding-right:90px}
+  .pp-fuss{margin-top:26px}
+  .pp-blatt .nur-druck-aus{display:none}
+  @media (max-width:700px){
+    .pp-blatt{padding:24px 18px 18px}
+    .pp-blatt > .pp-kante{width:60px; height:60px}
+    .pp-blatt .pp-ori{display:none}
+  }
+}
+
+/* Druck: A4 ohne Seitenrand, ein .pp-blatt = eine Seite */
 @page{ size:A4 portrait; margin:0 }
 @media print{
   html,body{margin:0 !important; padding:0 !important; background:#fff !important}
   .wrap.seite{max-width:none !important; padding:0 !important; margin:0 !important}
-  .nur-druck{display:revert}
-  .pp-blatt{position:relative; height:296.5mm; overflow:hidden; box-sizing:border-box; padding:11mm 13mm 22mm 13mm !important; break-after:page; page-break-after:always;
+  .pp-karte{padding:0 !important; border:0 !important; border-radius:0 !important; box-shadow:none !important; background:#fff !important}
+  .pp-blatt{height:296.5mm; overflow:hidden; box-sizing:border-box; padding:11mm 13mm 22mm 13mm !important; break-after:page; page-break-after:always;
     -webkit-print-color-adjust:exact; print-color-adjust:exact}
   .pp-blatt:last-child{break-after:auto; page-break-after:auto}
-  .pp-blatt > *{position:relative; z-index:1}
-  .pp-blatt > .pp-falten{position:absolute; inset:0; width:100%; height:100%; z-index:0}
-  .pp-falten line{stroke:#ece5d6; stroke-width:.5; stroke-dasharray:3 2.4; vector-effect:non-scaling-stroke}
-  .pp-blatt > .pp-kante{position:absolute; top:0; right:0; width:36mm; height:36mm; z-index:3; display:block}
-  .pp-logo{display:inline-flex !important; align-items:center; gap:6px; font-family:var(--display); font-weight:800; font-size:13px; color:#1d2742}
-  div > .pp-logo:first-child{display:flex !important; margin-bottom:10px}
-  .pp-tape{position:absolute; left:-6px; right:-10px; top:22%; height:62%; background:#ffe36e; opacity:.85; transform:rotate(-2deg); z-index:-1}
-  .pp-titel{position:relative; display:inline-block; z-index:0}
-  .pp-kopf2{display:flex !important; justify-content:space-between; align-items:center; font-size:11px; color:#5d6478; border-bottom:1px solid #e8e2d4; padding-bottom:8px; margin-bottom:9mm; padding-right:30mm}
-  .pp-blatt > .pp-fuss{position:absolute; left:13mm; right:13mm; bottom:10mm; display:flex !important; justify-content:space-between; align-items:center; border-top:1px solid #e8e2d4; padding-top:8px}
-  .pp-fuss .pp-logo{font-size:11px; font-weight:600; color:#5d6478}
-  .pp-seite{font-family:var(--hand); font-size:17px; color:#c2410c}
-  .pp-ori{display:flex !important; flex-direction:column; align-items:center; text-align:center; transform:rotate(-2deg)}
-  .pp-ori em{font-family:var(--hand); font-style:normal; font-size:17px; line-height:1.1; color:#c2410c}
+  .pp-blatt > .pp-kante{width:36mm; height:36mm}
+  .pp-kopf2{margin-bottom:9mm; padding-right:30mm}
+  .pp-blatt > .pp-fuss{position:absolute; left:13mm; right:13mm; bottom:10mm}
 }

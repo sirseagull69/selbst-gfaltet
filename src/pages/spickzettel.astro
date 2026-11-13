@@ -54,12 +54,12 @@ const REGELN = [
       <p class="seite-lead">Die Befehle, die ich wirklich benutze, und die Regeln, mit denen KI-Antworten besser werden. Ausdrucken, neben die Tastatur legen.</p>
       <div class="knoepfe" style="margin-bottom:32px"><button class="knopf voll" type="button" onclick="window.print()">Drucken oder als PDF speichern</button><a class="knopf" href="/werkzeuge">Zu den Werkzeugen</a></div>
     </div>
-    <div class="spick faltplan-druck pp-blatt">
+    <div class="spick faltplan-druck pp-karte"><div class="pp-blatt">
       <PapierDeko />
       <div class="spick-kopf">
         <div>
           <PapierLogo />
-          <b class="pp-titel"><span class="nur-druck pp-tape" aria-hidden="true"></span>Der Spickzettel</b><br /><span>Ollama · Claude Code · Prompts · selbstgfaltet.de</span>
+          <b class="pp-titel"><span class="pp-tape" aria-hidden="true"></span>Der Spickzettel</b><br /><span>Ollama · Claude Code · Prompts · selbstgfaltet.de</span>
         </div>
         <img class="spick-kopf-ori" src="/anim/wissen-abendrot.svg" alt="" width="64" height="64" />
       </div>
@@ -68,7 +68,7 @@ const REGELN = [
           <h2>Ollama</h2>
           <p class="spick-hinweis">Lässt Modelle auf deinem PC laufen. Modellname austauschen, wenn du ein anderes nimmst.</p>
           <dl>{OLLAMA.map(([b, t]) => <><dt><code>{b}</code></dt><dd>{t}</dd></>)}</dl>
-          <span class="nur-druck pp-ori spick-ori"><img src="/anim/rechnet-abendrot.svg" alt="" width="44" height="44" /><em>ollama ps verrät, wie viel von mir wirklich auf der Grafikkarte sitzt.</em></span>
+          <span class="pp-ori spick-ori"><img src="/anim/rechnet-abendrot.svg" alt="" width="44" height="44" /><em>ollama ps verrät, wie viel von mir wirklich auf der Grafikkarte sitzt.</em></span>
         </section>
         <section>
           <h2>Claude Code: starten</h2>
@@ -78,17 +78,25 @@ const REGELN = [
           <dl>{CC_DRIN.map(([b, t]) => <><dt><code>{b}</code></dt><dd>{t}</dd></>)}</dl>
         </section>
         <section class="spick-breit">
-          <h2>Acht Regeln für bessere Prompts <span class="nur-druck pp-ori spick-ori2"><img src="/anim/sassy-abendrot.svg" alt="" width="40" height="40" /><em>Regel 5 mag ich am liebsten. Ich frag nämlich gern nach.</em></span></h2>
+          <h2>Acht Regeln für bessere Prompts <span class="pp-ori spick-ori2"><img src="/anim/sassy-abendrot.svg" alt="" width="40" height="40" /><em>Regel 5 mag ich am liebsten. Ich frag nämlich gern nach.</em></span></h2>
           <ol class="spick-regeln">{REGELN.map(([t, s]) => <li><b>{t}</b><span>{s}</span></li>)}</ol>
         </section>
       </div>
       <PapierFuss seite={1} von={1} />
       <p class="spick-fuss">Stand November 2026. Befehle ändern sich manchmal, im Zweifel zeigt <code>/help</code> in Claude Code und <code>ollama --help</code> den aktuellen Stand.</p>
     </div>
+    </div>
   </div>
 </Base>
 <style>
   .spick{padding:24px}
+  .spick-kopf{padding-right:90px}
+  .spick-kopf-ori{display:none}
+  .spick-ori{flex-direction:row !important; gap:8px; margin-top:10px; text-align:left !important}
+  .spick-ori img{width:34px; height:34px}
+  .spick-ori em{font-size:15px !important}
+  .spick-ori2{display:inline-flex !important; flex-direction:row !important; gap:6px; vertical-align:middle; margin-left:14px; font-weight:400}
+  .spick-ori2 em{font-size:16px !important}
   .spick-kopf{display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:14px}
   .spick-kopf b{font-family:var(--display); font-size:1.6rem}
   .spick-kopf span{color:var(--bleistift); font-size:.9rem}
@@ -106,10 +114,9 @@ const REGELN = [
   .spick-fuss{font-size:.8rem; color:var(--bleistift); margin:16px 0 0}
   @media (max-width:760px){ .spick-raster,.spick-regeln{grid-template-columns:1fr} .spick dl{grid-template-columns:1fr} .spick dd{margin-bottom:6px} }
   @media print{
-    .spick{font-size:12px; border:0 !important; box-shadow:none !important; background:#fff !important}
+    .spick{font-size:12px}
     .spick-kopf{margin-bottom:10px; padding-right:26mm}
     .spick-kopf :global(.pp-logo){margin-bottom:10px}
-    .spick-kopf-ori{display:none}
     .spick-kopf b{font-size:1.6rem}
     .spick h2{font-size:1.1rem; margin:0 0 6px}
     .spick-hinweis{font-size:11.5px; margin-bottom:5px !important}
@@ -120,16 +127,11 @@ const REGELN = [
     .spick dl{grid-template-columns:auto minmax(0,1fr) !important}
     .spick dd{margin-bottom:0 !important}
     .spick-raster section{position:relative}
-    .spick-ori{flex-direction:row !important; gap:8px; margin-top:10px; text-align:left !important}
-    .spick-ori img{width:34px; height:34px}
-    .spick-ori em{font-size:15px !important}
     .spick .spick-regeln li{display:list-item !important; grid-template-columns:none !important; margin:0 0 2px; break-inside:avoid}
     .spick .spick-regeln li::before{content:none !important}
     .spick-regeln{padding-left:18px; gap:4px 24px !important}
     .spick-regeln span{display:block; font-size:11.5px; line-height:1.35}
     .spick-regeln b{font-size:12px}
-    .spick-ori2{display:inline-flex !important; flex-direction:row !important; gap:6px; vertical-align:middle; margin-left:14px; font-weight:400}
-    .spick-ori2 em{font-size:16px !important}
     .spick-fuss{font-size:10.5px; margin-top:10px}
   }
 </style>

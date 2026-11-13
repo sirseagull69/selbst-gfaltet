@@ -34,7 +34,7 @@ const SEITEN = [SCHRITTE.slice(0, 5), SCHRITTE.slice(5)];
       <p class="seite-lead">10 Schritte zur eigenen KI. Wie man Ollama installiert, findest du überall. Hier steht, was sonst keiner aufschreibt: bei jedem Schritt meine echte Zahl und die Falle, in die ich getappt bin.</p>
       <div class="knoepfe" style="margin-bottom:32px"><button class="knopf voll" type="button" onclick="window.print()">Drucken oder als PDF speichern</button><a class="knopf" href="/werkzeuge">Zu den Werkzeugen</a></div>
     </div>
-    <div class="faltplan-druck fp">
+    <div class="faltplan-druck fp pp-karte">
       {SEITEN.map((seite, si) => (
         <section class="fp-blatt pp-blatt">
           <PapierDeko />
@@ -43,14 +43,14 @@ const SEITEN = [SCHRITTE.slice(0, 5), SCHRITTE.slice(5)];
             <div class="fp-kopf">
               <div>
                 <PapierLogo />
-                <b class="pp-titel"><span class="nur-druck pp-tape" aria-hidden="true"></span>Der Faltplan</b><br /><span>10 Schritte, 10 Fallen · gemessen mit origami · selbstgfaltet.de</span>
+                <b class="pp-titel"><span class="pp-tape" aria-hidden="true"></span>Der Faltplan</b><br /><span>10 Schritte, 10 Fallen · gemessen mit origami · selbstgfaltet.de</span>
               </div>
               <img class="fp-kopf-ori" src="/anim/ruhezustand-abendrot.svg" alt="" width="72" height="72" />
             </div>
             </>
           )}
           {si > 0 && (
-            <div class="nur-druck pp-kopf2">
+            <div class="pp-kopf2">
               <PapierLogo />
               <span>Der Faltplan, Schritte 6 bis 10</span>
             </div>
@@ -68,7 +68,7 @@ const SEITEN = [SCHRITTE.slice(0, 5), SCHRITTE.slice(5)];
                     <p class="fp-falle"><span>Falle</span>{falle}</p>
                   </div>
                   {ori && (
-                    <span class="nur-druck pp-ori fp-ori"><img src={`/anim/${ori[0]}-abendrot.svg`} alt="" width="46" height="46" /><em>{ori[1]}</em></span>
+                    <span class="pp-ori fp-ori"><img src={`/anim/${ori[0]}-abendrot.svg`} alt="" width="46" height="46" /><em>{ori[1]}</em></span>
                   )}
                 </li>
               );
@@ -104,7 +104,12 @@ const SEITEN = [SCHRITTE.slice(0, 5), SCHRITTE.slice(5)];
   .fp .fp-fuss{margin:20px 0 0; font-family:var(--hand); font-size:1.4rem; color:#c2410c}
   .fp .fp-klein{font-size:.8rem; color:#5d6478}
   .fp ol{list-style:none}
-  .fp-blatt + .fp-blatt ol{margin-top:14px}
+  .fp-kopf-ori{display:none}
+  .fp-kopf :global(.pp-logo){margin-bottom:10px}
+  .fp li{position:relative}
+  .fp li.hat-ori > div{padding-right:150px}
+  .fp-ori{position:absolute !important; right:0; top:2px; width:140px}
+  @media screen and (max-width:700px){ .fp li.hat-ori > div{padding-right:0} }
   @media print{
     /* ein Blatt beidseitig: Schritte 1-5 vorne, 6-10 hinten, gut lesbare Schrift */
     .fp{max-width:none !important; width:100%; margin:0; padding:0 !important; box-shadow:none !important; border:0 !important; border-radius:0; background:#fff !important;
@@ -116,11 +121,6 @@ const SEITEN = [SCHRITTE.slice(0, 5), SCHRITTE.slice(5)];
     .fp ol{gap:13px}
     .fp li{grid-template-columns:30px 22px 1fr; gap:10px; break-inside:avoid; page-break-inside:avoid}
     .fp-kopf{position:relative; z-index:1}
-    .fp-kopf-ori{display:none}
-    .fp-kopf :global(.pp-logo){margin-bottom:10px}
-    .fp li{position:relative}
-    .fp li.hat-ori > div{padding-right:150px}
-    .fp-ori{position:absolute !important; right:0; top:2px; width:140px}
     .fp li::before{font-size:1.4rem}
     .fp .box{width:18px; height:18px; margin-top:2px}
     .fp li > div > b{font-size:17px}
