@@ -26,6 +26,8 @@ Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt
 - **Kein Name von Nils** auf der Seite (Titel, Texte, Footer, RSS), nur im Impressum und in der Datenschutzerklärung. Einzige Ausnahme (seit 13.11.): der Vorname im Footer („Selbst gfaltet · von Nils mit zu viel Kaffee“), nie der Nachname, sonst nirgends. Auch keine Ortsangabe.
 - **Keine Firmendaten:** Arbeitgeber, Kollegen, Dienstleister, Server, interne Vorfälle nie nennen. Keine Adressen, Zugangsdaten oder die Fernzugriffs-Adresse von origami.
 - Fachbegriffe beim ersten Auftauchen einfach erklären, neue Begriffe ins Glossar.
+- **Zielgruppe (seit 13.11.):** Bastler mit Gaming-PC, die mit Claude Code selbst bauen, keine völligen Anfänger. Anleitung 01 nicht als „Einsteiger“ ausgeben, der Einstieg ohne Vorwissen ist Anleitung 02.
+- **Sicherheits-Tipps nie zu viel versprechen (seit 13.11.):** Fernzugriff zuerst nur für eigene Geräte (`tailscale serve`), Funnel nur als Ausnahme mit Login. „Ohne Admin“ schützt das System, nicht die eigenen Dateien. Ein Injection-Check fängt nur plumpe Versuche, halten müssen die Sperren im Code.
 
 ## Ablauf für neue Artikel
 1. Material kommt aus dem Änderungsverlauf der origami-Doku (claude.ai-Projekt „Origami“, Doku „Dokumentation“). Aus diesem Projekt heraus ist die Doku nicht lesbar. Lesbar sind Nils' Artifacts, vor allem „origami von innen“ (Aufbau, Aufgabenteilung, Werkzeuge, Schutzschicht, Gedächtnis, Netz, Speicher, Pläne) und „Modell-Dreikampf origami“. Fehlt was, Nils fragen.
