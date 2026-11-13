@@ -50,6 +50,9 @@ h3{font-size:1.2rem; font-weight:700}
 
 /* Kopf */
 header{border-bottom:2px solid var(--tinte); background:var(--papier)}
+/* 13.11.: Kopfzeile läuft beim Scrollen mit (Wunsch Nils), am Handy nicht – dort bricht das Menü um und würde zu viel Platz fressen */
+@media (min-width:861px){ body > header{position:sticky; top:0; z-index:50} html{scroll-padding-top:96px} .randnotiz{top:100px} }
+@media print{ body > header{position:static} }
 .kopf{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:14px 24px; max-width:1120px; margin:0 auto; flex-wrap:wrap}
 .logo{display:flex; align-items:center; gap:10px; text-decoration:none; font-family:var(--display); font-weight:800; font-size:1.45rem}
 .logo img{width:44px; height:44px}
