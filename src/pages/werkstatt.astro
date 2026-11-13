@@ -26,7 +26,6 @@ const TEILE = [
   { id: 'tunnel', anim: 'senden', gruppe: 'Unterwegs', titel: 'Vom Handy aus', kurz: 'Zugriff über einen Tunnel wie Tailscale. Verwaltungsseiten bleiben nur am PC.', zahl: '', dep: ['login'], rang: 13, link: '/blog/von-unterwegs', ori: 'Ich komm mit. In die Hosentasche, aber nur mit Login.' },
   { id: 'dauerlauf', anim: 'backup', gruppe: 'Unterwegs', titel: 'Läuft von allein', kurz: 'Autostart ohne Anmeldung, Neustart nach Absturz, Backup jede Nacht.', zahl: 'Steht nach Absturz nach 5 s wieder auf, Backup um 3 Uhr, 14 Tage aufgehoben.', dep: [], rang: 14, link: '/blog/von-unterwegs', ori: 'Ich steh wieder auf. Immer. Das ist kein Versprechen, das ist Code.' },
 ];
-const GRUPPEN = ['Tempo', 'Werkzeuge', 'Schutz', 'Hilfe', 'Unterwegs'];
 ---
 <Base titel="Die Werkstatt: Stell dir deine eigene KI zusammen" aktiv="werkzeuge" beschreibung="Zieh die Bauteile zusammen, die deine KI können soll. Du bekommst deinen eigenen Faltplan in der richtigen Reihenfolge, mit echten Messwerten.">
   <div class="wrap seite">
@@ -34,7 +33,7 @@ const GRUPPEN = ['Tempo', 'Werkzeuge', 'Schutz', 'Hilfe', 'Unterwegs'];
       <div>
         <span class="kicker">Planen, bevor du faltest</span>
         <h1>Die Werkstatt</h1>
-        <p class="lead">Zieh rüber, was deine KI können soll. Die Werkstatt sortiert alles in die richtige Reihenfolge, packt dazu, was du dafür brauchst, und macht dir daraus deinen eigenen Faltplan. Bauen tust du dann selbst.</p>
+        <p class="lead">In drei Schritten zu deinem eigenen Faltplan: Grafikkarte wählen, antippen, was deine KI können soll, fertig. Bauen tust du dann selbst.</p>
       </div>
       <div class="ori-rand">
         <Ori name="schreibt" alt="Ori" />
@@ -42,94 +41,86 @@ const GRUPPEN = ['Tempo', 'Werkzeuge', 'Schutz', 'Hilfe', 'Unterwegs'];
       </div>
     </div>
 
-    <DeineKI />
+    <section class="ws-schritt nicht-drucken" aria-labelledby="ws-s1">
+      <h2 id="ws-s1"><span class="ws-nr">1</span>Wie viel Speicher hat deine Grafikkarte?</h2>
+      <div class="chips" role="radiogroup" aria-label="Grafikspeicher (VRAM)">
+        {[6, 8, 12, 16, 24].map((g) => <label class="chip-wahl"><input type="radio" name="wsvram" value={g} checked={g === 8} /><span>{g} GB</span></label>)}
+      </div>
+      <p class="ws-hilfe">Weißt du nicht? Unter Windows: Task-Manager, Reiter „Leistung“, dann „GPU“. Dort steht „Dedizierter GPU-Speicher“.</p>
+    </section>
 
-    <div class="ws">
-      <section class="ws-regal nicht-drucken" aria-labelledby="ws-regal-titel">
-        <div class="ws-regal-kopf">
-          <h2 id="ws-regal-titel">Bauteile</h2>
-          <div class="ws-vorlagen">
-            <button type="button" class="chip-knopf" data-vorlage="schnell">Schnellstart</button>
-            <button type="button" class="chip-knopf" data-vorlage="origami">Wie origami</button>
-            <button type="button" class="chip-knopf" data-vorlage="leer">Leeren</button>
-          </div>
+    <section class="ws-schritt nicht-drucken" aria-labelledby="ws-s2">
+      <h2 id="ws-s2"><span class="ws-nr">2</span>Tipp an, was deine KI können soll</h2>
+      <p class="ws-hilfe">Graue Teile sind noch nicht drin. Antippen baut ein, nochmal antippen baut aus. Was ein Teil braucht, kommt automatisch mit. Oder nimm eine Vorlage:
+        <span class="ws-vorlagen">
+          <button type="button" class="chip-knopf" data-vorlage="schnell">Schnellstart</button>
+          <button type="button" class="chip-knopf" data-vorlage="origami">Alles wie bei origami</button>
+          <button type="button" class="chip-knopf" data-vorlage="leer">Von vorn</button>
+        </span>
+      </p>
+      <DeineKI />
+      <div class="ws-info" id="ws-info" aria-live="polite">
+        <img class="ori-light ws-info-ori" src="/anim/sassy-abendrot.svg" alt="" width="56" height="56" />
+        <img class="ori-dark ws-info-ori" src="/anim/sassy-hell.svg" alt="" width="56" height="56" />
+        <div>
+          <b id="ws-info-titel">Fang an: Tipp oben auf ein graues Teil.</b>
+          <p id="ws-info-text">Zum Beispiel auf „Wetter“ oder „Fester Prompt-Anfang“. Hier steht dann, was das Teil macht und was ich bei mir gemessen hab.</p>
+          <p class="ws-info-ori-text"><em id="ws-ori-text">Noch leer hier. Ich warte.</em></p>
         </div>
-        <fieldset class="ws-vram">
-          <legend>Deine Grafikkarte (VRAM)</legend>
-          <div class="chips">
-            {[6, 8, 12, 16, 24].map((g) => <label class="chip-wahl"><input type="radio" name="wsvram" value={g} checked={g === 8} /><span>{g} GB</span></label>)}
-          </div>
-        </fieldset>
-        {GRUPPEN.map((g) => (
-          <div class="ws-gruppe">
-            <h3>{g}</h3>
-            <ul>
-              {TEILE.filter((t) => t.gruppe === g).map((t) => (
-                <li class="ws-teil" draggable="true" data-id={t.id}>
-                  <div>
-                    <b>{t.titel}</b>
-                    <span>{t.kurz}</span>
-                  </div>
-                  <button type="button" class="ws-plus" data-add={t.id} aria-label={`${t.titel} einbauen`}>+</button>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </section>
+      </div>
+    </section>
 
-      <section class="ws-plan">
-        <div class="pp-karte ws-karte">
-          <div class="pp-blatt" id="ws-ablage" aria-live="polite">
-            <PapierDeko />
-            <div class="ws-kopf">
-              <PapierLogo />
-              <b class="pp-titel ws-titel"><span class="pp-tape" aria-hidden="true"></span>Dein Faltplan</b>
-              <p class="ws-unter" id="ws-unter">Gebaut in der Werkstatt · selbstgfaltet.de</p>
-            </div>
-            <div class="ws-modell" id="ws-modell"></div>
-            <ol class="ws-liste" id="ws-liste"></ol>
-            <div class="ws-leer nicht-drucken" id="ws-leer">Zieh Bauteile hier rein<br /><small>oder tipp auf das Plus</small></div>
-            <p class="ws-ori nicht-drucken" id="ws-ori"><img src="/anim/sassy-abendrot.svg" alt="" width="40" height="40" /><em id="ws-ori-text">Noch leer hier. Ich warte.</em></p>
-            <PapierFuss seite={1} von={1} />
+    <section class="ws-schritt" aria-labelledby="ws-s3">
+      <h2 id="ws-s3" class="nicht-drucken"><span class="ws-nr">3</span>Dein Faltplan</h2>
+      <p class="ws-hilfe nicht-drucken">In der richtigen Reihenfolge. Hak ab, was fertig ist, dann wird's oben im Schaubild grün. Zum Mitnehmen ausdrucken oder als PDF speichern.</p>
+      <div class="pp-karte ws-karte">
+        <div class="pp-blatt" id="ws-ablage">
+          <PapierDeko />
+          <div class="ws-kopf">
+            <PapierLogo />
+            <b class="pp-titel ws-titel"><span class="pp-tape" aria-hidden="true"></span>Dein Faltplan</b>
+            <p class="ws-unter" id="ws-unter">Gebaut in der Werkstatt · selbstgfaltet.de</p>
           </div>
+          <div class="ws-modell" id="ws-modell"></div>
+          <ol class="ws-liste" id="ws-liste"></ol>
+          <div class="ws-leer nicht-drucken" id="ws-leer">Noch nichts drin außer dem Grundgerüst.<br /><small>Tipp oben im Schaubild auf ein graues Teil.</small></div>
+          <PapierFuss seite={1} von={1} />
         </div>
-        <div class="knoepfe nicht-drucken" style="margin-top:16px">
-          <button class="knopf voll" type="button" onclick="window.print()">Drucken oder als PDF speichern</button>
-        </div>
-        <div class="dl-hinweis nicht-drucken"><b>Die passende CLAUDE.md dazu?</b> Die Regeln, mit denen Claude Code das alles sauber für dich baut, gibt's im Startpaket für Newsletter-Leser. <a href="#newsletter">Zum Newsletter</a></div>
-      </section>
-    </div>
+      </div>
+      <div class="knoepfe nicht-drucken" style="margin-top:16px">
+        <button class="knopf voll" type="button" onclick="window.print()">Drucken oder als PDF speichern</button>
+      </div>
+      <div class="dl-hinweis nicht-drucken"><b>Die passende CLAUDE.md dazu?</b> Die Regeln, mit denen Claude Code das alles sauber für dich baut, gibt's im Startpaket für Newsletter-Leser. <a href="#newsletter">Zum Newsletter</a></div>
+    </section>
     <div id="newsletter" class="nicht-drucken" style="margin-top:40px"><Newsletter /></div>
   </div>
   <script type="application/json" id="ws-daten" set:html={JSON.stringify(TEILE)} />
 </Base>
 
 <style>
+  .ws-schritt{margin:0 0 34px}
+  .ws-schritt h2{display:flex; align-items:center; gap:12px; font-size:1.35rem; margin:0 0 10px}
+  .ws-nr{flex:none; display:grid; place-items:center; width:38px; height:38px; border-radius:50%; background:var(--ori); color:#fff; font-family:var(--display); font-weight:800; font-size:1.1rem}
+  .ws-hilfe{color:var(--bleistift); font-size:.95rem; margin:0 0 14px; max-width:62em}
+  .ws-vorlagen{display:inline-flex; flex-wrap:wrap; gap:6px; margin-left:6px; vertical-align:middle}
+  .ws-info{display:flex; gap:14px; align-items:flex-start; border:2px solid var(--tinte); border-radius:14px; background:var(--blatt); padding:14px 16px; margin-top:-14px}
+  .ws-info-ori{width:56px; height:56px; flex:none}
+  .ws-info b{font-family:var(--display); font-size:1.05rem}
+  .ws-info p{margin:4px 0 0; font-size:.95rem; color:var(--bleistift)}
+  .ws-info :global(.ws-gem){display:inline-block; margin-top:4px; color:var(--tinte)}
+  .ws-info :global(.ws-gem i){font-style:normal; font-family:var(--display); font-weight:700; font-size:.68rem; text-transform:uppercase; letter-spacing:.05em; padding:1px 6px; border-radius:5px; margin-right:6px; background:#dff3e7; color:#23784a}
+  .ws-info-ori-text em{font-family:var(--hand); font-style:normal; font-size:1.2rem; color:var(--ori)}
+  .ws-karte{max-width:820px}
+  :global(.dki-el[role="button"]){cursor:pointer}
+  :global(.dki-el[role="button"]:not(.an):not(.fertig):hover),:global(.dki-el[role="button"]:focus-visible){border-color:var(--ori) !important; color:var(--tinte) !important; outline:none}
+  :global(.dki-el.an:hover),:global(.dki-el.fertig:hover){filter:brightness(.97)}
+  :global(.dki.dki-leer .dki-el:not(.an):not(.fertig)){animation:ws-winken 2.4s ease-in-out infinite}
+  @media (prefers-reduced-motion:reduce){ :global(.dki.dki-leer .dki-el){animation:none !important} }
+  @keyframes ws-winken{0%,100%{border-color:var(--aus)} 50%{border-color:var(--ori)}}
   .ws-liste :global(.ws-haken){width:22px; height:22px; border:2px solid #1d2742; border-radius:5px; background:#fff; cursor:pointer; padding:0; margin-top:2px; display:grid; place-items:center; color:#fff; font-weight:800; font-size:14px; line-height:1}
   .ws-liste :global(.ws-haken[aria-pressed="true"]){background:var(--ok); border-color:var(--ok)}
   .ws-liste :global(li.erledigt b){text-decoration:line-through; text-decoration-color:var(--ok); text-decoration-thickness:2px}
   @media print{ :global(.dki){display:none !important} .ws-liste :global(.ws-haken){background:#fff !important; color:transparent} }
-  .ws{display:grid; grid-template-columns:minmax(0,0.95fr) minmax(0,1.05fr); gap:28px; align-items:start; margin-top:8px}
-  .ws-regal{background:var(--blatt); border:2px solid var(--tinte); border-radius:14px; padding:18px}
-  .ws-regal-kopf{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap}
-  .ws-regal h2{font-size:1.3rem}
-  .ws-vorlagen{display:flex; gap:6px; flex-wrap:wrap}
-  .ws-vram{border:0; padding:0; margin:14px 0 4px}
-  .ws-vram legend{font-family:var(--display); font-weight:700; font-size:.9rem; margin-bottom:6px}
-  .ws-gruppe h3{font-size:.8rem; text-transform:uppercase; letter-spacing:.06em; color:var(--bleistift); margin:16px 0 6px}
-  .ws-gruppe ul{list-style:none; margin:0; padding:0; display:grid; gap:8px}
-  .ws-teil{display:flex; align-items:center; gap:10px; background:var(--papier); border:2px solid var(--tinte); border-radius:10px; padding:9px 10px 9px 12px; cursor:grab; transition:transform .15s, box-shadow .15s, opacity .15s}
-  .ws-teil:hover{transform:translate(-2px,-2px) rotate(-.4deg); box-shadow:4px 4px 0 var(--tinte)}
-  .ws-teil:global(.zieht){opacity:.4}
-  .ws-teil > div{flex:1; min-width:0}
-  .ws-teil b{font-family:var(--display); font-size:.98rem; display:block}
-  .ws-teil span{font-size:.85rem; color:var(--bleistift); line-height:1.35; display:block}
-  .ws-teil:global(.drin){opacity:.45; border-style:dashed}
-  .ws-teil:global(.drin) .ws-plus{background:var(--ok); border-color:var(--ok); color:#fff}
-  .ws-plus{flex:none; width:36px; height:36px; border-radius:50%; border:2px solid var(--tinte); background:var(--blatt); color:var(--tinte); font-family:var(--display); font-weight:800; font-size:1.2rem; line-height:1; cursor:pointer}
-  .ws-plus:hover{background:var(--marker)}
-  .ws-plan{position:sticky; top:16px}
   .ws-karte{background:#fffdf8; color:#1d2742; border:2px solid #1d2742; border-radius:14px}
   .ws-kopf{padding-right:66px}
   .ws-titel{font-family:var(--display); font-size:1.7rem}
@@ -150,18 +141,12 @@ const GRUPPEN = ['Tempo', 'Werkzeuge', 'Schutz', 'Hilfe', 'Unterwegs'];
   .ws-liste :global(.ws-weg:hover){background:#fde4d6; color:#c2410c}
   .ws-leer{border:2.5px dashed #e3d7c4; border-radius:12px; padding:34px 16px; text-align:center; font-family:var(--display); font-weight:700; color:#5d6478; margin-top:6px}
   .ws-leer small{font-family:var(--text); font-weight:400}
-  #ws-ablage:global(.drueber) .ws-leer,#ws-ablage:global(.drueber) .ws-liste{outline:3px dashed var(--ori); outline-offset:6px; border-radius:10px; background:color-mix(in srgb,var(--marker) 25%,transparent)}
-  .ws-ori{display:flex; align-items:center; gap:8px; margin:16px 0 0}
-  .ws-ori em{font-family:var(--hand); font-style:normal; font-size:1.2rem; color:#c2410c; line-height:1.15}
   @keyframes rein{from{opacity:0; transform:translateY(-6px) rotate(-1deg)} to{opacity:1; transform:none}}
-  @media (max-width:900px){ .ws{grid-template-columns:1fr} .ws-plan{position:static} }
-  @media (prefers-reduced-motion:reduce){ .ws-liste :global(li){animation:none} .ws-teil{transition:none} }
+  @media (prefers-reduced-motion:reduce){ .ws-liste :global(li){animation:none} }
   @media print{
     .ws-karte{border:0}
     .nicht-drucken{display:none !important}
-    .ws{display:block; margin:0}
-    .ws-plan{position:static}
-    .ws-titel{font-size:1.6rem}
+      .ws-titel{font-size:1.6rem}
     .ws-liste{gap:8px}
     .ws-liste :global(p){font-size:12.5px}
     .ws-liste :global(.zahl){font-size:12px}
@@ -197,7 +182,6 @@ const GRUPPEN = ['Tempo', 'Werkzeuge', 'Schutz', 'Hilfe', 'Unterwegs'];
   const leer = document.getElementById('ws-leer')!;
   const oriText = document.getElementById('ws-ori-text')!;
   const modell = document.getElementById('ws-modell')!;
-  const ablage = document.getElementById('ws-ablage')!;
 
   const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
 
@@ -206,6 +190,10 @@ const GRUPPEN = ['Tempo', 'Werkzeuge', 'Schutz', 'Hilfe', 'Unterwegs'];
   }
 
   function sag(t: string) { oriText.textContent = t; }
+  function info(t: Teil) {
+    document.getElementById('ws-info-titel')!.textContent = t.titel + (t.fest ? ' (ist immer dabei)' : drin.has(t.id) ? ' ist eingebaut' : ' ist raus');
+    document.getElementById('ws-info-text')!.innerHTML = esc(t.kurz) + (t.zahl ? `<br><span class="ws-gem"><i>Gemessen</i>${esc(t.zahl)}</span>` : '') + (t.link ? ` <a href="${t.link}">Mehr dazu</a>` : '');
+  }
 
   function einbauen(id: string) {
     const t = nachId.get(id);
@@ -246,13 +234,14 @@ const GRUPPEN = ['Tempo', 'Werkzeuge', 'Schutz', 'Hilfe', 'Unterwegs'];
     leer.hidden = drin.size > 1;
     liste.classList.toggle('kompakt', drin.size > 8);
     document.getElementById('ws-unter')!.textContent = `${drin.size} ${drin.size === 1 ? 'Schritt' : 'Schritte'} · gebaut in der Werkstatt · selbstgfaltet.de`;
-    document.querySelectorAll<HTMLElement>('.ws-teil').forEach((el) => {
-      const an = drin.has(el.dataset.id!);
-      el.classList.toggle('drin', an);
-      const b = el.querySelector<HTMLButtonElement>('.ws-plus')!;
-      b.textContent = an ? '✓' : '+';
-      b.setAttribute('aria-label', `${nachId.get(el.dataset.id!)!.titel} ${an ? 'ist eingebaut, entfernen' : 'einbauen'}`);
+    document.querySelectorAll<HTMLElement>('.dki-el[data-k]').forEach((el) => {
+      const t = nachId.get(el.dataset.k!); if (!t) return;
+      el.setAttribute('role', 'button'); el.tabIndex = 0;
+      el.setAttribute('aria-pressed', String(drin.has(t.id)));
+      el.setAttribute('aria-label', t.fest ? `${t.titel}, ist immer dabei` : `${t.titel} ${drin.has(t.id) ? 'ausbauen' : 'einbauen'}`);
+      el.title = t.fest ? 'Ist immer dabei' : drin.has(t.id) ? 'Antippen zum Ausbauen' : 'Antippen zum Einbauen';
     });
+    document.querySelector('.dki')?.classList.toggle('dki-leer', drin.size === 1);
     neu = new Set();
     document.querySelectorAll<Element>('.dki [data-k]').forEach((el) => {
       const k = el.getAttribute('data-k')!;
@@ -277,7 +266,7 @@ const GRUPPEN = ['Tempo', 'Werkzeuge', 'Schutz', 'Hilfe', 'Unterwegs'];
 
   document.addEventListener('click', (e) => {
     const z = e.target as HTMLElement;
-    const add = z.closest<HTMLElement>('[data-add]'); if (add) { const id = add.dataset.add!; drin.has(id) ? ausbauen(id) : einbauen(id); return; }
+    const teil = z.closest<HTMLElement>('.dki-el[data-k]'); if (teil) { tippe(teil.dataset.k!); return; }
     const weg = z.closest<HTMLElement>('[data-weg]'); if (weg) { ausbauen(weg.dataset.weg!); return; }
     const hk = z.closest<HTMLElement>('[data-haken]'); if (hk) { haken(hk.dataset.haken!); return; }
     const vl = z.closest<HTMLElement>('[data-vorlage]');
@@ -291,14 +280,16 @@ const GRUPPEN = ['Tempo', 'Werkzeuge', 'Schutz', 'Hilfe', 'Unterwegs'];
     }
   });
 
-  let ziehe = '';
-  document.querySelectorAll<HTMLElement>('.ws-teil').forEach((el) => {
-    el.addEventListener('dragstart', (e) => { ziehe = el.dataset.id!; e.dataTransfer?.setData('application/x-werkstatt', ziehe); if (e.dataTransfer) e.dataTransfer.effectAllowed = 'copy'; el.classList.add('zieht'); });
-    el.addEventListener('dragend', () => { el.classList.remove('zieht'); setTimeout(() => { ziehe = ''; }, 0); });
+  function tippe(id: string) {
+    const t = nachId.get(id); if (!t) return;
+    if (t.fest) { sag('Das Grundgerüst bleibt. Ohne das gibt\'s mich nicht.'); kernAnim('ruhezustand-3'); }
+    else if (drin.has(id)) ausbauen(id); else einbauen(id);
+    info(t);
+  }
+  document.addEventListener('keydown', (e) => {
+    const el = (e.target as HTMLElement).closest?.('.dki-el[data-k]') as HTMLElement | null;
+    if (el && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); tippe(el.dataset.k!); }
   });
-  ablage.addEventListener('dragover', (e) => { e.preventDefault(); ablage.classList.add('drueber'); });
-  ablage.addEventListener('dragleave', (e) => { if (!ablage.contains(e.relatedTarget as Node)) ablage.classList.remove('drueber'); });
-  ablage.addEventListener('drop', (e) => { e.preventDefault(); ablage.classList.remove('drueber'); const id = ziehe || e.dataTransfer?.getData('application/x-werkstatt'); ziehe = ''; if (id && nachId.has(id)) einbauen(id); });
   document.querySelectorAll('input[name=wsvram]').forEach((i) => i.addEventListener('change', modellText));
 
   modellText();
