@@ -5,6 +5,7 @@ import PapierDeko from '../components/papier/PapierDeko.astro';
 import PapierLogo from '../components/papier/PapierLogo.astro';
 import PapierFuss from '../components/papier/PapierFuss.astro';
 import Newsletter from '../components/Newsletter.astro';
+import DeineKI from '../components/werkstatt/DeineKI.astro';
 import '../styles/papier.css';
 
 // Alle Zahlen sind echte Messwerte aus origami (siehe Faltplan und Artikel). Nichts erfinden.
@@ -41,37 +42,7 @@ const GRUPPEN = ['Tempo', 'Werkzeuge', 'Schutz', 'Hilfe', 'Unterwegs'];
       </div>
     </div>
 
-    <section class="ws-ki-wrap" aria-labelledby="ws-ki-titel">
-      <div class="ws-ki-kopf">
-        <h2 id="ws-ki-titel">Deine KI</h2>
-        <div class="ws-fortschritt" aria-live="polite"><span id="ws-stand">Noch nichts gefaltet</span><div class="ws-balken"><i id="ws-balken"></i></div></div>
-      </div>
-      <div class="ws-ki" id="ws-ki">
-        <svg class="ws-linien" viewBox="0 0 1000 360" preserveAspectRatio="none" aria-hidden="true">
-          <line data-l="tunnel" x1="105" y1="180" x2="225" y2="180" />
-          <line data-l="fundament" x1="335" y1="180" x2="400" y2="180" />
-          <line data-l="fundament" x1="600" y1="180" x2="700" y2="180" />
-          <line data-l="claude" x1="560" y1="70" x2="845" y2="70" />
-        </svg>
-        <div class="ws-k ws-k-handy" data-k="tunnel"><b>Handy</b><small>über den Tunnel</small></div>
-        <div class="ws-k ws-k-schloss" data-k="login" title="Login mit Zwei-Faktor"><b>Login</b><small>2 Schlüssel</small></div>
-        <div class="ws-k ws-k-browser an" data-k="fundament"><b>Chat im Browser</b><small>dein Fenster zur KI</small></div>
-        <div class="ws-tempo"><span data-k="anfang">fester Anfang</span><span data-k="vorwaermen">vorgewärmt</span></div>
-        <div class="ws-schutz" data-k="freigaben"><span class="ws-schutz-name">Schutzschicht</span><span class="ws-bremse" data-k="notbremse">Notbremse</span></div>
-        <div class="ws-kern an" data-k="fundament">
-          <img class="ori ori-light" id="ws-kern-ori" src="/anim/ruhezustand-3-abendrot.svg" alt="" width="96" height="96" />
-          <img class="ori ori-dark" id="ws-kern-ori-d" src="/anim/ruhezustand-3-hell.svg" alt="" width="96" height="96" />
-          <b>Grundgerüst</b>
-        </div>
-        <div class="ws-werkzeuge">
-          <span data-k="rechnen">Rechnen</span><span data-k="wetter">Wetter</span><span data-k="befehle">PC-Befehle</span><span data-k="surfen">Websuche</span><span data-k="merken">Gedächtnis</span>
-        </div>
-        <div class="ws-k ws-k-ollama an" data-k="fundament"><b>Ollama + Modell</b><small id="ws-ki-modell">auf deinem PC</small></div>
-        <div class="ws-k ws-k-dauer" data-k="dauerlauf"><b>Läuft von allein</b><small>Neustart, Backup</small></div>
-        <div class="ws-k ws-k-claude" data-k="claude"><b>Claude</b><small>für die schweren Sachen</small></div>
-      </div>
-      <p class="ws-ki-hinweis">Grau gestrichelt = noch nicht eingebaut. Abgehakte Schritte leuchten grün.</p>
-    </section>
+    <DeineKI />
 
     <div class="ws">
       <section class="ws-regal nicht-drucken" aria-labelledby="ws-regal-titel">
@@ -135,64 +106,10 @@ const GRUPPEN = ['Tempo', 'Werkzeuge', 'Schutz', 'Hilfe', 'Unterwegs'];
 </Base>
 
 <style>
-  .ws-ki-wrap{background:var(--blatt); border:2px solid var(--tinte); border-radius:14px; padding:18px 20px 12px; margin:0 0 28px}
-  .ws-ki-kopf{display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; margin-bottom:6px}
-  .ws-ki-kopf h2{font-size:1.3rem}
-  .ws-fortschritt{display:flex; align-items:center; gap:10px; font-family:var(--display); font-weight:700; font-size:.9rem}
-  .ws-balken{width:160px; height:10px; border:2px solid var(--tinte); border-radius:99px; overflow:hidden; background:var(--papier)}
-  .ws-balken i{display:block; height:100%; width:0; background:var(--ok); transition:width .5s cubic-bezier(.2,.9,.3,1)}
-  .ws-ki{position:relative; height:360px}
-  .ws-linien{position:absolute; inset:0; width:100%; height:100%}
-  .ws-linien line{stroke:var(--linie); stroke-width:2; stroke-dasharray:6 5; vector-effect:non-scaling-stroke; transition:stroke .3s}
-  .ws-linien line:global(.an){stroke:var(--ori); stroke-dasharray:none}
-  .ws-linien line:global(.fertig){stroke:var(--ok)}
-  .ws-ki [data-k]{transition:opacity .3s, transform .35s cubic-bezier(.2,.9,.3,1.3), border-color .3s, background .3s}
-  .ws-k{position:absolute; transform:translateY(-50%); background:var(--papier); border:2px dashed var(--linie); border-radius:12px; padding:8px 12px; opacity:.45; text-align:center; min-width:110px}
-  .ws-k b{display:block; font-family:var(--display); font-size:.92rem}
-  .ws-k small{display:block; font-size:.75rem; color:var(--bleistift)}
-  .ws-ki :global(.an){opacity:1}
-  .ws-k:global(.an){border:2px solid var(--tinte); box-shadow:3px 3px 0 var(--tinte); animation:plopp .45s cubic-bezier(.2,.9,.3,1.4)}
-  .ws-k:global(.fertig),.ws-kern:global(.fertig){border-color:var(--ok); box-shadow:3px 3px 0 var(--ok)}
-  .ws-k-handy{left:0; top:50%}
-  .ws-k-schloss{left:13.2%; top:50%; min-width:0; padding:4px 8px; border-radius:99px; z-index:2}
-  .ws-k-schloss small{display:none}
-  .ws-k-browser{left:22.5%; top:50%}
-  .ws-k-ollama{left:70%; top:50%}
-  .ws-k-dauer{left:70%; top:80%}
-  .ws-k-claude{left:84.5%; top:19%}
-  .ws-tempo{position:absolute; left:22.5%; top:72%; display:flex; flex-direction:column; align-items:flex-start; gap:4px}
-  .ws-tempo::before{content:'Tempo'; font-family:var(--hand); color:var(--ori); font-size:1rem}
-  .ws-tempo span,.ws-werkzeuge span{font-family:var(--display); font-weight:700; font-size:.75rem; padding:3px 9px; border-radius:99px; border:1.5px dashed var(--linie); color:var(--bleistift); background:var(--papier); opacity:.5; white-space:nowrap}
-  .ws-tempo span:global(.an){border:1.5px solid var(--ori); color:var(--ori); background:#fff3ea; opacity:1}
-  .ws-werkzeuge span:global(.an){border:1.5px solid var(--tinte); color:var(--tinte); background:var(--marker); opacity:1}
-  .ws-tempo span:global(.fertig),.ws-werkzeuge span:global(.fertig){border-color:var(--ok); background:#dff3e7; color:#23784a}
-  .ws-schutz{position:absolute; left:38.5%; top:6%; width:23%; height:88%; border:2.5px dashed var(--linie); border-radius:18px; opacity:.5}
-  .ws-schutz:global(.an){border:3px solid var(--ori); opacity:1; background:color-mix(in srgb,var(--ori) 6%,transparent)}
-  .ws-schutz:global(.fertig){border-color:var(--ok)}
-  .ws-schutz-name{position:absolute; top:-11px; left:14px; background:var(--blatt); padding:0 6px; font-family:var(--hand); font-size:1.05rem; color:var(--ori)}
-  .ws-bremse{position:absolute; bottom:-12px; right:12px; font-family:var(--display); font-weight:800; font-size:.7rem; text-transform:uppercase; letter-spacing:.05em; padding:2px 8px; border-radius:6px; border:1.5px dashed var(--linie); background:var(--blatt); color:var(--bleistift); opacity:.6}
-  .ws-bremse:global(.an){border:1.5px solid #c2410c; background:#c2410c; color:#fff; opacity:1}
-  .ws-bremse:global(.fertig){background:var(--ok); border-color:var(--ok)}
-  .ws-kern{position:absolute; left:50%; top:38%; transform:translate(-50%,-50%); width:150px; text-align:center; background:var(--papier); border:2px solid var(--tinte); border-radius:14px; padding:6px 8px 8px; box-shadow:3px 3px 0 var(--tinte)}
-  .ws-kern img{width:84px; height:84px; vertical-align:top}
-  .ws-kern b{font-family:var(--display); font-size:.92rem}
-  .ws-werkzeuge{position:absolute; left:50%; top:74%; transform:translate(-50%,-50%); width:21%; display:flex; flex-wrap:wrap; justify-content:center; gap:5px}
-  .ws-ki-hinweis{font-size:.8rem; color:var(--bleistift); margin:6px 0 0}
-  @keyframes plopp{0%{transform:translateY(-50%) scale(.8)} 100%{transform:translateY(-50%) scale(1)}}
   .ws-liste :global(.ws-haken){width:22px; height:22px; border:2px solid #1d2742; border-radius:5px; background:#fff; cursor:pointer; padding:0; margin-top:2px; display:grid; place-items:center; color:#fff; font-weight:800; font-size:14px; line-height:1}
   .ws-liste :global(.ws-haken[aria-pressed="true"]){background:var(--ok); border-color:var(--ok)}
   .ws-liste :global(li.erledigt b){text-decoration:line-through; text-decoration-color:var(--ok); text-decoration-thickness:2px}
-  @media (max-width:900px){
-    .ws-ki{height:auto; display:flex; flex-wrap:wrap; gap:8px; justify-content:center}
-    .ws-linien{display:none}
-    .ws-k,.ws-kern,.ws-tempo,.ws-werkzeuge,.ws-schutz{position:static; transform:none !important; width:auto; height:auto}
-    .ws-schutz{padding:14px 10px 10px; min-width:140px; text-align:center}
-    .ws-schutz-name,.ws-bremse{position:static; display:inline-block; margin:2px}
-    .ws-tempo{flex-direction:row}
-    .ws-werkzeuge{width:100%}
-    .ws-k:global(.an){animation:none}
-  }
-  @media print{ .ws-ki-wrap{display:none} .ws-liste :global(.ws-haken){background:#fff !important; color:transparent} }
+  @media print{ :global(.dki){display:none !important} .ws-liste :global(.ws-haken){background:#fff !important; color:transparent} }
   .ws{display:grid; grid-template-columns:minmax(0,0.95fr) minmax(0,1.05fr); gap:28px; align-items:start; margin-top:8px}
   .ws-regal{background:var(--blatt); border:2px solid var(--tinte); border-radius:14px; padding:18px}
   .ws-regal-kopf{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap}
@@ -271,9 +188,10 @@ const GRUPPEN = ['Tempo', 'Werkzeuge', 'Schutz', 'Hilfe', 'Unterwegs'];
   let fertig = new Set<string>();
   try { const s = JSON.parse(localStorage.getItem(SPEICHER) || 'null'); if (s?.fertig) fertig = new Set(s.fertig); } catch { /* egal */ }
   let neu = new Set<string>();
-  const kernL = document.getElementById('ws-kern-ori') as HTMLImageElement;
-  const kernD = document.getElementById('ws-kern-ori-d') as HTMLImageElement;
-  function kernAnim(name: string) { kernL.src = `/anim/${name}-abendrot.svg`; kernD.src = `/anim/${name}-hell.svg`; }
+  function kernAnim(name: string) {
+    document.querySelectorAll<HTMLImageElement>('.dki-ori-l').forEach((i) => { i.src = `/anim/${name}-abendrot.svg`; });
+    document.querySelectorAll<HTMLImageElement>('.dki-ori-d').forEach((i) => { i.src = `/anim/${name}-hell.svg`; });
+  }
 
   const liste = document.getElementById('ws-liste')!;
   const leer = document.getElementById('ws-leer')!;
@@ -317,7 +235,7 @@ const GRUPPEN = ['Tempo', 'Werkzeuge', 'Schutz', 'Hilfe', 'Unterwegs'];
     const v = +((document.querySelector('input[name=wsvram]:checked') as HTMLInputElement)?.value || 8);
     const groessen: [string, number][] = [['4B', 4], ['8B', 8], ['14B', 14], ['27B', 27], ['32B', 32]];
     const passt = groessen.filter(([, p]) => p * 0.6 + 1.5 <= v).pop();
-    document.getElementById('ws-ki-modell')!.textContent = `${v} GB, Modell bis ca. ${passt ? passt[0] : '4B'} ganz auf der Karte`;
+    document.querySelectorAll('.dki-modell').forEach((el) => { el.textContent = `${v} GB, Modell bis ${passt ? passt[0] : '4B'}`; });
     modell.innerHTML = `<b>Deine Grafikkarte: ${v} GB.</b> Komplett auf die Karte passt ungefähr ${passt ? `ein Modell bis ${passt[0]}` : 'nur ein sehr kleines Modell'}, größere laufen teils im Arbeitsspeicher.` +
       `<small>Zum Vergleich: Ich nutze Gemma 4 26B auf 8 GB. Rund 7,6 GB liegen auf der Karte, der Rest im Arbeitsspeicher. Genauer: <a href="/werkzeuge#gpu">Passt das auf meinen PC?</a></small>`;
   }
@@ -336,14 +254,13 @@ const GRUPPEN = ['Tempo', 'Werkzeuge', 'Schutz', 'Hilfe', 'Unterwegs'];
       b.setAttribute('aria-label', `${nachId.get(el.dataset.id!)!.titel} ${an ? 'ist eingebaut, entfernen' : 'einbauen'}`);
     });
     neu = new Set();
-    document.querySelectorAll<Element>('#ws-ki [data-k], #ws-ki [data-l]').forEach((el) => {
-      const k = (el as HTMLElement).dataset.k || el.getAttribute('data-l')!;
+    document.querySelectorAll<Element>('.dki [data-k]').forEach((el) => {
+      const k = el.getAttribute('data-k')!;
       el.classList.toggle('an', drin.has(k));
       el.classList.toggle('fertig', fertig.has(k));
     });
     const gesamt = drin.size, f = [...fertig].filter((x) => drin.has(x)).length;
-    document.getElementById('ws-stand')!.textContent = f ? `${f} von ${gesamt} gefaltet` : `${gesamt} ${gesamt === 1 ? 'Schritt' : 'Schritte'} geplant`;
-    (document.getElementById('ws-balken') as HTMLElement).style.width = `${gesamt ? (f / gesamt) * 100 : 0}%`;
+    document.querySelectorAll('.dki-stand').forEach((el) => { el.textContent = `${gesamt} von ${TEILE.length} eingebaut${f ? `, ${f === gesamt ? 'alle' : f} abgehakt` : ''}`; });
   }
 
   function haken(id: string) {
