@@ -62,5 +62,30 @@ const SCHRITTE = [
   .fp-falle span{background:#fde4d6; color:#c2410c}
   .fp-fuss{margin:20px 0 0; font-family:var(--hand); font-size:1.4rem; color:#c2410c}
   .fp-klein{font-size:.8rem; color:#5d6478}
-  @media print{ .fp p{font-size:10px} .fp li > div > b{font-size:11.5px} .fp ol{gap:6px} .fp-kopf{margin-bottom:8px} }
+  @media print{
+    /* volle Breite, weiß, kein Schritt wird zerrissen, alles auf ein Blatt */
+    .fp{max-width:none !important; width:100%; margin:0; padding:0 !important; box-shadow:none !important; border:0 !important; border-radius:0; background:#fff !important;
+      -webkit-print-color-adjust:exact; print-color-adjust:exact}
+    .fp-kopf{margin-bottom:6px}
+    .fp-kopf b{font-size:1.25rem}
+    .fp-kopf span{font-size:10px}
+    .fp-kopf img{width:46px; height:46px}
+    .fp ol{gap:7px}
+    .fp li{grid-template-columns:22px 18px 1fr; gap:7px; break-inside:avoid; page-break-inside:avoid}
+    .fp li::before{font-size:1rem}
+    .fp .box{width:14px; height:14px; margin-top:1px}
+    .fp li > div > b{font-size:12px}
+    .fp p{font-size:9.6px; line-height:1.33; margin-top:1px}
+    .fp-zahl span,.fp-falle span{font-size:7.5px; padding:0 4px; margin-right:5px}
+    .fp-fuss{font-size:.95rem; margin-top:8px; break-inside:avoid}
+    .fp-klein{font-size:7.5px; margin-top:1px}
+  }
+</style>
+<style is:global>
+  /* Druck: ein A4-Blatt hochkant, volle Breite */
+  @page{ size:A4 portrait; margin:10mm 12mm }
+  @media print{
+    html,body{background:#fff !important}
+    .wrap.seite{max-width:none; padding:0; margin:0}
+  }
 </style>
