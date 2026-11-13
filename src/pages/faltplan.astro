@@ -60,29 +60,30 @@ const SCHRITTE = [
   .fp-zahl span,.fp-falle span{display:inline-block; font-family:var(--display); font-weight:700; font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; padding:1px 7px; border-radius:5px; margin-right:7px}
   .fp-zahl span{background:#dff3e7; color:#23784a}
   .fp-falle span{background:#fde4d6; color:#c2410c}
-  .fp-fuss{margin:20px 0 0; font-family:var(--hand); font-size:1.4rem; color:#c2410c}
-  .fp-klein{font-size:.8rem; color:#5d6478}
+  .fp .fp-fuss{margin:20px 0 0; font-family:var(--hand); font-size:1.4rem; color:#c2410c}
+  .fp .fp-klein{font-size:.8rem; color:#5d6478}
   @media print{
-    /* volle Breite, weiß, kein Schritt wird zerrissen, alles auf ein Blatt */
+    /* ein Blatt beidseitig: Schritte 1-5 vorne, 6-10 hinten, gut lesbare Schrift */
     .fp{max-width:none !important; width:100%; margin:0; padding:0 !important; box-shadow:none !important; border:0 !important; border-radius:0; background:#fff !important;
       -webkit-print-color-adjust:exact; print-color-adjust:exact}
-    .fp-kopf{margin-bottom:6px}
-    .fp-kopf b{font-size:1.25rem}
-    .fp-kopf span{font-size:10px}
-    .fp-kopf img{width:46px; height:46px}
-    .fp ol{gap:7px}
-    .fp li{grid-template-columns:22px 18px 1fr; gap:7px; break-inside:avoid; page-break-inside:avoid}
-    .fp li::before{font-size:1rem}
-    .fp .box{width:14px; height:14px; margin-top:1px}
-    .fp li > div > b{font-size:12px}
-    .fp p{font-size:9.6px; line-height:1.33; margin-top:1px}
-    .fp-zahl span,.fp-falle span{font-size:7.5px; padding:0 4px; margin-right:5px}
-    .fp-fuss{font-size:.95rem; margin-top:8px; break-inside:avoid}
-    .fp-klein{font-size:7.5px; margin-top:1px}
+    .fp-kopf{margin-bottom:14px}
+    .fp-kopf b{font-size:1.6rem}
+    .fp-kopf span{font-size:12px}
+    .fp-kopf img{width:56px; height:56px}
+    .fp ol{gap:24px}
+    .fp li{grid-template-columns:30px 22px 1fr; gap:10px; break-inside:avoid; page-break-inside:avoid}
+    .fp li:nth-child(6){break-before:page; page-break-before:always}
+    .fp li::before{font-size:1.4rem}
+    .fp .box{width:18px; height:18px; margin-top:2px}
+    .fp li > div > b{font-size:17px}
+    .fp p{font-size:14px; line-height:1.45; margin-top:4px}
+    .fp-zahl span,.fp-falle span{font-size:10px; padding:1px 5px; margin-right:6px}
+    .fp .fp-fuss{font-size:1.6rem; margin-top:24px; break-inside:avoid}
+    .fp .fp-klein{font-size:12px; margin-top:4px}
   }
 </style>
 <style is:global>
-  /* Druck: ein A4-Blatt hochkant, volle Breite */
+  /* Druck: A4 hochkant, zwei Seiten (beidseitig = ein Blatt) */
   @page{ size:A4 portrait; margin:10mm 12mm }
   @media print{
     html,body{background:#fff !important}
