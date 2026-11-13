@@ -41,7 +41,7 @@ div > .pp-logo:first-child{display:flex; margin-bottom:10px}
   .pp-blatt{height:296.5mm; overflow:hidden; box-sizing:border-box; padding:11mm 13mm 22mm 13mm !important; break-after:page; page-break-after:always;
     -webkit-print-color-adjust:exact; print-color-adjust:exact}
   .pp-blatt:last-child{break-after:auto; page-break-after:auto}
-  .pp-blatt > .pp-kante{width:24mm; height:24mm}
+  .pp-blatt > .pp-kante{width:22mm; height:22mm; top:5mm; right:5mm}
   .pp-kopf2{margin-bottom:9mm; padding-right:30mm}
   .pp-blatt > .pp-fuss{position:absolute; left:13mm; right:13mm; bottom:10mm}
 }
