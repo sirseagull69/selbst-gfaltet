@@ -10,7 +10,21 @@ export const OG_SEITEN: Record<string, { kicker: string; titel: string; ori: str
   faltplan: { kicker: 'Zum Ausdrucken', titel: 'Der Faltplan: 10 Schritte, 10 Fallen', ori: 'fertig' },
   spickzettel: { kicker: 'Zum Ausdrucken', titel: 'Spickzettel für Ollama und Claude Code', ori: 'terminal' },
   origami: { kicker: 'Der Bauplan hinter Ori', titel: 'origami: deine KI, bei dir zu Hause.', ori: 'sassy' },
-  ueber: { kicker: "Servus, ich bin's", titel: 'Quereinsteiger, ohne Studium, mit eigener KI', ori: 'triumph' },
+  ueber: { kicker: "Servus, ich bin's", titel: 'Quereinsteiger, ohne Studium, mit eigener KI', ori: 'winkt' },
+};
+
+// Eigene Ori pro Artikel-Vorschaubild, keine doppelt (auch nicht mit den Seiten oben)
+export const OG_ARTIKEL_ORI: Record<string, string> = {
+  'erstes-tool': 'senden',
+  'in-gemma-reingeschaut': 'wissen',
+  'ki-surft-selbst': 'websuche',
+  'lokal-oder-claude': 'uebergabe-claude',
+  'modell-dreikampf': 'triumph',
+  'programmieren-ohne-ausbildung': 'start-landung',
+  'schutzschicht': 'wartet-freigabe',
+  'von-unterwegs': 'login',
+  'was-die-ki-nicht-entscheidet': 'seufzt',
+  'wie-origami-lernt': 'gemerkt',
 };
 
 export function ogSchluessel(pfad: string): string {

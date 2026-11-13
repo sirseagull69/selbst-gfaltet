@@ -4,7 +4,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import satori from 'satori';
 import { Resvg } from '@resvg/resvg-js';
-import { OG_SEITEN } from '../../og';
+import { OG_SEITEN, OG_ARTIKEL_ORI } from '../../og';
 
 type Daten = { kicker: string; titel: string; ori: string; unter?: string };
 
@@ -13,7 +13,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const seiten = Object.entries(OG_SEITEN).map(([bild, d]) => ({ params: { bild }, props: d }));
   const blog = artikel.map((a) => ({
     params: { bild: `blog--${a.id}` },
-    props: { kicker: 'Aus dem Blog', titel: a.data.titel, ori: a.data.ori, unter: a.data.kurz } as Daten,
+    props: { kicker: 'Aus dem Blog', titel: a.data.titel, ori: OG_ARTIKEL_ORI[a.id] ?? a.data.ori, unter: a.data.kurz } as Daten,
   }));
   return [...seiten, ...blog];
 };
@@ -26,10 +26,11 @@ const FONTS = [
 ];
 
 const svgUri = (svg: string) => `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`;
+// Ori als Standbild: pro Animation der Moment mit der meisten Pose (vorab aus public/anim gerendert, src/og-ori)
 function oriBild(name: string) {
-  let p = resolve('public/anim', `${name}-abendrot.svg`);
-  if (!existsSync(p)) p = resolve('public/anim', 'ruhezustand-abendrot.svg');
-  return svgUri(readFileSync(p, 'utf8'));
+  let p = resolve('src/og-ori', `${name}.png`);
+  if (!existsSync(p)) p = resolve('src/og-ori', 'ruhezustand.png');
+  return `data:image/png;base64,${readFileSync(p).toString('base64')}`;
 }
 const ECKE = svgUri('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="0,0 100,0 100,100" fill="#ff8a4c"/><polygon points="38,0 100,0 100,62" fill="#c2410c"/><polygon points="0,0 38,0 100,62 100,100" fill="#ffc9a8" opacity=".35"/></svg>');
 const FALTEN = svgUri('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630"><g stroke="#ddd5c4" stroke-width="2" stroke-dasharray="10 9" fill="none"><line x1="0" y1="630" x2="1200" y2="0"/><line x1="0" y1="315" x2="1200" y2="315"/></g></svg>');
