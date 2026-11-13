@@ -2,17 +2,41 @@
 import Base from '../layouts/Base.astro';
 import Ori from '../components/Ori.astro';
 import Baustein from '../components/Baustein.astro';
+import Icon from '../components/Icon.astro';
 import { GLOSSAR } from '../glossar';
 ---
 <Base titel="Werkzeuge für deine eigene KI" aktiv="werkzeuge" beschreibung="Token-Uhr, Lokal-oder-Claude-Test, Modell-Rechner mit echten Messwerten, Prompt-Baukasten, Spickzettel und Glossar für deine eigene KI.">
   <div class="wrap seite">
-    <span class="kicker hand">Zum Ausprobieren</span>
+    <span class="kicker hand">Planen, ausprobieren, mitnehmen</span>
     <h1>Werkzeuge</h1>
-    <p class="seite-lead">Kleine Helfer, die dir Fragen beantworten, bevor du Geld ausgibst oder Stunden verlierst. Alles läuft in deinem Browser, nichts wird verschickt.</p>
+    <p class="seite-lead">Alles, was dir beim Falten hilft, an einem Ort: erst planen, dann ausprobieren, dann mitnehmen. Was hier auf der Seite läuft, läuft in deinem Browser, nichts wird verschickt.</p>
 
-    <div class="dl-hinweis"><b>Neu: Die Werkstatt.</b> Zieh zusammen, was deine KI können soll, und kriegst deinen eigenen Faltplan mit Schaubild zum Abhaken. <a href="/werkstatt">Zur Werkstatt</a></div>
-    <div class="dl-hinweis"><b>Die Werkzeugkiste zum Download.</b> PC-Check und Modell-Prüfstand, dazu der origami-Bauplan exklusiv im Newsletter. <a href="/downloads">Zu den Downloads</a></div>
-    <div class="dl-hinweis"><b>Zum Ausdrucken:</b> <a href="/faltplan">Der Faltplan</a> (10 Schritte, ein Blatt) · <a href="/spickzettel">Der Spickzettel</a> (Ollama, Claude Code, Prompt-Regeln)</div>
+    <nav class="wz-hub" aria-label="Alle Werkzeuge">
+      <div class="wz-gruppe">
+        <h2><span class="hand">1</span> Planen</h2>
+        <div class="wzgitter">
+          <a class="wz" href="/werkstatt"><span class="kat kat-live">Neu</span><Icon name="teile" /><h3>Die Werkstatt</h3><p>Zieh zusammen, was deine KI können soll. Du kriegst deinen Faltplan mit Schaubild zum Abhaken.</p></a>
+          <a class="wz" href="#gpu"><span class="kat kat-live">Hier auf der Seite</span><Icon name="gpu" /><h3>Passt das auf meinen PC?</h3><p>Welche Modellgröße auf deine Grafikkarte passt.</p></a>
+        </div>
+      </div>
+      <div class="wz-gruppe">
+        <h2><span class="hand">2</span> Ausprobieren</h2>
+        <div class="wzgitter">
+          <a class="wz" href="#token"><span class="kat kat-live">Hier auf der Seite</span><Icon name="messung" /><h3>Token-Uhr</h3><p>Wie lange liest deine KI einen Text ein?</p></a>
+          <a class="wz" href="#route"><span class="kat kat-live">Hier auf der Seite</span><Icon name="diagnose" /><h3>Lokal oder Claude?</h3><p>Wer bei origami antworten würde, mit den echten Wortlisten.</p></a>
+          <a class="wz" href="#prompt"><span class="kat kat-live">Hier auf der Seite</span><Icon name="falt" /><h3>Prompt-Baukasten</h3><p>Felder ausfüllen, fertigen Prompt kopieren.</p></a>
+          <a class="wz" href="#glossar"><span class="kat kat-live">Hier auf der Seite</span><Icon name="kurz" /><h3>Fachchinesisch</h3><p>Die Begriffe vom Blog, einfach erklärt.</p></a>
+        </div>
+      </div>
+      <div class="wz-gruppe">
+        <h2><span class="hand">3</span> Mitnehmen</h2>
+        <div class="wzgitter">
+          <a class="wz" href="/downloads"><span class="kat kat-gratis">Download</span><Icon name="schritte" /><h3>Die Werkzeugkiste</h3><p>KI-Check, Modell-Prüfstand und der Falt-TÜV. Jedes Skript mit echtem Sicherheits-Check.</p></a>
+          <a class="wz" href="/faltplan"><span class="kat kat-gratis">Ausdrucken</span><Icon name="check" /><h3>Der Faltplan</h3><p>10 Schritte, 10 Fallen. Ein Blatt, vorne und hinten.</p></a>
+          <a class="wz" href="/spickzettel"><span class="kat kat-gratis">Ausdrucken</span><Icon name="buch" /><h3>Der Spickzettel</h3><p>Ollama, Claude Code und Prompt-Regeln auf einer Seite.</p></a>
+        </div>
+      </div>
+    </nav>
 
     <Baustein titel="Token-Uhr: Wie lange liest meine KI das?" icon="messung" id="token">
       <div class="feld"><label for="tktext">Text oder Prompt reinkopieren</label><textarea id="tktext" rows="6" placeholder="Zum Beispiel deine Anweisungen an die KI, eine Mail oder ein Stück Code"></textarea></div>
@@ -78,11 +102,6 @@ import { GLOSSAR } from '../glossar';
       <div class="knoepfe" style="margin-top:10px"><button class="knopf voll" id="pbkopie" type="button">Kopieren</button><span class="hand" id="pbori" style="align-self:center"></span></div>
     </Baustein>
 
-    <Baustein titel="Spickzettel zum Ausdrucken" icon="buch" id="spick">
-      <p style="margin-top:0">Die wichtigsten Befehle für Ollama und Claude Code und die Regeln für gute Prompts. Eine Seite, passt neben die Tastatur.</p>
-      <div class="knoepfe"><a class="knopf voll" href="/spickzettel">Spickzettel öffnen</a></div>
-    </Baustein>
-
     <Baustein titel="Fachchinesisch auf Deutsch" icon="buch" id="glossar">
       <div class="glkopf">
         <div class="feld" style="flex:1"><label for="glsuche">Begriff suchen</label><input id="glsuche" type="search" placeholder="z. B. Token" /></div>
@@ -95,6 +114,13 @@ import { GLOSSAR } from '../glossar';
   </div>
 </Base>
 
+<style>
+  .wz-hub{display:grid; gap:26px; margin:26px 0 40px}
+  .wz-gruppe h2{font-size:1.25rem; margin:0 0 12px; display:flex; align-items:baseline; gap:10px}
+  .wz-gruppe h2 .hand{font-size:1.8rem; color:var(--ori)}
+  .wz-hub .wz h3{font-size:1.05rem; margin:0}
+  .wz-hub .wz p{margin:0; font-size:.92rem; color:var(--bleistift)}
+</style>
 <script>
   const oriNochmal = (img: HTMLImageElement) => (window as any).oriNochmal?.(img);
   // Token-Uhr
