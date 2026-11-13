@@ -1,0 +1,26 @@
+/* origami-Papier-Design für alles, was gedruckt oder als PDF rausgeht.
+   Regeln: CLAUDE.md, Abschnitt „Druck-Dokumente“. Nur im Druck sichtbar. */
+.nur-druck{display:none}
+@page{ size:A4 portrait; margin:0 }
+@media print{
+  html,body{margin:0 !important; padding:0 !important; background:#fff !important}
+  .wrap.seite{max-width:none !important; padding:0 !important; margin:0 !important}
+  .nur-druck{display:revert}
+  .pp-blatt{position:relative; height:296.5mm; overflow:hidden; box-sizing:border-box; padding:11mm 13mm 22mm 13mm !important; break-after:page; page-break-after:always;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact}
+  .pp-blatt:last-child{break-after:auto; page-break-after:auto}
+  .pp-blatt > *{position:relative; z-index:1}
+  .pp-blatt > .pp-falten{position:absolute; inset:0; width:100%; height:100%; z-index:0}
+  .pp-falten line{stroke:#ece5d6; stroke-width:.5; stroke-dasharray:3 2.4; vector-effect:non-scaling-stroke}
+  .pp-blatt > .pp-kante{position:absolute; top:0; right:0; width:36mm; height:36mm; z-index:3; display:block}
+  .pp-logo{display:inline-flex !important; align-items:center; gap:6px; font-family:var(--display); font-weight:800; font-size:13px; color:#1d2742}
+  div > .pp-logo:first-child{display:flex !important; margin-bottom:10px}
+  .pp-tape{position:absolute; left:-6px; right:-10px; top:22%; height:62%; background:#ffe36e; opacity:.85; transform:rotate(-2deg); z-index:-1}
+  .pp-titel{position:relative; display:inline-block; z-index:0}
+  .pp-kopf2{display:flex !important; justify-content:space-between; align-items:center; font-size:11px; color:#5d6478; border-bottom:1px solid #e8e2d4; padding-bottom:8px; margin-bottom:9mm; padding-right:30mm}
+  .pp-blatt > .pp-fuss{position:absolute; left:13mm; right:13mm; bottom:10mm; display:flex !important; justify-content:space-between; align-items:center; border-top:1px solid #e8e2d4; padding-top:8px}
+  .pp-fuss .pp-logo{font-size:11px; font-weight:600; color:#5d6478}
+  .pp-seite{font-family:var(--hand); font-size:17px; color:#c2410c}
+  .pp-ori{display:flex !important; flex-direction:column; align-items:center; text-align:center; transform:rotate(-2deg)}
+  .pp-ori em{font-family:var(--hand); font-style:normal; font-size:17px; line-height:1.1; color:#c2410c}
+}

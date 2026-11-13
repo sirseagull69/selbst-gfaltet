@@ -57,10 +57,10 @@ Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt
 - Ori am Rand wandert mit: `<OriRand ori="…" spruch="…" />` unter eine Überschrift setzen, ab da wechselt Ori Animation und Spruch. Nur vorhandene Animationen aus `public/anim/` nehmen. Jeder Artikel bekommt eigene, zum Abschnitt passende Wechsel und Sprüche, kein Spruch doppelt über alle Artikel.
 
 ## Druck-Dokumente: Papier-Design (seit 13.11.)
-Gilt für alles, was gedruckt oder als PDF ausgegeben wird (Faltplan, Startpaket, künftige Spickzettel). Nie „nackig“ wie ein Formular. Vorlage: `src/pages/faltplan.astro`.
+Das ist das origami-Hausdesign für alles, was wir rausgeben: gedruckt, als PDF oder als Datei (Faltplan, Spickzettel, Startpaket, alles Künftige). Nie „nackig“ wie ein Formular. Bausteine: `src/components/papier/` (PapierDeko, PapierLogo, PapierFuss) + `src/styles/papier.css`, Seiten in `.pp-blatt`.
 - **Kopf auf jeder Seite:** Logo (Ori `ruhezustand` + „Selbst gfaltet“). Seite 1 zusätzlich Titel mit gelbem Klebestreifen (`#ffe36e`), Folgeseiten kleiner Kopf mit Logo + Untertitel.
 - **Fußzeile auf jeder Seite:** Linie, links Mini-Ori + „selbstgfaltet.de“, rechts in Handschrift „Falte X von Y“ (nie „Seite“).
-- **Papier-Gefühl:** Eselsohr oben rechts (`#ffc9a8`), feine gestrichelte Faltlinien (`#ece5d6`), sehr hell, tintensparend.
+- **Große orange Ecke oben rechts:** volles Dreieck bis an den Papierrand (36 mm, `#ff8a4c` mit dunkler Facette `#c2410c`), dazu feine gestrichelte Faltlinien (`#ece5d6`). Druck ohne Seitenrand (`@page margin:0`), Abstand innen über `.pp-blatt`.
 - **Ori am Rand:** 1–2 Kommentare pro Seite in Handschrift (`#c2410c`) mit vorhandener Animation. Jeder Spruch passt genau zum Schritt daneben, sassy und trocken, nie gemein, kein Spruch doppelt (auch nicht mit den Artikeln).
 - Alles nur im Druck (Klasse `nur-druck`), Bildschirm bleibt ruhig.
 - Schrift lesbar halten (Fließtext ca. 13,5 px). Faltplan = ein Blatt beidseitig, Schritte 1–5 vorne, 6–10 hinten. Vor dem Freigeben PDF erzeugen und anschauen (genau 2 Seiten, nichts abgeschnitten).

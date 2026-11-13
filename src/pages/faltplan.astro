@@ -1,5 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
+import PapierDeko from '../components/papier/PapierDeko.astro';
+import PapierLogo from '../components/papier/PapierLogo.astro';
+import PapierFuss from '../components/papier/PapierFuss.astro';
+import '../styles/papier.css';
 // [Titel, Was du tust, Meine Zahl, Die Falle]
 const SCHRITTE = [
   ['Grafikkarte ehrlich prüfen', 'Schau, wie viel Speicher (VRAM) deine Grafikkarte hat. Im Rechner „Passt das auf meinen PC?“ siehst du, was ungefähr passt.', 'Gemma 4 26B belegt bei mir rund 17 GB. Auf der 8-GB-Karte liegen ca. 7,6 GB, der Rest im Arbeitsspeicher.', 'Passt nicht alles auf die Karte, ist vor allem das Einlesen langer Texte zäh. Das Schreiben geht trotzdem flott.'],
@@ -32,25 +36,22 @@ const SEITEN = [SCHRITTE.slice(0, 5), SCHRITTE.slice(5)];
     </div>
     <div class="faltplan-druck fp">
       {SEITEN.map((seite, si) => (
-        <section class="fp-blatt">
-          <div class="nur-druck fp-kante" aria-hidden="true"></div>
-          <svg class="nur-druck fp-falten" viewBox="0 0 210 297" preserveAspectRatio="none" aria-hidden="true">
-            <line x1="0" y1="90" x2="210" y2="30" /><line x1="0" y1="250" x2="210" y2="170" /><line x1="105" y1="0" x2="105" y2="297" />
-          </svg>
+        <section class="fp-blatt pp-blatt">
+          <PapierDeko />
           {si === 0 && (
             <>
             <div class="fp-kopf">
               <div>
-                <span class="nur-druck fp-logo"><img src="/anim/ruhezustand-abendrot.svg" alt="" width="28" height="28" />Selbst gfaltet</span>
-                <b><span class="fp-tape" aria-hidden="true"></span>Der Faltplan</b><br /><span>10 Schritte, 10 Fallen · gemessen mit origami · selbstgfaltet.de</span>
+                <PapierLogo />
+                <b class="pp-titel"><span class="nur-druck pp-tape" aria-hidden="true"></span>Der Faltplan</b><br /><span>10 Schritte, 10 Fallen · gemessen mit origami · selbstgfaltet.de</span>
               </div>
               <img class="fp-kopf-ori" src="/anim/ruhezustand-abendrot.svg" alt="" width="72" height="72" />
             </div>
             </>
           )}
           {si > 0 && (
-            <div class="nur-druck fp-kopf2">
-              <span class="fp-logo"><img src="/anim/ruhezustand-abendrot.svg" alt="" width="28" height="28" />Selbst gfaltet</span>
+            <div class="nur-druck pp-kopf2">
+              <PapierLogo />
               <span>Der Faltplan, Schritte 6 bis 10</span>
             </div>
           )}
@@ -67,7 +68,7 @@ const SEITEN = [SCHRITTE.slice(0, 5), SCHRITTE.slice(5)];
                     <p class="fp-falle"><span>Falle</span>{falle}</p>
                   </div>
                   {ori && (
-                    <span class="nur-druck fp-ori"><img src={`/anim/${ori[0]}-abendrot.svg`} alt="" width="46" height="46" /><em>{ori[1]}</em></span>
+                    <span class="nur-druck pp-ori fp-ori"><img src={`/anim/${ori[0]}-abendrot.svg`} alt="" width="46" height="46" /><em>{ori[1]}</em></span>
                   )}
                 </li>
               );
@@ -79,10 +80,7 @@ const SEITEN = [SCHRITTE.slice(0, 5), SCHRITTE.slice(5)];
               <p class="fp-klein">Gemessen auf einer RTX 4060 (8 GB) mit 32 GB Arbeitsspeicher und gemma4:26b, November 2026. Auf anderer Hardware sind die Zahlen anders, die Fallen meistens nicht.</p>
             </>
           )}
-          <div class="nur-druck fp-unten">
-            <span class="fp-logo"><img src="/anim/ruhezustand-abendrot.svg" alt="" width="20" height="20" />selbstgfaltet.de</span>
-            <span class="fp-seite">Falte {si + 1} von {SEITEN.length}</span>
-          </div>
+          <PapierFuss seite={si + 1} von={SEITEN.length} />
         </section>
       ))}
     </div>
@@ -105,7 +103,6 @@ const SEITEN = [SCHRITTE.slice(0, 5), SCHRITTE.slice(5)];
   .fp-falle span{background:#fde4d6; color:#c2410c}
   .fp .fp-fuss{margin:20px 0 0; font-family:var(--hand); font-size:1.4rem; color:#c2410c}
   .fp .fp-klein{font-size:.8rem; color:#5d6478}
-  .nur-druck{display:none}
   .fp ol{list-style:none}
   .fp-blatt + .fp-blatt ol{margin-top:14px}
   @media print{
@@ -118,28 +115,12 @@ const SEITEN = [SCHRITTE.slice(0, 5), SCHRITTE.slice(5)];
     .fp-kopf img{width:56px; height:56px}
     .fp ol{gap:13px}
     .fp li{grid-template-columns:30px 22px 1fr; gap:10px; break-inside:avoid; page-break-inside:avoid}
-    .nur-druck{display:revert}
-    .fp-blatt{position:relative; height:275mm; overflow:hidden; box-sizing:border-box; padding-bottom:11mm; break-after:page; page-break-after:always}
-    .fp-blatt:last-child{break-after:auto; page-break-after:auto}
-    .fp-blatt ol{position:relative; z-index:1}
     .fp-kopf{position:relative; z-index:1}
     .fp-kopf-ori{display:none}
-    .fp-logo{display:inline-flex !important; align-items:center; gap:6px; font-family:var(--display); font-weight:800; font-size:13px; color:#1d2742}
-    .fp-kopf .fp-logo{margin-bottom:10px}
-    .fp-kopf b{position:relative; display:inline-block}
-    .fp-tape{position:absolute; left:-6px; right:-10px; top:22%; height:62%; background:#ffe36e; opacity:.85; transform:rotate(-2deg); z-index:-1}
-    .fp-kopf2{display:flex !important; justify-content:space-between; align-items:center; font-size:11px; color:#5d6478; border-bottom:1px solid #e8e2d4; padding-bottom:8px; margin-bottom:6px; padding-right:17mm; position:relative; z-index:1}
-    .fp-kante{position:absolute; top:0; right:0; width:13mm; height:13mm; background:linear-gradient(225deg,#fff 50%,#ffc9a8 50%); z-index:2}
-    .fp-kante::after{content:""; position:absolute; inset:0; background:linear-gradient(225deg,transparent 50%,rgba(45,26,16,.10) 50%,transparent 62%)}
-    .fp-falten{position:absolute; inset:0; width:100%; height:100%; z-index:0}
-    .fp-falten line{stroke:#ece5d6; stroke-width:.5; stroke-dasharray:3 2.4; vector-effect:non-scaling-stroke}
+    .fp-kopf :global(.pp-logo){margin-bottom:10px}
     .fp li{position:relative}
     .fp li.hat-ori > div{padding-right:150px}
-    .fp-ori{position:absolute !important; right:0; top:2px; width:140px; display:flex !important; flex-direction:column; align-items:center; text-align:center; transform:rotate(-2deg)}
-    .fp-ori em{font-family:var(--hand); font-style:normal; font-size:17px; line-height:1.1; color:#c2410c}
-    .fp-unten{position:absolute !important; left:0; right:0; bottom:0; display:flex !important; justify-content:space-between; align-items:center; border-top:1px solid #e8e2d4; padding-top:8px; position:relative; z-index:1}
-    .fp-unten .fp-logo{font-size:11px; font-weight:600; color:#5d6478}
-    .fp-seite{font-family:var(--hand); font-size:17px; color:#c2410c}
+    .fp-ori{position:absolute !important; right:0; top:2px; width:140px}
     .fp li::before{font-size:1.4rem}
     .fp .box{width:18px; height:18px; margin-top:2px}
     .fp li > div > b{font-size:17px}
@@ -151,7 +132,6 @@ const SEITEN = [SCHRITTE.slice(0, 5), SCHRITTE.slice(5)];
 </style>
 <style is:global>
   /* Druck: A4 hochkant, zwei Seiten (beidseitig = ein Blatt) */
-  @page{ size:A4 portrait; margin:10mm 12mm }
   @media print{
     html,body{background:#fff !important}
     .wrap.seite{max-width:none; padding:0; margin:0}

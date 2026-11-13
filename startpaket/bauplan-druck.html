@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Der origami-Bauplan</title>
+<!-- Quelle für origami-bauplan.pdf im Startpaket. Neu bauen: siehe LIESMICH.md in diesem Ordner. Hausdesign: CLAUDE.md, „Druck-Dokumente“. -->
+<style>
+@font-face{font-family:"Bricolage Grotesque";font-weight:700;src:url(../node_modules/@fontsource/bricolage-grotesque/files/bricolage-grotesque-latin-700-normal.woff2)}
+@font-face{font-family:"Bricolage Grotesque";font-weight:800;src:url(../node_modules/@fontsource/bricolage-grotesque/files/bricolage-grotesque-latin-800-normal.woff2)}
+@font-face{font-family:"Source Serif 4";font-weight:400;src:url(../node_modules/@fontsource/source-serif-4/files/source-serif-4-latin-400-normal.woff2)}
+@font-face{font-family:"Source Serif 4";font-weight:600;src:url(../node_modules/@fontsource/source-serif-4/files/source-serif-4-latin-600-normal.woff2)}
+@font-face{font-family:Caveat;font-weight:500;src:url(../node_modules/@fontsource/caveat/files/caveat-latin-500-normal.woff2)}
+@font-face{font-family:"JetBrains Mono";font-weight:400;src:url(../node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-400-normal.woff2)}
+@page{size:A4 portrait;margin:0}
+*{box-sizing:border-box}
+html,body{margin:0;background:#fff;color:#1d2742;font-family:"Source Serif 4",Georgia,serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.blatt{position:relative;width:210mm;height:296.5mm;overflow:hidden;padding:11mm 13mm 22mm;break-after:page}
+.blatt:last-child{break-after:auto}
+.blatt>*{position:relative;z-index:1}
+.falten{position:absolute!important;inset:0;width:100%;height:100%;z-index:0!important}
+.falten line{stroke:#ece5d6;stroke-width:.5;stroke-dasharray:3 2.4;vector-effect:non-scaling-stroke}
+.kante{position:absolute!important;top:0;right:0;width:36mm;height:36mm;z-index:3!important}
+.logo{display:flex;align-items:center;gap:6px;font-family:"Bricolage Grotesque";font-weight:800;font-size:13px}
+.logo img{width:28px;height:28px}
+h1{font-family:"Bricolage Grotesque";font-weight:800;font-size:28px;margin:10px 0 2px;display:inline-block;position:relative}
+h1 .tape{position:absolute;left:-6px;right:-10px;top:22%;height:62%;background:#ffe36e;opacity:.85;transform:rotate(-2deg);z-index:-1}
+.unter{font-size:12px;color:#5d6478;margin:0 0 12px}
+.intro{font-size:13.5px;line-height:1.45;margin:0 0 6px;padding-right:20mm}
+.intro code,.schritt code{font-family:"JetBrains Mono";font-size:12px;background:#f5f4ee;border:1px solid #e3e1d8;border-radius:4px;padding:0 4px}
+.kopf2{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#5d6478;border-bottom:1px solid #e8e2d4;padding:0 30mm 8px 0;margin-bottom:9mm}
+.schritt{position:relative;display:grid;grid-template-columns:34px 1fr;gap:6px;margin-top:14px;break-inside:avoid}
+.nr{font-family:"Bricolage Grotesque";font-weight:800;font-size:22px;color:#c2410c;line-height:1}
+.schritt h2{font-family:"Bricolage Grotesque";font-weight:700;font-size:16px;margin:2px 0 6px}
+.auftrag{background:#fffaf3;border:1px solid #f3dcc8;border-radius:8px;padding:8px 11px;font-size:13px;line-height:1.45}
+.auftrag .lbl,.pruefen .lbl{display:inline-block;font-family:"Bricolage Grotesque";font-weight:700;font-size:9.5px;text-transform:uppercase;letter-spacing:.05em;padding:1px 6px;border-radius:5px;margin-right:6px}
+.auftrag .lbl{background:#fde4d6;color:#c2410c}
+.pruefen{font-size:13px;margin:6px 0 0;line-height:1.4}
+.pruefen .lbl{background:#dff3e7;color:#23784a}
+.hat-ori .inhalt{padding-right:140px}
+.ori{position:absolute;right:0;top:0;width:132px;display:flex;flex-direction:column;align-items:center;text-align:center;transform:rotate(-2deg)}
+.ori img{width:46px;height:46px}
+.ori em{font-family:Caveat;font-style:normal;font-size:17px;line-height:1.1;color:#c2410c}
+.schluss{font-family:Caveat;font-size:22px;color:#c2410c;margin:18px 0 0}
+.fuss{position:absolute!important;left:13mm;right:13mm;bottom:10mm;display:flex;justify-content:space-between;align-items:center;border-top:1px solid #e8e2d4;padding-top:8px}
+.fuss .logo{font-size:11px;font-weight:700;color:#5d6478}.fuss .logo img{width:20px;height:20px}
+.seite{font-family:Caveat;font-size:17px;color:#c2410c}
+</style></head><body>
+
+<section class="blatt">
+<svg class="kante" viewBox="0 0 100 100" aria-hidden="true"><polygon points="0,0 100,0 100,100" fill="#ff8a4c"/><polygon points="38,0 100,0 100,62" fill="#c2410c"/><polygon points="0,0 38,0 100,62 100,100" fill="#ffc9a8" opacity=".25"/></svg>
+<svg class="falten" viewBox="0 0 210 297" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="90" x2="210" y2="30"/><line x1="0" y1="250" x2="210" y2="170"/><line x1="105" y1="0" x2="105" y2="297"/></svg>
+<div class="logo"><img src="../public/anim/ruhezustand-abendrot.svg" alt="">Selbst gfaltet</div>
+<h1><span class="tape"></span>Der origami-Bauplan</h1>
+<p class="unter">9 Aufträge für Claude Code · dein Startpaket · selbstgfaltet.de</p>
+<p class="intro">So baust du dir mit Claude Code deine eigene KI, nach dem Vorbild von origami. Leg <code>CLAUDE.md</code> in einen leeren Ordner, starte dort Claude Code (<code>claude</code>) und gib die Aufträge nacheinander ein. Erst den nächsten Schritt, wenn der vorige läuft.</p>
+<p class="intro">Voraussetzung: Ollama ist installiert und ein Modell geladen (<code>ollama pull gemma4:26b</code>). Prüf vorher mit <code>ki-check.ps1</code>, was auf deinen PC passt.</p>
+
+<div class="schritt"><span class="nr">1</span><div class="inhalt"><h2>Das Grundgerüst</h2>
+<div class="auftrag"><span class="lbl">Auftrag</span>Lies CLAUDE.md. Bau das Grundgerüst: Node-Server mit einer Chat-Oberfläche im Browser, die meine Nachricht an Ollama schickt und die Antwort Wort für Wort anzeigt. Unter jeder Antwort Modell und Dauer. Erklär mir danach, wie ich es starte.</div>
+<p class="pruefen"><span class="lbl">Prüfen</span>Server starten, <code>http://localhost:3000</code> öffnen, „Hallo“ schreiben.</p></div></div>
+
+<div class="schritt hat-ori"><span class="nr">2</span><div class="inhalt"><h2>Schnell machen</h2>
+<div class="auftrag"><span class="lbl">Auftrag</span>Sorg dafür, dass der Anfang des Prompts bei jeder Anfrage gleich bleibt (Uhrzeit hinten an die Nachricht) und bau das Vorwärmen ein, wie in CLAUDE.md beschrieben. Miss die Zeit bis zur ersten Antwort vorher und nachher und zeig mir beide Werte.</div>
+<p class="pruefen"><span class="lbl">Prüfen</span>Server neu starten, Seite öffnen, kurz warten, dann fragen. Die erste Antwort sollte deutlich schneller kommen als vorher.</p></div>
+<span class="ori"><img src="../public/anim/rechnet-abendrot.svg" alt=""><em>Bleibt der Anfang gleich, muss ich nicht alles nochmal lesen. Danke.</em></span></div>
+
+<div class="schritt"><span class="nr">3</span><div class="inhalt"><h2>Erste Werkzeuge</h2>
+<div class="auftrag"><span class="lbl">Auftrag</span>Bau zwei Werkzeuge: <code>rechnen</code> (versteht z. B. „100 + 19%“) und <code>wetter</code> über Open-Meteo (Ort und Tag rein, kurze fertige Antwort raus). Das Modell soll sie selbst aufrufen können. Die Werkzeugliste immer komplett mitschicken.</div>
+<p class="pruefen"><span class="lbl">Prüfen</span>„Was sind 249 Euro plus 19 %?“ und „Wie wird das Wetter morgen in Stuttgart?“</p></div></div>
+
+<div class="schritt hat-ori"><span class="nr">4</span><div class="inhalt"><h2>Die Schutzschicht</h2>
+<div class="auftrag"><span class="lbl">Auftrag</span>Bau die Freigabe-Abfrage und die Regeln aus dem Abschnitt Sicherheit in CLAUDE.md. Dann ein Werkzeug <code>befehl_ausfuehren</code> für PowerShell: reine Lesebefehle laufen frei, alles andere fragt. Schreib Tests mit fiesen Fällen (zusammengesetzte Löschbefehle, versteckte Anweisung in einer Datei) und zeig mir, dass sie abgefangen werden.</div>
+<p class="pruefen"><span class="lbl">Prüfen</span>„Wie viel Platz ist auf C?“ läuft ohne Nachfrage. „Lösch die Datei test.txt“ fragt.</p></div>
+<span class="ori"><img src="../public/anim/seufzt-abendrot.svg" alt=""><em>Ich frag lieber einmal zu oft. Aufräumen machst du nämlich ungern.</em></span></div>
+
+<div class="schritt"><span class="nr">5</span><div class="inhalt"><h2>Die Notbremse</h2>
+<div class="auftrag"><span class="lbl">Auftrag</span>Bau die Notbremse aus CLAUDE.md ein: 3 Fehler, 3-mal dieselbe Aktion oder 20 Schritte, dann Abbruch mit Erklärung. Schreib einen Test, der eine Endlosschleife simuliert.</div></div></div>
+
+<div class="fuss"><span class="logo"><img src="../public/anim/ruhezustand-abendrot.svg" alt="">selbstgfaltet.de</span><span class="seite">Falte 1 von 2</span></div>
+</section>
+
+<section class="blatt">
+<svg class="kante" viewBox="0 0 100 100" aria-hidden="true"><polygon points="0,0 100,0 100,100" fill="#ff8a4c"/><polygon points="38,0 100,0 100,62" fill="#c2410c"/><polygon points="0,0 38,0 100,62 100,100" fill="#ffc9a8" opacity=".25"/></svg>
+<svg class="falten" viewBox="0 0 210 297" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="90" x2="210" y2="30"/><line x1="0" y1="250" x2="210" y2="170"/><line x1="105" y1="0" x2="105" y2="297"/></svg>
+<div class="kopf2"><span class="logo"><img src="../public/anim/ruhezustand-abendrot.svg" alt="">Selbst gfaltet</span><span>Der origami-Bauplan, Schritte 6 bis 9</span></div>
+
+<div class="schritt hat-ori"><span class="nr">6</span><div class="inhalt"><h2>Ein Gedächtnis</h2>
+<div class="auftrag"><span class="lbl">Auftrag</span>Bau ein Werkzeug <code>merken</code>, das Fakten über mich in <code>daten/memory.json</code> speichert, mit Rückgängig-Knopf in der Oberfläche. Keine Passwörter oder Gesundheitsdaten speichern. Achtung: Neue Einträge ändern den Prompt-Anfang. Sag mir, wie du damit umgehst.</div></div>
+<span class="ori"><img src="../public/anim/wissen-abendrot.svg" alt=""><em>Ich merk mir, was du sagst. Nicht, was du meinst.</em></span></div>
+
+<div class="schritt"><span class="nr">7</span><div class="inhalt"><h2>Login für unterwegs</h2>
+<div class="auftrag"><span class="lbl">Auftrag</span>Bau einen Login mit Passwort und Zwei-Faktor-Code (Authenticator-App), Sperre nach Fehlversuchen. Verwaltungsseiten nur von localhost. Erst wenn das läuft: erklär mir, wie ich mit Tailscale Funnel von unterwegs drankomme.</div>
+<p class="pruefen"><span class="lbl">Prüfen</span>Vom Handy aus ohne Code darf nichts gehen.</p></div></div>
+
+<div class="schritt hat-ori"><span class="nr">8</span><div class="inhalt"><h2>Läuft von allein</h2>
+<div class="auftrag"><span class="lbl">Auftrag</span>Richte ein, dass die KI beim Hochfahren automatisch startet (Windows-Aufgabe, ohne Anmeldung), nach einem Absturz neu startet und jede Nacht um 3 Uhr ein Backup von <code>daten/</code> macht, 14 Tage aufheben.</div>
+<p class="pruefen"><span class="lbl">Prüfen</span>PC neu starten, ohne anzumelden vom Handy aus fragen.</p></div>
+<span class="ori"><img src="../public/anim/triumph-abendrot.svg" alt=""><em>Um 3 Uhr mach ich Backup. Du schläfst. Wie immer.</em></span></div>
+
+<div class="schritt"><span class="nr">9</span><div class="inhalt"><h2>Optional: Hilfe von Claude</h2>
+<div class="auftrag"><span class="lbl">Auftrag</span>Bau eine Aufgabenteilung: Kurze Alltagssachen bleiben lokal, Code, Recherche und alles über 700 Zeichen geht an Claude über die API (Schlüssel aus <code>.env</code>). Entscheiden soll eine feste Wortliste, keine KI. Unter jeder Antwort steht, wer geantwortet hat.</div></div></div>
+
+<p class="schluss">Alle neun durch? Dann hast du dir deine eigene KI gefaltet. – Ori</p>
+<p class="intro" style="font-size:12px;color:#5d6478">Mehr zu jedem Schritt, mit echten Messwerten und Pannen: www.selbstgfaltet.de</p>
+
+<div class="fuss"><span class="logo"><img src="../public/anim/ruhezustand-abendrot.svg" alt="">selbstgfaltet.de</span><span class="seite">Falte 2 von 2</span></div>
+</section>
+</body></html>
