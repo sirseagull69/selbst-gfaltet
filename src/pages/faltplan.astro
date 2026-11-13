@@ -13,6 +13,14 @@ const SCHRITTE = [
   ['Gedächtnis mit Bedacht', 'Dauerhafte Fakten gezielt speichern lassen, mit Rückgängig-Knopf. Lange Chats automatisch zusammenfassen, Wichtiges wörtlich behalten.', 'Ein neuer Gedächtnis-Eintrag kostet die nächste Anfrage ca. 20 s extra. Chat-Fenster bei mir ca. 16.000 Tokens.', 'Jeder neue Eintrag ändert den Prompt, dann wird alles neu eingelesen (siehe Schritt 3). Keine Passwörter oder Gesundheitsdaten speichern.'],
   ['Sicher von unterwegs, und stabil', 'Zugriff über einen Tunnel wie Tailscale, Login mit Passwort plus Zwei-Faktor-Code. Dazu Autostart ohne Anmeldung, Neustart nach Absturz und ein nächtliches Backup.', 'Bei mir: steht nach Absturz nach 5 s wieder auf, Backup um 3 Uhr, 14 Tage werden aufgehoben.', 'Verwaltungsseiten nur direkt am PC, nie übers Internet. Und Windows-Grenzen im Blick behalten: Ein Ausfall bei mir hing an zu wenigen freien Netzwerk-Ports und einer zu kleinen Auslagerungsdatei.'],
 ];
+// Ori kommentiert am Rand (nur im Druck), zwei pro Seite
+const ORI: Record<number, [string, string]> = {
+  2: ['sassy', 'Eine Uhrzeit. Eine einzige. Und ich fang von vorn an.'],
+  4: ['rechnet', 'Rechnen? Ich? Dafür gibt’s Code.'],
+  7: ['seufzt', 'Bitten überhör ich. Sperren nicht.'],
+  8: ['wissen', 'Ich merk mir alles. Fast alles.'],
+};
+const SEITEN = [SCHRITTE.slice(0, 5), SCHRITTE.slice(5)];
 ---
 <Base titel="Der Faltplan: 10 Schritte zur eigenen KI" beschreibung="10 Schritte zur eigenen KI, jeder mit echter Messung und der Falle, in die ich getappt bin. Zum Ausdrucken.">
   <div class="wrap seite">
@@ -23,25 +31,60 @@ const SCHRITTE = [
       <div class="knoepfe" style="margin-bottom:32px"><button class="knopf voll" type="button" onclick="window.print()">Drucken oder als PDF speichern</button><a class="knopf" href="/werkzeuge">Zu den Werkzeugen</a></div>
     </div>
     <div class="faltplan-druck fp">
-      <div class="fp-kopf">
-        <div><b>Der Faltplan</b><br /><span>10 Schritte, 10 Fallen · gemessen mit origami · selbstgfaltet.de</span></div>
-        <img src="/anim/ruhezustand-abendrot.svg" alt="" width="72" height="72" />
-      </div>
-      <ol>
-        {SCHRITTE.map(([t, tun, zahl, falle]) => (
-          <li>
-            <span class="box"></span>
-            <div>
-              <b>{t}</b>
-              <p class="fp-tun">{tun}</p>
-              <p class="fp-zahl"><span>Gemessen</span>{zahl}</p>
-              <p class="fp-falle"><span>Falle</span>{falle}</p>
+      {SEITEN.map((seite, si) => (
+        <section class="fp-blatt">
+          <div class="nur-druck fp-kante" aria-hidden="true"></div>
+          <svg class="nur-druck fp-falten" viewBox="0 0 210 297" preserveAspectRatio="none" aria-hidden="true">
+            <line x1="0" y1="90" x2="210" y2="30" /><line x1="0" y1="250" x2="210" y2="170" /><line x1="105" y1="0" x2="105" y2="297" />
+          </svg>
+          {si === 0 && (
+            <>
+            <div class="fp-kopf">
+              <div>
+                <span class="nur-druck fp-logo"><img src="/anim/ruhezustand-abendrot.svg" alt="" width="28" height="28" />Selbst gfaltet</span>
+                <b><span class="fp-tape" aria-hidden="true"></span>Der Faltplan</b><br /><span>10 Schritte, 10 Fallen · gemessen mit origami · selbstgfaltet.de</span>
+              </div>
+              <img class="fp-kopf-ori" src="/anim/ruhezustand-abendrot.svg" alt="" width="72" height="72" />
             </div>
-          </li>
-        ))}
-      </ol>
-      <p class="fp-fuss">Alles abgehakt? Dann hast du dir deine eigene KI gefaltet. – Ori</p>
-      <p class="fp-klein">Gemessen auf einer RTX 4060 (8 GB) mit 32 GB Arbeitsspeicher und gemma4:26b, November 2026. Auf anderer Hardware sind die Zahlen anders, die Fallen meistens nicht.</p>
+            </>
+          )}
+          {si > 0 && (
+            <div class="nur-druck fp-kopf2">
+              <span class="fp-logo"><img src="/anim/ruhezustand-abendrot.svg" alt="" width="28" height="28" />Selbst gfaltet</span>
+              <span>Der Faltplan, Schritte 6 bis 10</span>
+            </div>
+          )}
+          <ol style={`counter-reset:f ${si * 5}`}>
+            {seite.map(([t, tun, zahl, falle], i) => {
+              const ori = ORI[si * 5 + i];
+              return (
+                <li class={ori ? 'hat-ori' : undefined}>
+                  <span class="box"></span>
+                  <div>
+                    <b>{t}</b>
+                    <p class="fp-tun">{tun}</p>
+                    <p class="fp-zahl"><span>Gemessen</span>{zahl}</p>
+                    <p class="fp-falle"><span>Falle</span>{falle}</p>
+                  </div>
+                  {ori && (
+                    <span class="nur-druck fp-ori"><img src={`/anim/${ori[0]}-abendrot.svg`} alt="" width="46" height="46" /><em>{ori[1]}</em></span>
+                  )}
+                </li>
+              );
+            })}
+          </ol>
+          {si === SEITEN.length - 1 && (
+            <>
+              <p class="fp-fuss">Alles abgehakt? Dann hast du dir deine eigene KI gefaltet. – Ori</p>
+              <p class="fp-klein">Gemessen auf einer RTX 4060 (8 GB) mit 32 GB Arbeitsspeicher und gemma4:26b, November 2026. Auf anderer Hardware sind die Zahlen anders, die Fallen meistens nicht.</p>
+            </>
+          )}
+          <div class="nur-druck fp-unten">
+            <span class="fp-logo"><img src="/anim/ruhezustand-abendrot.svg" alt="" width="20" height="20" />selbstgfaltet.de</span>
+            <span class="fp-seite">Falte {si + 1} von {SEITEN.length}</span>
+          </div>
+        </section>
+      ))}
     </div>
   </div>
 </Base>
@@ -60,29 +103,54 @@ const SCHRITTE = [
   .fp-zahl span,.fp-falle span{display:inline-block; font-family:var(--display); font-weight:700; font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; padding:1px 7px; border-radius:5px; margin-right:7px}
   .fp-zahl span{background:#dff3e7; color:#23784a}
   .fp-falle span{background:#fde4d6; color:#c2410c}
-  .fp-fuss{margin:20px 0 0; font-family:var(--hand); font-size:1.4rem; color:#c2410c}
-  .fp-klein{font-size:.8rem; color:#5d6478}
+  .fp .fp-fuss{margin:20px 0 0; font-family:var(--hand); font-size:1.4rem; color:#c2410c}
+  .fp .fp-klein{font-size:.8rem; color:#5d6478}
+  .nur-druck{display:none}
+  .fp ol{list-style:none}
+  .fp-blatt + .fp-blatt ol{margin-top:14px}
   @media print{
-    /* volle Breite, weiß, kein Schritt wird zerrissen, alles auf ein Blatt */
+    /* ein Blatt beidseitig: Schritte 1-5 vorne, 6-10 hinten, gut lesbare Schrift */
     .fp{max-width:none !important; width:100%; margin:0; padding:0 !important; box-shadow:none !important; border:0 !important; border-radius:0; background:#fff !important;
       -webkit-print-color-adjust:exact; print-color-adjust:exact}
-    .fp-kopf{margin-bottom:6px}
-    .fp-kopf b{font-size:1.25rem}
-    .fp-kopf span{font-size:10px}
-    .fp-kopf img{width:46px; height:46px}
-    .fp ol{gap:7px}
-    .fp li{grid-template-columns:22px 18px 1fr; gap:7px; break-inside:avoid; page-break-inside:avoid}
-    .fp li::before{font-size:1rem}
-    .fp .box{width:14px; height:14px; margin-top:1px}
-    .fp li > div > b{font-size:12px}
-    .fp p{font-size:9.6px; line-height:1.33; margin-top:1px}
-    .fp-zahl span,.fp-falle span{font-size:7.5px; padding:0 4px; margin-right:5px}
-    .fp-fuss{font-size:.95rem; margin-top:8px; break-inside:avoid}
-    .fp-klein{font-size:7.5px; margin-top:1px}
+    .fp-kopf{margin-bottom:8px}
+    .fp-kopf b{font-size:1.6rem}
+    .fp-kopf span{font-size:12px}
+    .fp-kopf img{width:56px; height:56px}
+    .fp ol{gap:13px}
+    .fp li{grid-template-columns:30px 22px 1fr; gap:10px; break-inside:avoid; page-break-inside:avoid}
+    .nur-druck{display:revert}
+    .fp-blatt{position:relative; height:275mm; overflow:hidden; box-sizing:border-box; padding-bottom:11mm; break-after:page; page-break-after:always}
+    .fp-blatt:last-child{break-after:auto; page-break-after:auto}
+    .fp-blatt ol{position:relative; z-index:1}
+    .fp-kopf{position:relative; z-index:1}
+    .fp-kopf-ori{display:none}
+    .fp-logo{display:inline-flex !important; align-items:center; gap:6px; font-family:var(--display); font-weight:800; font-size:13px; color:#1d2742}
+    .fp-kopf .fp-logo{margin-bottom:10px}
+    .fp-kopf b{position:relative; display:inline-block}
+    .fp-tape{position:absolute; left:-6px; right:-10px; top:22%; height:62%; background:#ffe36e; opacity:.85; transform:rotate(-2deg); z-index:-1}
+    .fp-kopf2{display:flex !important; justify-content:space-between; align-items:center; font-size:11px; color:#5d6478; border-bottom:1px solid #e8e2d4; padding-bottom:8px; margin-bottom:6px; padding-right:17mm; position:relative; z-index:1}
+    .fp-kante{position:absolute; top:0; right:0; width:13mm; height:13mm; background:linear-gradient(225deg,#fff 50%,#ffc9a8 50%); z-index:2}
+    .fp-kante::after{content:""; position:absolute; inset:0; background:linear-gradient(225deg,transparent 50%,rgba(45,26,16,.10) 50%,transparent 62%)}
+    .fp-falten{position:absolute; inset:0; width:100%; height:100%; z-index:0}
+    .fp-falten line{stroke:#ece5d6; stroke-width:.5; stroke-dasharray:3 2.4; vector-effect:non-scaling-stroke}
+    .fp li{position:relative}
+    .fp li.hat-ori > div{padding-right:150px}
+    .fp-ori{position:absolute !important; right:0; top:2px; width:140px; display:flex !important; flex-direction:column; align-items:center; text-align:center; transform:rotate(-2deg)}
+    .fp-ori em{font-family:var(--hand); font-style:normal; font-size:17px; line-height:1.1; color:#c2410c}
+    .fp-unten{position:absolute !important; left:0; right:0; bottom:0; display:flex !important; justify-content:space-between; align-items:center; border-top:1px solid #e8e2d4; padding-top:8px; position:relative; z-index:1}
+    .fp-unten .fp-logo{font-size:11px; font-weight:600; color:#5d6478}
+    .fp-seite{font-family:var(--hand); font-size:17px; color:#c2410c}
+    .fp li::before{font-size:1.4rem}
+    .fp .box{width:18px; height:18px; margin-top:2px}
+    .fp li > div > b{font-size:17px}
+    .fp p{font-size:13.5px; line-height:1.4; margin-top:3px}
+    .fp-zahl span,.fp-falle span{font-size:10px; padding:1px 5px; margin-right:6px}
+    .fp .fp-fuss{font-size:1.5rem; margin-top:12px; break-inside:avoid}
+    .fp .fp-klein{font-size:12px; margin-top:4px}
   }
 </style>
 <style is:global>
-  /* Druck: ein A4-Blatt hochkant, volle Breite */
+  /* Druck: A4 hochkant, zwei Seiten (beidseitig = ein Blatt) */
   @page{ size:A4 portrait; margin:10mm 12mm }
   @media print{
     html,body{background:#fff !important}
