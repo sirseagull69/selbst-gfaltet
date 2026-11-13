@@ -22,7 +22,7 @@ Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt
 - **Jeder Artikel** hat mindestens: `KurzGesagt`, einen visuellen Baustein (Schaubild, `WasMacht`, `Messung` oder `VorherNachher`), `Schritte` wenn man etwas nachbauen kann, eine `Checkliste` am Ende, 1–2 `OriSagt`.
 - **Ori:** Spitzname von origami (die KI heißt origami, Ori ist der Kosename). origami ist eine **Sie**: sie, ihr, „die KI“, nie „er“ oder „der Assistent“. Papiervogel, sassy wie GLaDOS, trocken, nie gemein. Kommentiert am Rand (`ori`, `oriSpruch` im Frontmatter).
 - **Nur echte Zahlen** aus Nils' Messungen bzw. der origami-Doku. Nichts erfinden, nichts schätzen ohne es zu sagen.
-- **Kein Name von Nils** auf der Seite (Titel, Texte, Footer, RSS), nur im Impressum und in der Datenschutzerklärung. Einzige Ausnahme (seit 13.11.): der Vorname „Nils“ auf „Über mich“ („Servus, ich bin Nils.“), nie der Nachname. Auch keine Ortsangabe.
+- **Kein Name von Nils** auf der Seite (Titel, Texte, Footer, RSS), nur im Impressum und in der Datenschutzerklärung. Einzige Ausnahme (seit 13.11.): der Vorname im Footer („Selbst gfaltet · von Nils mit zu viel Kaffee gefaltet.“), nie der Nachname, sonst nirgends. Auch keine Ortsangabe.
 - **Keine Firmendaten:** Arbeitgeber, Kollegen, Dienstleister, Server, interne Vorfälle nie nennen. Keine Adressen, Zugangsdaten oder die Fernzugriffs-Adresse von origami.
 - Fachbegriffe beim ersten Auftauchen einfach erklären, neue Begriffe ins Glossar.
 
