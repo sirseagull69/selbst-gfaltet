@@ -5,7 +5,7 @@ import Baustein from '../components/Baustein.astro';
 import Icon from '../components/Icon.astro';
 import { GLOSSAR } from '../glossar';
 ---
-<Base titel="Werkzeuge für deine eigene KI" aktiv="werkzeuge" beschreibung="Token-Uhr, Lokal-oder-Claude-Test, Modell-Rechner mit echten Messwerten, Prompt-Baukasten, Spickzettel und Glossar für deine eigene KI.">
+<Base titel="Werkzeuge für deine eigene KI" aktiv="werkzeuge" beschreibung="Werkstatt, Lokal-oder-Claude-Test, Modell-Rechner mit echten Messwerten, Prompt-Baukasten, Spickzettel und Glossar für deine eigene KI.">
   <div class="wrap seite">
     <span class="kicker hand">Planen, ausprobieren, mitnehmen</span>
     <h1>Werkzeuge</h1>
@@ -22,7 +22,6 @@ import { GLOSSAR } from '../glossar';
       <div class="wz-gruppe">
         <h2><span class="hand">2</span> Ausprobieren</h2>
         <div class="wzgitter">
-          <a class="wz" href="#token"><span class="kat kat-live">Hier auf der Seite</span><Icon name="messung" /><h3>Token-Uhr</h3><p>Wie lange liest deine KI einen Text ein?</p></a>
           <a class="wz" href="#route"><span class="kat kat-live">Hier auf der Seite</span><Icon name="diagnose" /><h3>Lokal oder Claude?</h3><p>Wer bei origami antworten würde, mit den echten Wortlisten.</p></a>
           <a class="wz" href="#prompt"><span class="kat kat-live">Hier auf der Seite</span><Icon name="falt" /><h3>Prompt-Baukasten</h3><p>Felder ausfüllen, fertigen Prompt kopieren.</p></a>
           <a class="wz" href="#glossar"><span class="kat kat-live">Hier auf der Seite</span><Icon name="kurz" /><h3>Fachchinesisch</h3><p>Die Begriffe vom Blog, einfach erklärt.</p></a>
@@ -37,18 +36,6 @@ import { GLOSSAR } from '../glossar';
         </div>
       </div>
     </nav>
-
-    <Baustein titel="Token-Uhr: Wie lange liest meine KI das?" icon="messung" id="token">
-      <div class="feld"><label for="tktext">Text oder Prompt reinkopieren</label><textarea id="tktext" rows="6" placeholder="Zum Beispiel deine Anweisungen an die KI, eine Mail oder ein Stück Code"></textarea></div>
-      <div class="tk-werte" aria-live="polite">
-        <div><b id="tkzeichen">0</b><span>Zeichen</span></div>
-        <div><b id="tktoken">0</b><span>Tokens (geschätzt)</span></div>
-        <div><b id="tklesen">0 s</b><span>Einlesen bei mir</span></div>
-        <div><b id="tkschreiben">0 s</b><span>gleich lange Antwort schreiben</span></div>
-      </div>
-      <div class="gpu-ori"><Ori name="liest" alt="Ori liest" /><span class="hand" id="tkori">Gib mir was zu lesen.</span></div>
-      <p class="klein">Tokens grob geschätzt mit etwa 4 Zeichen pro Token, die echte Zahl hängt vom Modell ab. Zeiten gemessen mit gemma4:26b auf einer RTX 4060 (8 GB): ca. 130 Tokens pro Sekunde beim Einlesen, 27–30 beim Schreiben. Bei origami geht alles über 700 Zeichen direkt an Claude.</p>
-    </Baustein>
 
     <Baustein titel="Lokal oder Claude? Wer würde antworten" icon="diagnose" id="route">
       <p style="margin-top:0">Tipp eine Nachricht wie im Chat. Du siehst, ob origami sie selbst mit Gemma beantwortet oder direkt an Claude gibt. Das sind die echten Wortlisten aus origami, Stand 9.11.2026.</p>
@@ -123,25 +110,6 @@ import { GLOSSAR } from '../glossar';
 </style>
 <script>
   const oriNochmal = (img: HTMLImageElement) => (window as any).oriNochmal?.(img);
-  // Token-Uhr
-  const tk = document.getElementById('tktext') as HTMLTextAreaElement;
-  const zeit = (s: number) => {
-    if (s < 10) return `${(Math.round(s * 10) / 10).toLocaleString('de-DE')} s`;
-    const r = Math.round(s);
-    return r < 60 ? `${r} s` : `${Math.floor(r / 60)}:${String(r % 60).padStart(2, '0')} Min.`;
-  };
-  const spanne = (a: string, b: string) => a === b ? a : (a.endsWith(' s') && b.endsWith(' s') ? `${a.slice(0, -2)}–${b}` : `${a}–${b}`);
-  function tkRechne() {
-    const z = tk.value.length, t = Math.ceil(z / 4);
-    document.getElementById('tkzeichen')!.textContent = z.toLocaleString('de-DE');
-    document.getElementById('tktoken')!.textContent = t.toLocaleString('de-DE');
-    document.getElementById('tklesen')!.textContent = zeit(t / 130);
-    document.getElementById('tkschreiben')!.textContent = t ? spanne(zeit(t / 30), zeit(t / 27)) : '0 s';
-    const o = document.getElementById('tkori')!;
-    o.textContent = !z ? 'Gib mir was zu lesen.' : z > 700 ? 'Über 700 Zeichen. Bei origami ginge das direkt an Claude.' : t / 130 < 2 ? 'Zack, gelesen.' : 'Moment. Ich les noch.';
-  }
-  tk.addEventListener('input', tkRechne);
-
   // Prompt-Baukasten
   const pb = (id: string) => (document.getElementById(id) as HTMLInputElement | HTMLTextAreaElement).value.trim();
   const pbRaus = document.getElementById('pbraus') as HTMLTextAreaElement;

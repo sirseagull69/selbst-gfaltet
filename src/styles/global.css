@@ -39,7 +39,7 @@ a{color:inherit}
 :focus-visible{outline:3px solid var(--ori); outline-offset:3px; border-radius:4px}
 .wrap{max-width:1120px; margin:0 auto; padding:0 24px}
 h1,h2,h3{font-family:var(--display); line-height:1.12; text-wrap:balance; margin:0}
-h1{font-size:clamp(2.2rem,5vw,3.6rem); font-weight:800; letter-spacing:-.02em}
+h1{font-size:clamp(2.2rem,5vw,3.6rem); font-weight:800; letter-spacing:-.02em; overflow-wrap:break-word; hyphens:auto}
 h2{font-size:clamp(1.6rem,3vw,2.2rem); font-weight:700; letter-spacing:-.01em}
 h3{font-size:1.2rem; font-weight:700}
 .mark{background:linear-gradient(transparent 55%,var(--marker) 55%,var(--marker) 90%,transparent 90%); padding:0 .1em}
@@ -133,7 +133,7 @@ footer .wrap{display:flex; justify-content:space-between; gap:16px; flex-wrap:wr
 .bkoerper{padding:20px}
 
 .schritte{list-style:none; margin:0; padding:0; display:grid; gap:14px; counter-reset:s}
-.schritte li{display:grid; grid-template-columns:44px 1fr; gap:14px; counter-increment:s}
+.schritte li{display:grid; grid-template-columns:44px minmax(0,1fr); gap:14px; counter-increment:s}
 .schritte li::before{content:counter(s); width:44px; height:44px; border-radius:50%; border:2px solid var(--tinte); display:grid; place-items:center; font-family:var(--display); font-weight:800; font-size:1.1rem; background:var(--papier)}
 .schritte h3{font-size:1.05rem; margin-top:8px}
 .schritte p{margin:4px 0 0; font-size:.98rem; color:var(--bleistift)}
@@ -201,7 +201,7 @@ pre{font-family:var(--mono); font-size:.85rem; background:#1d2742; color:#e9ecf5
   .ori-rand img{width:160px; height:160px}
   .lernwege,.zwei,.wasmacht,.kurz{grid-template-columns:1fr}
   .kurz > div + div{border-left:0; border-top:2px solid var(--tinte)}
-  .artikel{grid-template-columns:1fr; gap:0}
+  .artikel{grid-template-columns:minmax(0,1fr); gap:0}
   .rand{display:none}
   .eintrag{grid-template-columns:1fr; gap:4px}
 }
@@ -420,7 +420,7 @@ main > section.block:first-child{padding-top:0}
 .thema[data-modus="auto"] .t-auto,.thema[data-modus="hell"] .t-hell,.thema[data-modus="dunkel"] .t-dunkel{display:block}
 .thema:not([data-modus]) .t-auto{display:block}
 
-/* Werkzeuge: Token-Uhr, Prompt-Baukasten, Messtabelle */
+/* Werkzeuge: Prompt-Baukasten, Messtabelle */
 .feld textarea{font:inherit; font-size:1rem; padding:10px 12px; border:2px solid var(--tinte); border-radius:10px; background:var(--papier); color:var(--tinte); resize:vertical}
 .feld textarea[readonly]{font-family:var(--mono); font-size:.88rem; background:var(--blatt)}
 .feld label small{font-weight:500; color:var(--bleistift)}
