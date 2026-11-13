@@ -20,14 +20,14 @@ div > .pp-logo:first-child{display:flex; margin-bottom:10px}
 @media screen{
   .pp-karte{padding:0 !important; overflow:hidden}
   .pp-blatt{padding:32px 32px 22px}
-  .pp-blatt > .pp-kante{width:92px; height:92px}
+  .pp-blatt > .pp-kante{width:62px; height:62px}
   .pp-blatt + .pp-blatt{border-top:2px dashed #ece5d6}
-  .pp-kopf2{margin-bottom:22px; padding-right:90px}
+  .pp-kopf2{margin-bottom:22px; padding-right:66px}
   .pp-fuss{margin-top:26px}
   .pp-blatt .nur-druck-aus{display:none}
   @media (max-width:700px){
     .pp-blatt{padding:24px 18px 18px}
-    .pp-blatt > .pp-kante{width:60px; height:60px}
+    .pp-blatt > .pp-kante{width:44px; height:44px}
     .pp-blatt .pp-ori{display:none}
   }
 }
@@ -41,7 +41,7 @@ div > .pp-logo:first-child{display:flex; margin-bottom:10px}
   .pp-blatt{height:296.5mm; overflow:hidden; box-sizing:border-box; padding:11mm 13mm 22mm 13mm !important; break-after:page; page-break-after:always;
     -webkit-print-color-adjust:exact; print-color-adjust:exact}
   .pp-blatt:last-child{break-after:auto; page-break-after:auto}
-  .pp-blatt > .pp-kante{width:36mm; height:36mm}
+  .pp-blatt > .pp-kante{width:22mm; height:22mm; top:5mm; right:5mm}
   .pp-kopf2{margin-bottom:9mm; padding-right:30mm}
   .pp-blatt > .pp-fuss{position:absolute; left:13mm; right:13mm; bottom:10mm}
 }

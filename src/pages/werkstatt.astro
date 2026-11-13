@@ -1,0 +1,307 @@
+---
+import Base from '../layouts/Base.astro';
+import Ori from '../components/Ori.astro';
+import PapierDeko from '../components/papier/PapierDeko.astro';
+import PapierLogo from '../components/papier/PapierLogo.astro';
+import PapierFuss from '../components/papier/PapierFuss.astro';
+import Newsletter from '../components/Newsletter.astro';
+import DeineKI from '../components/werkstatt/DeineKI.astro';
+import '../styles/papier.css';
+
+// Alle Zahlen sind echte Messwerte aus origami (siehe Faltplan und Artikel). Nichts erfinden.
+// rang = Reihenfolge beim Bauen, dep = was vorher drin sein muss.
+const TEILE = [
+  { id: 'fundament', anim: 'start-landung', gruppe: 'Fundament', titel: 'Das Grundgerüst', kurz: 'Chat im Browser, der mit Ollama redet und die Antwort Wort für Wort zeigt.', zahl: '', dep: [], rang: 1, fest: true, ori: '' },
+  { id: 'anfang', anim: 'liest', gruppe: 'Tempo', titel: 'Fester Prompt-Anfang', kurz: 'Anweisungen und Werkzeugliste bleiben immer gleich, Wechselndes kommt hinten dran.', zahl: 'Vorher bis ca. 107 s bis zur Antwort, nachher 8 bis 12 s.', dep: [], rang: 2, link: '/faltplan', ori: 'Endlich muss ich nicht jedes Mal von vorn lesen.' },
+  { id: 'vorwaermen', anim: 'aufwachen', gruppe: 'Tempo', titel: 'Vorwärmen', kurz: 'Beim Start eine leere Probe-Anfrage, dann ist der Anfang schon eingelesen, wenn du tippst.', zahl: 'Erste Frage 9 s statt 39 s.', dep: ['anfang'], rang: 3, link: '/faltplan', ori: 'Kaffee vor der Arbeit. Versteh ich.' },
+  { id: 'rechnen', anim: 'rechnet', gruppe: 'Werkzeuge', titel: 'Rechnen', kurz: 'Ein Werkzeug, das rechnet. Das Modell schätzt nur, der Code rechnet richtig.', zahl: '', dep: [], rang: 4, link: '/faltplan', ori: 'Kopfrechnen war nie meine Stärke. Ich bin aus Papier.' },
+  { id: 'wetter', anim: 'wetter', gruppe: 'Werkzeuge', titel: 'Wetter', kurz: 'Eigenes Werkzeug mit fertiger kurzer Antwort, statt ganze Webseiten zu lesen.', zahl: 'Wetterfrage: fast 4 Minuten, mit eigenem Werkzeug 14 Sekunden.', dep: [], rang: 5, link: '/faltplan', ori: 'Regenschirm ja oder nein. Mehr willst du eh nicht wissen.' },
+  { id: 'freigaben', anim: 'wartet-freigabe', gruppe: 'Schutz', titel: 'Freigaben im Code', kurz: 'Löschen, Installieren, Absenden nur nach deinem Okay. Das regelt der Code, nicht der Prompt.', zahl: 'origami hat neun Schutzschichten zwischen Gemma und dem PC.', dep: [], rang: 6, link: '/blog/schutzschicht', ori: 'Ich darf also nicht alles. Gut so, ehrlich gesagt.' },
+  { id: 'notbremse', anim: 'fehler', gruppe: 'Schutz', titel: 'Notbremse', kurz: 'Der Code zählt mit und bricht ab, wenn sie sich im Kreis dreht.', zahl: 'Bei mir: 3 Fehler, 3-mal dieselbe Aktion oder 20 Schritte, dann ist Schluss.', dep: [], rang: 7, link: '/faltplan', ori: 'Falls ich mal hänge. Kommt selten vor. Fast nie.' },
+  { id: 'befehle', anim: 'terminal', gruppe: 'Werkzeuge', titel: 'PC-Befehle', kurz: 'Reine Lesebefehle wie „Wie voll ist C?“ laufen frei, alles andere fragt vorher.', zahl: '', dep: ['freigaben', 'notbremse'], rang: 8, link: '/blog/schutzschicht', ori: 'Ich schau nur. Anfassen erst nach deinem Okay.' },
+  { id: 'surfen', anim: 'websuche', gruppe: 'Werkzeuge', titel: 'Websuche und Seiten lesen', kurz: 'Suchen, Seiten als Text lesen, Formulare nie selbst absenden.', zahl: 'Eine Seite wird als Text gelesen, höchstens 10.000 Zeichen.', dep: ['freigaben'], rang: 9, link: '/blog/ki-surft-selbst', ori: 'Das Internet. Ich les nur, ich kommentier nicht.' },
+  { id: 'merken', anim: 'gemerkt', gruppe: 'Werkzeuge', titel: 'Gedächtnis', kurz: 'Fakten über dich gezielt speichern, mit Rückgängig-Knopf. Keine Passwörter.', zahl: 'Ein neuer Eintrag kostet die nächste Anfrage ca. 20 s extra.', dep: ['anfang'], rang: 10, link: '/blog/wie-origami-lernt', ori: 'Ab jetzt vergess ich nichts mehr. Überleg dir, was du sagst.' },
+  { id: 'claude', anim: 'uebergabe-claude', gruppe: 'Hilfe', titel: 'Claude als Helfer', kurz: 'Alltag bleibt lokal, Schweres geht an Claude. Entscheiden tut eine Wortliste, keine KI.', zahl: 'Bei mir geht alles über 700 Zeichen, Code und Recherche an Claude.', dep: [], rang: 11, link: '/blog/lokal-oder-claude', ori: 'Für die schweren Sachen hol ich mir Verstärkung. Kein Drama.' },
+  { id: 'login', anim: 'login', gruppe: 'Unterwegs', titel: 'Login mit Zwei-Faktor', kurz: 'Passwort plus Code aus der Authenticator-App, Sperre nach Fehlversuchen.', zahl: '', dep: [], rang: 12, link: '/blog/von-unterwegs', ori: 'Wer zu mir will, braucht zwei Schlüssel.' },
+  { id: 'tunnel', anim: 'senden', gruppe: 'Unterwegs', titel: 'Vom Handy aus', kurz: 'Zugriff über einen Tunnel wie Tailscale. Verwaltungsseiten bleiben nur am PC.', zahl: '', dep: ['login'], rang: 13, link: '/blog/von-unterwegs', ori: 'Ich komm mit. In die Hosentasche, aber nur mit Login.' },
+  { id: 'dauerlauf', anim: 'backup', gruppe: 'Unterwegs', titel: 'Läuft von allein', kurz: 'Autostart ohne Anmeldung, Neustart nach Absturz, Backup jede Nacht.', zahl: 'Steht nach Absturz nach 5 s wieder auf, Backup um 3 Uhr, 14 Tage aufgehoben.', dep: [], rang: 14, link: '/blog/von-unterwegs', ori: 'Ich steh wieder auf. Immer. Das ist kein Versprechen, das ist Code.' },
+];
+const GRUPPEN = ['Tempo', 'Werkzeuge', 'Schutz', 'Hilfe', 'Unterwegs'];
+---
+<Base titel="Die Werkstatt: Stell dir deine eigene KI zusammen" aktiv="werkzeuge" beschreibung="Zieh die Bauteile zusammen, die deine KI können soll. Du bekommst deinen eigenen Faltplan in der richtigen Reihenfolge, mit echten Messwerten.">
+  <div class="wrap seite">
+    <div class="held nicht-drucken" style="padding-top:0">
+      <div>
+        <span class="kicker">Planen, bevor du faltest</span>
+        <h1>Die Werkstatt</h1>
+        <p class="lead">Zieh rüber, was deine KI können soll. Die Werkstatt sortiert alles in die richtige Reihenfolge, packt dazu, was du dafür brauchst, und macht dir daraus deinen eigenen Faltplan. Bauen tust du dann selbst.</p>
+      </div>
+      <div class="ori-rand">
+        <Ori name="schreibt" alt="Ori" />
+        <span class="hand">Ich hab Vorschläge.<br />Viele.</span>
+      </div>
+    </div>
+
+    <DeineKI />
+
+    <div class="ws">
+      <section class="ws-regal nicht-drucken" aria-labelledby="ws-regal-titel">
+        <div class="ws-regal-kopf">
+          <h2 id="ws-regal-titel">Bauteile</h2>
+          <div class="ws-vorlagen">
+            <button type="button" class="chip-knopf" data-vorlage="schnell">Schnellstart</button>
+            <button type="button" class="chip-knopf" data-vorlage="origami">Wie origami</button>
+            <button type="button" class="chip-knopf" data-vorlage="leer">Leeren</button>
+          </div>
+        </div>
+        <fieldset class="ws-vram">
+          <legend>Deine Grafikkarte (VRAM)</legend>
+          <div class="chips">
+            {[6, 8, 12, 16, 24].map((g) => <label class="chip-wahl"><input type="radio" name="wsvram" value={g} checked={g === 8} /><span>{g} GB</span></label>)}
+          </div>
+        </fieldset>
+        {GRUPPEN.map((g) => (
+          <div class="ws-gruppe">
+            <h3>{g}</h3>
+            <ul>
+              {TEILE.filter((t) => t.gruppe === g).map((t) => (
+                <li class="ws-teil" draggable="true" data-id={t.id}>
+                  <div>
+                    <b>{t.titel}</b>
+                    <span>{t.kurz}</span>
+                  </div>
+                  <button type="button" class="ws-plus" data-add={t.id} aria-label={`${t.titel} einbauen`}>+</button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </section>
+
+      <section class="ws-plan">
+        <div class="pp-karte ws-karte">
+          <div class="pp-blatt" id="ws-ablage" aria-live="polite">
+            <PapierDeko />
+            <div class="ws-kopf">
+              <PapierLogo />
+              <b class="pp-titel ws-titel"><span class="pp-tape" aria-hidden="true"></span>Dein Faltplan</b>
+              <p class="ws-unter" id="ws-unter">Gebaut in der Werkstatt · selbstgfaltet.de</p>
+            </div>
+            <div class="ws-modell" id="ws-modell"></div>
+            <ol class="ws-liste" id="ws-liste"></ol>
+            <div class="ws-leer nicht-drucken" id="ws-leer">Zieh Bauteile hier rein<br /><small>oder tipp auf das Plus</small></div>
+            <p class="ws-ori nicht-drucken" id="ws-ori"><img src="/anim/sassy-abendrot.svg" alt="" width="40" height="40" /><em id="ws-ori-text">Noch leer hier. Ich warte.</em></p>
+            <PapierFuss seite={1} von={1} />
+          </div>
+        </div>
+        <div class="knoepfe nicht-drucken" style="margin-top:16px">
+          <button class="knopf voll" type="button" onclick="window.print()">Drucken oder als PDF speichern</button>
+        </div>
+        <div class="dl-hinweis nicht-drucken"><b>Die passende CLAUDE.md dazu?</b> Die Regeln, mit denen Claude Code das alles sauber für dich baut, gibt's im Startpaket für Newsletter-Leser. <a href="#newsletter">Zum Newsletter</a></div>
+      </section>
+    </div>
+    <div id="newsletter" class="nicht-drucken" style="margin-top:40px"><Newsletter /></div>
+  </div>
+  <script type="application/json" id="ws-daten" set:html={JSON.stringify(TEILE)} />
+</Base>
+
+<style>
+  .ws-liste :global(.ws-haken){width:22px; height:22px; border:2px solid #1d2742; border-radius:5px; background:#fff; cursor:pointer; padding:0; margin-top:2px; display:grid; place-items:center; color:#fff; font-weight:800; font-size:14px; line-height:1}
+  .ws-liste :global(.ws-haken[aria-pressed="true"]){background:var(--ok); border-color:var(--ok)}
+  .ws-liste :global(li.erledigt b){text-decoration:line-through; text-decoration-color:var(--ok); text-decoration-thickness:2px}
+  @media print{ :global(.dki){display:none !important} .ws-liste :global(.ws-haken){background:#fff !important; color:transparent} }
+  .ws{display:grid; grid-template-columns:minmax(0,0.95fr) minmax(0,1.05fr); gap:28px; align-items:start; margin-top:8px}
+  .ws-regal{background:var(--blatt); border:2px solid var(--tinte); border-radius:14px; padding:18px}
+  .ws-regal-kopf{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap}
+  .ws-regal h2{font-size:1.3rem}
+  .ws-vorlagen{display:flex; gap:6px; flex-wrap:wrap}
+  .ws-vram{border:0; padding:0; margin:14px 0 4px}
+  .ws-vram legend{font-family:var(--display); font-weight:700; font-size:.9rem; margin-bottom:6px}
+  .ws-gruppe h3{font-size:.8rem; text-transform:uppercase; letter-spacing:.06em; color:var(--bleistift); margin:16px 0 6px}
+  .ws-gruppe ul{list-style:none; margin:0; padding:0; display:grid; gap:8px}
+  .ws-teil{display:flex; align-items:center; gap:10px; background:var(--papier); border:2px solid var(--tinte); border-radius:10px; padding:9px 10px 9px 12px; cursor:grab; transition:transform .15s, box-shadow .15s, opacity .15s}
+  .ws-teil:hover{transform:translate(-2px,-2px) rotate(-.4deg); box-shadow:4px 4px 0 var(--tinte)}
+  .ws-teil:global(.zieht){opacity:.4}
+  .ws-teil > div{flex:1; min-width:0}
+  .ws-teil b{font-family:var(--display); font-size:.98rem; display:block}
+  .ws-teil span{font-size:.85rem; color:var(--bleistift); line-height:1.35; display:block}
+  .ws-teil:global(.drin){opacity:.45; border-style:dashed}
+  .ws-teil:global(.drin) .ws-plus{background:var(--ok); border-color:var(--ok); color:#fff}
+  .ws-plus{flex:none; width:36px; height:36px; border-radius:50%; border:2px solid var(--tinte); background:var(--blatt); color:var(--tinte); font-family:var(--display); font-weight:800; font-size:1.2rem; line-height:1; cursor:pointer}
+  .ws-plus:hover{background:var(--marker)}
+  .ws-plan{position:sticky; top:16px}
+  .ws-karte{background:#fffdf8; color:#1d2742; border:2px solid #1d2742; border-radius:14px}
+  .ws-kopf{padding-right:66px}
+  .ws-titel{font-family:var(--display); font-size:1.7rem}
+  .ws-unter{font-size:.9rem; color:#5d6478; margin:4px 0 14px}
+  .ws-modell{border:1.5px solid #e8e2d4; background:#fffaf3; border-radius:10px; padding:10px 12px; font-size:.92rem; color:#1d2742; margin-bottom:14px}
+  .ws-modell :global(b){font-family:var(--display)}
+  .ws-modell :global(small){display:block; color:#5d6478; margin-top:4px; font-size:.82rem}
+  .ws-liste{margin:0; padding:0; list-style:none; counter-reset:w; display:grid; gap:10px}
+  .ws-liste :global(li){counter-increment:w; display:grid; grid-template-columns:30px 26px 1fr auto; gap:8px; align-items:start; animation:rein .35s cubic-bezier(.2,.9,.3,1.2)}
+  .ws-liste :global(li)::before{content:counter(w); font-family:var(--display); font-weight:800; font-size:1.25rem; color:#c2410c; line-height:1.2}
+    .ws-liste :global(b){font-family:var(--display); font-size:1rem; color:#1d2742}
+  .ws-liste :global(p){margin:2px 0 0; font-size:.9rem; line-height:1.4; color:#3b4258}
+  .ws-liste :global(.zahl){font-size:.86rem}
+  .ws-liste :global(.zahl i){font-style:normal; display:inline-block; font-family:var(--display); font-weight:700; font-size:.68rem; text-transform:uppercase; letter-spacing:.05em; padding:1px 6px; border-radius:5px; margin-right:6px; background:#dff3e7; color:#23784a}
+  .ws-liste :global(.neu){font-family:var(--hand); color:#c2410c; font-size:1.05rem; margin-left:6px}
+  .ws-liste :global(a){color:#c2410c; font-size:.85rem}
+  .ws-liste :global(.ws-weg){border:0; background:none; color:#5d6478; font-size:1.2rem; cursor:pointer; width:32px; height:32px; border-radius:50%}
+  .ws-liste :global(.ws-weg:hover){background:#fde4d6; color:#c2410c}
+  .ws-leer{border:2.5px dashed #e3d7c4; border-radius:12px; padding:34px 16px; text-align:center; font-family:var(--display); font-weight:700; color:#5d6478; margin-top:6px}
+  .ws-leer small{font-family:var(--text); font-weight:400}
+  #ws-ablage:global(.drueber) .ws-leer,#ws-ablage:global(.drueber) .ws-liste{outline:3px dashed var(--ori); outline-offset:6px; border-radius:10px; background:color-mix(in srgb,var(--marker) 25%,transparent)}
+  .ws-ori{display:flex; align-items:center; gap:8px; margin:16px 0 0}
+  .ws-ori em{font-family:var(--hand); font-style:normal; font-size:1.2rem; color:#c2410c; line-height:1.15}
+  @keyframes rein{from{opacity:0; transform:translateY(-6px) rotate(-1deg)} to{opacity:1; transform:none}}
+  @media (max-width:900px){ .ws{grid-template-columns:1fr} .ws-plan{position:static} }
+  @media (prefers-reduced-motion:reduce){ .ws-liste :global(li){animation:none} .ws-teil{transition:none} }
+  @media print{
+    .ws-karte{border:0}
+    .nicht-drucken{display:none !important}
+    .ws{display:block; margin:0}
+    .ws-plan{position:static}
+    .ws-titel{font-size:1.6rem}
+    .ws-liste{gap:8px}
+    .ws-liste :global(p){font-size:12.5px}
+    .ws-liste :global(.zahl){font-size:12px}
+    .ws-liste :global(a),.ws-liste :global(.ws-weg){display:none !important}
+    .ws-liste:global(.kompakt) :global(.ws-text){display:none !important}
+    .ws-liste :global(b){font-size:14px}
+    .ws-liste :global(li){grid-template-columns:28px 24px 1fr; break-inside:avoid}
+  }
+</style>
+
+<script>
+  type Teil = { id: string; anim: string; gruppe: string; titel: string; kurz: string; zahl: string; dep: string[]; rang: number; fest?: boolean; link?: string; ori: string };
+  const TEILE: Teil[] = JSON.parse(document.getElementById('ws-daten')!.textContent || '[]');
+  const nachId = new Map(TEILE.map((t) => [t.id, t]));
+  const SPEICHER = 'werkstatt-v1';
+  const VORLAGEN: Record<string, string[]> = {
+    schnell: ['anfang', 'vorwaermen', 'rechnen', 'wetter'],
+    origami: TEILE.map((t) => t.id),
+    leer: [],
+  };
+
+  let drin = new Set<string>(['fundament']);
+  try { const s = JSON.parse(localStorage.getItem(SPEICHER) || 'null'); if (s?.teile) drin = new Set(['fundament', ...s.teile]); } catch { /* egal */ }
+  let fertig = new Set<string>();
+  try { const s = JSON.parse(localStorage.getItem(SPEICHER) || 'null'); if (s?.fertig) fertig = new Set(s.fertig); } catch { /* egal */ }
+  let neu = new Set<string>();
+  function kernAnim(name: string) {
+    document.querySelectorAll<HTMLImageElement>('.dki-ori-l').forEach((i) => { i.src = `/anim/${name}-abendrot.svg`; });
+    document.querySelectorAll<HTMLImageElement>('.dki-ori-d').forEach((i) => { i.src = `/anim/${name}-hell.svg`; });
+  }
+
+  const liste = document.getElementById('ws-liste')!;
+  const leer = document.getElementById('ws-leer')!;
+  const oriText = document.getElementById('ws-ori-text')!;
+  const modell = document.getElementById('ws-modell')!;
+  const ablage = document.getElementById('ws-ablage')!;
+
+  const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
+
+  function speichern() {
+    try { localStorage.setItem(SPEICHER, JSON.stringify({ teile: [...drin].filter((i) => i !== 'fundament'), fertig: [...fertig].filter((i) => drin.has(i)) })); } catch { /* egal */ }
+  }
+
+  function sag(t: string) { oriText.textContent = t; }
+
+  function einbauen(id: string) {
+    const t = nachId.get(id);
+    if (!t || drin.has(id)) { if (t && !t.fest) sag('Hab ich schon. Doppelt falten macht\'s nicht besser.'); return; }
+    const dazu: string[] = [];
+    const hol = (x: string) => { const d = nachId.get(x)!; d.dep.forEach(hol); if (!drin.has(x)) { drin.add(x); neu.add(x); if (x !== id) dazu.push(d.titel); } };
+    hol(id);
+    sag(dazu.length ? `${t.titel} geht nur mit ${dazu.join(' und ')}. Hab ich gleich mit reingepackt.` : t.ori);
+    kernAnim(t.anim);
+    zeichnen(); speichern();
+  }
+
+  function ausbauen(id: string) {
+    const t = nachId.get(id);
+    if (!t || t.fest) return;
+    const weg = [id];
+    let geaendert = true;
+    while (geaendert) { geaendert = false; for (const x of drin) { if (!weg.includes(x) && nachId.get(x)!.dep.some((d) => weg.includes(d))) { weg.push(x); geaendert = true; } } }
+    weg.forEach((x) => { drin.delete(x); fertig.delete(x); });
+    kernAnim('seufzt');
+    const mit = weg.slice(1).map((x) => nachId.get(x)!.titel);
+    sag(mit.length ? `Ohne ${t.titel} geht ${mit.join(' und ')} nicht. Fliegt beides raus.` : `${t.titel} ist raus. Ich sag nichts. Fast nichts.`);
+    zeichnen(); speichern();
+  }
+
+  function modellText() {
+    const v = +((document.querySelector('input[name=wsvram]:checked') as HTMLInputElement)?.value || 8);
+    const groessen: [string, number][] = [['4B', 4], ['8B', 8], ['14B', 14], ['27B', 27], ['32B', 32]];
+    const passt = groessen.filter(([, p]) => p * 0.6 + 1.5 <= v).pop();
+    document.querySelectorAll('.dki-modell').forEach((el) => { el.textContent = `${v} GB, Modell bis ${passt ? passt[0] : '4B'}`; });
+    modell.innerHTML = `<b>Deine Grafikkarte: ${v} GB.</b> Komplett auf die Karte passt ungefähr ${passt ? `ein Modell bis ${passt[0]}` : 'nur ein sehr kleines Modell'}, größere laufen teils im Arbeitsspeicher.` +
+      `<small>Zum Vergleich: Ich nutze Gemma 4 26B auf 8 GB. Rund 7,6 GB liegen auf der Karte, der Rest im Arbeitsspeicher. Genauer: <a href="/werkzeuge#gpu">Passt das auf meinen PC?</a></small>`;
+  }
+
+  function zeichnen() {
+    const sortiert = [...drin].map((i) => nachId.get(i)!).sort((a, b) => a.rang - b.rang);
+    liste.innerHTML = sortiert.map((t) => `<li class="${fertig.has(t.id) ? 'erledigt' : ''}"><button type="button" class="ws-haken" data-haken="${t.id}" aria-pressed="${fertig.has(t.id)}" aria-label="${esc(t.titel)} als gefaltet abhaken">${fertig.has(t.id) ? '✓' : ''}</button><div><b>${esc(t.titel)}</b>${neu.has(t.id) && !t.fest ? '<span class="neu">neu</span>' : ''}<p class="ws-text">${esc(t.kurz)}${t.link ? ` <a href="${t.link}">Mehr dazu</a>` : ''}</p>${t.zahl ? `<p class="zahl"><i>Gemessen</i>${esc(t.zahl)}</p>` : ''}</div>${t.fest ? '' : `<button type="button" class="ws-weg" data-weg="${t.id}" aria-label="${esc(t.titel)} entfernen">×</button>`}</li>`).join('');
+    leer.hidden = drin.size > 1;
+    liste.classList.toggle('kompakt', drin.size > 8);
+    document.getElementById('ws-unter')!.textContent = `${drin.size} ${drin.size === 1 ? 'Schritt' : 'Schritte'} · gebaut in der Werkstatt · selbstgfaltet.de`;
+    document.querySelectorAll<HTMLElement>('.ws-teil').forEach((el) => {
+      const an = drin.has(el.dataset.id!);
+      el.classList.toggle('drin', an);
+      const b = el.querySelector<HTMLButtonElement>('.ws-plus')!;
+      b.textContent = an ? '✓' : '+';
+      b.setAttribute('aria-label', `${nachId.get(el.dataset.id!)!.titel} ${an ? 'ist eingebaut, entfernen' : 'einbauen'}`);
+    });
+    neu = new Set();
+    document.querySelectorAll<Element>('.dki [data-k]').forEach((el) => {
+      const k = el.getAttribute('data-k')!;
+      el.classList.toggle('an', drin.has(k));
+      el.classList.toggle('fertig', fertig.has(k));
+    });
+    const gesamt = drin.size, f = [...fertig].filter((x) => drin.has(x)).length;
+    document.querySelectorAll('.dki-stand').forEach((el) => { el.textContent = `${gesamt} von ${TEILE.length} eingebaut${f ? `, ${f === gesamt ? 'alle' : f} abgehakt` : ''}`; });
+  }
+
+  function haken(id: string) {
+    const t = nachId.get(id)!;
+    if (fertig.has(id)) { fertig.delete(id); sag(`${t.titel} doch nicht fertig? Passiert den Besten.`); kernAnim('ratlos'); }
+    else {
+      fertig.add(id);
+      const alle = [...drin].every((x) => fertig.has(x));
+      if (alle) { sag('Alles gefaltet. Du hast dir deine eigene KI gebaut. Ich bin fast ein bisschen stolz.'); kernAnim('applaus'); }
+      else { sag(`${t.titel} ist gefaltet. Weiter so, ich schau zu.`); kernAnim('sicher'); }
+    }
+    zeichnen(); speichern();
+  }
+
+  document.addEventListener('click', (e) => {
+    const z = e.target as HTMLElement;
+    const add = z.closest<HTMLElement>('[data-add]'); if (add) { const id = add.dataset.add!; drin.has(id) ? ausbauen(id) : einbauen(id); return; }
+    const weg = z.closest<HTMLElement>('[data-weg]'); if (weg) { ausbauen(weg.dataset.weg!); return; }
+    const hk = z.closest<HTMLElement>('[data-haken]'); if (hk) { haken(hk.dataset.haken!); return; }
+    const vl = z.closest<HTMLElement>('[data-vorlage]');
+    if (vl) {
+      const v = vl.dataset.vorlage!;
+      drin = new Set(['fundament']); neu = new Set(); fertig = new Set();
+      VORLAGEN[v].forEach((id) => { const hol = (x: string) => { nachId.get(x)!.dep.forEach(hol); drin.add(x); }; hol(id); });
+      kernAnim(v === 'origami' ? 'triumph' : v === 'schnell' ? 'senden' : 'ruhezustand-3');
+      sag(v === 'origami' ? 'Alles drin. So seh ich von innen aus. Respekt, wer das nachbaut.' : v === 'schnell' ? 'Schnell und schlau. Für den ersten Abend reicht das völlig.' : 'Leer. Ein frisches Blatt. Ich mag das.');
+      zeichnen(); speichern();
+    }
+  });
+
+  let ziehe = '';
+  document.querySelectorAll<HTMLElement>('.ws-teil').forEach((el) => {
+    el.addEventListener('dragstart', (e) => { ziehe = el.dataset.id!; e.dataTransfer?.setData('application/x-werkstatt', ziehe); if (e.dataTransfer) e.dataTransfer.effectAllowed = 'copy'; el.classList.add('zieht'); });
+    el.addEventListener('dragend', () => { el.classList.remove('zieht'); setTimeout(() => { ziehe = ''; }, 0); });
+  });
+  ablage.addEventListener('dragover', (e) => { e.preventDefault(); ablage.classList.add('drueber'); });
+  ablage.addEventListener('dragleave', (e) => { if (!ablage.contains(e.relatedTarget as Node)) ablage.classList.remove('drueber'); });
+  ablage.addEventListener('drop', (e) => { e.preventDefault(); ablage.classList.remove('drueber'); const id = ziehe || e.dataTransfer?.getData('application/x-werkstatt'); ziehe = ''; if (id && nachId.has(id)) einbauen(id); });
+  document.querySelectorAll('input[name=wsvram]').forEach((i) => i.addEventListener('change', modellText));
+
+  modellText();
+  zeichnen();
+  if (drin.size > 1) sag('Da bist du ja wieder. Dein Plan ist noch da.');
+</script>
