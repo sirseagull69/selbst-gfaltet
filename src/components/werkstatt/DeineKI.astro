@@ -104,7 +104,7 @@ const ico = (n?: string, gr = 18) => n ? `<svg class="dki-ico" width="${gr}" hei
         <div class="dki-stand" style={L.name === 'desk' ? 'left:20px;top:50px' : 'left:16px;top:46px'}>1 von 14 eingebaut</div>
         {L.labels.map(([t, x, y]) => <div class="dki-label" style={`left:${x}px;top:${y}px`}>{t}</div>)}
         <div class={`dki-legende dki-legende-${L.name}`}>
-          <span><i class="lg-aus"></i>noch nicht eingebaut</span>
+          <span><i class="lg-aus"></i>noch nicht eingebaut, antippen</span>
           <span><i class="lg-an"></i>eingebaut</span>
           <span><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#2f7d4f" /><path d="M4.5 8.3l2.3 2.3 4.7-5" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>gebaut und abgehakt</span>
         </div>
