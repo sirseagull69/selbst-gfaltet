@@ -1,6 +1,9 @@
 ---
-// Unsichtbare Markierung: Ab hier zeigt Ori am Rand diese Animation und diesen Spruch.
+// Markierung: Ab hier zeigt Ori am Rand diese Animation und diesen Spruch.
+// Auf dem Handy (kein Rand) steht der Spruch stattdessen als kleine Randnotiz direkt hier im Text.
+import Ori from './Ori.astro';
 interface Props { ori: string; spruch?: string }
 const { ori, spruch = '' } = Astro.props;
 ---
 <span class="ori-wechsel" data-ori={ori} data-spruch={spruch} aria-hidden="true"></span>
+{spruch && <div class="ori-handy" aria-hidden="true"><Ori name={ori} /><span class="hand">{spruch}</span></div>}

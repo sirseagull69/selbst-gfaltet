@@ -125,6 +125,16 @@ footer .wrap{display:flex; justify-content:space-between; gap:16px; flex-wrap:wr
 .inline-ori{display:flex; gap:14px; align-items:center; margin:22px 0; padding:12px 16px; border-left:4px solid var(--ori); background:var(--blatt); border-radius:0 12px 12px 0}
 .inline-ori img{width:72px; height:72px; flex:none}
 .inline-ori .hand{font-size:1.45rem}
+/* Ori am Rand auf dem Handy: kleine Randnotiz unter der Überschrift */
+.ori-handy{display:none}
+@media (max-width:860px){
+  .ori-handy{display:flex; justify-content:flex-end; align-items:center; gap:6px; margin:-6px 0 10px}
+  .ori-handy img{width:52px; height:52px; flex:none}
+  .ori-handy .hand{font-size:1.3rem; transform:rotate(-2deg); max-width:16em; text-align:right}
+  .ori-handy .ori-dark{display:none}
+}
+@media (max-width:860px) and (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .ori-handy .ori-light{display:none} :root:not([data-theme="light"]) .ori-handy .ori-dark{display:inline} }
+@media (max-width:860px){ :root[data-theme="dark"] .ori-handy .ori-light{display:none} :root[data-theme="dark"] .ori-handy .ori-dark{display:inline} }
 
 /* Bausteine */
 .baustein{margin:28px 0; background:var(--blatt); border:2px solid var(--tinte); border-radius:14px; overflow:hidden}
