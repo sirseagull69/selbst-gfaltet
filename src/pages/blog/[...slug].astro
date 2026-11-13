@@ -17,7 +17,7 @@ const idx = weg ? weg.teile.findIndex((t: any) => t.slug === a.id) : -1;
 const naechster = weg ? weg.teile.slice(idx + 1).find((t: any) => t.slug) : null;
 const alle = (await getCollection('artikel')).filter((x) => x.id !== a.id).slice(0, 3);
 ---
-<Base titel={d.titel} beschreibung={d.beschreibung} aktiv="blog">
+<Base titel={d.titel} beschreibung={d.kurz ?? d.beschreibung} aktiv="blog" ori={d.ori}>
   <div class="wrap">
     <article class="artikel">
       <header class="akopf">
