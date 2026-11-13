@@ -159,7 +159,7 @@ const GRUPPEN = ['Tempo', 'Werkzeuge', 'Schutz', 'Hilfe', 'Unterwegs'];
     .ws-liste :global(p){font-size:12.5px}
     .ws-liste :global(.zahl){font-size:12px}
     .ws-liste :global(a),.ws-liste :global(.ws-weg){display:none !important}
-    .ws-liste:global(.kompakt) :global(.kurz){display:none !important}
+    .ws-liste:global(.kompakt) :global(.ws-text){display:none !important}
     .ws-liste :global(b){font-size:14px}
     .ws-liste :global(li){grid-template-columns:28px 1fr; break-inside:avoid}
   }
@@ -226,7 +226,7 @@ const GRUPPEN = ['Tempo', 'Werkzeuge', 'Schutz', 'Hilfe', 'Unterwegs'];
 
   function zeichnen() {
     const sortiert = [...drin].map((i) => nachId.get(i)!).sort((a, b) => a.rang - b.rang);
-    liste.innerHTML = sortiert.map((t) => `<li class="${t.fest ? 'fest' : ''}"><div><b>${esc(t.titel)}</b>${neu.has(t.id) && !t.fest ? '<span class="neu">neu</span>' : ''}<p class="kurz">${esc(t.kurz)}${t.link ? ` <a href="${t.link}">Mehr dazu</a>` : ''}</p>${t.zahl ? `<p class="zahl"><i>Gemessen</i>${esc(t.zahl)}</p>` : ''}</div>${t.fest ? '' : `<button type="button" class="ws-weg" data-weg="${t.id}" aria-label="${esc(t.titel)} entfernen">×</button>`}</li>`).join('');
+    liste.innerHTML = sortiert.map((t) => `<li class="${t.fest ? 'fest' : ''}"><div><b>${esc(t.titel)}</b>${neu.has(t.id) && !t.fest ? '<span class="neu">neu</span>' : ''}<p class="ws-text">${esc(t.kurz)}${t.link ? ` <a href="${t.link}">Mehr dazu</a>` : ''}</p>${t.zahl ? `<p class="zahl"><i>Gemessen</i>${esc(t.zahl)}</p>` : ''}</div>${t.fest ? '' : `<button type="button" class="ws-weg" data-weg="${t.id}" aria-label="${esc(t.titel)} entfernen">×</button>`}</li>`).join('');
     leer.hidden = drin.size > 1;
     liste.classList.toggle('kompakt', drin.size > 8);
     document.getElementById('ws-unter')!.textContent = `${drin.size} ${drin.size === 1 ? 'Schritt' : 'Schritte'} · gebaut in der Werkstatt · selbstgfaltet.de`;
