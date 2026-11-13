@@ -17,7 +17,7 @@ const check = datei('ki-check.ps1'), pruef = datei('modell-pruefstand.ps1');
       <div>
         <span class="kicker hand">Kostenlos</span>
         <h1>Die Werkzeugkiste</h1>
-        <p class="seite-lead">Zwei Skripte, die ich für origami selbst gebraucht hab, frei zum Runterladen, ohne Anmeldung. Und das Startpaket mit dem origami-Bauplan, exklusiv für Newsletter-Leser.</p>
+        <p class="seite-lead">Zwei Skripte, die ich für origami selbst gebraucht hab, und zwei Blätter zum Ausdrucken, frei und ohne Anmeldung. Dazu das Startpaket mit dem origami-Bauplan, exklusiv für Newsletter-Leser.</p>
       </div>
       <div class="ori-rand">
         <Ori name="wissen" alt="Ori" />
@@ -49,6 +49,15 @@ const check = datei('ki-check.ps1'), pruef = datei('modell-pruefstand.ps1');
       <p class="klein dl-sha">SHA-256: {pruef.sha}</p>
     </Baustein>
 
+    <Baustein titel="Zum Ausdrucken: Faltplan und Spickzettel" icon="buch" id="drucken">
+      <p style="margin-top:0">Zwei Blätter für neben die Tastatur, im Browser als PDF speichern oder direkt drucken:</p>
+      <ul>
+        <li><b>Der Faltplan:</b> 10 Schritte zur eigenen KI, bei jedem meine echte Messung und die Falle. Ein Blatt, vorne und hinten.</li>
+        <li><b>Der Spickzettel:</b> die Ollama- und Claude-Code-Befehle, die ich wirklich benutze, und acht Prompt-Regeln. Eine Seite.</li>
+      </ul>
+      <div class="knoepfe"><a class="knopf voll" href="/faltplan">Zum Faltplan</a><a class="knopf" href="/spickzettel">Zum Spickzettel</a></div>
+    </Baustein>
+
     <div class="exklusiv">
       <span class="exklusiv-band">Nur für Newsletter-Leser</span>
       <h2>Das Startpaket: der origami-Bauplan für Claude Code</h2>
@@ -56,6 +65,7 @@ const check = datei('ki-check.ps1'), pruef = datei('modell-pruefstand.ps1');
       <ul>
         <li><b>CLAUDE.md</b> mit allen Regeln, die origami schnell und sicher machen: konstanter Prompt-Anfang, Vorwärmen, feste Werkzeuge, Freigaben im Code, Erlaubnisliste statt Sperrliste, Papierkorb statt Löschen, Injection-Check, Notbremse, Login vor Tunnel</li>
         <li><b>9 Aufträge</b> zum Kopieren in Claude Code, vom ersten Chat bis zur KI, die du sicher vom Handy erreichst. Jeder mit „So prüfst du's“.</li>
+        <li><b>Der Bauplan als PDF</b> zum Ausdrucken und Abhaken.</li>
       </ul>
       <p>Anmelden, Mail bestätigen, und der Link kommt direkt in deinem Postfach an.</p>
     </div>
