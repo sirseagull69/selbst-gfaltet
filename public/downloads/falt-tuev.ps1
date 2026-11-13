@@ -94,10 +94,12 @@ try {
   $mitZeit = "Es ist $(Get-Date -Format 'HH:mm:ss').`n" + $anfang
   $r3 = Frage-Ollama '/api/chat' @{ model = $Modell; stream = $false; options = $opts; keep_alive = '10m'; messages = @(@{ role = 'system'; content = $mitZeit }, @{ role = 'user'; content = 'Sag nur: ja' }) }
   $t2 = Sek $r2.prompt_eval_duration; $t3 = Sek $r3.prompt_eval_duration
-  Zeile ("  Anfang bleibt gleich:     {0} s Einlesen  ({1} Tokens neu gelesen)" -f $t2, $r2.prompt_eval_count)
-  Zeile ("  Uhrzeit oben drin:        {0} s Einlesen  ({1} Tokens neu gelesen)" -f $t3, $r3.prompt_eval_count)
+  Zeile ("  Anfang bleibt gleich:     {0} s Einlesen" -f $t2)
+  Zeile ("  Uhrzeit oben drin:        {0} s Einlesen" -f $t3)
   $max++
-  if ($r2.prompt_eval_count -lt ($r3.prompt_eval_count / 2)) {
+  # Nach der Zeit vergleichen, nicht nach der Token-Zahl: neuere Ollama-Versionen melden auch bei
+  # wiederverwendetem Anfang die volle Token-Zahl (gemessen mit 0.40: 1279 Tokens in 0,4 s statt 9,4 s).
+  if ($t2 -lt [math]::Max(1.0, $t3 / 3)) {
     $punkte++; Zeile '  OK: Ollama liest einen gleichen Anfang nicht nochmal. Halt den Anfang in deiner KI fest.' Green
   } else {
     Zeile '  HINWEIS: Der gleiche Anfang wurde trotzdem neu gelesen. Läuft noch ein anderes Programm mit Ollama?' Yellow

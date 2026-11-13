@@ -37,7 +37,8 @@ $standard = @(
 )
 if ($Aufgaben) {
   if (-not (Test-Path $Aufgaben)) { Write-Host "Datei nicht gefunden: $Aufgaben" -ForegroundColor Red; exit 1 }
-  $liste = @(Get-Content $Aufgaben -Encoding UTF8 | Where-Object { $_.Trim() -ne '' })
+  # [string]: Get-Content hängt Zusatzinfos an jede Zeile, ConvertTo-Json machte daraus ein Objekt statt Text (Ollama lehnte ab)
+  $liste = @(Get-Content $Aufgaben -Encoding UTF8 | ForEach-Object { [string]$_ } | Where-Object { $_.Trim() -ne '' })
 } else { $liste = $standard }
 
 function GB([double]$b) { [math]::Round($b / 1GB, 1) }
