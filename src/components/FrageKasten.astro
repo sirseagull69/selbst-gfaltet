@@ -1,0 +1,22 @@
+---
+// Kleiner „Frag mich“-Streifen unter Artikeln. Kein Formular-Dienst, nichts wird gespeichert:
+// der Knopf öffnet nur das Mailprogramm mit fertigem Betreff an fragen@selbstgfaltet.de.
+import Ori from './Ori.astro';
+interface Props { thema?: string; ori?: string }
+const { thema = '', ori = 'ratlos' } = Astro.props;
+const betreff = thema ? `Frage zu: ${thema}` : 'Frage an Selbst gfaltet';
+const link = `mailto:fragen@selbstgfaltet.de?subject=${encodeURIComponent(betreff)}`;
+---
+<aside class="frage">
+  <div class="fr-ori"><Ori name={ori} alt="" /></div>
+  <p><b>Hängst du irgendwo?</b> Schreib mir deine Frage, vielleicht wird ein Artikel draus.</p>
+  <a class="knopf" href={link}>Frage stellen</a>
+</aside>
+<style>
+  .frage{display:flex; align-items:center; gap:12px; margin:36px 0 0; padding:10px 14px; background:var(--blatt); box-shadow:var(--schatten); border-radius:3px; border-left:4px solid var(--ori)}
+  .fr-ori{flex:none; width:48px; height:48px}
+  .fr-ori :global(img){width:48px; height:48px}
+  .frage p{margin:0; flex:1; font-size:.95rem}
+  .frage .knopf{flex:none; padding:8px 14px; min-height:0}
+  @media (max-width:560px){ .frage{flex-wrap:wrap} .fr-ori{display:none} .frage .knopf{width:100%; text-align:center} }
+</style>
