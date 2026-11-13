@@ -5,7 +5,7 @@ import ArtikelListe from '../../components/ArtikelListe.astro';
 import { getCollection } from 'astro:content';
 const artikel = (await getCollection('artikel')).sort((a, b) => +b.data.datum - +a.data.datum || a.data.titel.localeCompare(b.data.titel));
 ---
-<Base titel="Blog: Eigene KI bauen, messen, absichern" aktiv="blog" beschreibung="Anleitungen, Messungen und Pannen rund um eigene KI.">
+<Base titel="Blog: Eigene KI bauen, messen, absichern" aktiv="blog" beschreibung="Anleitungen, Messungen und Pannen rund um die eigene KI auf dem eigenen PC. Mit Schaubildern, echten Zahlen und Checklisten zum Abhaken.">
   <div class="wrap seite">
     <div class="held" style="padding:0 0 24px">
       <div>

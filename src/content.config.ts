@@ -6,6 +6,8 @@ const artikel = defineCollection({
   schema: z.object({
     titel: z.string(),
     beschreibung: z.string(),
+    // Kurzfassung für Google und Vorschaubilder, max. 160 Zeichen
+    kurz: z.string().max(160).optional(),
     datum: z.coerce.date(),
     kategorie: z.enum(['lokal', 'sicherheit', 'messung', 'code', 'panne']),
     lesezeit: z.number(),

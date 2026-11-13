@@ -11,12 +11,15 @@ import '@fontsource/jetbrains-mono/latin-400.css';
 import '@fontsource/jetbrains-mono/latin-600.css';
 import '../styles/global.css';
 import Analytics from '@vercel/analytics/astro';
+import { OG_SEITEN, ogSchluessel } from '../og';
 
-interface Props { titel?: string; beschreibung?: string; aktiv?: string }
+interface Props { titel?: string; beschreibung?: string; aktiv?: string; ori?: string }
 const { titel, beschreibung = 'Falt dir deine eigene KI: Schritt für Schritt zum eigenen KI-Assistenten auf dem eigenen PC. Mit Bildern, Messungen und allen Pannen.', aktiv = '' } = Astro.props;
 const MARKE = 'Selbst gfaltet';
 const voll = !titel ? `${MARKE} – Falt dir deine eigene KI` : (titel.length + MARKE.length + 3 <= 60 ? `${titel} – ${MARKE}` : titel);
 const start = Astro.url.pathname === '/';
+const ogKey = ogSchluessel(Astro.url.pathname);
+const ogBild = new URL(`/og/${OG_SEITEN[ogKey] || ogKey.startsWith('blog--') ? ogKey : 'start'}.png`, Astro.site);
 const nav = [
   ['/', 'Start', 'start'], ['/anleitungen', 'Faltanleitungen', 'lernwege'], ['/blog', 'Blog', 'blog'],
   ['/werkzeuge', 'Werkzeuge', 'werkzeuge'], ['/origami', 'origami', 'origami'], ['/ueber', 'Über mich', 'ueber'],
@@ -36,6 +39,12 @@ const nav = [
   <meta property="og:type" content={start ? "website" : "article"} />
   {start && <script type="application/ld+json" set:html={JSON.stringify({"@context":"https://schema.org","@type":"WebSite","name":"Selbst gfaltet","alternateName":"selbstgfaltet.de","url":"https://www.selbstgfaltet.de/"})} />}
   <meta property="og:description" content={beschreibung} />
+  <meta property="og:image" content={ogBild} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)} />
+  <meta property="og:locale" content="de_DE" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
   <link rel="sitemap" href="/sitemap-index.xml" />
   <Analytics />
