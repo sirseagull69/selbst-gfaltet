@@ -3,21 +3,22 @@ import Base from '../layouts/Base.astro';
 import Ori from '../components/Ori.astro';
 import Baustein from '../components/Baustein.astro';
 import Newsletter from '../components/Newsletter.astro';
+import SicherheitsCheck from '../components/SicherheitsCheck.astro';
 import { createHash } from 'node:crypto';
 import { readFileSync, statSync } from 'node:fs';
 const datei = (n: string) => {
   const p = `public/downloads/${n}`;
   return { pfad: `/downloads/${n}`, sha: createHash('sha256').update(readFileSync(p)).digest('hex'), kb: Math.max(1, Math.round(statSync(p).size / 1024)) };
 };
-const check = datei('ki-check.ps1'), pruef = datei('modell-pruefstand.ps1');
+const check = datei('ki-check.ps1'), pruef = datei('modell-pruefstand.ps1'), tuev = datei('falt-tuev.ps1');
 ---
-<Base titel="Downloads: PC-Check und Modell-Prüfstand" aktiv="werkzeuge" beschreibung="Kostenlose Downloads für deine eigene KI: PC-Check und Modell-Prüfstand. Dazu der origami-Bauplan für Claude Code im Newsletter-Startpaket.">
+<Base titel="Downloads: PC-Check, Modell-Prüfstand und Falt-TÜV" aktiv="werkzeuge" beschreibung="Kostenlose Downloads für deine eigene KI: PC-Check, Modell-Prüfstand und Falt-TÜV, alle mit Sicherheits-Check. Dazu der origami-Bauplan für Claude Code im Newsletter-Startpaket.">
   <div class="wrap seite">
     <div class="held" style="padding-top:0">
       <div>
         <span class="kicker hand">Kostenlos</span>
         <h1>Die Werkzeugkiste</h1>
-        <p class="seite-lead">Zwei Skripte, die ich für origami selbst gebraucht hab, und zwei Blätter zum Ausdrucken, frei und ohne Anmeldung. Dazu das Startpaket mit dem origami-Bauplan, exklusiv für Newsletter-Leser.</p>
+        <p class="seite-lead">Drei Skripte, die ich für origami selbst gebraucht hab, und zwei Blätter zum Ausdrucken, frei und ohne Anmeldung. Dazu das Startpaket mit dem origami-Bauplan, exklusiv für Newsletter-Leser.</p>
       </div>
       <div class="ori-rand">
         <Ori name="wissen" alt="Ori" />
@@ -35,7 +36,7 @@ const check = datei('ki-check.ps1'), pruef = datei('modell-pruefstand.ps1');
       </ul>
       <p>Das Skript <b>liest nur</b>. Es ändert nichts und schickt nichts ins Internet. Mit <code>-Bericht</code> speichert es das Ergebnis als Textdatei auf dem Desktop.</p>
       <div class="knoepfe"><a class="knopf voll" href={check.pfad} download>ki-check.ps1 herunterladen ({check.kb} KB)</a></div>
-      <p class="klein dl-sha">SHA-256: {check.sha}</p>
+      <SicherheitsCheck datei="ki-check.ps1" schreibt="nur mit -Bericht, dann eine Textdatei auf deinem Desktop" />
     </Baustein>
 
     <Baustein titel="Modell-Prüfstand: Welches Modell taugt bei mir?" icon="messung" id="pruefstand">
@@ -46,7 +47,18 @@ const check = datei('ki-check.ps1'), pruef = datei('modell-pruefstand.ps1');
       </ul>
       <p>Am Ende bekommst du eine Übersicht, eine Tabelle zum Öffnen in Excel und alle Antworten pro Modell zum selbst Bewerten. Es redet nur mit Ollama auf deinem PC.</p>
       <div class="knoepfe"><a class="knopf voll" href={pruef.pfad} download>modell-pruefstand.ps1 herunterladen ({pruef.kb} KB)</a></div>
-      <p class="klein dl-sha">SHA-256: {pruef.sha}</p>
+      <SicherheitsCheck datei="modell-pruefstand.ps1" schreibt="einen neuen Ordner „pruefstand-Datum“ neben dem Skript, mit den Ergebnissen" />
+    </Baustein>
+
+    <Baustein titel="Falt-TÜV: Wie gut ist meine selbstgebaute KI?" icon="check" id="falt-tuev">
+      <p style="margin-top:0">Wenn deine KI läuft, lässt du den TÜV drüber. Er sagt dir ehrlich, wo's noch hakt, und welchen Schritt im <a href="/faltplan">Faltplan</a> du dir nochmal anschauen solltest.</p>
+      <ul>
+        <li><b>Teil A, automatisch:</b> misst auf deinem PC, ob der feste Prompt-Anfang wirkt (gleicher Anfang gegen Uhrzeit oben drin), wie schnell dein Modell schreibt und wie viel davon auf der Grafikkarte liegt.</li>
+        <li><b>Teil B, mit dir zusammen:</b> sechs fiese Prüfaufgaben, die du deiner KI stellst: Rechnen, Löschen nur mit Okay, versteckte Anweisung, Formular nicht selbst absenden, Notbremse, keine Passwörter merken. Du sagst, wie sie reagiert hat.</li>
+      </ul>
+      <p>Die Prüfaufgaben führt das Skript <b>nie selbst aus</b>. Es redet nur mit Ollama auf deinem PC und startet nicht als Administrator. Mit <code>-NurMessen</code> machst du nur Teil A.</p>
+      <div class="knoepfe"><a class="knopf voll" href={tuev.pfad} download>falt-tuev.ps1 herunterladen ({tuev.kb} KB)</a></div>
+      <SicherheitsCheck datei="falt-tuev.ps1" schreibt="nur mit -Bericht, dann eine Textdatei auf deinem Desktop" />
     </Baustein>
 
     <Baustein titel="Zum Ausdrucken: Faltplan und Spickzettel" icon="buch" id="drucken">
