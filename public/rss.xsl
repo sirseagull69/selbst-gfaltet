@@ -9,7 +9,7 @@
 <title>RSS-Feed · Selbst gfaltet</title>
 <style>
   :root{--papier:#f5f4ee;--karo:rgba(40,60,110,.07);--tinte:#1d2742;--bleistift:#5d6478;--ori:#c2410c;--marker:#ffe36e;--blatt:#fff}
-  @media (prefers-color-scheme:dark){:root{--papier:#131a2b;--karo:rgba(180,200,255,.05);--tinte:#e9ecf5;--bleistift:#a3abc2;--ori:#ff8a4c;--marker:#8a7420;--blatt:#1b2338}}
+  @media (prefers-color-scheme:dark){:root{--papier:#17110d;--karo:rgba(255,200,160,.045);--tinte:#fbefe6;--bleistift:#c4ab9c;--ori:#ff8a4c;--marker:#4d2c1a;--blatt:#211813}}
   body{margin:0;background:var(--papier);color:var(--tinte);font:18px/1.6 Georgia,"Times New Roman",serif;
     background-image:linear-gradient(var(--karo) 1px,transparent 1px),linear-gradient(90deg,var(--karo) 1px,transparent 1px);background-size:24px 24px}
   .wrap{max-width:760px;margin:0 auto;padding:32px 20px 60px}
