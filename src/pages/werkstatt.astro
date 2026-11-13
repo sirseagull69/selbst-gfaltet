@@ -26,6 +26,17 @@ const TEILE = [
   { id: 'tunnel', anim: 'senden', gruppe: 'Unterwegs', titel: 'Vom Handy aus', kurz: 'Zugriff über einen Tunnel wie Tailscale. Verwaltungsseiten bleiben nur am PC.', zahl: '', dep: ['login'], rang: 13, link: '/blog/von-unterwegs', ori: 'Ich komm mit. In die Hosentasche, aber nur mit Login.' },
   { id: 'dauerlauf', anim: 'backup', gruppe: 'Unterwegs', titel: 'Läuft von allein', kurz: 'Autostart ohne Anmeldung, Neustart nach Absturz, Backup jede Nacht.', zahl: 'Steht nach Absturz nach 5 s wieder auf, Backup um 3 Uhr, 14 Tage aufgehoben.', dep: [], rang: 14, link: '/blog/von-unterwegs', ori: 'Ich steh wieder auf. Immer. Das ist kein Versprechen, das ist Code.' },
 ];
+// Wünsche in Alltagssprache. Jeder Wunsch baut ein oder mehrere Bauteile ein (plus deren Voraussetzungen).
+const WUENSCHE = [
+  { id: 'schnell', titel: 'Schnell antworten', satz: 'Sie soll nicht ewig überlegen, bevor sie loslegt.', ids: ['anfang', 'vorwaermen'], anim: 'aufwachen', ori: 'Schnell? Kann ich. Wenn man mich lässt.' },
+  { id: 'alltag', titel: 'Rechnen und Wetter', satz: 'Kurz was ausrechnen oder fragen, ob du morgen einen Schirm brauchst.', ids: ['rechnen', 'wetter'], anim: 'wissen', ori: 'Regenschirm ja oder nein. Mehr willst du eh nicht wissen.' },
+  { id: 'internet', titel: 'Im Internet nachschauen', satz: 'Sie sucht selbst und liest Webseiten für dich.', ids: ['surfen'], anim: 'websuche', ori: 'Das Internet. Ich les nur, ich kommentier nicht.' },
+  { id: 'merken', titel: 'Sich Sachen über dich merken', satz: 'Beim nächsten Mal weiß sie noch, was du ihr erzählt hast.', ids: ['merken'], anim: 'schreibt', ori: 'Ab jetzt vergess ich nichts mehr. Überleg dir, was du sagst.' },
+  { id: 'pc', titel: 'Am PC mithelfen', satz: 'Zum Beispiel nachschauen, wie voll die Festplatte ist. Vor allem Wichtigen fragt sie dich.', ids: ['befehle'], anim: 'wartet-freigabe', ori: 'Ich schau nur. Anfassen erst nach deinem Okay.' },
+  { id: 'handy', titel: 'Vom Handy aus erreichbar', satz: 'Auch unterwegs mit deiner KI zu Hause reden, mit sicherem Login.', ids: ['tunnel'], anim: 'login', ori: 'Ich komm mit. In die Hosentasche, aber nur mit Login.' },
+  { id: 'immer', titel: 'Immer an', satz: 'Startet von allein, steht nach einem Absturz wieder auf und macht jede Nacht ein Backup.', ids: ['dauerlauf'], anim: 'backup', ori: 'Ich steh wieder auf. Immer. Das ist kein Versprechen, das ist Code.' },
+  { id: 'claude', titel: 'Hilfe bei schweren Fragen', satz: 'Alltägliches bleibt bei dir zu Hause, Schwieriges geht an Claude im Internet.', ids: ['claude'], anim: 'uebergabe-claude', ori: 'Für die schweren Sachen hol ich mir Verstärkung. Kein Drama.' },
+];
 ---
 <Base titel="Die Werkstatt: Stell dir deine eigene KI zusammen" aktiv="werkzeuge" beschreibung="Zieh die Bauteile zusammen, die deine KI können soll. Du bekommst deinen eigenen Faltplan in der richtigen Reihenfolge, mit echten Messwerten.">
   <div class="wrap seite">
@@ -33,7 +44,7 @@ const TEILE = [
       <div>
         <span class="kicker">Planen, bevor du faltest</span>
         <h1>Die Werkstatt</h1>
-        <p class="lead">In drei Schritten zu deinem eigenen Faltplan: Grafikkarte wählen, antippen, was deine KI können soll, fertig. Bauen tust du dann selbst.</p>
+        <p class="lead">Sag, was deine KI können soll, ganz ohne Fachchinesisch. Die Werkstatt macht dir daraus deinen eigenen Faltplan in der richtigen Reihenfolge. Bauen tust du dann selbst.</p>
       </div>
       <div class="ori-rand">
         <Ori name="schreibt" alt="Ori" />
@@ -50,29 +61,42 @@ const TEILE = [
     </section>
 
     <section class="ws-schritt nicht-drucken" aria-labelledby="ws-s2">
-      <h2 id="ws-s2"><span class="ws-nr">2</span>Tipp an, was deine KI können soll</h2>
-      <p class="ws-hilfe">Graue Teile sind noch nicht drin. Antippen baut ein, nochmal antippen baut aus. Was ein Teil braucht, kommt automatisch mit. Oder nimm eine Vorlage:
+      <h2 id="ws-s2"><span class="ws-nr">2</span>Was soll deine KI können?</h2>
+      <p class="ws-hilfe">Tipp an, was du dir wünschst. Du musst keine Fachbegriffe kennen, die Werkstatt übersetzt das für dich. Oder nimm eine Vorlage:
         <span class="ws-vorlagen">
-          <button type="button" class="chip-knopf" data-vorlage="schnell">Schnellstart</button>
+          <button type="button" class="chip-knopf" data-vorlage="schnell">Für den Anfang</button>
           <button type="button" class="chip-knopf" data-vorlage="origami">Alles wie bei origami</button>
           <button type="button" class="chip-knopf" data-vorlage="leer">Von vorn</button>
         </span>
       </p>
-      <DeineKI />
+      <div class="ws-wuensche">
+        {WUENSCHE.map((w) => (
+          <button type="button" class="ws-wunsch" data-wunsch={w.id} aria-pressed="false">
+            <span class="ws-w-haken" aria-hidden="true"></span>
+            <span class="ws-w-text"><b>{w.titel}</b><span>{w.satz}</span><small>Dafür baust du: {w.ids.map((i) => TEILE.find((t) => t.id === i)!.titel).join(', ')}</small></span>
+          </button>
+        ))}
+      </div>
       <div class="ws-info" id="ws-info" aria-live="polite">
-        <img class="ori-light ws-info-ori" src="/anim/sassy-abendrot.svg" alt="" width="56" height="56" />
-        <img class="ori-dark ws-info-ori" src="/anim/sassy-hell.svg" alt="" width="56" height="56" />
+        <img class="ori-light ws-info-ori" id="ws-info-ori-l" src="/anim/sassy-abendrot.svg" alt="" width="56" height="56" />
+        <img class="ori-dark ws-info-ori" id="ws-info-ori-d" src="/anim/sassy-hell.svg" alt="" width="56" height="56" />
         <div>
-          <b id="ws-info-titel">Fang an: Tipp oben auf ein graues Teil.</b>
-          <p id="ws-info-text">Zum Beispiel auf „Wetter“ oder „Fester Prompt-Anfang“. Hier steht dann, was das Teil macht und was ich bei mir gemessen hab.</p>
-          <p class="ws-info-ori-text"><em id="ws-ori-text">Noch leer hier. Ich warte.</em></p>
+          <b id="ws-info-titel">Noch nichts ausgewählt.</b>
+          <p id="ws-info-text">Tipp oben auf einen Wunsch. Hier steht dann, was du dafür baust und was ich bei mir gemessen hab.</p>
+          <p class="ws-info-ori-text"><em id="ws-ori-text">Ich warte. Ich bin geduldig. Meistens.</em></p>
         </div>
       </div>
     </section>
 
-    <section class="ws-schritt" aria-labelledby="ws-s3">
-      <h2 id="ws-s3" class="nicht-drucken"><span class="ws-nr">3</span>Dein Faltplan</h2>
-      <p class="ws-hilfe nicht-drucken">In der richtigen Reihenfolge. Hak ab, was fertig ist, dann wird's oben im Schaubild grün. Zum Mitnehmen ausdrucken oder als PDF speichern.</p>
+    <section class="ws-schritt nicht-drucken" aria-labelledby="ws-s3">
+      <h2 id="ws-s3"><span class="ws-nr">3</span>So sieht deine KI dann aus</h2>
+      <p class="ws-hilfe">Alles, was du ausgewählt hast, ist eingebaut (Papierkarte). Grau gestrichelt ist noch nicht dabei. Die Schutzschicht kommt automatisch dazu, sobald deine KI etwas tun darf, damit nichts kaputt geht.</p>
+      <DeineKI />
+    </section>
+
+    <section class="ws-schritt" aria-labelledby="ws-s4">
+      <h2 id="ws-s4" class="nicht-drucken"><span class="ws-nr">4</span>Dein Faltplan</h2>
+      <p class="ws-hilfe nicht-drucken">In der richtigen Reihenfolge. Hak ab, was fertig ist, dann wird's im Schaubild grün. Zum Mitnehmen ausdrucken oder als PDF speichern.</p>
       <div class="pp-karte ws-karte">
         <div class="pp-blatt" id="ws-ablage">
           <PapierDeko />
@@ -83,7 +107,7 @@ const TEILE = [
           </div>
           <div class="ws-modell" id="ws-modell"></div>
           <ol class="ws-liste" id="ws-liste"></ol>
-          <div class="ws-leer nicht-drucken" id="ws-leer">Noch nichts drin außer dem Grundgerüst.<br /><small>Tipp oben im Schaubild auf ein graues Teil.</small></div>
+          <div class="ws-leer nicht-drucken" id="ws-leer">Bis jetzt nur das Grundgerüst.<br /><small>Tipp oben bei Schritt 2 an, was deine KI können soll.</small></div>
           <PapierFuss seite={1} von={1} />
         </div>
       </div>
@@ -95,6 +119,7 @@ const TEILE = [
     <div id="newsletter" class="nicht-drucken" style="margin-top:40px"><Newsletter /></div>
   </div>
   <script type="application/json" id="ws-daten" set:html={JSON.stringify(TEILE)} />
+  <script type="application/json" id="ws-wuensche" set:html={JSON.stringify(WUENSCHE)} />
 </Base>
 
 <style>
@@ -103,7 +128,18 @@ const TEILE = [
   .ws-nr{flex:none; display:grid; place-items:center; width:38px; height:38px; border-radius:50%; background:var(--ori); color:#fff; font-family:var(--display); font-weight:800; font-size:1.1rem}
   .ws-hilfe{color:var(--bleistift); font-size:.95rem; margin:0 0 14px; max-width:62em}
   .ws-vorlagen{display:inline-flex; flex-wrap:wrap; gap:6px; margin-left:6px; vertical-align:middle}
-  .ws-info{display:flex; gap:14px; align-items:flex-start; border:2px solid var(--tinte); border-radius:14px; background:var(--blatt); padding:14px 16px; margin-top:-14px}
+  .ws-wuensche{display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr)); gap:12px; margin-bottom:26px}
+  .ws-wunsch{display:flex; gap:12px; align-items:flex-start; text-align:left; background:var(--blatt); color:var(--tinte); border:2px solid var(--tinte); border-radius:14px; padding:14px; cursor:pointer; font:inherit; transition:transform .15s, box-shadow .15s, background .2s}
+  .ws-wunsch:hover{transform:translate(-2px,-2px); box-shadow:4px 4px 0 var(--tinte)}
+  .ws-wunsch:focus-visible{outline:3px solid var(--ori); outline-offset:3px}
+  .ws-w-haken{flex:none; width:26px; height:26px; border:2px solid var(--tinte); border-radius:7px; background:var(--papier); display:grid; place-items:center; margin-top:1px}
+  .ws-w-text b{display:block; font-family:var(--display); font-size:1.05rem}
+  .ws-w-text span{display:block; font-size:.92rem; color:var(--bleistift); line-height:1.4; margin-top:2px}
+  .ws-w-text small{display:block; font-size:.78rem; color:var(--bleistift); margin-top:8px; opacity:.85}
+  .ws-wunsch[aria-pressed="true"]{background:color-mix(in srgb,var(--marker) 45%,var(--blatt))}
+  .ws-wunsch[aria-pressed="true"] .ws-w-haken{background:var(--ok); border-color:var(--ok)}
+  .ws-wunsch[aria-pressed="true"] .ws-w-haken::after{content:"✓"; color:#fff; font-weight:800; font-size:15px; line-height:1}
+  .ws-info{display:flex; gap:14px; align-items:flex-start; border:2px solid var(--tinte); border-radius:14px; background:var(--blatt); padding:14px 16px; margin-top:0}
   .ws-info-ori{width:56px; height:56px; flex:none}
   .ws-info b{font-family:var(--display); font-size:1.05rem}
   .ws-info p{margin:4px 0 0; font-size:.95rem; color:var(--bleistift)}
@@ -111,12 +147,6 @@ const TEILE = [
   .ws-info :global(.ws-gem i){font-style:normal; font-family:var(--display); font-weight:700; font-size:.68rem; text-transform:uppercase; letter-spacing:.05em; padding:1px 6px; border-radius:5px; margin-right:6px; background:#dff3e7; color:#23784a}
   .ws-info-ori-text em{font-family:var(--hand); font-style:normal; font-size:1.2rem; color:var(--ori)}
   .ws-karte{max-width:820px}
-  :global(.dki-el[role="button"]){cursor:pointer}
-  :global(.dki-el[role="button"]:not(.an):not(.fertig):hover),:global(.dki-el[role="button"]:focus-visible){border-color:var(--ori) !important; color:var(--tinte) !important; outline:none}
-  :global(.dki-el.an:hover),:global(.dki-el.fertig:hover){filter:brightness(.97)}
-  :global(.dki.dki-leer .dki-el:not(.an):not(.fertig)){animation:ws-winken 2.4s ease-in-out infinite}
-  @media (prefers-reduced-motion:reduce){ :global(.dki.dki-leer .dki-el){animation:none !important} }
-  @keyframes ws-winken{0%,100%{border-color:var(--aus)} 50%{border-color:var(--ori)}}
   .ws-liste :global(.ws-haken){width:22px; height:22px; border:2px solid #1d2742; border-radius:5px; background:#fff; cursor:pointer; padding:0; margin-top:2px; display:grid; place-items:center; color:#fff; font-weight:800; font-size:14px; line-height:1}
   .ws-liste :global(.ws-haken[aria-pressed="true"]){background:var(--ok); border-color:var(--ok)}
   .ws-liste :global(li.erledigt b){text-decoration:line-through; text-decoration-color:var(--ok); text-decoration-thickness:2px}
@@ -162,14 +192,23 @@ const TEILE = [
   const TEILE: Teil[] = JSON.parse(document.getElementById('ws-daten')!.textContent || '[]');
   const nachId = new Map(TEILE.map((t) => [t.id, t]));
   const SPEICHER = 'werkstatt-v1';
-  const VORLAGEN: Record<string, string[]> = {
-    schnell: ['anfang', 'vorwaermen', 'rechnen', 'wetter'],
-    origami: TEILE.map((t) => t.id),
-    leer: [],
-  };
+  type Wunsch = { id: string; titel: string; satz: string; ids: string[]; anim: string; ori: string };
+  const WUENSCHE: Wunsch[] = JSON.parse(document.getElementById('ws-wuensche')!.textContent || '[]');
+  const VORLAGEN: Record<string, string[]> = { schnell: ['schnell', 'alltag'], origami: WUENSCHE.map((w) => w.id), leer: [] };
 
+  let wuensche = new Set<string>();
   let drin = new Set<string>(['fundament']);
-  try { const s = JSON.parse(localStorage.getItem(SPEICHER) || 'null'); if (s?.teile) drin = new Set(['fundament', ...s.teile]); } catch { /* egal */ }
+  function berechne() {
+    drin = new Set(['fundament']);
+    const hol = (x: string) => { nachId.get(x)!.dep.forEach(hol); drin.add(x); };
+    WUENSCHE.filter((w) => wuensche.has(w.id)).forEach((w) => w.ids.forEach(hol));
+  }
+  try {
+    const s = JSON.parse(localStorage.getItem(SPEICHER) || 'null');
+    if (s?.wuensche) wuensche = new Set(s.wuensche);
+    else if (s?.teile) wuensche = new Set(WUENSCHE.filter((w) => w.ids.every((i) => s.teile.includes(i))).map((w) => w.id));
+  } catch { /* egal */ }
+  berechne();
   let fertig = new Set<string>();
   try { const s = JSON.parse(localStorage.getItem(SPEICHER) || 'null'); if (s?.fertig) fertig = new Set(s.fertig); } catch { /* egal */ }
   let neu = new Set<string>();
@@ -186,39 +225,10 @@ const TEILE = [
   const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
 
   function speichern() {
-    try { localStorage.setItem(SPEICHER, JSON.stringify({ teile: [...drin].filter((i) => i !== 'fundament'), fertig: [...fertig].filter((i) => drin.has(i)) })); } catch { /* egal */ }
+    try { localStorage.setItem(SPEICHER, JSON.stringify({ wuensche: [...wuensche], teile: [...drin].filter((i) => i !== 'fundament'), fertig: [...fertig].filter((i) => drin.has(i)) })); } catch { /* egal */ }
   }
 
   function sag(t: string) { oriText.textContent = t; }
-  function info(t: Teil) {
-    document.getElementById('ws-info-titel')!.textContent = t.titel + (t.fest ? ' (ist immer dabei)' : drin.has(t.id) ? ' ist eingebaut' : ' ist raus');
-    document.getElementById('ws-info-text')!.innerHTML = esc(t.kurz) + (t.zahl ? `<br><span class="ws-gem"><i>Gemessen</i>${esc(t.zahl)}</span>` : '') + (t.link ? ` <a href="${t.link}">Mehr dazu</a>` : '');
-  }
-
-  function einbauen(id: string) {
-    const t = nachId.get(id);
-    if (!t || drin.has(id)) { if (t && !t.fest) sag('Hab ich schon. Doppelt falten macht\'s nicht besser.'); return; }
-    const dazu: string[] = [];
-    const hol = (x: string) => { const d = nachId.get(x)!; d.dep.forEach(hol); if (!drin.has(x)) { drin.add(x); neu.add(x); if (x !== id) dazu.push(d.titel); } };
-    hol(id);
-    sag(dazu.length ? `${t.titel} geht nur mit ${dazu.join(' und ')}. Hab ich gleich mit reingepackt.` : t.ori);
-    kernAnim(t.anim);
-    zeichnen(); speichern();
-  }
-
-  function ausbauen(id: string) {
-    const t = nachId.get(id);
-    if (!t || t.fest) return;
-    const weg = [id];
-    let geaendert = true;
-    while (geaendert) { geaendert = false; for (const x of drin) { if (!weg.includes(x) && nachId.get(x)!.dep.some((d) => weg.includes(d))) { weg.push(x); geaendert = true; } } }
-    weg.forEach((x) => { drin.delete(x); fertig.delete(x); });
-    kernAnim('seufzt');
-    const mit = weg.slice(1).map((x) => nachId.get(x)!.titel);
-    sag(mit.length ? `Ohne ${t.titel} geht ${mit.join(' und ')} nicht. Fliegt beides raus.` : `${t.titel} ist raus. Ich sag nichts. Fast nichts.`);
-    zeichnen(); speichern();
-  }
-
   function modellText() {
     const v = +((document.querySelector('input[name=wsvram]:checked') as HTMLInputElement)?.value || 8);
     const groessen: [string, number][] = [['4B', 4], ['8B', 8], ['14B', 14], ['27B', 27], ['32B', 32]];
@@ -230,18 +240,11 @@ const TEILE = [
 
   function zeichnen() {
     const sortiert = [...drin].map((i) => nachId.get(i)!).sort((a, b) => a.rang - b.rang);
-    liste.innerHTML = sortiert.map((t) => `<li class="${fertig.has(t.id) ? 'erledigt' : ''}"><button type="button" class="ws-haken" data-haken="${t.id}" aria-pressed="${fertig.has(t.id)}" aria-label="${esc(t.titel)} als gefaltet abhaken">${fertig.has(t.id) ? '✓' : ''}</button><div><b>${esc(t.titel)}</b>${neu.has(t.id) && !t.fest ? '<span class="neu">neu</span>' : ''}<p class="ws-text">${esc(t.kurz)}${t.link ? ` <a href="${t.link}">Mehr dazu</a>` : ''}</p>${t.zahl ? `<p class="zahl"><i>Gemessen</i>${esc(t.zahl)}</p>` : ''}</div>${t.fest ? '' : `<button type="button" class="ws-weg" data-weg="${t.id}" aria-label="${esc(t.titel)} entfernen">×</button>`}</li>`).join('');
+    liste.innerHTML = sortiert.map((t) => `<li class="${fertig.has(t.id) ? 'erledigt' : ''}"><button type="button" class="ws-haken" data-haken="${t.id}" aria-pressed="${fertig.has(t.id)}" aria-label="${esc(t.titel)} als gefaltet abhaken">${fertig.has(t.id) ? '✓' : ''}</button><div><b>${esc(t.titel)}</b>${neu.has(t.id) && !t.fest ? '<span class="neu">neu</span>' : ''}<p class="ws-text">${esc(t.kurz)}${t.link ? ` <a href="${t.link}">Mehr dazu</a>` : ''}</p>${t.zahl ? `<p class="zahl"><i>Gemessen</i>${esc(t.zahl)}</p>` : ''}</div></li>`).join('');
     leer.hidden = drin.size > 1;
     liste.classList.toggle('kompakt', drin.size > 8);
     document.getElementById('ws-unter')!.textContent = `${drin.size} ${drin.size === 1 ? 'Schritt' : 'Schritte'} · gebaut in der Werkstatt · selbstgfaltet.de`;
-    document.querySelectorAll<HTMLElement>('.dki-el[data-k]').forEach((el) => {
-      const t = nachId.get(el.dataset.k!); if (!t) return;
-      el.setAttribute('role', 'button'); el.tabIndex = 0;
-      el.setAttribute('aria-pressed', String(drin.has(t.id)));
-      el.setAttribute('aria-label', t.fest ? `${t.titel}, ist immer dabei` : `${t.titel} ${drin.has(t.id) ? 'ausbauen' : 'einbauen'}`);
-      el.title = t.fest ? 'Ist immer dabei' : drin.has(t.id) ? 'Antippen zum Ausbauen' : 'Antippen zum Einbauen';
-    });
-    document.querySelector('.dki')?.classList.toggle('dki-leer', drin.size === 1);
+    document.querySelectorAll<HTMLElement>('[data-wunsch]').forEach((el) => el.setAttribute('aria-pressed', String(wuensche.has(el.dataset.wunsch!))));
     neu = new Set();
     document.querySelectorAll<Element>('.dki [data-k]').forEach((el) => {
       const k = el.getAttribute('data-k')!;
@@ -266,33 +269,42 @@ const TEILE = [
 
   document.addEventListener('click', (e) => {
     const z = e.target as HTMLElement;
-    const teil = z.closest<HTMLElement>('.dki-el[data-k]'); if (teil) { tippe(teil.dataset.k!); return; }
-    const weg = z.closest<HTMLElement>('[data-weg]'); if (weg) { ausbauen(weg.dataset.weg!); return; }
+    const wu = z.closest<HTMLElement>('[data-wunsch]'); if (wu) { wunsch(wu.dataset.wunsch!); return; }
     const hk = z.closest<HTMLElement>('[data-haken]'); if (hk) { haken(hk.dataset.haken!); return; }
     const vl = z.closest<HTMLElement>('[data-vorlage]');
     if (vl) {
       const v = vl.dataset.vorlage!;
-      drin = new Set(['fundament']); neu = new Set(); fertig = new Set();
-      VORLAGEN[v].forEach((id) => { const hol = (x: string) => { nachId.get(x)!.dep.forEach(hol); drin.add(x); }; hol(id); });
-      kernAnim(v === 'origami' ? 'triumph' : v === 'schnell' ? 'senden' : 'ruhezustand-3');
+      wuensche = new Set(VORLAGEN[v]); neu = new Set(); fertig = new Set(); berechne();
+      kernAnim(v === 'origami' ? 'triumph' : v === 'schnell' ? 'aufwachen' : 'ruhezustand-3');
       sag(v === 'origami' ? 'Alles drin. So seh ich von innen aus. Respekt, wer das nachbaut.' : v === 'schnell' ? 'Schnell und schlau. Für den ersten Abend reicht das völlig.' : 'Leer. Ein frisches Blatt. Ich mag das.');
       zeichnen(); speichern();
     }
   });
 
-  function tippe(id: string) {
-    const t = nachId.get(id); if (!t) return;
-    if (t.fest) { sag('Das Grundgerüst bleibt. Ohne das gibt\'s mich nicht.'); kernAnim('ruhezustand-3'); }
-    else if (drin.has(id)) ausbauen(id); else einbauen(id);
-    info(t);
+  function wunsch(id: string) {
+    const w = WUENSCHE.find((x) => x.id === id); if (!w) return;
+    const vorher = new Set(drin);
+    if (wuensche.has(id)) wuensche.delete(id); else wuensche.add(id);
+    berechne();
+    [...fertig].forEach((x) => { if (!drin.has(x)) fertig.delete(x); });
+    neu = new Set([...drin].filter((x) => !vorher.has(x)));
+    const an = wuensche.has(id);
+    const teile = w.ids.map((i) => nachId.get(i)!);
+    const extra = [...neu].filter((x) => !w.ids.includes(x)).map((x) => nachId.get(x)!.titel);
+    document.getElementById('ws-info-titel')!.textContent = an ? `${w.titel}: dafür baust du ${teile.map((t) => t.titel).join(' und ')}` : `${w.titel} ist raus`;
+    document.getElementById('ws-info-text')!.innerHTML = an
+      ? teile.map((t) => `${esc(t.kurz)}${t.zahl ? ` <span class="ws-gem"><i>Gemessen</i>${esc(t.zahl)}</span>` : ''}`).join('<br>') + (extra.length ? `<br><b>Kommt automatisch mit:</b> ${esc(extra.join(', '))}, damit nichts kaputt geht.` : '')
+      : 'Kein Problem, du kannst es jederzeit wieder dazunehmen.';
+    sag(an ? w.ori : 'Weniger ist manchmal mehr. Manchmal.');
+    const anim = an ? w.anim : 'seufzt';
+    kernAnim(anim);
+    (document.getElementById('ws-info-ori-l') as HTMLImageElement).src = `/anim/${anim}-abendrot.svg`;
+    (document.getElementById('ws-info-ori-d') as HTMLImageElement).src = `/anim/${anim}-hell.svg`;
+    zeichnen(); speichern();
   }
-  document.addEventListener('keydown', (e) => {
-    const el = (e.target as HTMLElement).closest?.('.dki-el[data-k]') as HTMLElement | null;
-    if (el && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); tippe(el.dataset.k!); }
-  });
   document.querySelectorAll('input[name=wsvram]').forEach((i) => i.addEventListener('change', modellText));
 
   modellText();
   zeichnen();
-  if (drin.size > 1) sag('Da bist du ja wieder. Dein Plan ist noch da.');
+  if (wuensche.size) sag('Da bist du ja wieder. Dein Plan ist noch da.');
 </script>
