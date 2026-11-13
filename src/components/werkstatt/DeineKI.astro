@@ -18,7 +18,7 @@ const ICON: Record<string, string> = {
 };
 
 const DESK: Lay = {
-  name: 'desk', W: 1100, H: 400, rahmen: [520, 64, 320, 280], ori: [552, 112],
+  name: 'desk', W: 1100, H: 440, rahmen: [520, 64, 320, 356], ori: [552, 112],
   li: [
     { k: 'tunnel', x: 104, y: 156, l: 24 }, { k: 'login', x: 200, y: 156, l: 24 }, { k: 'fundament', x: 356, y: 156, l: 184 },
     { k: 'fundament', x: 820, y: 156, l: 42 }, { k: 'fundament', x: 862, y: 156, l: 22 },
@@ -38,6 +38,12 @@ const DESK: Lay = {
     { k: 'befehle', typ: 'chip', x: 712, y: 252, w: 108, h: 30, titel: 'PC-Befehle' },
     { k: 'surfen', typ: 'chip', x: 540, y: 290, w: 136, h: 30, titel: 'Websuche' },
     { k: 'merken', typ: 'chip', x: 684, y: 290, w: 136, h: 30, titel: 'Gedächtnis' },
+    { k: 'spezial', typ: 'chip', x: 540, y: 328, w: 100, h: 30, titel: 'Bahn & Co.' },
+    { k: 'dateien', typ: 'chip', x: 648, y: 328, w: 76, h: 30, titel: 'Dateien' },
+    { k: 'browser', typ: 'chip', x: 732, y: 328, w: 88, h: 30, titel: 'Browser' },
+    { k: 'zusammenfassen', typ: 'chip', x: 540, y: 366, w: 100, h: 30, titel: 'Lange Chats' },
+    { k: 'erinnern', typ: 'chip', x: 648, y: 366, w: 76, h: 30, titel: 'Erinnern' },
+    { k: 'feedback', typ: 'chip', x: 732, y: 366, w: 88, h: 30, titel: 'Daumen ↑↓' },
     { k: 'freigaben', typ: 'chip', x: 536, y: 52, w: 116, h: 24, titel: 'Schutzschicht', icon: 'schild' },
     { k: 'notbremse', typ: 'chip', x: 716, y: 50, w: 108, h: 28, titel: 'Notbremse', icon: 'stopp' },
     { k: 'claude', typ: 'box', x: 884, y: 24, w: 196, h: 60, titel: 'Claude', unter: 'für die schweren Sachen', icon: 'wolke' },
@@ -47,12 +53,12 @@ const DESK: Lay = {
   labels: [['Tempo', 378, 76, 'hand'], ['Werkzeuge', 568, 224, 'hand']],
 };
 const PHONE: Lay = {
-  name: 'phone', W: 360, H: 820, rahmen: [12, 252, 336, 322], ori: [40, 296],
+  name: 'phone', W: 360, H: 934, rahmen: [12, 252, 336, 436], ori: [40, 296],
   li: [
     { k: 'tunnel', x: 106, y: 108, l: 24 }, { k: 'login', x: 206, y: 108, l: 24 }, { k: 'fundament', x: 283, y: 140, l: 144, v: true },
     { k: 'anfang', x: 263, y: 169, l: 24 }, { k: 'vorwaermen', x: 263, y: 207, l: 24 }, { k: 'fundament', x: 40, y: 404, l: 32, v: true },
-    { k: 'fundament', x: 304, y: 404, l: 196, v: true }, { k: 'fundament', x: 304, y: 600, l: 24, v: true },
-    { k: 'claude', x: 84, y: 596, l: 224 }, { k: 'claude', x: 80, y: 600, l: 24, v: true }, { k: 'dauerlauf', x: 252, y: 716, l: 24, v: true },
+    { k: 'fundament', x: 304, y: 404, l: 310, v: true }, { k: 'fundament', x: 304, y: 714, l: 24, v: true },
+    { k: 'claude', x: 84, y: 710, l: 224 }, { k: 'claude', x: 80, y: 714, l: 24, v: true }, { k: 'dauerlauf', x: 252, y: 830, l: 24, v: true },
   ],
   els: [
     { k: 'tunnel', typ: 'box', x: 16, y: 84, w: 90, h: 56, titel: 'Handy', icon: 'handy' },
@@ -66,11 +72,17 @@ const PHONE: Lay = {
     { k: 'befehle', typ: 'chip', x: 28, y: 474, w: 124, h: 30, titel: 'PC-Befehle' },
     { k: 'surfen', typ: 'chip', x: 160, y: 474, w: 124, h: 30, titel: 'Websuche' },
     { k: 'merken', typ: 'chip', x: 28, y: 512, w: 124, h: 30, titel: 'Gedächtnis' },
+    { k: 'browser', typ: 'chip', x: 160, y: 512, w: 124, h: 30, titel: 'Browser' },
+    { k: 'spezial', typ: 'chip', x: 28, y: 550, w: 124, h: 30, titel: 'Bahn & Co.' },
+    { k: 'dateien', typ: 'chip', x: 160, y: 550, w: 124, h: 30, titel: 'Dateien' },
+    { k: 'zusammenfassen', typ: 'chip', x: 28, y: 588, w: 124, h: 30, titel: 'Lange Chats' },
+    { k: 'erinnern', typ: 'chip', x: 160, y: 588, w: 124, h: 30, titel: 'Erinnern' },
+    { k: 'feedback', typ: 'chip', x: 28, y: 626, w: 124, h: 30, titel: 'Daumen ↑↓' },
     { k: 'freigaben', typ: 'chip', x: 28, y: 240, w: 116, h: 24, titel: 'Schutzschicht', icon: 'schild' },
-    { k: 'notbremse', typ: 'chip', x: 28, y: 560, w: 108, h: 28, titel: 'Notbremse', icon: 'stopp' },
-    { k: 'claude', typ: 'box', x: 16, y: 624, w: 136, h: 76, titel: 'Claude', unter: 'für die schweren Sachen' },
-    { k: 'fundament', typ: 'box', x: 168, y: 624, w: 176, h: 92, titel: 'Ollama + Modell', modell: true },
-    { k: 'dauerlauf', typ: 'box', x: 168, y: 740, w: 176, h: 60, titel: 'Läuft von allein', unter: 'Neustart · Backup' },
+    { k: 'notbremse', typ: 'chip', x: 160, y: 626, w: 108, h: 28, titel: 'Notbremse', icon: 'stopp' },
+    { k: 'claude', typ: 'box', x: 16, y: 738, w: 136, h: 76, titel: 'Claude', unter: 'für die schweren Sachen' },
+    { k: 'fundament', typ: 'box', x: 168, y: 738, w: 176, h: 92, titel: 'Ollama + Modell', modell: true },
+    { k: 'dauerlauf', typ: 'box', x: 168, y: 854, w: 176, h: 60, titel: 'Läuft von allein', unter: 'Neustart · Backup' },
   ],
   labels: [['Tempo', 28, 161, 'hand'], ['Werkzeuge', 56, 408, 'hand']],
 };
@@ -155,7 +167,7 @@ const ico = (n?: string, gr = 18) => n ? `<svg class="dki-ico" width="${gr}" hei
   .dki-legende{display:flex; gap:22px; font-size:12.5px; color:var(--text2); white-space:nowrap}
   .dki-legende span{display:flex; align-items:center; gap:8px}
   .dki-legende-desk{left:20px; top:364px}
-  .dki-legende-phone{left:16px; top:726px; flex-direction:column; gap:8px}
+  .dki-legende-phone{left:16px; top:840px; flex-direction:column; gap:8px}
   .lg-aus,.lg-an{display:inline-block; width:22px; height:14px; box-sizing:border-box}
   .lg-aus{border:1.5px dashed var(--aus)}
   .lg-an{border:1.5px solid var(--tinte); background:linear-gradient(225deg,var(--orange) 0 5px,var(--box) 5px)}
