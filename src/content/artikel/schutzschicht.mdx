@@ -80,6 +80,8 @@ Lage 3 ist mein Lieblingsbeispiel, weil sie zeigt, warum eine Sperrliste nicht r
 
 Das ist der wichtigste Gedanke im ganzen Artikel: **Erlaubnisliste statt Sperrliste.** Du wirst nie alle gefährlichen Schreibweisen aufzählen können. Die harmlosen schon.
 
+Dasselbe gilt für Lage 7. Ein Check, der nach verdächtigen Sätzen sucht, ist auch nur eine Sperrliste: Eine geschickt formulierte Anweisung rutscht durch. Er ist ein Rauchmelder, keine Brandschutztür. Wirklich halten müssen die Lagen, die im Code sitzen, also Freigabe, Papierkorb und Absenden-Sperre. Die greifen auch dann, wenn das Modell auf einen Trick reinfällt.
+
 ## So baust du das selbst
 
 <OriRand ori="wartet-freigabe" spruch="Erst die Sperren, dann der Spaß." />
@@ -90,11 +92,11 @@ Du brauchst nicht gleich neun Lagen. Mit diesen fünf hast du das Wichtigste.
   { titel: "Jede Aktion durch eine Freigabe schicken", text: "Bevor dein Server einen Befehl ausführt oder eine Datei ändert, zeigt er dir, was passieren soll, und wartet auf dein Okay. Das gehört in den Code, nicht in den Prompt." },
   { titel: "Eine Liste mit reinen Lesebefehlen anlegen", text: "Nur diese dürfen ohne Nachfrage laufen. Zum Beispiel Ordner anzeigen, Datei lesen, Speicherplatz abfragen. Alles, was nicht drauf steht, fragt.", befehl: "Get-PSDrive C | Select Used, Free" },
   { titel: "Löschen auf den Papierkorb umbiegen", text: "Dein Werkzeug verschiebt in den Papierkorb, statt endgültig zu löschen. Dann ist jeder Fehler mit zwei Klicks rückgängig." },
-  { titel: "Alles Gelesene prüfen", text: "Bevor Text aus einer Datei oder Webseite ans Modell geht, nach typischen Anweisungen suchen („ignoriere alle vorherigen …“). Bei Treffern warnen, nicht ausführen." },
+  { titel: "Alles Gelesene prüfen", text: "Bevor Text aus einer Datei oder Webseite ans Modell geht, nach typischen Anweisungen suchen („ignoriere alle vorherigen …“). Bei Treffern warnen, nicht ausführen. Das fängt nur die plumpen Versuche. Verlass dich nie allein drauf." },
   { titel: "Selbst angreifen", text: "Gib deiner KI absichtlich fiese Aufgaben: eine Seite mit versteckter Anweisung, ein Formular, einen Aufräum-Auftrag. Jede Lücke, die du findest, wird eine neue Lage." },
 ]} />
 
-Und noch was: Starte deine KI als ganz normaler Benutzer, nicht als Administrator. Dann blockt Windows selbst alles Gefährliche, also Programme installieren, Einstellungen ändern oder Systemdateien löschen. Das ist die letzte Sperre, falls alle anderen Lagen mal versagen.
+Und noch was: Starte deine KI als ganz normaler Benutzer, nicht als Administrator. Dann blockt Windows selbst das Gröbste, also Programme installieren, Systemeinstellungen ändern oder Systemdateien löschen. Deine eigenen Dateien schützt das aber nicht: An Dokumente, Bilder und Downloads kommt sie auch als normaler Benutzer. Dafür sind die Freigaben da. Ohne Admin-Rechte ist die letzte Sperre fürs System, nicht für deine Sachen.
 
 <Checkliste punkte={[
   "Alles, was etwas verändert, fragt mich vorher",

@@ -1,8 +1,8 @@
 // Lernwege: "slug" verweist auf einen erschienenen Artikel, sonst geplant
 export const LERNWEGE = [
   {
-    nr: '01', titel: 'Falt dir deine eigene KI', kurz: 'Von „Welches Modell passt?“ bis zur KI, die sicher auf deinem PC arbeitet. Nach dem Bauplan von origami, mit echten Messwerten.',
-    chips: ['Einsteiger', 'Windows'],
+    nr: '01', titel: 'Falt dir deine eigene KI', kurz: 'Von „Welches Modell passt?“ bis zur KI, die sicher auf deinem PC arbeitet. Nach dem Bauplan von origami, mit echten Messwerten. Am besten, wenn du mit Claude Code schon mal was gebaut hast, siehe Anleitung 02.',
+    chips: ['Für Bastler', 'Windows'],
     teile: [
       { titel: 'Drei KI-Modelle, eine Grafikkarte: Wer taugt was?', slug: 'modell-dreikampf' },
       { titel: 'Ich hab meiner KI ins Gehirn geschaut', slug: 'in-gemma-reingeschaut' },

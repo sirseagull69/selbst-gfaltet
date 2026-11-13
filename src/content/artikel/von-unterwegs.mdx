@@ -20,7 +20,7 @@ import OriRand from '../../components/OriRand.astro';
 <KurzGesagt
   links="Was du brauchst"
   rechts="Was du lieber lässt"
-  a={["Einen Tunnel mit echtem HTTPS-Zertifikat", "Passwort plus Zwei-Faktor-Code", "Autostart, Neustart nach Absturz, Backup"]}
+  a={["Einen Tunnel, am besten nur für deine eigenen Geräte", "Passwort plus Zwei-Faktor-Code", "Autostart, Neustart nach Absturz, Backup"]}
   b={["Ports am Router aufmachen", "Verwaltungsseiten übers Internet erreichbar machen", "Hoffen, dass der PC schon läuft"]}
 />
 
@@ -43,7 +43,9 @@ Das klingt einfach, hat aber zwei Seiten. Erstens muss es **sicher** sein, denn 
   { name: "Der Heim-PC", typ: "macht die Arbeit", text: "Hier laufen origami und Gemma. Das Handy schickt nur Text hin und bekommt die Antwort zurück.", bild: "die Küche, das Handy ist nur der Kellner" },
 ]} />
 
-Wichtig: Ein Tunnel wie dieser macht origami wirklich aus dem Internet erreichbar. Deshalb ist der Login keine Nebensache, sondern das Wichtigste an der ganzen Sache.
+Wichtig: Funnel macht origami wirklich aus dem ganzen Internet erreichbar. Jeder kann die Adresse aufrufen, und zwischen ihm und meinem PC steht dann nur noch mein selbst gebauter Login. Deshalb ist der keine Nebensache, sondern das Wichtigste an der ganzen Sache.
+
+Für dich heißt das: Fang nicht mit Funnel an. Installier Tailscale auf dem PC und auf dem Handy, dann erreichen nur deine eigenen Geräte die KI, und der Rest der Welt sieht sie gar nicht. Funnel brauchst du erst, wenn du auch von einem Gerät ran willst, auf dem du Tailscale nicht installieren kannst.
 
 ## Was nur zu Hause geht
 
@@ -95,7 +97,8 @@ Und weil ich so was nicht nochmal erst merken will, wenn's zu spät ist, gibt's 
 
 <Schritte titel="Sicher und zuverlässig von unterwegs" schritte={[
   { titel: "Login zuerst", text: "Bevor irgendwas von außen erreichbar ist: Passwort plus Zwei-Faktor-Code, Sperre nach Fehlversuchen. In dieser Reihenfolge, nicht andersrum." },
-  { titel: "Tunnel statt offener Ports", text: "Mit Tailscale Funnel bekommt dein PC eine HTTPS-Adresse mit echtem Zertifikat, ohne dass du am Router etwas freigibst. Der Befehl leitet einen lokalen Port nach außen weiter.", befehl: "tailscale funnel 3000" },
+  { titel: "Tunnel statt offener Ports", text: "Tailscale auf dem PC und auf dem Handy installieren. Der Befehl gibt deiner KI eine HTTPS-Adresse mit echtem Zertifikat, die nur auf deinen eigenen Geräten funktioniert. Am Router gibst du nichts frei.", befehl: "tailscale serve 3000" },
+  { titel: "Funnel nur, wenn's sein muss", text: "Willst du auch von Geräten ohne Tailscale ran, macht Funnel dieselbe Adresse fürs ganze Internet auf. So läuft es bei origami. Dann hängt alles an deinem Login, also erst machen, wenn der sitzt.", befehl: "tailscale funnel 3000" },
   { titel: "Verwaltung nur lokal", text: "Alles, womit man deine KI steuert oder umbaut, prüft, ob die Anfrage direkt vom PC kommt. Von außen gibt's nur den Chat." },
   { titel: "Autostart ohne Anmeldung", text: "Eine geplante Windows-Aufgabe startet deine KI beim Hochfahren, auch wenn sich niemand anmeldet. Dazu ein Wächter, der sie nach einem Absturz neu startet." },
   { titel: "Backup jede Nacht", text: "Chats, Gedächtnis und Einstellungen sichern und ein paar Tage aufheben. Bei mir 14." },
@@ -105,6 +108,7 @@ Und weil ich so was nicht nochmal erst merken will, wenn's zu spät ist, gibt's 
 <Checkliste punkte={[
   "Von außen komm ich nur mit Passwort und Zwei-Faktor-Code rein",
   "Am Router sind keine Ports offen",
+  "Ich weiß, ob meine KI nur für meine Geräte erreichbar ist oder fürs ganze Internet",
   "Verwaltung und Fernsteuerung gehen nur direkt am PC",
   "Meine KI startet von selbst, auch ohne Anmeldung",
   "Nach einem Absturz steht sie von selbst wieder auf",
