@@ -41,7 +41,7 @@ const zeilen = text.split(/\r?\n/).length;
     <pre><code>{text}</code></pre>
   </details>
   <div class="sc-selbst">
-    <b>Selbst nachprüfen:</b> Nach dem Runterladen in PowerShell <code>Get-FileHash .\{datei}</code> eingeben. Die Zahl muss genau so aussehen:
+    <b>Selbst nachprüfen:</b> Nach dem Runterladen in PowerShell <code>Get-FileHash "$HOME\Downloads\{datei}"</code> eingeben. Die Zahl muss genau so aussehen:
     <code class="sc-sha">{sha}</code>
     Starte Skripte aus dem Netz nie als Administrator, auch dieses nicht.
   </div>
