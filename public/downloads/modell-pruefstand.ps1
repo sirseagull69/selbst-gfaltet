@@ -102,7 +102,7 @@ foreach ($m in $Modelle) {
     $md.Add('') | Out-Null
     if ($antwort.Trim() -ne '') { $md.Add($antwort) | Out-Null } else { $md.Add('_(keine Antwort)_') | Out-Null }
   }
-  $datei = Join-Path $ordner (($m -replace '[^a-zA-Z0-9._-]', '_') + '.md')
+  $datei = Join-Path $ordner ('antworten-' + ($m -replace '[^a-zA-Z0-9._-]', '_') + '.md')
   $md | Out-File -FilePath $datei -Encoding utf8
 }
 
@@ -128,9 +128,10 @@ foreach ($m in $Modelle) {
   Write-Host ("    Ø $zeit s pro Aufgabe · Einlesen $lesen Tok/s · Schreiben $schr Tok/s · ohne Antwort: $leer von " + $e.Count) -ForegroundColor $farbe
 }
 $zus.Add('') | Out-Null
-$zus.Add('Gemessen mit dem Modell-Prüfstand von www.selbstgfaltet.de. Die Antworten stehen in den .md-Dateien in diesem Ordner. Bewerte sie selbst.') | Out-Null
-$zus | Out-File -FilePath (Join-Path $ordner 'ergebnis.md') -Encoding utf8
+$zus.Add('Gemessen mit dem Modell-Prüfstand von www.selbstgfaltet.de. Die Antworten stehen in den Dateien antworten-<modell>.md in diesem Ordner. Bewerte sie selbst.') | Out-Null
+$zus | Out-File -FilePath (Join-Path $ordner 'zusammenfassung.md') -Encoding utf8
 Write-Host ''
 Write-Host '  Tipp: Zähl nicht nur die Zeit. Ein Modell, das oft gar nichts schreibt, hilft dir nicht, egal wie schnell es ist.' -ForegroundColor Gray
 Write-Host ("  Alles gespeichert in: " + $ordner) -ForegroundColor Cyan
+Write-Host '  Die Antworten zum Lesen und Bewerten stehen in den Dateien antworten-<modell>.md (mit dem Editor öffnen).' -ForegroundColor Cyan
 if ($Host.Name -eq 'ConsoleHost' -and -not $env:KI_CHECK_KEIN_WARTEN) { Write-Host ''; Read-Host '  Enter zum Schließen' | Out-Null }
