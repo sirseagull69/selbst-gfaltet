@@ -63,6 +63,7 @@ Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt
 - `fragen@selbstgfaltet.de` ist eine IONOS-Weiterleitung (kein Postfach, man kann davon nicht senden). Mail-Einträge (MX, SPF, DKIM, DMARC) bei IONOS nicht anfassen.
 - `noindex` ist raus, Google darf die Seite aufnehmen. Sitemap: `/sitemap-index.xml`, steht auch in `public/robots.txt` und ist in der Google Search Console eingereicht (Bestätigung per TXT-Eintrag bei IONOS, nicht löschen).
 - Besucherzählung: Vercel Web Analytics (ohne Cookies), steht in der Datenschutzerklärung. Neue Dienste immer dort nachtragen.
+- Daumen hoch/runter unter jedem Artikel (`src/components/Daumen.astro`): Browser schickt nur an `/api/daumen` (Vercel-Funktion, Region fra1 in `vercel.json`), die reicht die Zählung an Supabase weiter (Projekt `nils-todos`, Schema `blog`, Funktion `public.blog_daumen`). Beim Laden keine Anfrage, keine IP an Supabase, Zahl erst ab 5 Daumen hoch. Steht in der Datenschutzerklärung (Abschnitt „Daumen unter Artikeln“).
 
 - Ori am Rand wandert mit: `<OriRand ori="…" spruch="…" />` unter eine Überschrift setzen, ab da wechselt Ori Animation und Spruch. Nur vorhandene Animationen aus `public/anim/` nehmen. Jeder Artikel bekommt eigene, zum Abschnitt passende Wechsel und Sprüche, kein Spruch doppelt über alle Artikel. Auf dem Handy (unter 860 px, kein Rand) erscheint der Spruch automatisch als kleine Randnotiz (`.ori-handy`) direkt unter der Überschrift, am PC nie.
 
