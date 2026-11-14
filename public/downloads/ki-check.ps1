@@ -124,7 +124,7 @@ if ($tags) {
     $summe = 0
     foreach ($m in $tags.models) { $summe += [double]$m.size; Info ("   " + $m.name + "  (" + (GB $m.size) + " GB)") }
     Info ("Zusammen " + (GB $summe) + " GB auf der Platte. Nicht genutzte Modelle löschst du mit: ollama rm <name>")
-  } else { Info 'Läuft, aber noch kein Modell geladen. Zum Beispiel: ollama pull gemma4:26b' }
+  } else { Info 'Läuft, aber noch kein Modell geladen. Zum Beispiel: ollama pull qwen3.5:9b (passt auf 8 GB Grafikkarte)' }
   $ps = $null
   try { $ps = Invoke-RestMethod -Uri "$api/api/ps" -TimeoutSec 3 } catch { $ps = $null }
   if ($ps -and @($ps.models).Count -gt 0) {

@@ -54,7 +54,7 @@ if (-not $Modelle -or $Modelle.Count -eq 0) { $Modelle = $vorhanden }
 $Modelle = @($Modelle | ForEach-Object { $_ -split ',' } | ForEach-Object { $_.Trim() } | Where-Object { $_ })
 $fehlt = @($Modelle | Where-Object { $vorhanden -notcontains $_ })
 if ($fehlt.Count -gt 0) { Write-Host ('Nicht heruntergeladen: ' + ($fehlt -join ', ') + '  (ollama pull <name>)') -ForegroundColor Red; exit 1 }
-if ($Modelle.Count -eq 0) { Write-Host 'Kein Modell gefunden. Erst eins laden, z. B.: ollama pull gemma4:26b' -ForegroundColor Red; exit 1 }
+if ($Modelle.Count -eq 0) { Write-Host 'Kein Modell gefunden. Erst eins laden, z. B.: ollama pull qwen3.5:9b (passt auf 8 GB Grafikkarte)' -ForegroundColor Red; exit 1 }
 
 $basis = $PSScriptRoot; if (-not $basis) { $basis = (Get-Location).Path }
 $ordner = Join-Path $basis ('pruefstand-' + (Get-Date -Format 'yyyy-MM-dd-HHmm'))

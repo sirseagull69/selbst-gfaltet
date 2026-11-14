@@ -70,7 +70,7 @@ Zeile 'TEIL A: Messen (automatisch, dauert ein paar Minuten)' Yellow
 try { $tags = Invoke-RestMethod -Uri "$Ollama/api/tags" -TimeoutSec 5 }
 catch { Zeile 'Ollama antwortet nicht. Läuft es? (ollama.com)' Red; exit 1 }
 $vorhanden = @($tags.models | ForEach-Object { $_.name })
-if ($vorhanden.Count -eq 0) { Zeile 'Kein Modell gefunden. Erst eins laden, z. B.: ollama pull gemma4:26b' Red; exit 1 }
+if ($vorhanden.Count -eq 0) { Zeile 'Kein Modell gefunden. Erst eins laden, z. B.: ollama pull qwen3.5:9b (passt auf 8 GB Grafikkarte)' Red; exit 1 }
 if (-not $Modell) {
   $geladen = @()
   try { $geladen = @((Invoke-RestMethod -Uri "$Ollama/api/ps" -TimeoutSec 5).models | ForEach-Object { $_.name }) } catch {}
