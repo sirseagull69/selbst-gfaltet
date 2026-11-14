@@ -1,0 +1,57 @@
+---
+// Daumen hoch/runter unter jedem Artikel. Erst beim Tippen geht eine Anfrage raus (Supabase, Frankfurt),
+// beim Laden der Seite nichts. Gespeichert wird nur die Zahl pro Artikel, die eigene Stimme merkt sich der Browser.
+import Ori from './Ori.astro';
+interface Props { slug: string }
+const { slug } = Astro.props;
+const URL = 'https://ovosbxkwqgxxfekrtlov.supabase.co/rest/v1/rpc/blog_daumen';
+const KEY = 'sb_publishable_cvKxZ4tvDpez0OWyf-C-og_raV3cGVZ';
+---
+<div class="daumen" data-slug={slug} data-url={URL} data-key={KEY}>
+  <span class="d-frage">Hat's dir was gebracht?</span>
+  <button type="button" class="d-knopf" data-wert="1" aria-pressed="false" aria-label="Daumen hoch">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 11v9H4v-9h3zm2 9h7.6a2 2 0 0 0 2-1.6l1.2-6A2 2 0 0 0 17.8 10H14V6a2 2 0 0 0-2-2l-3 7v9z"/></svg>
+  </button>
+  <button type="button" class="d-knopf" data-wert="-1" aria-pressed="false" aria-label="Daumen runter">
+    <svg viewBox="0 0 24 24" aria-hidden="true" style="transform:rotate(180deg)"><path d="M7 11v9H4v-9h3zm2 9h7.6a2 2 0 0 0 2-1.6l1.2-6A2 2 0 0 0 17.8 10H14V6a2 2 0 0 0-2-2l-3 7v9z"/></svg>
+  </button>
+  <span class="d-antwort" aria-live="polite"><Ori name="gemerkt" /><span class="hand d-text"></span></span>
+</div>
+<style>
+  .daumen{display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin:32px 0 8px; padding-top:16px; border-top:1px dashed var(--linie); font-family:var(--display); font-size:.95rem; color:var(--bleistift)}
+  .d-knopf{display:grid; place-items:center; width:38px; height:38px; border-radius:50%; border:1.5px solid var(--linie); background:none; color:var(--bleistift); cursor:pointer; transition:transform .15s, border-color .15s, color .15s}
+  .d-knopf svg{width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linejoin:round}
+  .d-knopf:hover{border-color:var(--tinte); color:var(--tinte)}
+  .d-knopf[aria-pressed="true"]{border-color:var(--ori); color:var(--ori); transform:scale(1.08)}
+  .d-knopf[aria-pressed="true"] svg{fill:currentColor; fill-opacity:.15}
+  .d-antwort{display:none; align-items:center; gap:4px}
+  .d-antwort.an{display:inline-flex}
+  .d-antwort :global(img.ori){width:34px; height:34px}
+  .d-text{font-size:1.15rem; color:var(--ori)}
+</style>
+<script>
+  const SPRUCH = { 1: 'Merk ich mir.', '-1': 'Aua. Notiert.' };
+  document.querySelectorAll<HTMLElement>('.daumen').forEach((box) => {
+    const slug = box.dataset.slug!, key = 'daumen:' + slug;
+    const knoepfe = [...box.querySelectorAll<HTMLButtonElement>('.d-knopf')];
+    const antwort = box.querySelector('.d-antwort')!, text = box.querySelector('.d-text')!;
+    let meine = 0; try { meine = Number(localStorage.getItem(key)) || 0; } catch {}
+    const zeigen = (hoch?: number) => {
+      knoepfe.forEach((k) => k.setAttribute('aria-pressed', String(Number(k.dataset.wert) === meine)));
+      if (!meine) { antwort.classList.remove('an'); return; }
+      let t = SPRUCH[meine as 1 | -1];
+      if (meine === 1 && hoch && hoch >= 5) t += ` Du und ${hoch - 1} andere fanden's gut.`;
+      text.textContent = t; antwort.classList.add('an');
+    };
+    zeigen();
+    knoepfe.forEach((k) => k.addEventListener('click', async () => {
+      const wert = Number(k.dataset.wert), neu = wert === meine ? 0 : wert, vorher = meine;
+      meine = neu; zeigen();
+      try { neu ? localStorage.setItem(key, String(neu)) : localStorage.removeItem(key); } catch {}
+      try {
+        const r = await fetch(box.dataset.url!, { method: 'POST', headers: { apikey: box.dataset.key!, 'Content-Type': 'application/json' }, body: JSON.stringify({ p_slug: slug, p_neu: neu, p_vorher: vorher }) });
+        const d = await r.json(); if (Array.isArray(d) && d[0]) zeigen(d[0].hoch);
+      } catch {}
+    }));
+  });
+</script>
