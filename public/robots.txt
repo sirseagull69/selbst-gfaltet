@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /notion/
 
 Sitemap: https://www.selbstgfaltet.de/sitemap-index.xml
