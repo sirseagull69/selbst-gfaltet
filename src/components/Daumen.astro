@@ -1,13 +1,11 @@
 ---
-// Daumen hoch/runter unter jedem Artikel. Erst beim Tippen geht eine Anfrage raus (Supabase, Frankfurt),
-// beim Laden der Seite nichts. Gespeichert wird nur die Zahl pro Artikel, die eigene Stimme merkt sich der Browser.
+// Daumen hoch/runter unter jedem Artikel. Erst beim Tippen geht eine Anfrage an /api/daumen (eigene Seite),
+// beim Laden nichts. Gespeichert wird nur die Zahl pro Artikel, die eigene Stimme merkt sich der Browser.
 import Ori from './Ori.astro';
 interface Props { slug: string }
 const { slug } = Astro.props;
-const URL = 'https://ovosbxkwqgxxfekrtlov.supabase.co/rest/v1/rpc/blog_daumen';
-const KEY = 'sb_publishable_cvKxZ4tvDpez0OWyf-C-og_raV3cGVZ';
 ---
-<div class="daumen" data-slug={slug} data-url={URL} data-key={KEY}>
+<div class="daumen" data-slug={slug}>
   <span class="d-frage">Hat's dir was gebracht?</span>
   <button type="button" class="d-knopf" data-wert="1" aria-pressed="false" aria-label="Daumen hoch">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 11v9H4v-9h3zm2 9h7.6a2 2 0 0 0 2-1.6l1.2-6A2 2 0 0 0 17.8 10H14V6a2 2 0 0 0-2-2l-3 7v9z"/></svg>
@@ -49,8 +47,8 @@ const KEY = 'sb_publishable_cvKxZ4tvDpez0OWyf-C-og_raV3cGVZ';
       meine = neu; zeigen();
       try { neu ? localStorage.setItem(key, String(neu)) : localStorage.removeItem(key); } catch {}
       try {
-        const r = await fetch(box.dataset.url!, { method: 'POST', headers: { apikey: box.dataset.key!, 'Content-Type': 'application/json' }, body: JSON.stringify({ p_slug: slug, p_neu: neu, p_vorher: vorher }) });
-        const d = await r.json(); if (Array.isArray(d) && d[0]) zeigen(d[0].hoch);
+        const r = await fetch('/api/daumen', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ slug, neu, vorher }) });
+        const d = await r.json(); if (d && typeof d.hoch === 'number') zeigen(d.hoch);
       } catch {}
     }));
   });
