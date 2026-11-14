@@ -1,0 +1,13 @@
+---
+// Ein echter Verlauf aus origami, nachgebaut im Seiten-Design (statt Bildschirmfoto)
+interface Props { wann?: string }
+const { wann } = Astro.props;
+---
+<div class="oc" role="group" aria-label="Chatverlauf aus origami">
+  {wann && <p class="oc-wann hand">{wann}</p>}
+  <slot />
+</div>
+<style>
+  .oc{margin:30px 0; display:flex; flex-direction:column; gap:14px}
+  .oc-wann{margin:0 0 -4px; font-size:1.1rem; color:var(--bleistift)}
+</style>

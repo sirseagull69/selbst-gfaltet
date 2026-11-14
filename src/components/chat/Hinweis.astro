@@ -1,0 +1,11 @@
+---
+// Gelbe Hinweiszeile von origami (z. B. Übergabe an Claude) oder graue Statuszeile
+interface Props { art?: 'gelb' | 'grau' }
+const { art = 'gelb' } = Astro.props;
+---
+<p class={`oc-hinweis ${art}`}><slot /></p>
+<style>
+  .oc-hinweis{margin:0; font-family:var(--display); font-size:.88rem; line-height:1.4; padding:10px 14px; border-radius:3px}
+  .oc-hinweis.gelb{background:var(--marker); color:var(--auf-marker, var(--tinte))}
+  .oc-hinweis.grau{background:var(--blatt); border:1px solid var(--linie); color:var(--bleistift)}
+</style>

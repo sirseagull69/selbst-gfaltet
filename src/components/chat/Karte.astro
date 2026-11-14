@@ -1,0 +1,33 @@
+---
+// Karte, die origami im Chat zeigt (Befund, Plan, Hinweis)
+import Ori from '../Ori.astro';
+interface Props { ori: string; titel: string; unter?: string; klein?: string }
+const { ori, titel, unter, klein } = Astro.props;
+---
+<div class="oc-karte">
+  <div class="oc-kopf">
+    <Ori name={ori} />
+    <div>
+      {klein && <p class="oc-klein hand">{klein}</p>}
+      <p class="oc-titel">{titel}</p>
+      {unter && <p class="oc-unter">{unter}</p>}
+    </div>
+  </div>
+  <slot />
+</div>
+<style>
+  .oc-karte{background:var(--blatt); border-radius:4px; box-shadow:0 1px 2px rgba(0,0,0,.06),0 6px 18px rgba(0,0,0,.06); padding:16px 18px; max-width:620px}
+  .oc-kopf{display:flex; gap:12px; align-items:center}
+  .oc-kopf :global(img.ori){width:56px; height:56px; flex:none}
+  .oc-klein{margin:0; font-size:1.1rem; color:var(--ori); line-height:1}
+  .oc-titel{margin:0; font-family:var(--display); font-weight:700; font-size:1.05rem; line-height:1.25}
+  .oc-unter{margin:2px 0 0; font-family:var(--display); font-size:.85rem; color:var(--bleistift)}
+  .oc-karte :global(.oc-feld){margin-top:12px; background:var(--papier); border-radius:4px; padding:10px 12px; font-size:.9rem}
+  .oc-karte :global(.oc-feld b){font-family:var(--display)}
+  .oc-karte :global(.oc-mono){font-family:var(--mono); font-size:.8rem; color:var(--bleistift); overflow-wrap:anywhere}
+  .oc-karte :global(.oc-tag){display:inline-block; margin-top:12px; font-family:var(--display); font-size:.8rem; font-weight:600; padding:3px 10px; border-radius:99px; background:color-mix(in srgb,var(--ok) 15%,transparent); color:var(--ok)}
+  .oc-karte :global(.oc-zeile){display:grid; grid-template-columns:minmax(0,1fr) auto; gap:10px; font-family:var(--mono); font-size:.8rem; padding:6px 0; border-bottom:1px solid var(--linie)}
+  .oc-karte :global(.oc-knoepfe){display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; font-family:var(--display); font-size:.9rem; font-weight:600; font-style:normal}
+  .oc-karte :global(.oc-knopf){padding:8px 14px; border-radius:6px; background:var(--tinte); color:var(--papier)}
+  .oc-karte :global(.oc-knopf.leer){background:none; color:var(--tinte); border:1.5px solid var(--linie)}
+</style>

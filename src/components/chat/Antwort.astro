@@ -1,0 +1,20 @@
+---
+// Antwort von origami: kleiner Schritt-Hinweis oben, Text, Meta-Zeile unten
+interface Props { schritt?: string; meta?: string }
+const { schritt, meta } = Astro.props;
+---
+<div class="oc-ori">
+  {schritt && <p class="oc-schritt"><span aria-hidden="true">✓</span> {schritt}</p>}
+  <div class="oc-text"><slot /></div>
+  {meta && <p class="oc-meta">{meta}</p>}
+</div>
+<style>
+  .oc-ori{max-width:100%}
+  .oc-schritt{margin:0 0 10px; font-family:var(--display); font-size:.85rem; font-weight:600; color:var(--bleistift)}
+  .oc-schritt span{color:var(--ok); margin-right:4px}
+  .oc-text{font-size:1rem}
+  .oc-text :global(p){margin:0 0 10px}
+  .oc-text :global(ul),.oc-text :global(ol){margin:0 0 10px; padding-left:22px}
+  .oc-text :global(li::marker){color:var(--ori)}
+  .oc-meta{margin:4px 0 0; font-family:var(--mono); font-size:.75rem; color:var(--bleistift)}
+</style>
