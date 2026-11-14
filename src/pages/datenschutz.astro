@@ -5,7 +5,7 @@ import { NEWSLETTER_FORM } from '../newsletter';
 <Base titel="Datenschutz">
   <div class="wrap seite prosa">
     <h1>Datenschutzerklärung</h1>
-    <p>Kurz vorweg: Diese Seite setzt keine Cookies und lädt keine Schriften oder Skripte von fremden Servern. Ich zähle Besuche mit Vercel Web Analytics, ohne Cookies und ohne dich wiederzuerkennen (siehe Punkt 3). Es gibt kein Kontaktformular.{NEWSLETTER_FORM ? ' Für den Newsletter gilt Punkt 5.' : ' Einen Newsletter gibt es noch nicht.'}</p>
+    <p>Kurz vorweg: Diese Seite setzt keine Cookies und lädt keine Schriften oder Skripte von fremden Servern. Ich zähle Besuche mit Vercel Web Analytics, ohne Cookies und ohne dich wiederzuerkennen (siehe Punkt 3). Es gibt kein Kontaktformular. Tippst du unter einem Artikel einen Daumen an, wird nur die Zählung gespeichert (siehe Daumen unter Artikeln).{NEWSLETTER_FORM ? ' Für den Newsletter gilt Punkt 5.' : ' Einen Newsletter gibt es noch nicht.'}</p>
 
     <h2>1. Verantwortlicher</h2>
     <p>Nils Pohler, Jettinger Str. 30/3, 71126 Gäufelden<br />E-Mail: fragen@selbstgfaltet.de</p>
@@ -33,10 +33,13 @@ import { NEWSLETTER_FORM } from '../newsletter';
     <h2>{NEWSLETTER_FORM ? 6 : 5}. Schriften und Inhalte</h2>
     <p>Alle Schriften, Bilder und Skripte werden von dieser Seite selbst ausgeliefert. Beim Aufruf werden keine Daten an Google Fonts oder andere Dritte übertragen. Externe Links öffnest du selbst; erst dann gelten die Datenschutzbestimmungen der jeweiligen Seite.</p>
 
-    <h2>{NEWSLETTER_FORM ? 7 : 6}. Lokal im Browser gespeicherte Daten</h2>
-    <p>Die Werkzeuge auf dieser Seite (Werkstatt, Lokal-oder-Claude-Test, Modell-Rechner, Prompt-Baukasten, Checklisten) laufen komplett in deinem Browser. Eingaben werden nicht an mich übertragen. Die Werkstatt merkt sich deinen Plan nur in deinem eigenen Browser (lokaler Speicher), bis du ihn leerst.</p>
+    <h2 id="daumen">{NEWSLETTER_FORM ? 7 : 6}. Daumen unter Artikeln</h2>
+    <p>Unter jedem Artikel kannst du mit Daumen hoch oder runter sagen, ob er dir was gebracht hat. Erst wenn du tippst, schickt dein Browser den Namen des Artikels und deine Stimme an diese Seite (Vercel, siehe Punkt 2). Von dort wird nur die Zählung an meine Datenbank bei Supabase weitergegeben (Server in Frankfurt am Main, Supabase arbeitet als Auftragsverarbeiter). Gespeichert wird ausschließlich, wie oft ein Artikel Daumen hoch und runter bekommen hat. Deine IP-Adresse oder andere Angaben zu dir gehen nicht an Supabase und werden von mir nicht gespeichert. Rechtsgrundlage ist mein berechtigtes Interesse, zu erfahren, welche Artikel helfen (Art. 6 Abs. 1 lit. f DSGVO). Damit du nicht doppelt zählst, merkt sich nur dein eigener Browser deine Stimme (lokaler Speicher); löschst du ihn, ist sie dort weg.</p>
 
-    <h2>{NEWSLETTER_FORM ? 8 : 7}. Deine Rechte</h2>
+    <h2>{NEWSLETTER_FORM ? 8 : 7}. Lokal im Browser gespeicherte Daten</h2>
+    <p>Die Werkzeuge auf dieser Seite (Werkstatt, Lokal-oder-Claude-Test, Modell-Rechner, Prompt-Baukasten, Checklisten) laufen komplett in deinem Browser. Eingaben werden nicht an mich übertragen. Die Werkstatt merkt sich deinen Plan nur in deinem eigenen Browser (lokaler Speicher), bis du ihn leerst. Genauso merkt sich dein Browser, ob du unter einem Artikel einen Daumen gegeben hast.</p>
+
+    <h2>{NEWSLETTER_FORM ? 9 : 8}. Deine Rechte</h2>
     <p>Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch (Art. 15 bis 21 DSGVO). Schreib mir dafür einfach eine Mail. Außerdem kannst du dich bei einer Datenschutz-Aufsichtsbehörde beschweren, zum Beispiel beim Landesbeauftragten für den Datenschutz und die Informationsfreiheit Baden-Württemberg.</p>
 
     <p class="klein">Stand: November 2026</p>

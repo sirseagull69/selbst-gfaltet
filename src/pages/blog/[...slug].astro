@@ -5,6 +5,7 @@ import { getCollection, render } from 'astro:content';
 import { KATEGORIEN, datumDE } from '../../lib';
 import { LERNWEGE } from '../../lernwege';
 import Newsletter from '../../components/Newsletter.astro';
+import Daumen from '../../components/Daumen.astro';
 import FrageKasten from '../../components/FrageKasten.astro';
 export async function getStaticPaths() {
   const artikel = await getCollection('artikel');
@@ -29,6 +30,7 @@ const alle = (await getCollection('artikel')).filter((x) => x.id !== a.id).slice
       </header>
       <div class="inhalt">
         <Content />
+        <Daumen slug={a.id} />
         <div class="knoepfe" style="margin-top:32px">
           {naechster ? <a class="knopf voll" href={`/blog/${naechster.slug}`}>Weiter in der Faltanleitung</a> : weg ? <a class="knopf voll" href={`/anleitungen#weg-${weg.nr}`}>Zur Faltanleitung</a> : null}
           <a class="knopf" href="/blog">Alle Artikel</a>

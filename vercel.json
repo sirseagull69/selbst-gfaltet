@@ -8,5 +8,8 @@
       "destination": "/anleitungen",
       "permanent": true
     }
+  ],
+  "regions": [
+    "fra1"
   ]
 }
