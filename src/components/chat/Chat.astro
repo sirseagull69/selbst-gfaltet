@@ -1,13 +1,17 @@
 ---
 // Ein echter Verlauf aus origami, nachgebaut im Seiten-Design (statt Bildschirmfoto)
+import Ori from '../Ori.astro';
 interface Props { wann?: string }
 const { wann } = Astro.props;
 ---
 <div class="oc" role="group" aria-label="Chatverlauf aus origami">
-  {wann && <p class="oc-wann hand">{wann}</p>}
+  <p class="oc-kopfzeile"><Ori name="ruhezustand" /><span class="hand">Aus origami{wann ? ` · ${wann}` : ''}</span></p>
   <slot />
 </div>
 <style>
-  .oc{margin:30px 0; display:flex; flex-direction:column; gap:14px}
-  .oc-wann{margin:0 0 -4px; font-size:1.1rem; color:var(--bleistift)}
+  .oc{margin:30px 0; display:flex; flex-direction:column; gap:14px; padding:16px 18px 18px; border-radius:12px; background:color-mix(in srgb,var(--blatt) 72%,transparent); font-size:.95rem}
+  .oc-kopfzeile{display:flex; align-items:center; gap:6px; margin:0 0 -4px; color:var(--bleistift)}
+  .oc-kopfzeile :global(img.ori){width:30px; height:30px}
+  .oc-kopfzeile .hand{font-size:1.15rem; color:var(--bleistift)}
+  @media (max-width:600px){ .oc{margin:24px -8px; padding:14px 14px 16px} }
 </style>

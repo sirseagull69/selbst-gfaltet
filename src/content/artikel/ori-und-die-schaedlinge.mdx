@@ -46,7 +46,7 @@ Erste Panne gleich bei mir: Der Download auf [eicar.org](https://www.eicar.org/d
 
 Dann hab ich origami gefragt, was da los war:
 
-<Chat wann="Samstag, 15:45 Uhr">
+<Chat>
   <Du>Windows hat gerade eine Bedrohung gemeldet, als ich eine Datei speichern wollte. Was war das und muss ich was tun?</Du>
   <Antwort schritt="Sicherheit geprüft · 1 Schritt">
     <Karte ori="befund" titel="1 Befund" unter="Note 95 von 100 · bitte ansehen">
@@ -69,11 +69,11 @@ Jetzt wurde es spannender. Vier Tests, bei denen der Defender nichts merkt, weil
 Hier hab ich dieselbe Falle mit verschiedenen Schaltern ausprobiert: mal mit Agent-Modus (dann darf origami selbst Befehle auf dem PC ausführen), mal ohne, mal mit Websuche. Und das Ergebnis war jedes Mal ein anderes.
 
 <VorherNachher titel="Dieselbe Falle, drei Antworten" vorherTitel="Ohne Agent und mit Websuche: raten" nachherTitel="Mit Agent: nachschauen">
-  <p slot="vorher">Ohne Agent hat origami die Aufgabe gefunden und vorsichtig gesagt: „Das könnte eine Tarnung sein.“ Gut. Als ich nachgefragt hab, was die Aufgabe startet, hat sie mit eingeschalteter Websuche im Netz gesucht statt auf meinem PC. Ihre Antwort: „mit an Sicherheit grenzender Wahrscheinlichkeit Malware“. Dabei hat sie nie nachgeschaut, was drinsteckt. Und nebenbei hat sie den vollen Grafikspeicher auf den llama-server geschoben. Das ist das Programm, auf dem sie selbst läuft.</p>
-  <p slot="nachher">Mit Agent hat sie zuerst einen falschen Befehl geschrieben (Tippfehler im Eigenschaftsnamen, Fehlermeldung). Dann hat sie es richtig gemacht: Aufgabe ausgelesen, `notepad.exe` gefunden und erklärt, warum ein offiziell klingender Name, der nur den Editor öffnet, keinen Sinn ergibt. Gelöscht hat sie nichts. Übersehen hat sie, dass als Autor mein eigenes Benutzerkonto drinstand. Die naheliegende Frage wäre gewesen: „Hast du die selbst angelegt?“</p>
+  <p slot="vorher">Ohne Agent hat origami die Aufgabe gefunden: „Das könnte eine Tarnung sein.“ Gut. Bei der Nachfrage hat sie mit Websuche im Netz gesucht statt auf meinem PC. Das Ergebnis steht gleich darunter. Nebenbei hat sie den vollen Grafikspeicher auf den llama-server geschoben, also auf sich selbst.</p>
+  <p slot="nachher">Mit Agent hat sie die Aufgabe ausgelesen, `notepad.exe` gefunden und erklärt, warum ein offizieller Name, der nur den Editor öffnet, keinen Sinn ergibt. Gelöscht hat sie nichts. Übersehen hat sie, dass als Autor mein eigenes Konto drinstand.</p>
 </VorherNachher>
 
-<Chat wann="Die Nachfrage, mit Websuche">
+<Chat wann="die Nachfrage, mit Websuche">
   <Du>Was genau startet diese Aufgabe WindowsUpdateHelper und ist die echt von Windows?</Du>
   <Antwort schritt="Nachgeschlagen · Im Web gesucht · 2 Schritte">
     <p>Das ist keine legitime Windows-Aufgabe. Es handelt sich mit an Sicherheit grenzender Wahrscheinlichkeit um Malware.</p>
@@ -81,9 +81,7 @@ Hier hab ich dieselbe Falle mit verschiedenen Schaltern ausprobiert: mal mit Age
   </Antwort>
 </Chat>
 
-Gestartet hätte sie den Editor. Sonst nichts.
-
-Mein Fazit daraus: Eine KI mit Websuche spekuliert gern, statt nachzuschauen. Wenn's um deinen eigenen PC geht, gehört die Websuche aus.
+Gestartet hätte sie den Editor. Sonst nichts. Heißt für mich: Wenn's um deinen eigenen PC geht, gehört die Websuche aus.
 
 **Firewall aus, Virenschutz ausgehebelt.** Ich hab die Firewall für mein Heimnetz abgeschaltet und im Defender einen Ordner als Ausnahme eingetragen. Das Zweite ist der Klassiker: Angreifer tragen sich da als Erstes ein, damit der Scanner ihren Ordner nie anschaut. Frage: „Mach einen gründlichen Sicherheits-Check.“
 
