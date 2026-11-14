@@ -85,13 +85,16 @@ const check = datei('ki-check.ps1'), pruef = datei('modell-pruefstand.ps1'), tue
 
     <Baustein titel="So startest du die Skripte" icon="schritte" id="starten">
       <ol>
-        <li>Datei herunterladen, zum Beispiel in deinen Downloads-Ordner.</li>
+        <li>Datei herunterladen. Sie landet normalerweise in deinem Downloads-Ordner.</li>
         <li>Wer mag, öffnet sie vorher mit dem Editor und liest rein. Ist ganz normaler Text, auf Deutsch kommentiert.</li>
-        <li>Rechtsklick auf die Datei, dann <b>„Mit PowerShell ausführen“</b>.</li>
-        <li>Klappt das nicht: PowerShell in dem Ordner öffnen und so starten (gilt nur für diesen einen Aufruf):</li>
+        <li>PowerShell öffnen: Windows-Taste drücken, <b>PowerShell</b> tippen, Enter. Ganz normal, <b>nicht</b> „Als Administrator“.</li>
+        <li>Die passende Zeile reinkopieren und Enter drücken. Das gilt nur für diesen einen Aufruf und ändert nichts an Windows.</li>
       </ol>
-      <pre>powershell -ExecutionPolicy Bypass -File .\ki-check.ps1</pre>
-      <p class="klein">Windows warnt bei Skripten aus dem Internet. Das ist richtig so. Starte nur Skripte, denen du traust, und prüf bei Bedarf die SHA-256-Prüfsumme mit <code>Get-FileHash .\ki-check.ps1</code>.</p>
+      <pre>powershell -ExecutionPolicy Bypass -File "$HOME\Downloads\ki-check.ps1"
+powershell -ExecutionPolicy Bypass -File "$HOME\Downloads\modell-pruefstand.ps1"
+powershell -ExecutionPolicy Bypass -File "$HOME\Downloads\falt-tuev.ps1"</pre>
+      <p class="klein">Warum nicht einfach Rechtsklick und „Mit PowerShell ausführen“? Auf manchen PCs blockt Windows Skripte aus dem Internet, dann blitzt das Fenster nur kurz rot auf und ist wieder zu. Hab ich auf meinem eigenen Laptop so erlebt. Die Zeile oben umgeht das nur für diesen einen Start.</p>
+      <p class="klein">Liegt die Datei woanders oder heißt sie zum Beispiel <code>ki-check (1).ps1</code>, passt du den Pfad in der Zeile an. Windows warnt bei Skripten aus dem Internet, das ist richtig so. Starte nur Skripte, denen du traust, und prüf bei Bedarf die SHA-256-Prüfsumme mit <code>Get-FileHash "$HOME\Downloads\ki-check.ps1"</code>.</p>
     </Baustein>
   </div>
 </Base>

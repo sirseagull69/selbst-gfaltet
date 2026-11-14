@@ -19,7 +19,7 @@
     Desktop).
   - Startet nicht als Administrator. Braucht es auch nicht.
 
-  Starten:      powershell -ExecutionPolicy Bypass -File .\falt-tuev.ps1
+  Starten:      powershell -ExecutionPolicy Bypass -File "$HOME\Downloads\falt-tuev.ps1"
   Nur Teil A:   ... -NurMessen
   Mit Bericht:  ... -Bericht
   Anderes Modell:  ... -Modell qwen3.5:9b

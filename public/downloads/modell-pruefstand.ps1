@@ -11,7 +11,7 @@
   Es ändert nichts am System. Ergebnisse landen in einem neuen Ordner
   "pruefstand-<Datum>" neben dem Skript.
 
-  Starten:  powershell -ExecutionPolicy Bypass -File .\modell-pruefstand.ps1
+  Starten:  powershell -ExecutionPolicy Bypass -File "$HOME\Downloads\modell-pruefstand.ps1"
   Nur bestimmte Modelle:  ... -Modelle gemma4:26b,qwen3.5:9b
   Eigene Aufgaben (eine pro Zeile):  ... -Aufgaben .\meine-aufgaben.txt
 #>

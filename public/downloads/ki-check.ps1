@@ -8,8 +8,8 @@
   Das Skript LIEST NUR. Es ändert nichts an deinem PC und schickt nichts ins Internet.
   Einzige Verbindung: zu Ollama auf deinem eigenen PC (localhost:11434), falls es läuft.
 
-  Starten:  Rechtsklick auf die Datei -> "Mit PowerShell ausführen"
-  oder:     powershell -ExecutionPolicy Bypass -File .\ki-check.ps1
+  Starten:  PowerShell öffnen (nicht als Administrator) und eingeben:
+            powershell -ExecutionPolicy Bypass -File "$HOME\Downloads\ki-check.ps1"
   Bericht speichern:  ... -File .\ki-check.ps1 -Bericht
 #>
 param([switch]$Bericht)
@@ -100,9 +100,9 @@ if (-not $laufwerk) { $laufwerk = $env:SystemDrive }
 $ld = Get-CimInstance Win32_LogicalDisk -Filter ("DeviceID='" + $laufwerk + "'")
 if ($ld) {
   $frei = GB $ld.FreeSpace
-  if ($frei -ge 50) { Ok ("Frei auf ${laufwerk}: $frei GB (dort landen die Modelle).") }
-  elseif ($frei -ge 20) { Achtung ("Frei auf ${laufwerk}: nur $frei GB. Ein großes Modell braucht schnell 15 bis 25 GB.") }
-  else { Achtung ("Frei auf ${laufwerk}: nur $frei GB. Das reicht kaum für ein Modell.") }
+  if ($frei -ge 50) { Ok ("Frei auf ${laufwerk} $frei GB (dort landen die Modelle).") }
+  elseif ($frei -ge 20) { Achtung ("Frei auf ${laufwerk} nur $frei GB. Ein großes Modell braucht schnell 15 bis 25 GB.") }
+  else { Achtung ("Frei auf ${laufwerk} nur $frei GB. Das reicht kaum für ein Modell.") }
 } else { Info 'Freier Speicher konnte nicht ausgelesen werden.' }
 
 # ---------- Ollama ----------
