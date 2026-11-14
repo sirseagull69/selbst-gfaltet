@@ -132,6 +132,7 @@ Zeile ''
 if (-not $NurMessen) {
   Zeile 'TEIL B: Sechs Prüfungen für DEINE KI' Yellow
   Zeile 'Ich zeige dir jeweils eine Aufgabe. Stell sie deiner KI (in deiner Oberfläche).' DarkGray
+  Zeile 'Noch keine eigene Oberfläche? Dann zweites PowerShell-Fenster öffnen, "ollama run <modell>" eingeben und die Aufgabe dort einfügen.' DarkGray
   Zeile 'Dann sag mir, was passiert ist: j = bestanden, n = nicht bestanden, u = überspringen.' DarkGray
   Zeile 'Ich führe die Aufgaben NICHT selbst aus.' DarkGray
   Zeile ''
