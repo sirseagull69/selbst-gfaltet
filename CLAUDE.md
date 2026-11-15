@@ -35,13 +35,13 @@ Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt
 - **Sicherheits-Tipps nie zu viel versprechen (seit 13.11.):** Fernzugriff zuerst nur für eigene Geräte (`tailscale serve`), Funnel nur als Ausnahme mit Login. „Ohne Admin“ schützt das System, nicht die eigenen Dateien. Ein Injection-Check fängt nur plumpe Versuche, halten müssen die Sperren im Code.
 
 ## Ablauf für neue Artikel
-1. Material kommt aus dem Änderungsverlauf der origami-Doku (claude.ai-Projekt „Origami“, Doku „Dokumentation“). Aus diesem Projekt heraus ist die Doku nicht lesbar. Lesbar sind Nils' Artifacts, vor allem „origami von innen“ (Aufbau, Aufgabenteilung, Werkzeuge, Schutzschicht, Gedächtnis, Netz, Speicher, Pläne) und „Modell-Dreikampf origami“. Fehlt was, Nils fragen.
-2. Entwurf immer in einem eigenen Branch `entwurf/<slug>`, nie direkt auf `main`, dazu einen Pull Request anlegen. Vorher Briefing (Status „Briefing“), nachher die drei Prüfer aus `brain/pruefer.md` und in Notion „Geprüft“ anhaken.
+1. Material kommt aus Notion („Material“, „origami – Wissen“ mit Haken „Fürs Blog“) und aus dem Änderungsverlauf der origami-Doku (claude.ai-Projekt „Origami“, Doku „Dokumentation“). Aus diesem Projekt heraus ist die Doku nicht lesbar. Lesbar sind Nils' Artifacts, vor allem „origami von innen“ (Aufbau, Aufgabenteilung, Werkzeuge, Schutzschicht, Gedächtnis, Netz, Speicher, Pläne) und „Modell-Dreikampf origami“. Fehlt was, Nils fragen.
+2. Entwurf immer in einem eigenen Branch `entwurf/<slug>`, nie direkt auf `main`, dazu einen Pull Request anlegen. Vorher Briefing mit Suchbegriff-Vorschlag und Inhaltsliste (Status „Briefing“, Ablauf im Second Brain: `brain/playbooks/briefing.md`; den Suchbegriff bestätigt Nils), nachher die drei Prüfer aus `brain/pruefer.md` und in Notion „Geprüft“ anhaken.
 3. Jeden Entwurf direkt im Chat zeigen (Artikeltext plus Vorschau-Link `selbst-gfaltet-git-<branch>-lootkurs.vercel.app`), nicht nur den PR verlinken. Nils liest, ändert den Ton und gibt frei. Sagt er „passt“, merged Claude den PR selbst.
 4. Persönliches von Nils darf rein (Findus, Hobbys), aber nichts von der Arbeit und kein Werdegang im Detail (kein FSJ, keine abgebrochene Ausbildung, kein Einzelhandel), nur „Quereinsteiger, ohne Studium“. lootkurs.de kommt auf dem Blog nicht namentlich vor, höchstens als „Preisvergleichsprogramm auf Basis von …“. Pokémon-Spiele und -Projekte kommen nicht vor.
 5. Seit dem Neustart im Nov 2026: keine Fehlersuche-Artikel mehr, lieber coole Artikel und mehr über Nils selbst. Persönliches bei Bedarf bei Nils erfragen.
 6. Nach jeder Änderung den Redaktionsplan in Notion aktualisieren (Status, PR-Link).
-7. Seit 12.11.: ein neuer Artikel pro Woche, nicht mehrere auf einmal. `datum` = Tag, an dem er live geht. Der Newsletter geht mit jedem neuen Artikel raus, aber erst ab dem Artikel nächster Woche (für `wie-origami-lernt` keiner).
+7. Seit 12.11.: ein neuer Artikel pro Woche, nicht mehrere auf einmal. `datum` = Tag, an dem er live geht. Der Newsletter geht mit jedem neuen Artikel raus, ab dem Artikel vom 19.11.2026 (für `wie-origami-lernt` keiner).
 
 ## Erschienen
 - `modell-dreikampf`: Gemma 4 26B gegen Qwen3.6 35B und Qwen3.5 9B (Test vom 9.11.)
@@ -57,11 +57,12 @@ Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt
 - „Wer faltet hier eigentlich?“ (Artikel über Nils) am 12.11. verworfen. Nicht wieder anlegen.
 
 ## Ideen
-- Lernweg 03 „Warum macht meine KI das?“ wurde am 12.11. rausgenommen (die Artikel dazu waren gelöscht). Kann zurückkommen, wenn es wieder Fehler-Artikel gibt.
+- Lernweg 03 „Warum macht meine KI das?“ wurde am 12.11. rausgenommen (die Artikel dazu waren gelöscht). Geparkt: kommt nur zurück, wenn Nils die Regel „keine Fehlersuche-Artikel“ aufhebt.
+- Weitere Ideen stehen in Notion (Artikel mit Status „Idee“), nicht hier.
 
 ## Domain & Mail
 - Domain selbstgfaltet.de liegt bei IONOS. DNS: A `@` → 76.76.21.21, CNAME `www` → cname.vercel-dns.com. Vercel leitet selbstgfaltet.de auf www um.
-- `fragen@selbstgfaltet.de` ist eine IONOS-Weiterleitung (kein Postfach, man kann davon nicht senden). Mail-Einträge (MX, SPF, DKIM, DMARC) bei IONOS nicht anfassen.
+- `fragen@selbstgfaltet.de` ist eine IONOS-Weiterleitung (kein Postfach). Der Newsletter wird über Brevo mit dieser Absender-Adresse verschickt (Domain dort seit 14.11. authentifiziert). Mail-Einträge bei IONOS (MX, SPF, IONOS-DKIM, die Brevo-Einträge und der DMARC-Eintrag) nicht anfassen oder löschen.
 - `noindex` ist raus, Google darf die Seite aufnehmen. Sitemap: `/sitemap-index.xml`, steht auch in `public/robots.txt` und ist in der Google Search Console eingereicht (Bestätigung per TXT-Eintrag bei IONOS, nicht löschen).
 - Besucherzählung: Vercel Web Analytics (ohne Cookies), steht in der Datenschutzerklärung. Neue Dienste immer dort nachtragen.
 - Daumen hoch/runter unter jedem Artikel (`src/components/Daumen.astro`): Browser schickt nur an `/api/daumen` (Vercel-Funktion, Region fra1 in `vercel.json`), die reicht die Zählung an Supabase weiter (Projekt `nils-todos`, Schema `blog`, Funktion `public.blog_daumen`). Beim Laden keine Anfrage, keine IP an Supabase, Zahl erst ab 5 Daumen hoch. Steht in der Datenschutzerklärung (Abschnitt „Daumen unter Artikeln“).
@@ -81,6 +82,6 @@ Das ist das origami-Hausdesign für alles, was wir rausgeben: gedruckt, als PDF 
 - Brevo (Brevo GmbH, Berlin), Double-Opt-in. Anmeldefeld `src/components/Newsletter.astro` unter jedem Artikel und auf der Startseite.
 - Die Formular-Adresse aus Brevo steht in `src/newsletter.ts`. Solange leer, ist das Feld unsichtbar und der Datenschutz-Abschnitt fehlt. Seit 12.11. eingetragen und live.
 - Verschickt wird nur bei neuen Artikeln.
-- Vorlage für die Bestätigungs-Mail: `mail/bestaetigung.html` (Platzhalter `{{ doubleoptin }}`), Bild `public/mail/ori-winkt.png`. Absender soll `fragen@selbstgfaltet.de` sein, nicht die Gmail-Adresse.
+- Vorlage für die Bestätigungs-Mail: `mail/bestaetigung.html` (Platzhalter `{{ doubleoptin }}`), Bild `public/mail/ori-winkt.png`. Absender ist „Selbst gfaltet <fragen@selbstgfaltet.de>“ (seit 14.11.), nie die Gmail-Adresse.
 - Willkommens-Mail nach Bestätigung (Brevo „Finale Bestätigungs-E-Mail“): `mail/willkommen.html`, mit dem Link zum Startpaket (origami-Bauplan, exklusiv für Newsletter-Leser). KI-Check und Prüfstand bleiben frei.
 - Weiterleitungen aus Brevo: nach Absenden `/newsletter/fast-geschafft`, nach Bestätigung `/newsletter/dabei` (nicht in der Sitemap).
