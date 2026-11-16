@@ -146,4 +146,6 @@ if (menue) {
   const stell = (auf) => { kopf.classList.toggle('offen', auf); menue.setAttribute('aria-expanded', auf); };
   menue.addEventListener('click', () => stell(!kopf.classList.contains('offen')));
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') stell(false); });
+  // Tippen neben das offene Menü oder auf einen Menüpunkt klappt es wieder zu
+  document.addEventListener('click', (e) => { if (kopf.classList.contains('offen') && (!kopf.contains(e.target) || e.target.closest('nav a'))) stell(false); });
 }

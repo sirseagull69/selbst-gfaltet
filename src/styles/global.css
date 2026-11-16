@@ -466,21 +466,30 @@ h1,h2,h3{overflow-wrap:break-word; hyphens:auto}
 :root[data-theme="dark"] pre{background:#0f0a07}
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) pre{background:#0f0a07} }
 
-/* Kopfzeile auf dem Handy: Logo links, Menü-Knopf rechts, Menü klappt darunter auf (seit 16.11.) */
-.menue{display:none; align-items:center; gap:8px; min-height:44px; padding:8px 12px; border:2px solid var(--tinte); border-radius:8px; background:transparent; color:var(--tinte); font-family:var(--display); font-weight:700; font-size:.98rem; cursor:pointer; box-shadow:none}
+/* Kopfzeile: Logo links, Menü und Farbmodus rechts. Auf dem Handy (unter 860 px, seit 16.11.) bleibt sie
+   beim Scrollen oben stehen, Farbmodus ist ein Symbol, die Menüpunkte klappen über den Knopf „Menü“ auf. */
+.kopf .logo{margin-right:auto}
+.kopf > .thema{order:3; margin-left:-6px}
+.kopf nav{order:2}
+.menue{display:none; order:4; align-items:center; gap:8px; min-height:44px; padding:8px 12px; border:2px solid var(--tinte); border-radius:8px; background:transparent; color:var(--tinte); font-family:var(--display); font-weight:700; font-size:.98rem; cursor:pointer; box-shadow:none}
 .menue svg{width:20px; height:20px}
 .menue .m-zu{display:none}
 .menue[aria-expanded="true"] .m-auf{display:none}
 .menue[aria-expanded="true"] .m-zu{display:block}
 @media (max-width:860px){
-  .kopf{flex-wrap:wrap; gap:0 12px}
-  .logo{font-size:1.3rem}
-  .logo img{width:38px; height:38px}
+  body > header{position:sticky; top:0; z-index:50}
+  html{scroll-padding-top:calc(var(--kopf-h,64px) + 12px)}
+  .kopf{flex-wrap:wrap; gap:0 8px; padding-top:8px; padding-bottom:8px}
+  .logo{font-size:1.25rem}
+  .logo img{width:36px; height:36px}
+  .kopf > .thema{margin-left:0; padding:8px; width:44px; justify-content:center}
+  .kopf > .thema span{display:none}
+  .kopf > .thema svg{width:20px; height:20px}
   .js .menue{display:inline-flex}
-  .kopf nav{flex-basis:100%; flex-direction:column; flex-wrap:nowrap; gap:2px; margin-top:10px; padding-top:8px; border-top:2px dashed var(--linie, rgba(0,0,0,.15))}
+  .kopf nav{order:5; flex-basis:100%; flex-direction:column; flex-wrap:nowrap; gap:2px; margin-top:8px; padding-top:8px; border-top:2px dashed var(--linie); max-height:calc(100vh - 80px); overflow-y:auto}
   .js .kopf nav{display:none}
   .js .kopf.offen nav{display:flex}
   .kopf nav a{width:100%; font-size:1.05rem; padding:10px 12px}
-  .kopf nav .thema{margin:6px 0 0; justify-content:flex-start; width:100%}
 }
 @media (max-width:360px){ .menue span{display:none} .menue{padding:8px 10px} }
+@media print{ body > header{position:static} }
