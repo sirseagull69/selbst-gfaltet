@@ -25,6 +25,7 @@ export const OG_ARTIKEL_ORI: Record<string, string> = {
   'von-unterwegs': 'login',
   'was-die-ki-nicht-entscheidet': 'denkt-nach-3',
   'wie-origami-lernt': 'gemerkt',
+  'claude-code-preis': 'rechnung',
 };
 
 export function ogSchluessel(pfad: string): string {
