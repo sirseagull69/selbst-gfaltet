@@ -138,3 +138,12 @@ if (rand && marken.length) {
   addEventListener('scroll', () => { if (!wartet) { wartet = true; requestAnimationFrame(pruefe); } }, { passive: true });
   pruefe();
 }
+
+// Menü auf dem Handy auf- und zuklappen
+const menue = document.getElementById('menue');
+if (menue) {
+  const kopf = menue.closest('.kopf');
+  const stell = (auf) => { kopf.classList.toggle('offen', auf); menue.setAttribute('aria-expanded', auf); };
+  menue.addEventListener('click', () => stell(!kopf.classList.contains('offen')));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') stell(false); });
+}
