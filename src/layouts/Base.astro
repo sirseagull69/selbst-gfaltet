@@ -13,12 +13,16 @@ import '../styles/global.css';
 import Analytics from '@vercel/analytics/astro';
 import { OG_SEITEN, ogSchluessel } from '../og';
 
-interface Props { titel?: string; beschreibung?: string; aktiv?: string; ori?: string }
-const { titel, beschreibung = 'Falt dir deine eigene KI: Schritt für Schritt zum eigenen KI-Assistenten auf dem eigenen PC. Mit Bildern, Messungen und allen Pannen.', aktiv = '' } = Astro.props;
+interface Props { titel?: string; beschreibung?: string; aktiv?: string; ori?: string; noindex?: boolean; datum?: Date }
+const { titel, beschreibung = 'Falt dir deine eigene KI: Schritt für Schritt zum eigenen KI-Assistenten auf dem eigenen PC. Mit Bildern, Messungen und allen Pannen.', aktiv = '', noindex = false, datum } = Astro.props;
 const MARKE = 'Selbst gfaltet';
 const voll = !titel ? `${MARKE} – Falt dir deine eigene KI` : (titel.length + MARKE.length + 3 <= 60 ? `${titel} – ${MARKE}` : titel);
 const start = Astro.url.pathname === '/';
 const ogKey = ogSchluessel(Astro.url.pathname);
+// Eine Adresse pro Seite, immer ohne Schrägstrich am Ende (wie in der Sitemap und in allen Links)
+const pfad = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const adresse = new URL(pfad, Astro.site);
+const istArtikel = !!datum;
 const ogBild = new URL(`/og/${OG_SEITEN[ogKey] || ogKey.startsWith('blog--') ? ogKey : 'start'}.png`, Astro.site);
 const nav = [
   ['/', 'Start', 'start'], ['/anleitungen', 'Faltanleitungen', 'lernwege'], ['/blog', 'Blog', 'blog'],
@@ -32,20 +36,23 @@ const nav = [
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{voll}</title>
   <meta name="description" content={beschreibung} />
+  {noindex && <meta name="robots" content="noindex" />}
   <link rel="icon" type="image/svg+xml" href="/anim/ruhezustand-abendrot.svg" />
   <link rel="alternate" type="application/rss+xml" title="Selbst gfaltet" href="/rss.xml" />
   <meta property="og:title" content={voll} />
   <meta property="og:site_name" content="Selbst gfaltet" />
-  <meta property="og:type" content={start ? "website" : "article"} />
+  <meta property="og:type" content={istArtikel ? "article" : "website"} />
+  {istArtikel && <meta property="article:published_time" content={datum.toISOString()} />}
+  {istArtikel && <script type="application/ld+json" set:html={JSON.stringify({"@context":"https://schema.org","@type":"BlogPosting","headline":titel,"description":beschreibung,"datePublished":datum.toISOString().slice(0,10),"image":ogBild.href,"mainEntityOfPage":adresse.href,"inLanguage":"de","author":{"@type":"Organization","name":"Selbst gfaltet","url":"https://www.selbstgfaltet.de/ueber"},"publisher":{"@type":"Organization","name":"Selbst gfaltet","url":"https://www.selbstgfaltet.de/"}})} />}
   {start && <script type="application/ld+json" set:html={JSON.stringify({"@context":"https://schema.org","@type":"WebSite","name":"Selbst gfaltet","alternateName":"selbstgfaltet.de","url":"https://www.selbstgfaltet.de/"})} />}
   <meta property="og:description" content={beschreibung} />
   <meta property="og:image" content={ogBild} />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)} />
+  <meta property="og:url" content={adresse} />
   <meta property="og:locale" content="de_DE" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+  {!noindex && <link rel="canonical" href={adresse} />}
   <link rel="sitemap" href="/sitemap-index.xml" />
   <Analytics />
   <script is:inline>
@@ -71,7 +78,7 @@ const nav = [
   <footer>
     <div class="wrap">
       <span>Selbst gfaltet · von Nils mit zu viel Kaffee</span>
-      <span><a href="/impressum">Impressum</a> · <a href="/datenschutz">Datenschutz</a> · <a href="/rss.xml">RSS</a></span>
+      <span><a href="mailto:fragen@selbstgfaltet.de">Kontakt</a> · <a href="/impressum">Impressum</a> · <a href="/datenschutz">Datenschutz</a> · <a href="/rss.xml">RSS</a></span>
     </div>
   </footer>
   <script>import "../scripts/site.js";</script>

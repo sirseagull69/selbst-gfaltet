@@ -7,6 +7,7 @@ import { LERNWEGE } from '../../lernwege';
 import Newsletter from '../../components/Newsletter.astro';
 import Daumen from '../../components/Daumen.astro';
 import FrageKasten from '../../components/FrageKasten.astro';
+import AutorKasten from '../../components/AutorKasten.astro';
 export async function getStaticPaths() {
   const artikel = await getCollection('artikel');
   return artikel.map((a) => ({ params: { slug: a.id }, props: { a } }));
@@ -19,7 +20,7 @@ const idx = weg ? weg.teile.findIndex((t: any) => t.slug === a.id) : -1;
 const naechster = weg ? weg.teile.slice(idx + 1).find((t: any) => t.slug) : null;
 const alle = (await getCollection('artikel')).filter((x) => x.id !== a.id).slice(0, 3);
 ---
-<Base titel={d.titel} beschreibung={d.kurz ?? d.beschreibung} aktiv="blog" ori={d.ori}>
+<Base titel={d.titel} beschreibung={d.kurz ?? d.beschreibung} aktiv="blog" ori={d.ori} datum={d.datum}>
   <div class="wrap">
     <article class="artikel">
       <header class="akopf">
@@ -35,6 +36,7 @@ const alle = (await getCollection('artikel')).filter((x) => x.id !== a.id).slice
           {naechster ? <a class="knopf voll" href={`/blog/${naechster.slug}`}>Weiter in der Faltanleitung</a> : weg ? <a class="knopf voll" href={`/anleitungen#weg-${weg.nr}`}>Zur Faltanleitung</a> : null}
           <a class="knopf" href="/blog">Alle Artikel</a>
         </div>
+        <AutorKasten />
         <FrageKasten thema={d.titel} />
         <Newsletter />
         {alle.length > 0 && (

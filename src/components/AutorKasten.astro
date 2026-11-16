@@ -1,0 +1,16 @@
+---
+// Autorenkasten unter jedem Artikel: wer schreibt hier, mit Ori statt Foto.
+// Bewusst ohne Namen und ohne Ort (Regel in CLAUDE.md), der Rest steht auf /ueber.
+import Ori from './Ori.astro';
+---
+<aside class="autor">
+  <div class="au-ori"><Ori name="winkt" alt="" /></div>
+  <p><b>Wer schreibt hier?</b> Ein Quereinsteiger ohne Studium, der sich daheim eine eigene KI gebaut hat. Was hier steht, hab ich selbst gebaut und selbst gemessen. Die Pannen auch. <a href="/ueber">Mehr über mich</a></p>
+</aside>
+<style>
+  .autor{display:flex; align-items:center; gap:12px; margin:36px 0 0; padding:10px 14px; background:var(--blatt); box-shadow:var(--schatten); border-radius:3px}
+  .au-ori{flex:none; width:56px; height:56px}
+  .au-ori :global(img){width:56px; height:56px}
+  .autor p{margin:0; flex:1; font-size:.95rem}
+  @media (max-width:560px){ .au-ori{width:44px; height:44px} .au-ori :global(img){width:44px; height:44px} }
+</style>
