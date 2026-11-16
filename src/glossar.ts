@@ -19,4 +19,6 @@ export const GLOSSAR = [
   ['Open Source', 'Der Bauplan ist offen, jeder darf reinschauen und mitbauen.', 'ein Rezept zum Abschreiben'],
   ['LoRA', 'Eine Art, ein Modell nachzutrainieren, ohne alles neu zu rechnen. Es kommt nur ein kleiner Zusatz obendrauf.', 'ein Aufsatz statt eines neuen Motors'],
   ['Feedback-Paar', 'Eine schlechte und eine gute Antwort auf dieselbe Frage, direkt nebeneinander. Daraus lernt ein Modell beim Training am meisten.', 'vorher und nachher beim Friseur'],
+  ['API', 'Der Zugang für Programme statt für Menschen. Bezahlt wird nach Verbrauch, nicht pauschal im Abo.', 'der Lieferanteneingang'],
+  ['Nutzungslimit', 'Die Grenze, wie viel du in einem Abo nutzen darfst. Bei Claude gibt es eins alle fünf Stunden und eins pro Woche.', 'das Datenvolumen im Handyvertrag'],
 ];

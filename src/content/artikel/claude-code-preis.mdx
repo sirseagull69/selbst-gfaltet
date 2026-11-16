@@ -1,0 +1,150 @@
+---
+titel: "Claude Code Preis: Was es in Euro kostet und was du privat wirklich brauchst"
+beschreibung: "Claude Code hat keinen eigenen Preis, es steckt im Claude-Abo. Hier stehen die Preise in Euro, was mit Steuer draus wird und wie oft ich mit Pro am Limit war. Und warum ich für denselben Plan 30 Euro mehr zahle als nötig. Aus Bequemlichkeit."
+kurz: "Claude Code Preis in Euro: Pro 18 €, Max 90 €, Ultra 180 € plus Steuer. Was privat reicht und warum mich der Kauf in der App 30 € mehr kostet."
+datum: 2026-12-03
+kategorie: code
+lesezeit: 6
+ori: rechnung
+oriSpruch: "Ich koste nur Strom. Sagt er. Die Stromrechnung zeigt er mir nie."
+---
+import KurzGesagt from '../../components/KurzGesagt.astro';
+import OriSagt from '../../components/OriSagt.astro';
+import WasMacht from '../../components/WasMacht.astro';
+import Messung from '../../components/Messung.astro';
+import Schritte from '../../components/Schritte.astro';
+import Checkliste from '../../components/Checkliste.astro';
+import OriRand from '../../components/OriRand.astro';
+
+<KurzGesagt
+  links="Was es kostet"
+  rechts="Was du wissen musst"
+  a={["Claude Code hat keinen eigenen Preis, es steckt im Claude-Abo", "Pro 18 €, Max 90 €, Ultra 180 € im Monat, ohne Steuern", "Kostenlos gibt es Claude Code nicht", "In der Handy-App ist derselbe Plan teurer"]}
+  b={["Es gibt kein festes Kontingent, sondern ein Limit alle fünf Stunden und eins pro Woche", "Ist das Limit erreicht, ist Schluss. Mehr zahlst du nur, wenn du es selbst einschaltest", "Zum Anfangen reicht Pro", "Im Browser abschließen, nicht in der App"]}
+/>
+
+## Was kostet Claude Code?
+
+Der Claude Code Preis ist schnell erklärt: Es gibt keinen. Claude Code ist das Programm, mit dem Claude direkt auf deinem PC Dateien anlegt und Befehle ausführt, statt nur im Chatfenster zu antworten. Kaufen kannst du es nicht einzeln. Es steckt in jedem bezahlten Claude-Abo und teilt sich das Kontingent mit dem normalen Chat.
+
+Die Frage ist also: Welches Abo brauchst du? Ich hab lange Pro gehabt und bin gerade bei Max. Hier steht, was das in Euro kostet, was auf meiner Rechnung steht und wo ich jeden Monat Geld liegen lasse.
+
+Alle Preise sind von der [Preisseite von Anthropic](https://claude.com/de/pricing), Stand 16.11.2026. Die können sich ändern, schau vor dem Abschließen selbst nach.
+
+## Claude Code Preis in Euro: die drei Pläne
+
+<OriRand ori="waehrung" spruch="Dollar bei Google, Euro auf der Seite. Ich rechne das nicht um." />
+
+Wenn du die Preisseite aus Deutschland aufrufst, zeigt sie Euro. Bei Google und in vielen Artikeln stehen Dollar (20, 100 und 200), darum findest du überall leicht andere Zahlen.
+
+<WasMacht titel="Die drei Pläne für Privatleute" teile={[
+  { name: "Pro", typ: "18 € im Monat", text: "Der Einstieg. Im Jahresabo 15 € im Monat, dann zahlst du 180 € im Voraus. Claude Code ist drin.", bild: "die Monatskarte" },
+  { name: "Max", typ: "90 € im Monat", text: "Fünfmal so viel Nutzung wie Pro, alle fünf Stunden und pro Woche. Gibt es nur monatlich.", bild: "die Monatskarte für Vielfahrer" },
+  { name: "Ultra", typ: "180 € im Monat", text: "Zehnmal so viel Nutzung pro Woche wie Pro. Für bestätigte Konten fällt das Fünf-Stunden-Limit weg. Auch nur monatlich.", bild: "die Bahncard 100" },
+]} />
+
+Dazu gibt es Pläne für Teams und Firmen. Die lass ich weg, das rechnen andere ausführlich vor.
+
+### Gibt es Claude Code kostenlos?
+
+Nein. Im kostenlosen Plan steht bei Claude Code auf der Preisseite ein Nein. Das Installieren kostet nichts, aber zum Benutzen brauchst du ein bezahltes Abo oder Guthaben für die API. Die API ist der Zugang für Programme, bei dem nach Verbrauch abgerechnet wird.
+
+## Was steht mit Steuer auf der Rechnung?
+
+<OriRand ori="rechnung" spruch="Ohne Steuern. Der schönste Preis ist immer der falsche." />
+
+Unter den Preisen steht klein „ohne anfallende Steuern“. Mit 19 % Mehrwertsteuer wären das gerechnet 21,42 € für Pro, 107,10 € für Max und 214,20 € für Ultra. Gerechnet, nicht abgelesen: Den Endpreis siehst du erst beim Bezahlen.
+
+Jetzt der Teil, der mir ein bisschen peinlich ist. Ich hab Max nicht im Browser abgeschlossen, sondern am Handy in der App, über Google Play. Dort steht bei mir ein anderer Betrag.
+
+<Messung titel="Was Max im Monat kostet" spalte="Preis" zeilen={[
+  { name: "Preisseite, ohne Steuern", wert: "90,00 €", anteil: 65, grau: true },
+  { name: "Mit 19 % Steuer (gerechnet)", wert: "107,10 €", anteil: 78 },
+  { name: "Google Play (meine Rechnung)", wert: "137,50 €", anteil: 100 },
+]} notiz="Preisseite und Google Play abgelesen am 15. und 16.11.2026. Der mittlere Wert ist nur gerechnet." />
+
+Das sind 30,40 € im Monat mehr als gerechnet über die Website. Aufs Jahr 364,80 €. Für exakt denselben Plan.
+
+Ich wusste das. Ich hab's trotzdem am Handy gemacht. Aus Bequemlichkeit, leider. Wenn du es besser machen willst: Schließ das Abo im Browser auf claude.ai ab. Das geht auch am Handy.
+
+<OriSagt ori="sassy">Bequemlichkeit hat ihren Preis. Bei ihm steht er sogar auf der Rechnung.</OriSagt>
+
+## Wie viel bekomme ich für Pro?
+
+<OriRand ori="ungeduldig" spruch="Fünf Stunden warten. Ich warte nie. Ich bin einfach da." />
+
+Eine feste Zahl an Nachrichten gibt es nicht. Stattdessen gibt es zwei Limits: eins, das sich alle fünf Stunden zurücksetzt, und eins pro Woche. Wie schnell du dran bist, hängt davon ab, welches Modell du nimmst, also welches KI-Gehirn, wie lang die Unterhaltung schon ist und wie große Dateien Claude lesen muss.
+
+Meine Erfahrung: Mit Pro bin ich oft ans Limit gekommen. Dann heißt es warten, bis das Fenster wieder aufgeht.
+
+Mit Max ist das besser. Ich hab es aber noch nicht lang genug, um ein ehrliches Urteil abzugeben. Das reich ich nach.
+
+Noch was, das nirgends auf der Preisseite steht: Ab und zu setzt Anthropic die Limits außer der Reihe zurück. Beim letzten Mal hab ich gleich zwei solche Resets bekommen. Schön, wenn's passiert. Einplanen würd ich es nicht.
+
+## Wann lohnt sich Max oder Ultra?
+
+<OriRand ori="rechnet" spruch="Fünfmal so viel Nutzung für fünfmal so viel Geld. Rechnen können sie." />
+
+Max ist fünfmal Pro, beim Limit und beim Preis. Es lohnt sich also erst, wenn du mit Pro regelmäßig hängen bleibst. Ein zweiter Unterschied: Das stärkste Modell ist bei Pro nicht im Abo drin, das läuft dort nur über extra Guthaben. Bei Max und Ultra ist es mit drin, begrenzt auf einen Teil des Wochenlimits.
+
+So würd ich's einteilen:
+
+- **Du baust abends nebenher**, ein, zwei Stunden: Pro. Das Limit merkst du manchmal, mehr nicht.
+- **Du sitzt am Wochenende stundenlang dran** und wartest ständig aufs Zurücksetzen: Max.
+- **Du arbeitest den ganzen Tag damit:** Ultra. Dazu kann ich nichts aus eigener Erfahrung sagen, den Plan hatte ich nie.
+
+Was ich mit meinem Abo gebaut hab: diesen Blog, origami, eine To-do-App und ein paar Spiele und Werkzeuge für meinen Handheld. Mehr dazu steht in [Wie ich ohne Ausbildung programmieren gelernt hab](/blog/programmieren-ohne-ausbildung).
+
+## Was passiert, wenn das Limit erreicht ist?
+
+Dann geht erst mal nichts mehr. Du hast drei Möglichkeiten:
+
+1. **Warten**, bis sich das Limit zurücksetzt. Claude Code zeigt dir, wann das ist.
+2. **In einen höheren Plan wechseln.**
+3. **Nutzungsguthaben einschalten.** Dann arbeitest du weiter und zahlst nach Verbrauch, zu den Preisen der API. Dafür kannst du ein Ausgabenlimit pro Monat setzen.
+
+### Zahle ich aus Versehen mehr, als ich wollte?
+
+Im Abo nicht. Ist das Limit erreicht, ist Schluss. Teurer wird es nur, wenn du das Nutzungsguthaben selbst einschaltest, und das passiert nicht nebenbei: In Claude Code geht das über den Befehl `/usage-credits`, und jeden Kauf musst du mit einem getippten „yes“ bestätigen.
+
+### Abo oder nach Verbrauch über die API?
+
+Du kannst Claude Code auch ganz ohne Abo nutzen und nur über die API nach Verbrauch zahlen. Für Privatleute ist das selten die bessere Wahl. Anthropic nennt für Firmen im Schnitt etwa 13 US-Dollar pro Entwickler und aktivem Tag und 150 bis 250 US-Dollar im Monat. Bei 90 % der Nutzer bleibt es unter 30 US-Dollar am Tag. Mit einem Abo weißt du vorher, was es kostet.
+
+## So findest du deinen Plan
+
+<OriRand ori="vergleicht" spruch="Daumen oder Browser. 30 Euro Unterschied. Für einen Daumen." />
+
+<Schritte titel="In vier Schritten zum passenden Plan" schritte={[
+  { titel: "Mit Pro anfangen", text: "Monatlich, nicht gleich das Jahresabo. Nach einem Monat weißt du, ob du dabeibleibst." },
+  { titel: "Im Browser abschließen", text: "Auf claude.ai, nicht in der App. Vor dem Bezahlen steht der Endpreis mit Steuer da." },
+  { titel: "Verbrauch anschauen", text: "In Claude Code zeigt dir ein Befehl, wie voll deine Limits sind und was am meisten verbraucht hat.", befehl: "/usage" },
+  { titel: "Erst hochstufen, wenn es nervt", text: "Ein Limit im Monat ist kein Grund für Max. Jede Woche zweimal warten schon." },
+]} />
+
+### Wie spare ich Verbrauch?
+
+Das kommt aus der Anleitung von Anthropic:
+
+- **Zwischen zwei Aufgaben aufräumen.** Mit `/clear` fängst du frisch an. Sonst schleppt Claude das ganze alte Gespräch bei jeder Nachricht mit.
+- **Genau sagen, was du willst.** „Mach das besser“ lässt Claude alles durchsuchen. „Ändere die Farbe vom Knopf in dieser Datei“ nicht.
+- **Bei Größerem erst planen lassen.** Mit Umschalt+Tab macht Claude erst einen Plan, bevor es baut. Das spart den teuren zweiten Anlauf.
+- **Nicht immer das größte Modell nehmen.** Mit `/model` wechselst du. Für kleine Sachen reicht ein kleineres.
+
+Wie du dein erstes Werkzeug baust, steht in [Dein erstes kleines Tool mit Claude Code](/blog/erstes-tool), die ganze Reihe findest du in den [Faltanleitungen](/anleitungen).
+
+## Geht das nicht auch gratis mit einer lokalen KI?
+
+Teilweise. Eine lokale KI läuft auf deinem eigenen PC und kostet außer Strom nichts. Bei mir macht origami den Alltag lokal und holt Claude nur für die schweren Fälle dazu. In meinem Vergleich war Claude aber in allen sieben Aufgaben besser. Die Zahlen dazu stehen in [Lokal oder Claude?](/blog/lokal-oder-claude) und in [Drei KI-Modelle, eine Grafikkarte](/blog/modell-dreikampf).
+
+Zum Bauen brauch ich also weiter ein Abo. Nur eben nicht das teuerste, und in Zukunft nicht mehr aus der App.
+
+<OriSagt ori="seufzt">Gratis-Alternative. Ich steh direkt daneben. Ich hör das.</OriSagt>
+
+<Checkliste punkte={[
+  "Ich weiß, dass Claude Code im Abo steckt und nichts extra kostet",
+  "Ich kenn den Preis meines Plans in Euro und rechne die Steuer dazu",
+  "Ich schließ im Browser ab, nicht in der App",
+  "Ich fang mit Pro an und schau mit /usage, ob es reicht",
+  "Nutzungsguthaben bleibt aus, solang ich es nicht bewusst einschalte",
+]} geschafft="Plan gewählt. Und ich koste immer noch nur Strom." />
