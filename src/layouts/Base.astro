@@ -11,6 +11,7 @@ import '@fontsource/jetbrains-mono/latin-400.css';
 import '@fontsource/jetbrains-mono/latin-600.css';
 import '../styles/global.css';
 import Analytics from '@vercel/analytics/astro';
+import Ori from '../components/Ori.astro';
 import { OG_SEITEN, ogSchluessel } from '../og';
 
 interface Props { titel?: string; beschreibung?: string; aktiv?: string; ori?: string; noindex?: boolean; datum?: Date }
@@ -76,6 +77,7 @@ const nav = [
       </button>
       <nav id="hauptmenue" aria-label="Hauptmenü">
         {nav.map(([href, name, key]) => <a href={href} aria-current={aktiv === key ? 'page' : undefined}>{name}</a>)}
+        <span class="menue-ori" aria-hidden="true"><Ori name="orte" /></span>
       </nav>
     </div>
   </header>
