@@ -6,7 +6,8 @@ export async function GET(context) {
     title: 'Selbst gfaltet',
     description: 'Falt dir deine eigene KI. Anleitungen, Messungen und Pannen aus der Werkstatt.',
     site: context.site,
-    items: artikel.map((a) => ({ title: a.data.titel, pubDate: a.data.datum, description: a.data.beschreibung, link: `/blog/${a.id}/` })),
+    items: artikel.map((a) => ({ title: a.data.titel, pubDate: a.data.datum, description: a.data.beschreibung, link: `/blog/${a.id}` })),
+    trailingSlash: false,
     customData: '<language>de-de</language>',
     stylesheet: '/rss.xsl',
   });

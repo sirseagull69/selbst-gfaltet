@@ -21,6 +21,8 @@ Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt
 - Vorschaubilder beim Teilen (Open Graph) entstehen beim Build automatisch in `src/pages/og/[bild].png.ts` im Papier-Design. Artikel brauchen nichts extra, neue feste Seiten in `src/og.ts` eintragen (sonst kriegen sie das Startseiten-Bild). Jedes Vorschaubild hat eine eigene Ori-Animation (`OG_SEITEN`, `OG_ARTIKEL_ORI`), keine doppelt; das Standbild dazu liegt in `src/og-ori/` (aus `public/anim` gerendert, Moment mit der meisten Pose).
 - Artikel haben im Frontmatter `kurz` (max. 160 Zeichen) für Google und Vorschau, `beschreibung` bleibt der lange Vorspann auf der Seite. Seitenbeschreibungen ca. 110–160 Zeichen.
 - Raster im CSS immer mit `minmax(0,1fr)` statt `1fr`, sonst scrollt die Seite auf dem Handy seitlich.
+- Adressen immer ohne Schrägstrich am Ende (seit 16.11.): `trailingSlash: 'never'` in `astro.config.mjs`, `"trailingSlash": false` in `vercel.json` (leitet `/blog/` auf `/blog` um). Sitemap, canonical, RSS und alle internen Links nutzen dieselbe Form. Seiten, die nicht zu Google sollen (404, `/newsletter/…`), bekommen `<Base noindex>`.
+- Unter jedem Artikel steht der Autorenkasten (`src/components/AutorKasten.astro`): Ori statt Foto, kein Name, kein Ort. Artikel bekommen automatisch strukturierte Daten (`BlogPosting`, Autor = „Selbst gfaltet“), sobald `Base` ein `datum` bekommt.
 
 ## Inhalt
 - **Ton:** Du-Form, locker, kurz, ehrlich, ein bisschen Schwäbisch. Pannen gehören dazu. Kein Marketing-Sprech, keine Emojis.
