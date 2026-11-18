@@ -18,7 +18,15 @@ const d = a.data;
 const weg = LERNWEGE.find((w) => w.teile.some((t: any) => t.slug === a.id));
 const idx = weg ? weg.teile.findIndex((t: any) => t.slug === a.id) : -1;
 const naechster = weg ? weg.teile.slice(idx + 1).find((t: any) => t.slug) : null;
-const alle = (await getCollection('artikel')).filter((x) => x.id !== a.id).slice(0, 3);
+// Unten passende Artikel: erst dieselbe Kategorie, dann der Rest, jeweils die neuesten zuerst.
+// Der nächste Teil der Faltanleitung fehlt, auf den zeigt schon der Knopf „Weiter in der Faltanleitung“.
+const andere = (await getCollection('artikel'))
+  .filter((x) => x.id !== a.id && x.id !== naechster?.slug)
+  .sort((x, y) => +y.data.datum - +x.data.datum || x.data.titel.localeCompare(y.data.titel));
+const alle = [
+  ...andere.filter((x) => x.data.kategorie === d.kategorie),
+  ...andere.filter((x) => x.data.kategorie !== d.kategorie),
+].slice(0, 3);
 ---
 <Base titel={d.titel} beschreibung={d.kurz ?? d.beschreibung} aktiv="blog" ori={d.ori} datum={d.datum}>
   <div class="wrap">
