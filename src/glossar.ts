@@ -13,6 +13,7 @@ export const GLOSSAR = [
   ['Zwischenspeicher (Cache)', 'Was die KI schon eingelesen hat, merkt sie sich. Bleibt der Anfang gleich, spart das viel Zeit.', 'die schon geschnippelten Zwiebeln'],
   ['Werkzeug (Tool)', 'Eine Funktion, die die KI aufrufen darf, zum Beispiel suchen oder rechnen.', 'Messer und Töpfe'],
   ['Agent', 'Eine KI, die selbst entscheidet, welche Werkzeuge sie nacheinander benutzt.', 'der Koch, der selbst einkauft'],
+  ['Vibe Coding', 'Programmieren, indem du der KI in normaler Sprache sagst, was du willst, und sie den Code schreibt.', 'dem Handwerker sagen, was du brauchst, statt selbst zu sägen'],
   ['MCP', 'Ein Standard, über den KIs an Werkzeuge angeschlossen werden.', 'eine Steckdose'],
   ['Ollama', 'Programm, das Modelle auf deinem PC laufen lässt.', 'die Küche'],
   ['MoE (Experten-Aufbau)', 'Ein Modell aus vielen kleinen Spezialisten, von denen pro Wort nur wenige arbeiten. Groß, aber schneller als gedacht.', 'eine Großküche mit Stationen'],
