@@ -56,6 +56,7 @@ Blog von Nils Pohler: „Falt dir deine eigene KI“. Zeigt Schritt für Schritt
 - `von-unterwegs`: Tunnel, Login, nur-lokal-Bereiche, Tagesablauf, Windows-Grenzen (Ports, Auslagerungsdatei)
 - `programmieren-ohne-ausbildung`, `erstes-tool`, `was-die-ki-nicht-entscheidet`: Lernweg 02 (Claude Code für Einsteiger: ohne Informatikstudium)
 - `wie-origami-lernt`: Gedächtnis, Fixes aus Daumen runter, geplantes LoRA-Training (12.11., kein Lernweg)
+- `ori-und-die-schaedlinge`: Angriffstest in neun Fallen (Testvirus, Passwort-ZIP, versteckte Befehle), der Schutz kommt aus dem Code (19.11., kein Lernweg, erster Newsletter)
 - Lernweg 01 (6 Teile) und Lernweg 02 (3 Teile) sind komplett erschienen. Lernweg 02 am 12.11. nachgeschärft (Installer, eigene Claude-Pannen), Werdegang-Details später wieder raus.
 - Die ersten vier Artikel (108 Sekunden, Leerzeilen-Panne, Regeln in den Code, Eigene KI auf dem PC) wurden am 12.11. bewusst gelöscht.
 - „Wer faltet hier eigentlich?“ (Artikel über Nils) am 12.11. verworfen. Nicht wieder anlegen.
