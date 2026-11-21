@@ -146,4 +146,7 @@ if (menue) {
   const stell = (auf) => { kopf.classList.toggle('offen', auf); menue.setAttribute('aria-expanded', auf); };
   menue.addEventListener('click', () => stell(!kopf.classList.contains('offen')));
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') stell(false); });
+  // Ein Tipp auf einen Menüpunkt klappt das Blatt wieder zu; wird das Fenster breit, auch
+  kopf.querySelector('nav').addEventListener('click', (e) => { if (e.target.closest('a')) stell(false); });
+  if (window.matchMedia) matchMedia('(min-width:861px)').addEventListener('change', (e) => { if (e.matches) stell(false); });
 }

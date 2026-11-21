@@ -11,6 +11,7 @@ import '@fontsource/jetbrains-mono/latin-400.css';
 import '@fontsource/jetbrains-mono/latin-600.css';
 import '../styles/global.css';
 import Analytics from '@vercel/analytics/astro';
+import Ori from '../components/Ori.astro';
 import { OG_SEITEN, ogSchluessel } from '../og';
 
 interface Props { titel?: string; beschreibung?: string; aktiv?: string; ori?: string; noindex?: boolean; datum?: Date }
@@ -64,18 +65,19 @@ const nav = [
   <header>
     <div class="kopf">
       <a class="logo" href="/"><img class="ori-light" src="/anim/ruhezustand-abendrot.svg" alt="" width="44" height="44" /><img class="ori-dark" src="/anim/ruhezustand-hell.svg" alt="" width="44" height="44" />Selbst gfaltet</a>
+      <button class="thema" id="thema" type="button" aria-label="Farbmodus wechseln">
+        <svg class="t-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg>
+        <svg class="t-hell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="t-dunkel" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+        <span id="thematext">Auto</span>
+      </button>
       <button class="menue" id="menue" type="button" aria-label="Menü" aria-expanded="false" aria-controls="hauptmenue">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path class="m-auf" d="M4 7h16M4 12h16M4 17h16"/><path class="m-zu" d="M6 6l12 12M18 6L6 18"/></svg>
         <span>Menü</span>
       </button>
       <nav id="hauptmenue" aria-label="Hauptmenü">
         {nav.map(([href, name, key]) => <a href={href} aria-current={aktiv === key ? 'page' : undefined}>{name}</a>)}
-        <button class="thema" id="thema" type="button" aria-label="Farbmodus wechseln">
-          <svg class="t-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg>
-          <svg class="t-hell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-          <svg class="t-dunkel" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
-          <span id="thematext">Auto</span>
-        </button>
+        <span class="menue-ori" aria-hidden="true"><Ori name="orte" /></span>
       </nav>
     </div>
   </header>
